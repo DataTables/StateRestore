@@ -3,11 +3,20 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables buttons staterestore">
+<js lib="jquery datatables staterestore buttons">
 <![CDATA[
 $(document).ready(function() {
     $('#example').DataTable({
-        dom: 'Blfrtip'
+        dom: 'Blfrtip',
+        stateRestore: true,
+        // buttons:[
+        //     {
+        //         extend: 'stateRestore',
+        //         config: {
+        //             state: 1
+        //         }
+        //     }
+        // ]
     });
 });
 ]]>
