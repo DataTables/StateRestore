@@ -51,30 +51,6 @@ export default class StateRestore {
 
 		table.settings()[0]._stateRestore = this;
 
-		this.s.dt.button().add(0, {
-			config: {
-				state: 1,
-				stateRestore: this
-			},
-			extend: 'stateRestore',
-			split: [
-				{
-					config: {
-						state: 1,
-						stateRestore: this
-					},
-					extend: 'saveState',
-				},
-				{
-					config: {
-						state: 1,
-						stateRestore: this
-					},
-					extend: 'deleteState',
-				},
-			]
-		});
-
 		return this;
 	}
 

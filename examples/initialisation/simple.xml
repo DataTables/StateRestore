@@ -8,15 +8,15 @@
 $(document).ready(function() {
     $('#example').DataTable({
         dom: 'Blfrtip',
-        stateRestore: true,
-        // buttons:[
-        //     {
-        //         extend: 'stateRestore',
-        //         config: {
-        //             state: 1
-        //         }
-        //     }
-        // ]
+        //stateRestore: true,
+        buttons:[
+            {
+                extend: 'stateRestore',
+                config: {
+                    state: 1
+                }
+            }
+        ]
     });
 });
 ]]>

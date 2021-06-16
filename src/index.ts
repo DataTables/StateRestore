@@ -115,12 +115,29 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 	$.fn.dataTable.ext.buttons.stateRestore = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
-			config.config.stateRestore.load(config.config.state);
+			config._stateRestore.load(config.config.state);
 		},
 		config: {},
 		init(dt, node, config) {
+			console.log(config)
 			let state = new $.fn.dataTable.StateRestore(dt);
 			config._stateRestore = state;
+			config.split = [
+				{
+					config: {
+						state: 1,
+						stateRestore: state
+					},
+					extend: 'saveState',
+				},
+				{
+					config: {
+						state: 1,
+						stateRestore: state
+					},
+					extend: 'deleteState',
+				},
+			];
 		},
 		text: 'StateRestore'
 	};

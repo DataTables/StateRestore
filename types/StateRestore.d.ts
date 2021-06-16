@@ -8,7 +8,6 @@ export default class StateRestore {
     c: any;
     s: any;
     constructor(settings: any, opts: any);
-    getNode(state: any): void;
     delete(state: any): void;
     save(state: any): void;
     load(state: any): void;
