@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables buttons staterestore">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Tlfrtip'
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Basic StateRestore Example</title>
+
+<info><![CDATA[
+This is the `-init stateRestore`extension for DataTables.
+]]></info>
+
+</dt-example>

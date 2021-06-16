@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="0">
+
+<title lib="StateRestore">StateRestore for DataTables</title>
+
+<js lib="jquery" />
+<info><![CDATA[
+This is the StateRestore extension for DataTables.
+]]></info>
+
+</dt-example>
