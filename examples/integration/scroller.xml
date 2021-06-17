@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore scroller"/>
+
+<js lib="jquery datatables staterestore buttons scroller">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        scroller: true,
+        buttons:[
+            {
+                extend: 'stateRestore',
+                config: {
+                    state: 1
+                },
+                text: 'State 1'
+            }
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Scroller Integration</title>
+
+<info><![CDATA[
+This is the `-init stateRestore`extension for DataTables.
+]]></info>
+
+</dt-example>

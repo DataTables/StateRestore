@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore searchbuilder datetime"/>
+
+<js lib="jquery datatables staterestore buttons searchbuilder datetime">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'QBlfrtip',
+        buttons:[
+            {
+                extend: 'stateRestore',
+                config: {
+                    state: 1
+                },
+                text: 'State 1'
+            }
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">SearchBuilder Integration</title>
+
+<info><![CDATA[
+This is the `-init stateRestore`extension for DataTables.
+]]></info>
+
+</dt-example>

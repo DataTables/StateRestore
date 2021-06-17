@@ -1,0 +1,34 @@
+div.dtsr-confirmation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    margin-left: -250px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 0 5px #555;
+    border: 2px solid #444;
+    z-index: 2003;
+    box-sizing: border-box;
+    padding: 1.5em 2em;   
+
+    div.dtsr-confirmation-text {
+        text-align: center;
+    }
+
+    div.dtsr-confirmation-buttons {
+        text-align: center;
+        margin-top: 1.5em;
+    }
+}
+
+div.dtsr-background {
+    z-index: 2002;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    background: radial-gradient(ellipse farthest-corner at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+}

@@ -10,5 +10,15 @@ export default class StateRestore {
     constructor(settings: any, opts: any);
     delete(state: any): void;
     save(state: any): void;
-    load(state: any): void;
+    load(state: any): {};
+    private confirmationModal;
+    /**
+     * Convert from camelCase notation to the internal Hungarian. We could use the
+     * Hungarian convert function here, but this is cleaner
+     *
+     * @param {object} obj Object to convert
+     * @returns {object} Inverted object
+     * @memberof DataTable#oApi
+     */
+    private searchToHung;
 }
