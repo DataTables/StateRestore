@@ -29,7 +29,7 @@ export default class StateRestore {
 	public c;
 	public s;
 
-	public constructor(settings, opts) {
+	public constructor(settings, opts, identifier) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -47,7 +47,7 @@ export default class StateRestore {
 		this.c = $.extend(true, {}, StateRestore.defaults, opts);
 
 		this.s = {
-			dt: table
+			dt: table,
 		};
 
 		this.dom = {
@@ -55,13 +55,7 @@ export default class StateRestore {
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>')
 		};
 
-		if (table.settings()[0]._stateRestore !== undefined) {
-			return;
-		}
-
-		table.settings()[0]._stateRestore = this;
-
-		return this;
+		this.save(identifier);
 	}
 
 	public delete(state) {
@@ -71,7 +65,7 @@ export default class StateRestore {
 				"Delete",
 				function(){
 					sessionStorage.removeItem(
-						'DataTables_stateRestore'+state+'_'+location.pathname
+						'DataTables_stateRestore_'+state+'_'+location.pathname
 					);
 					console.log("delete" + state)
 				}
@@ -88,9 +82,11 @@ export default class StateRestore {
 		};
 		console.log("save", state, savedState);
 
+		this.s.savedState = savedState;
+
 		try {
 			sessionStorage.setItem(
-				'DataTables_stateRestore'+state+'_'+location.pathname,
+				'DataTables_stateRestore_'+state+'_'+location.pathname,
 				JSON.stringify(savedState)
 			);
 		}
@@ -101,7 +97,7 @@ export default class StateRestore {
 		try {
 			let loadedState = JSON.parse(
 				sessionStorage.getItem(
-					'DataTables_stateRestore'+state+'_'+location.pathname,
+					'DataTables_stateRestore_'+state+'_'+location.pathname,
 				)
 			);
 			console.log("load", state, loadedState);
@@ -149,11 +145,11 @@ export default class StateRestore {
 				}
 			}
 
-			if (loadedState.searchBuilder !== undefined) {
+			if (loadedState.searchBuilder) {
 				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
 			}
 
-			if(loadedState.searchPanes !== undefined) {
+			if(loadedState.searchPanes) {
 				this.s.dt.context[0]._searchPanes.s.selectionList = loadedState.searchPanes.selectionList;
 				this.s.dt.context[0]._searchPanes.s.panes = loadedState.searchPanes.panes;
 				this.s.dt.searchPanes.rebuildPane(false, true);
@@ -175,7 +171,6 @@ export default class StateRestore {
 	}
 
 	private confirmationModal(message, buttonText, buttonAction) {
-		console.log(message)
 		this.dom.confirmation.empty();
 		this.dom.confirmation
 			.append($('<div class="'+this.classes.confirmationText+'"><span>'+message+'</span></div>'))
@@ -189,7 +184,6 @@ export default class StateRestore {
 			);
 		this.dom.background.appendTo('body');
 		this.dom.confirmation.appendTo('body');
-		console.log("appended to body")
 		$('button.'+this.classes.confirmationButton).one('click', () => {
 			buttonAction();
 			this.dom.background.remove();

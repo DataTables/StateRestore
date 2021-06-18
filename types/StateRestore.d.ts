@@ -7,7 +7,7 @@ export default class StateRestore {
     dom: any;
     c: any;
     s: any;
-    constructor(settings: any, opts: any);
+    constructor(settings: any, opts: any, identifier: any);
     delete(state: any): void;
     save(state: any): void;
     load(state: any): {};

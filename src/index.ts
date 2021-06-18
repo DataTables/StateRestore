@@ -29,6 +29,7 @@ declare let define: {
 };
 
 import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
+import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from './StateRestoreCollection';
 
 // DataTables extensions common UMD. Note that this allows for AMD, CommonJS
 // (with window and jQuery being allowed as parameters to the returned
@@ -62,11 +63,14 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 }(function($, window, document) {
 
 	stateRestoreJQuery($);
+	stateRestoreCollectionJQuery($);
 
 	let dataTable = $.fn.dataTable;
 
 	($.fn as any).dataTable.StateRestore = StateRestore;
 	($.fn as any).DataTable.StateRestore = StateRestore;
+	($.fn as any).dataTable.StateRestoreCollection = StateRestoreCollection;
+	($.fn as any).DataTable.StateRestoreCollection = StateRestoreCollection;
 
 	let apiRegister = ($.fn.dataTable.Api as any).register;
 
@@ -77,7 +81,15 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 	apiRegister('stateRestore.state()', function(stateSelector) {
 		return this.iterator('table', function(ctx) {
 			if (ctx._stateRestore) {
-				ctx._stateRestore.state(stateSelector);
+				return ctx._stateRestore.getState(stateSelector);
+			}
+		});
+	});
+
+	apiRegister('stateRestore.addState()', function(stateSelector) {
+		return this.iterator('table', function(ctx) {
+			if (ctx._stateRestore) {
+				return ctx._stateRestore.addState(stateSelector);
 			}
 		});
 	});
@@ -85,7 +97,7 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 	apiRegister('stateRestore.states()', function(stateSelector) {
 		return this.iterator('table', function(ctx) {
 			if (ctx._stateRestore) {
-				ctx._stateRestore.states(stateSelector);
+				return ctx._stateRestore.getStates(stateSelector);
 			}
 		});
 	});
@@ -115,17 +127,14 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 	$.fn.dataTable.ext.buttons.stateRestore = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
-			config._stateRestore.load(config.config.state);
+			config._stateRestore.load(config._stateRestore.s.savedState.stateRestore.state);
 		},
 		config: {
 			split: ['saveState', 'deleteState']
 		},
-		init(dt, node, config) {
-			let state = new $.fn.dataTable.StateRestore(dt);
-			config._stateRestore = state;
-		},
 		text: 'StateRestore'
 	};
+
 	$.fn.dataTable.ext.buttons.saveState = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
@@ -133,20 +142,54 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 		},
 		text: 'Save',
 	};
+
 	$.fn.dataTable.ext.buttons.savedStates = {
 		buttons: [],
 		extend: 'collection',
 		name: 'SaveStateRestore',
 		text: 'Saved States'
 	};
+
 	$.fn.dataTable.ext.buttons.createStateRestore = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
-			console.log(dt, config);
-			dt.button('SaveStateRestore:name').remove();
+			let stateLength = dt.stateRestore.states()[0].length;
+			dt.stateRestore.addState('State '+(stateLength+1));
+			let states = dt.stateRestore.states()[0];
+			let stateButtons = [];
+			for(let state of states) {
+				stateButtons.push({
+					_stateRestore: state,
+					config: {
+						split: ['saveState', 'deleteState'],
+					},
+					extend: 'stateRestore',
+					text: state.s.savedState.stateRestore.state
+				});
+			}
+			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+		},
+		init(dt, node, config) {
+			if(dt.settings()[0]._stateRestore === undefined) {
+				new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
+				let states = dt.stateRestore.states()[0];
+				let stateButtons = [];
+				for(let state of states) {
+					stateButtons.push({
+						_stateRestore: state,
+						config: {
+							split: ['saveState', 'deleteState'],
+						},
+						extend: 'stateRestore',
+						text: state.s.savedState.stateRestore.state
+					});
+				}
+				dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+			}
 		},
 		text: 'Create State'
 	};
+
 	$.fn.dataTable.ext.buttons.deleteState = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
@@ -161,7 +204,7 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 			? options
 			: api.init().stateRestore || dataTable.defaults.stateRestore;
 
-		let stateRestore = new StateRestore(api, opts);
+		let stateRestore = new StateRestoreCollection(api, opts);
 
 		return stateRestore;
 	}
