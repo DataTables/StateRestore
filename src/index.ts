@@ -146,6 +146,24 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.savedStates = {
 		buttons: [],
 		extend: 'collection',
+		init(dt, node, config) {
+			if(dt.settings()[0]._stateRestore === undefined) {
+				new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
+				let states = dt.stateRestore.states()[0];
+				let stateButtons = [];
+				for(let state of states) {
+					stateButtons.push({
+						_stateRestore: state,
+						config: {
+							split: ['saveState', 'deleteState'],
+						},
+						extend: 'stateRestore',
+						text: state.s.savedState.stateRestore.state
+					});
+				}
+				dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+			}
+		},
 		name: 'SaveStateRestore',
 		text: 'Saved States'
 	};
@@ -170,7 +188,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 		},
 		init(dt, node, config) {
-			if(dt.settings()[0]._stateRestore === undefined) {
+			if(dt.settings()[0]._stateRestore === undefined && dt.button('SaveStateRestore:name').length > 1) {
 				new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
 				let states = dt.stateRestore.states()[0];
 				let stateButtons = [];
