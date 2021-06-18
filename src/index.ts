@@ -216,6 +216,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		text: 'Delete'
 	};
 
+	$.fn.dataTable.ext.buttons.renameState = {
+		action(e, dt, node, config) {
+			
+		}
+	}
+
 	function _init(settings, options = null) {
 		let api = new dataTable.Api(settings);
 		let opts = options

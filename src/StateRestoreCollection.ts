@@ -54,6 +54,27 @@ export default class StateRestoreCollection {
 		let state = this.getState(identifier);
 		if(state === null) {
 			let newState = new StateRestore(this.s.dt.settings()[0], this.c, identifier);
+			newState.dom.confirmation.on('dtsr-delete', () => {
+				for(let i = 0; i < this.s.states.length; i++) {
+					if(this.s.states[i].s.savedState.state === identifier) {
+						this.s.states.splice(i, 1);
+						i--;
+					}
+				}
+
+				let stateButtons = [];
+				for(let remainingState of this.s.states) {
+					stateButtons.push({
+						_stateRestore: remainingState,
+						config: {
+							split: ['saveState', 'deleteState'],
+						},
+						extend: 'stateRestore',
+						text: remainingState.s.savedState.stateRestore.state
+					});
+				}
+				this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+			});
 			this.s.states.push(newState);
 			return newState;
 		}
@@ -96,6 +117,27 @@ export default class StateRestoreCollection {
 				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
 				newState.s.savedState = loadedState;
 				this.s.states.push(newState);
+				newState.dom.confirmation.on('dtsr-delete', () => {
+					for(let i = 0; i < this.s.states.length; i++) {
+						if(this.s.states[i].s.savedState.stateRestore.state === loadedState.stateRestore.state) {
+							this.s.states.splice(i, 1);
+							i--;
+						}
+					}
+
+					let stateButtons = [];
+					for(let remainingState of this.s.states) {
+						stateButtons.push({
+							_stateRestore: remainingState,
+							config: {
+								split: ['saveState', 'deleteState'],
+							},
+							extend: 'stateRestore',
+							text: remainingState.s.savedState.stateRestore.state
+						});
+					}
+					this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+				});
 			}
 		}
 	}

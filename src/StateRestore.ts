@@ -63,11 +63,12 @@ export default class StateRestore {
 			this.confirmationModal(
 				"Are you sure you want to delete this state?",
 				"Delete",
-				function(){
+				() => {
 					sessionStorage.removeItem(
 						'DataTables_stateRestore_'+state+'_'+location.pathname
 					);
-					console.log("delete" + state)
+					console.log("delete" + state);
+					this.dom.confirmation.trigger('dtsr-delete');
 				}
 			);
 		}
