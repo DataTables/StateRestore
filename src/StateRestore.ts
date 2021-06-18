@@ -55,33 +55,45 @@ export default class StateRestore {
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>')
 		};
 
+		// When a StateRestore instance is created the current state of the table should also be saved.
 		this.save(identifier);
 	}
 
+	/**
+	 * Removes a state from storage and
+	 * then triggers the dtsr-delete event so that the StateRestoreCollection class can remove it's references as well.
+	 *
+	 * @param state The identifier of the state that should be deleted
+	 */
 	public delete(state) {
 		try {
 			this.confirmationModal(
-				"Are you sure you want to delete this state?",
-				"Delete",
+				'Are you sure you want to delete this state?',
+				'Delete',
 				() => {
 					sessionStorage.removeItem(
 						'DataTables_stateRestore_'+state+'_'+location.pathname
 					);
-					console.log("delete" + state);
+					console.log('delete' + state);
 					this.dom.confirmation.trigger('dtsr-delete');
 				}
 			);
 		}
-		catch (e) {};
+		catch (e) {}
 	}
 
+	/**
+	 * Saves the tables current state using the identifier that is passed in.
+	 *
+	 * @param state The identifier of the state that should be saved
+	 */
 	public save(state) {
 		this.s.dt.state.save();
 		let savedState = this.s.dt.state();
 		savedState.stateRestore = {
 			state
 		};
-		console.log("save", state, savedState);
+		console.log('save', state, savedState);
 
 		this.s.savedState = savedState;
 
@@ -91,9 +103,15 @@ export default class StateRestore {
 				JSON.stringify(savedState)
 			);
 		}
-		catch (e) {};
+		catch (e) {}
 	}
 
+	/**
+	 * Loads the state referenced by the identifier from storage
+	 *
+	 * @param state The identifier of the state that should be loaded
+	 * @returns the state that has been loaded
+	 */
 	public load(state) {
 		try {
 			let loadedState = JSON.parse(
@@ -101,20 +119,21 @@ export default class StateRestore {
 					'DataTables_stateRestore_'+state+'_'+location.pathname,
 				)
 			);
-			console.log("load", state, loadedState);
+			console.log('load', state, loadedState);
 
-			if(loadedState === null) {
+			if (loadedState === null) {
 				return;
 			}
 
 			let settings = this.s.dt.settings()[0];
 
-			if(settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
+			if (settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
 				return;
 			}
 
 			settings.oLoadedState = $.extend(true, {}, loadedState);
 
+			// Order
 			if (loadedState.order !== undefined) {
 				settings.aaSorting = [];
 				$.each(loadedState.order, function(i, col) {
@@ -130,6 +149,7 @@ export default class StateRestore {
 				$.extend(settings.oPreviousSearch, this.searchToHung(loadedState.search));
 			}
 
+			// Columns
 			if (loadedState.columns) {
 				for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
 					let col = loadedState.columns[i];
@@ -146,20 +166,24 @@ export default class StateRestore {
 				}
 			}
 
+			// SearchBuilder
 			if (loadedState.searchBuilder) {
 				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
 			}
 
-			if(loadedState.searchPanes) {
+			// SearchPanes
+			if (loadedState.searchPanes) {
 				this.s.dt.context[0]._searchPanes.s.selectionList = loadedState.searchPanes.selectionList;
 				this.s.dt.context[0]._searchPanes.s.panes = loadedState.searchPanes.panes;
 				this.s.dt.searchPanes.rebuildPane(false, true);
 			}
 
+			// ColReorder
 			if (loadedState.ColReorder) {
 				this.s.dt.colReorder.order(loadedState.ColReorder, true);
 			}
 
+			// Scroller
 			if (loadedState.scroller) {
 				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
 			}
@@ -171,6 +195,13 @@ export default class StateRestore {
 		}
 	}
 
+	/**
+	 * Displays a confirmation modal for the user to confirm their action
+	 *
+	 * @param message The message that should be displayed within the confirmation modal.
+	 * @param buttonText The text that should be displayed in the confirmation button.
+	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
+	 */
 	private confirmationModal(message, buttonText, buttonAction) {
 		this.dom.confirmation.empty();
 		this.dom.confirmation
@@ -185,6 +216,7 @@ export default class StateRestore {
 			);
 		this.dom.background.appendTo('body');
 		this.dom.confirmation.appendTo('body');
+
 		$('button.'+this.classes.confirmationButton).one('click', () => {
 			buttonAction();
 			this.dom.background.remove();
