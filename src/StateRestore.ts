@@ -149,6 +149,24 @@ export default class StateRestore {
 				}
 			}
 
+			if (loadedState.searchBuilder !== undefined) {
+				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
+			}
+
+			if(loadedState.searchPanes !== undefined) {
+				this.s.dt.context[0]._searchPanes.s.selectionList = loadedState.searchPanes.selectionList;
+				this.s.dt.context[0]._searchPanes.s.panes = loadedState.searchPanes.panes;
+				this.s.dt.searchPanes.rebuildPane(false, true);
+			}
+
+			if (loadedState.ColReorder) {
+				this.s.dt.colReorder.order(loadedState.ColReorder, true);
+			}
+
+			if (loadedState.scroller) {
+				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
+			}
+
 			this.s.dt.draw();
 		}
 		catch (e) {

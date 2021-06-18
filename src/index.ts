@@ -131,7 +131,21 @@ import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
 			e.stopPropagation();
 			config.parent._stateRestore.save(config.parent.config.state);
 		},
-		text: 'Save'
+		text: 'Save',
+	};
+	$.fn.dataTable.ext.buttons.savedStates = {
+		buttons: [],
+		extend: 'collection',
+		name: 'SaveStateRestore',
+		text: 'Saved States'
+	};
+	$.fn.dataTable.ext.buttons.createStateRestore = {
+		action(e, dt, node, config, parentConfig) {
+			e.stopPropagation();
+			console.log(dt, config);
+			dt.button('SaveStateRestore:name').remove();
+		},
+		text: 'Create State'
 	};
 	$.fn.dataTable.ext.buttons.deleteState = {
 		action(e, dt, node, config) {
