@@ -8,7 +8,11 @@
 $(document).ready(function() {
     $('#example').DataTable({
         dom: 'Blfrtip',
-        scroller: true,
+        ajax:           "../data/2500.txt",
+        deferRender:    true,
+        scrollY:        200,
+        scrollCollapse: true,
+        scroller:       true,
         buttons:[
             {
                 extend: 'stateRestore',
@@ -28,5 +32,19 @@ $(document).ready(function() {
 <info><![CDATA[
 This is the `-init stateRestore`extension for DataTables.
 ]]></info>
+
+<custom-table>
+<table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>ZIP / Post code</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
+</custom-table>
 
 </dt-example>
