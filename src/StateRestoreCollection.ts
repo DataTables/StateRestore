@@ -16,7 +16,13 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults = {
-
+		i18n: {
+			deleteButton: 'Delete',
+			deleteConfirm: 'Are you sure you want to delete this state?',
+			emptyStates: 'No saved states',
+			renameButton: 'Rename',
+			renameLabel: 'New Name:'
+		}
 	};
 
 	public classes;
@@ -156,7 +162,11 @@ export default class StateRestoreCollection {
 		let stateButtons = [];
 
 		if(this.s.states.length === 0) {
-			stateButtons.push('<span class="'+this.classes.emptyStates+'">No saved states</span>');
+			stateButtons.push(
+				'<span class="'+this.classes.emptyStates+'">' +
+					this.s.dt.i18n('stateRestore.emptyStates', this.c.i18n.emptyStates) +
+				'</span>'
+			);
 		}
 		else {
 			for (let state of this.s.states) {

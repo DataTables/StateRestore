@@ -21,8 +21,15 @@ export default class StateRestore {
 
 	private static defaults = {
 		delete: true,
+		i18n: {
+			deleteButton: 'Delete',
+			deleteConfirm: 'Are you sure you want to delete this state?',
+			emptyStates: 'No saved states',
+			renameButton: 'Rename',
+			renameLabel: 'New Name:'
+		},
 		load: true,
-		save: true,
+		save: true
 	};
 
 	public classes;
@@ -69,8 +76,8 @@ export default class StateRestore {
 	public delete(state) {
 		try {
 			this.confirmationModal(
-				'Are you sure you want to delete this state?',
-				'Delete',
+				this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
+				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
 				() => {
 					sessionStorage.removeItem(
 						'DataTables_stateRestore_'+state+'_'+location.pathname
@@ -91,8 +98,8 @@ export default class StateRestore {
 	public rename(identifier) {
 		try {
 			this.renameModal(
-				'New Name:',
-				'Rename',
+				this.s.dt.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel),
+				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
 				(newIdentifier) => {
 					try {
 						sessionStorage.removeItem(

@@ -132,7 +132,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		config: {
 			split: ['saveState', 'deleteState', 'renameState']
 		},
-		text: 'StateRestore'
+		text(dt) {
+			return dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1);
+		}
 	};
 
 	$.fn.dataTable.ext.buttons.saveState = {
@@ -140,7 +142,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			e.stopPropagation();
 			config.parent._stateRestore.save(config.parent.config.state);
 		},
-		text: 'Save',
+		text(dt){
+			return dt.i18n('buttons.saveState', 'Save');
+		}
 	};
 
 	$.fn.dataTable.ext.buttons.savedStates = {
@@ -152,14 +156,16 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			}
 		},
 		name: 'SaveStateRestore',
-		text: 'Saved States'
+		text(dt) {
+			return dt.i18n('buttons.savedStates', 'Saved States');
+		}
 	};
 
 	$.fn.dataTable.ext.buttons.createStateRestore = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
 			let stateLength = dt.stateRestore.states()[0].length;
-			dt.stateRestore.addState('State '+(stateLength+1));
+			dt.stateRestore.addState(dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1));
 			let states = dt.stateRestore.states()[0];
 			let stateButtons = [];
 			for(let state of states) {
@@ -179,7 +185,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				_buttonInit(dt, config);
 			}
 		},
-		text: 'Create State'
+		text(dt) {
+			return dt.i18n('buttons.createStateRestore', 'Create State');
+		}
 	};
 
 	$.fn.dataTable.ext.buttons.deleteState = {
@@ -187,7 +195,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			e.stopPropagation();
 			config.parent._stateRestore.delete(config.parent._stateRestore.s.savedState.stateRestore.state);
 		},
-		text: 'Delete'
+		text(dt) {
+			return dt.i18n('buttons.deleteState', 'Delete');
+		}
 	};
 
 	$.fn.dataTable.ext.buttons.renameState = {
@@ -195,7 +205,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			e.stopPropagation();
 			config.parent._stateRestore.rename(config.parent._stateRestore.s.savedState.stateRestore.state, node);
 		},
-		text: 'Rename'
+		text(dt) {
+			return dt.i18n('buttons.renameState', 'Rename');
+		}
 	};
 
 	function _init(settings, options = null) {
@@ -221,7 +233,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		let stateButtons = [];
 		if (states.length === 0) {
 			stateButtons.push(
-				'<span class="'+SRC.classes.emptyStates+'">No saved states</span>'
+				'<span class="'+SRC.classes.emptyStates+'">' +
+					dt.i18n('stateRestore.emptyStates', SRC.c.i18n.emptyStates) +
+				'</span>'
 			);
 		}
 		else {

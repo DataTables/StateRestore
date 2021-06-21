@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        language:{
+            stateRestore: {
+                deleteButton: 'Remove',
+                deleteConfirm: 'Confirm you want to remove this state.',
+                emptyStates: 'No States',
+                renameButton: 'Change Name',
+                renameLabel: 'Rename to:'
+            },
+            buttons: {
+                createStateRestore: 'New State',
+                savedStates: 'Stored States',
+                saveState: 'Store',
+                stateRestore: 'New State %d',
+                deleteState: 'Remove',
+                renameState: 'Change Name',
+
+            }
+        },
+        buttons:['createStateRestore', 'savedStates']
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">StateRestore Language Options</title>
+
+<info><![CDATA[
+This example shows all of the language options that are available for `-init stateRestore` and how to configure them.
+]]></info>
+
+</dt-example>
