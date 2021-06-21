@@ -1,7 +1,9 @@
 export declare function setJQuery(jq: any): void;
 export default class StateRestoreCollection {
     private static version;
+    private static classes;
     private static defaults;
+    classes: any;
     c: any;
     s: any;
     constructor(settings: any, opts: any);

@@ -148,20 +148,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		extend: 'collection',
 		init(dt, node, config) {
 			if(dt.settings()[0]._stateRestore === undefined) {
-				new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
-				let states = dt.stateRestore.states()[0];
-				let stateButtons = [];
-				for(let state of states) {
-					stateButtons.push({
-						_stateRestore: state,
-						config: {
-							split: ['saveState', 'deleteState', 'renameState'],
-						},
-						extend: 'stateRestore',
-						text: state.s.savedState.stateRestore.state
-					});
-				}
-				dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+				_buttonInit(dt, config);
 			}
 		},
 		name: 'SaveStateRestore',
@@ -189,20 +176,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		},
 		init(dt, node, config) {
 			if(dt.settings()[0]._stateRestore === undefined && dt.button('SaveStateRestore:name').length > 1) {
-				new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
-				let states = dt.stateRestore.states()[0];
-				let stateButtons = [];
-				for(let state of states) {
-					stateButtons.push({
-						_stateRestore: state,
-						config: {
-							split: ['saveState', 'deleteState', 'renameState'],
-						},
-						extend: 'stateRestore',
-						text: state.s.savedState.stateRestore.state
-					});
-				}
-				dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+				_buttonInit(dt, config);
 			}
 		},
 		text: 'Create State'
@@ -233,6 +207,36 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		let stateRestore = new StateRestoreCollection(api, opts);
 
 		return stateRestore;
+	}
+
+	/**
+	 * Initialisation function if initialising using a button
+	 *
+	 * @param dt The datatables instance
+	 * @param config the config for the button
+	 */
+	function _buttonInit(dt, config) {
+		let SRC = new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
+		let states = dt.stateRestore.states()[0];
+		let stateButtons = [];
+		if (states.length === 0) {
+			stateButtons.push(
+				'<span class="'+SRC.classes.emptyStates+'">No saved states</span>'
+			);
+		}
+		else {
+			for(let state of states) {
+				stateButtons.push({
+					_stateRestore: state,
+					config: {
+						split: ['saveState', 'deleteState', 'renameState'],
+					},
+					extend: 'stateRestore',
+					text: state.s.savedState.stateRestore.state
+				});
+			}
+		}
+		dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}
 
 	// Attach a listener to the document which listens for DataTables initialisation

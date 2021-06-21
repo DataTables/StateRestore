@@ -32,3 +32,15 @@ div.dtsr-background {
     background: rgba(0, 0, 0, 0.7);
     background: radial-gradient(ellipse farthest-corner at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
 }
+
+div.dt-button-collection {
+    span.dtsr-emptyStates {
+        display: inline-block;
+        line-height: 1.6em;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        width:100%;
+        padding-bottom: 2px;
+    }
+}

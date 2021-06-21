@@ -24,7 +24,8 @@ export default class StateRestore {
     /**
      * Saves the tables current state using the identifier that is passed in.
      *
-     * @param state The identifier of the state that should be saved
+     * @param identifier The identifier of the state that should be saved
+     * @param state Optional. If provided this is the state that will be saved rather than using the current state
      */
     save(identifier: any, state?: boolean): void;
     /**

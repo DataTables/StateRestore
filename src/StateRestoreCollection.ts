@@ -11,10 +11,15 @@ export function setJQuery(jq) {
 export default class StateRestoreCollection {
 	private static version = '0.0.1';
 
+	private static classes = {
+		emptyStates: 'dtsr-emptyStates'
+	};
+
 	private static defaults = {
 
 	};
 
+	public classes;
 	public c;
 	public s;
 
@@ -30,6 +35,7 @@ export default class StateRestoreCollection {
 		}
 
 		let table = new dataTable.Api(settings);
+		this.classes = $.extend(true, {}, StateRestoreCollection.classes);
 
 		// Get options from user
 		this.c = $.extend(true, {}, StateRestoreCollection.defaults, opts);
@@ -149,15 +155,20 @@ export default class StateRestoreCollection {
 	private _collectionRebuild() {
 		let stateButtons = [];
 
-		for (let state of this.s.states) {
-			stateButtons.push({
-				_stateRestore: state,
-				config: {
-					split: ['saveState', 'deleteState', 'renameState'],
-				},
-				extend: 'stateRestore',
-				text: state.s.savedState.stateRestore.state
-			});
+		if(this.s.states.length === 0) {
+			stateButtons.push('<span class="'+this.classes.emptyStates+'">No saved states</span>');
+		}
+		else {
+			for (let state of this.s.states) {
+				stateButtons.push({
+					_stateRestore: state,
+					config: {
+						split: ['saveState', 'deleteState', 'renameState'],
+					},
+					extend: 'stateRestore',
+					text: state.s.savedState.stateRestore.state
+				});
+			}
 		}
 
 		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
