@@ -130,7 +130,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			config._stateRestore.load(config._stateRestore.s.savedState.stateRestore.state);
 		},
 		config: {
-			split: ['saveState', 'deleteState']
+			split: ['saveState', 'deleteState', 'renameState']
 		},
 		text: 'StateRestore'
 	};
@@ -155,7 +155,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 					stateButtons.push({
 						_stateRestore: state,
 						config: {
-							split: ['saveState', 'deleteState'],
+							split: ['saveState', 'deleteState', 'renameState'],
 						},
 						extend: 'stateRestore',
 						text: state.s.savedState.stateRestore.state
@@ -179,7 +179,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', 'deleteState'],
+						split: ['saveState', 'deleteState', 'renameState'],
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state
@@ -196,7 +196,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 					stateButtons.push({
 						_stateRestore: state,
 						config: {
-							split: ['saveState', 'deleteState'],
+							split: ['saveState', 'deleteState', 'renameState'],
 						},
 						extend: 'stateRestore',
 						text: state.s.savedState.stateRestore.state
@@ -211,16 +211,18 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.deleteState = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
-			config.parent._stateRestore.delete(config.parent.config.state);
+			config.parent._stateRestore.delete(config.parent._stateRestore.s.savedState.stateRestore.state);
 		},
 		text: 'Delete'
 	};
 
 	$.fn.dataTable.ext.buttons.renameState = {
 		action(e, dt, node, config) {
-			
-		}
-	}
+			e.stopPropagation();
+			config.parent._stateRestore.rename(config.parent._stateRestore.s.savedState.stateRestore.state, node);
+		},
+		text: 'Rename'
+	};
 
 	function _init(settings, options = null) {
 		let api = new dataTable.Api(settings);

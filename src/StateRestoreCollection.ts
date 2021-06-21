@@ -61,6 +61,7 @@ export default class StateRestoreCollection {
 		if (state === null) {
 			let newState = new StateRestore(this.s.dt.settings()[0], this.c, identifier);
 			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(identifier));
+			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
 			this.s.states.push(newState);
 
 			return newState;
@@ -120,6 +121,7 @@ export default class StateRestoreCollection {
 				newState.s.savedState = loadedState;
 				this.s.states.push(newState);
 				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(loadedState.stateRestore.state));
+				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
 			}
 		}
 	}
@@ -138,16 +140,23 @@ export default class StateRestoreCollection {
 			}
 		}
 
+		this._collectionRebuild();
+	}
+
+	/**
+	 * Rebuilds all of the buttons in the collection of states to make sure that states and text is up to date
+	 */
+	private _collectionRebuild() {
 		let stateButtons = [];
 
-		for (let remainingState of this.s.states) {
+		for (let state of this.s.states) {
 			stateButtons.push({
-				_stateRestore: remainingState,
+				_stateRestore: state,
 				config: {
-					split: ['saveState', 'deleteState'],
+					split: ['saveState', 'deleteState', 'renameState'],
 				},
 				extend: 'stateRestore',
-				text: remainingState.s.savedState.stateRestore.state
+				text: state.s.savedState.stateRestore.state
 			});
 		}
 

@@ -15,7 +15,8 @@ export default class StateRestore {
 		confirmationButton: 'dtsr-confirmation-button',
 		confirmationButtons: 'dtsr-confirmation-buttons',
 		confirmationText: 'dtsr-confirmation-text',
-		dtButton: 'dt-button'
+		dtButton: 'dt-button',
+		input: 'dtsr-input'
 	};
 
 	private static defaults = {
@@ -83,23 +84,59 @@ export default class StateRestore {
 	}
 
 	/**
+	 * Shows a modal that allows a state to be renamed
+	 *
+	 * @param identifier The identifier for the state that is to be renamed
+	 */
+	public rename(identifier) {
+		try {
+			this.renameModal(
+				'New Name:',
+				'Rename',
+				(newIdentifier) => {
+					try {
+						sessionStorage.removeItem(
+							'DataTables_stateRestore_'+identifier+'_'+location.pathname
+						);
+					}
+					catch (e) {}
+
+					this.save(newIdentifier, this.s.savedState);
+					this.dom.confirmation.trigger('dtsr-rename');
+				}
+			);
+		}
+		catch (e) {}
+	}
+
+	/**
 	 * Saves the tables current state using the identifier that is passed in.
 	 *
-	 * @param state The identifier of the state that should be saved
+	 * @param identifier The identifier of the state that should be saved
+	 * @param state Optional. If provided this is the state that will be saved rather than using the current state
 	 */
-	public save(state) {
-		this.s.dt.state.save();
-		let savedState = this.s.dt.state();
+	public save(identifier, state=false) {
+		let savedState;
+
+		// If no state has been provided then create a new one from the current state
+		if (!state) {
+			this.s.dt.state.save();
+			savedState = this.s.dt.state();
+		}
+		else {
+			savedState = state;
+		}
 		savedState.stateRestore = {
-			state
+			state: identifier
 		};
-		console.log('save', state, savedState);
+
+		console.log('save', identifier, savedState);
 
 		this.s.savedState = savedState;
 
 		try {
 			sessionStorage.setItem(
-				'DataTables_stateRestore_'+state+'_'+location.pathname,
+				'DataTables_stateRestore_'+identifier+'_'+location.pathname,
 				JSON.stringify(savedState)
 			);
 		}
@@ -219,6 +256,46 @@ export default class StateRestore {
 
 		$('button.'+this.classes.confirmationButton).one('click', () => {
 			buttonAction();
+			this.dom.background.remove();
+			this.dom.confirmation.remove();
+		});
+
+		$('div.'+this.classes.background).one('click', (event) => {
+			event.stopPropagation();
+			this.dom.background.remove();
+			this.dom.confirmation.remove();
+		});
+	}
+
+	/**
+	 * Displays a rename modal for the user to rename the selected state
+	 *
+	 * @param message The message that should be displayed within the confirmation modal.
+	 * @param buttonText The text that should be displayed in the confirmation button.
+	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
+	 */
+	private renameModal(message, buttonText, buttonAction) {
+		this.dom.confirmation.empty();
+		this.dom.confirmation
+			.append(
+				$('<div class="'+this.classes.confirmationText+'">' +
+					'<span>'+message+'</span>' +
+					'<input class="'+this.classes.input+'"></input>' +
+				'</div>')
+			)
+			.append(
+				$('<div class="'+this.classes.confirmationButtons+'">' +
+						'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
+							buttonText+
+						'</button>' +
+					'</div>'
+				)
+			);
+		this.dom.background.appendTo('body');
+		this.dom.confirmation.appendTo('body');
+
+		$('button.'+this.classes.confirmationButton).one('click', () => {
+			buttonAction($('input.'+this.classes.input).val());
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
 		});
