@@ -14,27 +14,27 @@ export default class StateRestore {
      *
      * @param state The identifier of the state that should be deleted
      */
-    delete(state: any): void;
+    delete(): void;
     /**
      * Shows a modal that allows a state to be renamed
      *
      * @param identifier The identifier for the state that is to be renamed
      */
-    rename(identifier: any): void;
+    rename(): void;
     /**
      * Saves the tables current state using the identifier that is passed in.
      *
      * @param identifier The identifier of the state that should be saved
      * @param state Optional. If provided this is the state that will be saved rather than using the current state
      */
-    save(identifier: any, state?: boolean): void;
+    save(state?: boolean): void;
     /**
      * Loads the state referenced by the identifier from storage
      *
      * @param state The identifier of the state that should be loaded
      * @returns the state that has been loaded
      */
-    load(state: any): {};
+    load(): {};
     /**
      * Displays a confirmation modal for the user to confirm their action
      *

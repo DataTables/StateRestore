@@ -56,6 +56,7 @@ export default class StateRestore {
 
 		this.s = {
 			dt: table,
+			identifier
 		};
 
 		this.dom = {
@@ -64,7 +65,7 @@ export default class StateRestore {
 		};
 
 		// When a StateRestore instance is created the current state of the table should also be saved.
-		this.save(identifier);
+		this.save();
 	}
 
 	/**
@@ -73,16 +74,16 @@ export default class StateRestore {
 	 *
 	 * @param state The identifier of the state that should be deleted
 	 */
-	public delete(state) {
+	public delete() {
 		try {
 			this.confirmationModal(
 				this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
 				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
 				() => {
 					sessionStorage.removeItem(
-						'DataTables_stateRestore_'+state+'_'+location.pathname
+						'DataTables_stateRestore_'+this.s.idenfitier+'_'+location.pathname
 					);
-					console.log('delete' + state);
+					console.log('delete' + this.s.idenfitier);
 					this.dom.confirmation.trigger('dtsr-delete');
 				}
 			);
@@ -95,7 +96,7 @@ export default class StateRestore {
 	 *
 	 * @param identifier The identifier for the state that is to be renamed
 	 */
-	public rename(identifier) {
+	public rename() {
 		try {
 			this.renameModal(
 				this.s.dt.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel),
@@ -103,12 +104,13 @@ export default class StateRestore {
 				(newIdentifier) => {
 					try {
 						sessionStorage.removeItem(
-							'DataTables_stateRestore_'+identifier+'_'+location.pathname
+							'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 						);
 					}
 					catch (e) {}
 
-					this.save(newIdentifier, this.s.savedState);
+					this.s.identifier = newIdentifier;
+					this.save(this.s.savedState);
 					this.dom.confirmation.trigger('dtsr-rename');
 				}
 			);
@@ -122,7 +124,7 @@ export default class StateRestore {
 	 * @param identifier The identifier of the state that should be saved
 	 * @param state Optional. If provided this is the state that will be saved rather than using the current state
 	 */
-	public save(identifier, state=false) {
+	public save(state=false) {
 		let savedState;
 
 		// If no state has been provided then create a new one from the current state
@@ -134,16 +136,16 @@ export default class StateRestore {
 			savedState = state;
 		}
 		savedState.stateRestore = {
-			state: identifier
+			state: this.s.identifier
 		};
 
-		console.log('save', identifier, savedState);
+		console.log('save', this.s.identifier, savedState);
 
 		this.s.savedState = savedState;
 
 		try {
 			sessionStorage.setItem(
-				'DataTables_stateRestore_'+identifier+'_'+location.pathname,
+				'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 				JSON.stringify(savedState)
 			);
 		}
@@ -156,14 +158,14 @@ export default class StateRestore {
 	 * @param state The identifier of the state that should be loaded
 	 * @returns the state that has been loaded
 	 */
-	public load(state) {
+	public load() {
 		try {
 			let loadedState = JSON.parse(
 				sessionStorage.getItem(
-					'DataTables_stateRestore_'+state+'_'+location.pathname,
+					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 				)
 			);
-			console.log('load', state, loadedState);
+			console.log('load', this.s.identifier, loadedState);
 
 			if (loadedState === null) {
 				return;

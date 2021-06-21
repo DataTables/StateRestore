@@ -79,41 +79,44 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	});
 
 	apiRegister('stateRestore.state()', function(stateSelector) {
-		return this.iterator('table', function(ctx) {
-			if (ctx._stateRestore) {
-				return ctx._stateRestore.getState(stateSelector);
-			}
-		});
+		let ctx = this.context[0];
+		if (ctx._stateRestore) {
+			return ctx._stateRestore.getState(stateSelector);
+		}
 	});
 
 	apiRegister('stateRestore.addState()', function(stateSelector) {
-		return this.iterator('table', function(ctx) {
-			if (ctx._stateRestore) {
-				return ctx._stateRestore.addState(stateSelector);
-			}
-		});
+		let ctx = this.context[0];
+		if (ctx._stateRestore.addState) {
+			return ctx._stateRestore.addState(stateSelector);
+		}
 	});
 
 	apiRegister('stateRestore.states()', function(stateSelector) {
-		return this.iterator('table', function(ctx) {
-			if (ctx._stateRestore) {
+		let res = this.iterator(true, 'table', function(ctx) {
+			if(ctx._stateRestore) {
 				return ctx._stateRestore.getStates(stateSelector);
 			}
 		});
+
+		return res;
 	});
 
 	apiRegister('stateRestore.state().save()', function() {
-		this.save();
+		let ctx = this.context[0];
+		ctx.save();
 		return this;
 	});
 
 	apiRegister('stateRestore.state().load()', function() {
-		this.load();
+		let ctx = this.context[0];
+		ctx.load();
 		return this;
 	});
 
 	apiRegister('stateRestore.state().delete()', function() {
-		this.delete();
+		let ctx = this.context[0];
+		ctx.delete();
 		return this;
 	});
 
@@ -140,7 +143,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.saveState = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
-			config.parent._stateRestore.save(config.parent.config.state);
+			config.parent._stateRestore.save();
 		},
 		text(dt){
 			return dt.i18n('buttons.saveState', 'Save');
@@ -193,7 +196,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.deleteState = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
-			config.parent._stateRestore.delete(config.parent._stateRestore.s.savedState.stateRestore.state);
+			config.parent._stateRestore.delete();
 		},
 		text(dt) {
 			return dt.i18n('buttons.deleteState', 'Delete');
@@ -203,7 +206,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.renameState = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
-			config.parent._stateRestore.rename(config.parent._stateRestore.s.savedState.stateRestore.state, node);
+			config.parent._stateRestore.rename();
 		},
 		text(dt) {
 			return dt.i18n('buttons.renameState', 'Rename');
@@ -217,6 +220,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			: api.init().stateRestore || dataTable.defaults.stateRestore;
 
 		let stateRestore = new StateRestoreCollection(api, opts);
+		_stateRegen(api, stateRestore);
 
 		return stateRestore;
 	}
@@ -229,12 +233,16 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	 */
 	function _buttonInit(dt, config) {
 		let SRC = new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
-		let states = dt.stateRestore.states()[0];
+		_stateRegen(dt, SRC)
+	}
+
+	function _stateRegen(dt, src){
+		let states = dt.stateRestore.states();
 		let stateButtons = [];
-		if (states.length === 0) {
+		if (states === undefined || states.length === 0) {
 			stateButtons.push(
-				'<span class="'+SRC.classes.emptyStates+'">' +
-					dt.i18n('stateRestore.emptyStates', SRC.c.i18n.emptyStates) +
+				'<span class="'+src.classes.emptyStates+'">' +
+					dt.i18n('stateRestore.emptyStates', src.c.i18n.emptyStates) +
 				'</span>'
 			);
 		}
@@ -250,6 +258,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				});
 			}
 		}
+
 		dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}
 

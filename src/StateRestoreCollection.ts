@@ -75,6 +75,7 @@ export default class StateRestoreCollection {
 			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(identifier));
 			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
 			this.s.states.push(newState);
+			this._collectionRebuild();
 
 			return newState;
 		}
@@ -134,6 +135,7 @@ export default class StateRestoreCollection {
 				this.s.states.push(newState);
 				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(loadedState.stateRestore.state));
 				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+				this._collectionRebuild();
 			}
 		}
 	}
@@ -176,7 +178,7 @@ export default class StateRestoreCollection {
 						split: ['saveState', 'deleteState', 'renameState'],
 					},
 					extend: 'stateRestore',
-					text: state.s.savedState.stateRestore.state
+					text: state.s.identifier
 				});
 			}
 		}

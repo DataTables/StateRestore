@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates']
+    });
+
+    $('#save').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).save();
+    })
+
+    $('#load').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).load();
+    })
+
+    $('#delete').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).delete();
+    })
+
+    $('#deleteAll').on('click', function() {
+        table.stateRestore.states().delete();
+    })
+
+    $('#add').on('click', function() {
+        table.stateRestore.addState($('#state-selector').val());
+    })
+});
+]]>
+</js>
+
+<title lib="stateRestore">Basic StateRestore Example</title>
+
+<info><![CDATA[
+This example demonstrates all of the API methods that are available within stateRestore and how they can be used outwith the usual buttons interactions.
+<input id="state-selector"></input>
+<button id="save">Save</button>
+<button id="add">Add State</button>
+<button id="load">Load</button>
+<button id="delete">Delete</button>
+<button id="deleteAll">Delete All</button>
+]]></info>
+
+</dt-example>
