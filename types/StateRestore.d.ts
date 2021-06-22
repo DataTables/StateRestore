@@ -18,9 +18,9 @@ export default class StateRestore {
     /**
      * Shows a modal that allows a state to be renamed
      *
-     * @param identifier The identifier for the state that is to be renamed
+     * @param newIdentifier Optional. The new identifier for this state
      */
-    rename(): void;
+    rename(newIdentifier?: any): void;
     /**
      * Saves the tables current state using the identifier that is passed in.
      *

@@ -100,31 +100,42 @@ export default class StateRestore {
 	/**
 	 * Shows a modal that allows a state to be renamed
 	 *
-	 * @param identifier The identifier for the state that is to be renamed
+	 * @param newIdentifier Optional. The new identifier for this state
 	 */
-	public rename() {
+	public rename(newIdentifier=null) {
 		try {
 			// Check if renaming of states is allowed
 			if (!this.c.rename) {
 				return;
 			}
 
-			this.renameModal(
-				this.s.dt.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel),
-				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
-				(newIdentifier) => {
-					try {
-						sessionStorage.removeItem(
-							'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
-						);
-					}
-					catch (e) {}
-
-					this.s.identifier = newIdentifier;
-					this.save(this.s.savedState);
-					this.dom.confirmation.trigger('dtsr-rename');
+			let renameFunction = (newId) => {
+				try {
+					sessionStorage.removeItem(
+						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+					);
 				}
-			);
+				catch (e) {}
+
+				this.s.identifier = newId;
+				this.save(this.s.savedState);
+				this.dom.confirmation.trigger('dtsr-rename');
+			};
+
+			// Check if a new identifier has been provided, if so no need for a modal
+			if (newIdentifier !== null) {
+				this.dom.confirmation.appendTo('body');
+				renameFunction(newIdentifier);
+				this.dom.confirmation.remove();
+			}
+			else {
+				this.renameModal(
+					this.s.dt.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel),
+					this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
+					renameFunction
+				);
+			}
+
 		}
 		catch (e) {}
 	}

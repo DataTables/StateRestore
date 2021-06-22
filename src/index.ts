@@ -111,6 +111,15 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		return this;
 	});
 
+	apiRegister('stateRestore.state().rename()', function(newIdentifier) {
+		let ctx = this.context[0];
+		// Check if renaming states is allowed
+		if(ctx.c.save) {
+			ctx.rename(newIdentifier);
+		}
+		return this;
+	});
+
 	apiRegister('stateRestore.state().load()', function() {
 		let ctx = this.context[0];
 		ctx.load();
