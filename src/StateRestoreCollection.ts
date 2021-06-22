@@ -187,7 +187,7 @@ export default class StateRestoreCollection {
 						split: [
 							this.c.save ? 'saveState' : '',
 							this.c.delete ? 'deleteState' : '',
-							'renameState'
+							this.c.save && this.c.rename ? 'renameState' : ''
 						],
 					},
 					extend: 'stateRestore',

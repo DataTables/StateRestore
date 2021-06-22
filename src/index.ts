@@ -177,6 +177,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
+			console.log(stateRestoreOpts)
 
 			// If creation/saving is not allowed then return
 			if (!stateRestoreOpts.creation || !stateRestoreOpts.save) {
@@ -195,7 +196,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						split: [
 							stateRestoreOpts.save ? 'saveState' : '',
 							stateRestoreOpts.delete ? 'deleteState' : '',
-							'renameState'
+							stateRestoreOpts.save && stateRestoreOpts.rename ? 'renameState' : ''
 						],
 					},
 					extend: 'stateRestore',
@@ -276,7 +277,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						split: [
 							stateRestoreOpts.save ? 'saveState' : '',
 							stateRestoreOpts.delete ? 'deleteState' : '',
-							'renameState'
+							stateRestoreOpts.save && stateRestoreOpts.rename ? 'renameState' : ''
 						],
 					},
 					extend: 'stateRestore',

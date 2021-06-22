@@ -104,6 +104,11 @@ export default class StateRestore {
 	 */
 	public rename() {
 		try {
+			// Check if renaming of states is allowed
+			if (!this.c.rename) {
+				return;
+			}
+
 			this.renameModal(
 				this.s.dt.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel),
 				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
