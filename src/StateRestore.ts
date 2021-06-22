@@ -20,6 +20,7 @@ export default class StateRestore {
 	};
 
 	private static defaults = {
+		creation: true,
 		delete: true,
 		i18n: {
 			deleteButton: 'Delete',

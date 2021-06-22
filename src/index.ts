@@ -167,7 +167,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.createStateRestore = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
-			let stateLength = dt.stateRestore.states()[0].length;
+
+			// If creation is not allowed then return
+			if (!dt.stateRestore.c.creation) {
+				return;
+			}
+
 			dt.stateRestore.addState(dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1));
 			let states = dt.stateRestore.states()[0];
 			let stateButtons = [];
@@ -232,8 +237,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	 * @param config the config for the button
 	 */
 	function _buttonInit(dt, config) {
-		let SRC = new $.fn.dataTable.StateRestoreCollection(dt, config.stateRestore);
-		_stateRegen(dt, SRC)
+		let SRC = new $.fn.dataTable.StateRestoreCollection(dt, config.config);
+		_stateRegen(dt, SRC);
 	}
 
 	function _stateRegen(dt, src){

@@ -16,6 +16,7 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults = {
+		creation: true,
 		i18n: {
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',
@@ -68,6 +69,11 @@ export default class StateRestoreCollection {
 	 * @returns The state that has been created
 	 */
 	public addState(identifier) {
+		// If creation is not allowed then return
+		if (!this.c.creation) {
+			return;
+		}
+
 		// Check if the state exists before creating a new ones
 		let state = this.getState(identifier);
 		if (state === null) {
