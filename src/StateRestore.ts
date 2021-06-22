@@ -73,26 +73,35 @@ export default class StateRestore {
 	 * Removes a state from storage and
 	 * then triggers the dtsr-delete event so that the StateRestoreCollection class can remove it's references as well.
 	 *
-	 * @param state The identifier of the state that should be deleted
+	 * @param skipModal Flag to indicate if the modal should be skipped or not
 	 */
-	public delete() {
+	public delete(skipModal=false) {
 		try {
 			// Check if deletion of states is allowed
 			if (!this.c.delete) {
 				return;
 			}
 
-			this.confirmationModal(
-				this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
-				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
-				() => {
-					sessionStorage.removeItem(
-						'DataTables_stateRestore_'+this.s.idenfitier+'_'+location.pathname
-					);
-					console.log('delete' + this.s.idenfitier);
-					this.dom.confirmation.trigger('dtsr-delete');
-				}
-			);
+			let deleteFunction = () => {
+				sessionStorage.removeItem(
+					'DataTables_stateRestore_'+this.s.idenfitier+'_'+location.pathname
+				);
+				console.log('delete' + this.s.idenfitier);
+				this.dom.confirmation.trigger('dtsr-delete');
+			};
+
+			if (skipModal) {
+				this.dom.confirmation.appendTo('body');
+				deleteFunction();
+				this.dom.confirmation.remove();
+			}
+			else {
+				this.confirmationModal(
+					this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
+					this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
+					deleteFunction
+				);
+			}
 		}
 		catch (e) {}
 	}
