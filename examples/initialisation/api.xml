@@ -27,6 +27,14 @@ $(document).ready(function() {
         table.stateRestore.states().delete();
     })
 
+    $('#deleteSkip').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).delete(true);
+    })
+
+    $('#deleteAllSkip').on('click', function() {
+        table.stateRestore.states().delete(true);
+    })
+
     $('#add').on('click', function() {
         table.stateRestore.addState($('#state-selector').val());
     })
@@ -43,7 +51,9 @@ This example demonstrates all of the API methods that are available within state
 <button id="add">Add State</button>
 <button id="load">Load</button>
 <button id="delete">Delete</button>
+<button id="deleteSkip">Delete and skip modal</button>
 <button id="deleteAll">Delete All</button>
+<button id="deleteAllSkip">Delete All skipping modal</button>
 ]]></info>
 
 </dt-example>

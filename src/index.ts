@@ -126,20 +126,20 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		return this;
 	});
 
-	apiRegister('stateRestore.state().delete()', function() {
+	apiRegister('stateRestore.state().delete()', function(skipModal) {
 		let ctx = this.context[0];
 		// Check if deletion of states is allowed
 		if(ctx.c.delete) {
-			ctx.delete();
+			ctx.delete(skipModal);
 		}
 		return this;
 	});
 
-	apiRegister('stateRestore.states().delete()', function() {
+	apiRegister('stateRestore.states().delete()', function(skipModal) {
 		this.each(function(set) {
 			// Check if deletion of states is allowed
 			if(set.c.delete) {
-				set.delete();
+				set.delete(skipModal);
 			}
 		});
 		return this;

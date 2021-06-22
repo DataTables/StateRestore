@@ -12,9 +12,9 @@ export default class StateRestore {
      * Removes a state from storage and
      * then triggers the dtsr-delete event so that the StateRestoreCollection class can remove it's references as well.
      *
-     * @param state The identifier of the state that should be deleted
+     * @param skipModal Flag to indicate if the modal should be skipped or not
      */
-    delete(): void;
+    delete(skipModal?: boolean): void;
     /**
      * Shows a modal that allows a state to be renamed
      *
