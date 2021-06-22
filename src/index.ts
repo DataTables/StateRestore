@@ -116,13 +116,19 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.state().delete()', function() {
 		let ctx = this.context[0];
-		ctx.delete();
+		// Check if deletion of states is allowed
+		if(ctx.c.delete) {
+			ctx.delete();
+		}
 		return this;
 	});
 
 	apiRegister('stateRestore.states().delete()', function() {
 		this.each(function(set) {
-			set.delete();
+			// Check if deletion of states is allowed
+			if(set.c.delete) {
+				set.delete();
+			}
 		});
 		return this;
 	});
@@ -167,20 +173,23 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.createStateRestore = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
+			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 
 			// If creation is not allowed then return
-			if (!dt.stateRestore.c.creation) {
+			if (!stateRestoreOpts.creation) {
 				return;
 			}
-
-			dt.stateRestore.addState(dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1));
-			let states = dt.stateRestore.states()[0];
+			let prevStates = dt.stateRestore.states();
+			dt.stateRestore.addState(
+				dt.i18n('buttons.stateRestore', 'State %d', prevStates !== undefined ? prevStates.length + 1 : 1)
+			);
+			let states = dt.stateRestore.states();
 			let stateButtons = [];
 			for(let state of states) {
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', 'deleteState', 'renameState'],
+						split: ['saveState', stateRestoreOpts.delete ? 'deleteState' : '', 'renameState'],
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state
@@ -244,6 +253,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	function _stateRegen(dt, src){
 		let states = dt.stateRestore.states();
 		let stateButtons = [];
+		let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 		if (states === undefined || states.length === 0) {
 			stateButtons.push(
 				'<span class="'+src.classes.emptyStates+'">' +
@@ -256,7 +266,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', 'deleteState', 'renameState'],
+						split: ['saveState', stateRestoreOpts.delete ? 'deleteState' : '', 'renameState'],
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state

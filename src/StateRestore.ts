@@ -77,6 +77,11 @@ export default class StateRestore {
 	 */
 	public delete() {
 		try {
+			// Check if deletion of states is allowed
+			if (!this.c.delete) {
+				return;
+			}
+
 			this.confirmationModal(
 				this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
 				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),

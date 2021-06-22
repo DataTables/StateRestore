@@ -17,6 +17,7 @@ export default class StateRestoreCollection {
 
 	private static defaults = {
 		creation: true,
+		delete: true,
 		i18n: {
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',
@@ -181,7 +182,7 @@ export default class StateRestoreCollection {
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', 'deleteState', 'renameState'],
+						split: ['saveState', this.c.delete ? 'deleteState' : '', 'renameState'],
 					},
 					extend: 'stateRestore',
 					text: state.s.identifier
