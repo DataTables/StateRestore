@@ -104,7 +104,10 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.state().save()', function() {
 		let ctx = this.context[0];
-		ctx.save();
+		// Check if saving states is allowed
+		if(ctx.c.save) {
+			ctx.save();
+		}
 		return this;
 	});
 
@@ -175,8 +178,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			e.stopPropagation();
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 
-			// If creation is not allowed then return
-			if (!stateRestoreOpts.creation) {
+			// If creation/saving is not allowed then return
+			if (!stateRestoreOpts.creation || !stateRestoreOpts.save) {
 				return;
 			}
 			let prevStates = dt.stateRestore.states();
@@ -189,7 +192,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', stateRestoreOpts.delete ? 'deleteState' : '', 'renameState'],
+						split: [
+							stateRestoreOpts.save ? 'saveState' : '',
+							stateRestoreOpts.delete ? 'deleteState' : '',
+							'renameState'
+						],
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state
@@ -266,7 +273,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', stateRestoreOpts.delete ? 'deleteState' : '', 'renameState'],
+						split: [
+							stateRestoreOpts.save ? 'saveState' : '',
+							stateRestoreOpts.delete ? 'deleteState' : '',
+							'renameState'
+						],
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state

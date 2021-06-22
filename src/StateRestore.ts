@@ -29,7 +29,7 @@ export default class StateRestore {
 			renameButton: 'Rename',
 			renameLabel: 'New Name:'
 		},
-		load: true,
+		rename: true,
 		save: true
 	};
 
@@ -131,6 +131,11 @@ export default class StateRestore {
 	 * @param state Optional. If provided this is the state that will be saved rather than using the current state
 	 */
 	public save(state=false) {
+		// Check if saving states is allowed
+		if (!this.c.save) {
+			return;
+		}
+
 		let savedState;
 
 		// If no state has been provided then create a new one from the current state

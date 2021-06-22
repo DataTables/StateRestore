@@ -24,7 +24,9 @@ export default class StateRestoreCollection {
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
 			renameLabel: 'New Name:'
-		}
+		},
+		rename: true,
+		save: true
 	};
 
 	public classes;
@@ -70,8 +72,8 @@ export default class StateRestoreCollection {
 	 * @returns The state that has been created
 	 */
 	public addState(identifier) {
-		// If creation is not allowed then return
-		if (!this.c.creation) {
+		// If creation/saving is not allowed then return
+		if (!this.c.creation || !this.c.save) {
 			return;
 		}
 
@@ -182,7 +184,11 @@ export default class StateRestoreCollection {
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: ['saveState', this.c.delete ? 'deleteState' : '', 'renameState'],
+						split: [
+							this.c.save ? 'saveState' : '',
+							this.c.delete ? 'deleteState' : '',
+							'renameState'
+						],
 					},
 					extend: 'stateRestore',
 					text: state.s.identifier
