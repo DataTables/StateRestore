@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
 	<name>stateRestore.delete</name>
-	<summary>Enable/Disable the deletion of new states</summary>
+	<summary>Enable/Disable the deletion of states</summary>
 	<since>0.0.1</since>
 
 	<type type="boolean">
