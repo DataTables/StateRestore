@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>deleteState</name>
+	<summary>deletes the relevant stateRestore instance.</summary>
+	<since>0.0.1</since>
+
+	<description>
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button deletes the relevant `-init stateRestore` instance. This completely removes the state from storage, as well as removing the buttons that represent it.
+
+        A confirmation modal is shown when the button is pressed to confirm that this is what the user wants to do.
+        
+        There are 2 other secondary buttons also within the split button - `-button renameState` and `-button saveState`. Their documentation provides further details relevant to their functionality.
+
+        This button is used within the `-init stateRestore` extension.
+	</description>
+
+    <option name="action" type="function">
+        The action function for the `-button deleteState` button calls the `-api stateRestore.state().delete()` function to delete the state.
+    </option>
+    <option name="text" type="function">
+        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `buttons.renameState` property, or you could directly change the value of this function.
+    </option>
+
+	<example title="renameState button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.renameState.text = function (e, dt, node, config) {
+    return "Rename State";
+}
+]]></example>
+</dt-button>
