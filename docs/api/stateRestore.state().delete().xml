@@ -14,7 +14,7 @@
 	<![CDATA[
 		This method provides the ability to delete a state that is managed by the `-init stateRestore` extension.
 
-		`-api stateRestore.state().delete` takes no arguments, instead it works off of the state retrieved by the previous call to `-api stateRestore.state()` that does take an argument to identify the state.
+		`-api stateRestore.state().delete()` takes no arguments, instead it works off of the state retrieved by the previous call to `-api stateRestore.state()` that does take an argument to identify the state.
         
         A Datatables Api is returned so that further chaining can occur.
 
