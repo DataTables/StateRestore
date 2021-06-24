@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.state().load()</name>
+	<summary>Load a state from StateRestore into the table</summary>
+	<since>0.0.1</since>
+
+	<type type="function">
+		<signature>stateRestore.state().load()</signature>
+		<description>Loads a stored state from the StateRestore extension into the table.</description>
+		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+		This method provides the ability to load a state that is managed by the `-init stateRestore` extension into the table.
+
+		`-api stateRestore.state().load()` takes no arguments. It uses the state retrieved by the previous call to `-api stateRestore.state()` to identify the correct state.
+        
+        A Datatables Api is returned so that further chaining can occur.
+	]]>
+
+	</description>
+
+	<example title="Load a state called 'New State':"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates']
+    });
+
+    table.stateRestore.state("New State").load()
+});
+]]></example>
+
+</dt-api>
