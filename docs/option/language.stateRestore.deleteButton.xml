@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.deleteButton</name>
+	<summary>Set the text within the StateRestore delete button</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the button that is shown in the delete modal.
+		</description>
+    </type>
+
+	<default value="Delete" />
+
+	<description>
+		<![CDATA[
+            This string is displayed in the confirmation button within the delete modal that is shown when a state is being deleted.
+		]]>
+	</description>
+
+	<example title="Change text within delete confirmation button"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                deleteButton: 'Remove'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>
