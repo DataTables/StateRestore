@@ -15,7 +15,7 @@
 	</default>
 	<description>
 		<![CDATA[
-		This option allows for the renaming of new states to be enabled or disabled.
+		This option allows for the renaming of states to be enabled or disabled.
 
 		As default the value is true, meaning that states can be renamed. If this option is set to false, then renaming will be disabled.
 
@@ -23,7 +23,7 @@
         ]]>
 	</description>
 
-<example title="Disable deletion of new states"><![CDATA[
+<example title="Disable renaming of new states"><![CDATA[
 $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[

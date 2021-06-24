@@ -15,7 +15,7 @@
 	</default>
 	<description>
 		<![CDATA[
-		This option allows for the deletion of new states to be enabled or disabled.
+		This option allows for the deletion of states to be enabled or disabled.
 
 		As default the value is true, meaning that states can be deleted. If this option is set to false, then deletion will be disabled.
 
