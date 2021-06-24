@@ -8,6 +8,31 @@ export function setJQuery(jq) {
 	dataTable = jq.fn.dataTable;
 }
 
+export interface IClasses {
+	emptyStates: string;
+}
+
+export interface IDefaults {
+	create: boolean;
+	delete: boolean;
+	i18n: II18n;
+	rename: boolean;
+	save: boolean;
+}
+
+export interface II18n {
+	deleteButton: string;
+	deleteConfirm: string;
+	emptyStates: string;
+	renameButton: string;
+	renameLabel: string;
+}
+
+export interface IS {
+	dt: any;
+	states: StateRestore[];
+}
+
 export default class StateRestoreCollection {
 	private static version = '0.0.1';
 
@@ -15,7 +40,7 @@ export default class StateRestoreCollection {
 		emptyStates: 'dtsr-emptyStates'
 	};
 
-	private static defaults = {
+	private static defaults: IDefaults = {
 		create: true,
 		delete: true,
 		i18n: {
@@ -29,11 +54,11 @@ export default class StateRestoreCollection {
 		save: true
 	};
 
-	public classes;
-	public c;
-	public s;
+	public classes: IClasses;
+	public c: IDefaults;
+	public s: IS;
 
-	public constructor(settings, opts) {
+	public constructor(settings: any, opts: IDefaults) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -71,7 +96,7 @@ export default class StateRestoreCollection {
 	 * @param identifier The value that is used to identify a state.
 	 * @returns The state that has been created
 	 */
-	public addState(identifier) {
+	public addState(identifier: string): StateRestore {
 		// If creation/saving is not allowed then return
 		if (!this.c.create || !this.c.save) {
 			return;
@@ -79,6 +104,7 @@ export default class StateRestoreCollection {
 
 		// Check if the state exists before creating a new ones
 		let state = this.getState(identifier);
+
 		if (state === null) {
 			let newState = new StateRestore(this.s.dt.settings()[0], this.c, identifier);
 			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(identifier));
@@ -98,7 +124,7 @@ export default class StateRestoreCollection {
 	 * @param identifier The value that is used to identify a state
 	 * @returns The state that has been identified or null if no states have been identified
 	 */
-	public getState(identifier) {
+	public getState(identifier: string): null | StateRestore {
 		for (let state of this.s.states) {
 			if (state.s.identifier === identifier) {
 				return state;
@@ -114,7 +140,7 @@ export default class StateRestoreCollection {
 	 * @param identifier The value that is used to identify a state
 	 * @returns Any states that have been identified
 	 */
-	public getStates(identifier) {
+	public getStates(identifier: string): StateRestore[] {
 		if (identifier === undefined) {
 			return this.s.states;
 		}
@@ -133,7 +159,7 @@ export default class StateRestoreCollection {
 	/**
 	 * Private method that checks for previously created states on initialisation
 	 */
-	private _searchForStates() {
+	private _searchForStates(): void {
 		let keys = Object.keys(sessionStorage);
 		for (let key of keys) {
 			// eslint-disable-next-line no-useless-escape
@@ -155,7 +181,7 @@ export default class StateRestoreCollection {
 	 *
 	 * @param identifier The value that is used to identify a state
 	 */
-	private _deleteCallback(identifier) {
+	private _deleteCallback(identifier: string): void {
 		for (let i = 0; i < this.s.states.length; i++) {
 			if (this.s.states[i].s.savedState.stateRestore.state === identifier) {
 				this.s.states.splice(i, 1);
@@ -169,7 +195,7 @@ export default class StateRestoreCollection {
 	/**
 	 * Rebuilds all of the buttons in the collection of states to make sure that states and text is up to date
 	 */
-	private _collectionRebuild() {
+	private _collectionRebuild(): void {
 		let stateButtons = [];
 
 		if(this.s.states.length === 0) {

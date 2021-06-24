@@ -1,15 +1,72 @@
 let $;
 let dataTable;
 
+import { IfStatement } from 'estree';
+import * as restoreType from './StateRestoreCollection';
+
 export function setJQuery(jq) {
 	$ = jq;
 	dataTable = jq.fn.dataTable;
 }
 
+export interface IClasses {
+	background: string;
+	confirmation: string;
+	confirmationButton: string;
+	confirmationButtons: string;
+	confirmationText: string;
+	dtButton: string;
+	input: string;
+}
+
+export interface IS {
+	dt: any;
+	identifier: string;
+	savedState: null | IState;
+}
+
+export interface IDom {
+	background: JQuery<HTMLElement>;
+	confirmation: JQuery<HTMLElement>;
+}
+
+export interface IState {
+	childRows: number[];
+	columns: IColumn[];
+	length: number;
+	order: Array<Array<string|number>>;
+	search: ISearch;
+	start: number;
+	stateRestore: IStateRestore;
+	time: number;
+}
+
+export interface IColumn {
+	search: ISearch;
+	visible: boolean;
+}
+
+export interface ISearch {
+	caseInsensitive: boolean;
+	regex: boolean;
+	search: string;
+	smart: boolean;
+}
+
+export interface IHungSearch {
+	bCaseInsensitive: boolean;
+	bRegex: boolean;
+	bSmart: boolean;
+	sSearch: string;
+}
+
+export interface IStateRestore {
+	state: string;
+}
 export default class StateRestore {
 	private static version = '0.0.1';
 
-	private static classes = {
+	private static classes: IClasses = {
 		background: 'dtsr-background',
 		confirmation: 'dtsr-confirmation',
 		confirmationButton: 'dtsr-confirmation-button',
@@ -19,7 +76,7 @@ export default class StateRestore {
 		input: 'dtsr-input'
 	};
 
-	private static defaults = {
+	private static defaults: restoreType.IDefaults = {
 		create: true,
 		delete: true,
 		i18n: {
@@ -33,12 +90,12 @@ export default class StateRestore {
 		save: true
 	};
 
-	public classes;
-	public dom;
-	public c;
-	public s;
+	public classes: IClasses;
+	public dom: IDom;
+	public c: restoreType.IDefaults;
+	public s: IS;
 
-	public constructor(settings, opts, identifier) {
+	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -57,7 +114,8 @@ export default class StateRestore {
 
 		this.s = {
 			dt: table,
-			identifier
+			identifier,
+			savedState: null
 		};
 
 		this.dom = {
@@ -75,7 +133,7 @@ export default class StateRestore {
 	 *
 	 * @param skipModal Flag to indicate if the modal should be skipped or not
 	 */
-	public delete(skipModal=false) {
+	public delete(skipModal = false): void {
 		try {
 			// Check if deletion of states is allowed
 			if (!this.c.delete) {
@@ -84,9 +142,9 @@ export default class StateRestore {
 
 			let deleteFunction = () => {
 				sessionStorage.removeItem(
-					'DataTables_stateRestore_'+this.s.idenfitier+'_'+location.pathname
+					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 				);
-				console.log('delete' + this.s.idenfitier);
+
 				this.dom.confirmation.trigger('dtsr-delete');
 			};
 
@@ -103,7 +161,9 @@ export default class StateRestore {
 				);
 			}
 		}
-		catch (e) {}
+		catch (e) {
+			return;
+		}
 	}
 
 	/**
@@ -111,7 +171,7 @@ export default class StateRestore {
 	 *
 	 * @param newIdentifier Optional. The new identifier for this state
 	 */
-	public rename(newIdentifier=null) {
+	public rename(newIdentifier: null|string = null): void {
 		try {
 			// Check if renaming of states is allowed
 			if (!this.c.rename) {
@@ -124,7 +184,9 @@ export default class StateRestore {
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 				}
-				catch (e) {}
+				catch (e) {
+					return;
+				}
 
 				this.s.identifier = newId;
 				this.save(this.s.savedState);
@@ -146,36 +208,36 @@ export default class StateRestore {
 			}
 
 		}
-		catch (e) {}
+		catch (e) {
+			return;
+		}
 	}
 
 	/**
 	 * Saves the tables current state using the identifier that is passed in.
 	 *
-	 * @param identifier The identifier of the state that should be saved
 	 * @param state Optional. If provided this is the state that will be saved rather than using the current state
 	 */
-	public save(state=false) {
+	public save(state?: IState): void {
 		// Check if saving states is allowed
 		if (!this.c.save) {
 			return;
 		}
 
-		let savedState;
+		let savedState: IState;
 
 		// If no state has been provided then create a new one from the current state
-		if (!state) {
+		if (state !== undefined) {
 			this.s.dt.state.save();
 			savedState = this.s.dt.state();
 		}
 		else {
 			savedState = state;
 		}
+
 		savedState.stateRestore = {
 			state: this.s.identifier
 		};
-
-		console.log('save', this.s.identifier, savedState);
 
 		this.s.savedState = savedState;
 
@@ -185,7 +247,9 @@ export default class StateRestore {
 				JSON.stringify(savedState)
 			);
 		}
-		catch (e) {}
+		catch (e) {
+			return;
+		}
 	}
 
 	/**
@@ -194,14 +258,13 @@ export default class StateRestore {
 	 * @param state The identifier of the state that should be loaded
 	 * @returns the state that has been loaded
 	 */
-	public load() {
+	public load(): void | IState {
 		try {
 			let loadedState = JSON.parse(
 				sessionStorage.getItem(
 					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 				)
 			);
-			console.log('load', this.s.identifier, loadedState);
 
 			if (loadedState === null) {
 				return;
@@ -271,9 +334,11 @@ export default class StateRestore {
 			}
 
 			this.s.dt.draw();
+
+			return loadedState;
 		}
 		catch (e) {
-			return {};
+			return;
 		}
 	}
 
@@ -284,7 +349,7 @@ export default class StateRestore {
 	 * @param buttonText The text that should be displayed in the confirmation button.
 	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
 	 */
-	private confirmationModal(message, buttonText, buttonAction) {
+	private confirmationModal(message: string, buttonText: string, buttonAction: () => void): void {
 		this.dom.confirmation.empty();
 		this.dom.confirmation
 			.append($('<div class="'+this.classes.confirmationText+'"><span>'+message+'</span></div>'))
@@ -319,7 +384,7 @@ export default class StateRestore {
 	 * @param buttonText The text that should be displayed in the confirmation button.
 	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
 	 */
-	private renameModal(message, buttonText, buttonAction) {
+	private renameModal(message: string, buttonText: string, buttonAction: (newIdentifier: string) => void): void {
 		this.dom.confirmation.empty();
 		this.dom.confirmation
 			.append(
@@ -360,7 +425,7 @@ export default class StateRestore {
 	 * @returns {object} Inverted object
 	 * @memberof DataTable#oApi
 	 */
-	private searchToHung(obj) {
+	private searchToHung(obj: ISearch): IHungSearch {
 		return {
 			bCaseInsensitive: obj.caseInsensitive,
 			bRegex:           obj.regex,
