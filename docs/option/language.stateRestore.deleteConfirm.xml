@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.deleteConfirm</name>
+	<summary>Set the confirmation message shown within the StateRestore delete modal</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the delete modal to confirm that a user wants to delete this state.
+		</description>
+    </type>
+
+	<default value="Are you sure you want to delete this state?" />
+
+	<description>
+		<![CDATA[
+            This string is displayed within the delete modal to confirm that a user wants to delete this state.
+		]]>
+	</description>
+
+	<example title="Change text within delete confirmation modal"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                deleteButton: 'Confirm you want to delete this state.'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>
