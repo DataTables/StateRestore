@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.state().save()</name>
+	<summary>Save a state from StateRestore</summary>
+	<since>0.0.1</since>
+
+	<type type="function">
+		<signature>stateRestore.state().save()</signature>
+		<description>Saves the current state into a stored state in the StateRestore extension.</description>
+		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+		This method provides the ability to save a state that is managed by the `-init stateRestore` extension.
+
+		`-api stateRestore.state().save()` takes no arguments. It uses the state retrieved by the previous call to `-api stateRestore.state()` to identify the correct state.
+        
+        A Datatables Api is returned so that further chaining can occur.
+
+        If the `-init stateRestore.save` initialisation option is set to false then this api method will not do anything.
+	]]>
+
+	</description>
+
+	<example title="Save a state called 'New State':"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates']
+    });
+
+    table.stateRestore.state("New State").save()
+});
+]]></example>
+
+</dt-api>
