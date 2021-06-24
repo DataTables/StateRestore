@@ -6,7 +6,7 @@
 
 	<type type="function">
 		<signature>stateRestore.state().delete()</signature>
-        <parameter type="boolean" default="false">Boolean value indicating if the confirmation modal should be skipped or not.</parameter>
+        <parameter type="boolean" name="skipModal">Boolean value indicating if the confirmation modal should be skipped or not.</parameter>
 		<description>Deletes a stored state from the StateRestore extension.</description>
 		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
 	</type>
