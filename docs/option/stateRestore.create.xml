@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.create</name>
+	<summary>Enable/Disable the creation of new states</summary>
+	<since>0.0.1</since>
+
+	<type type="boolean">
+		<description>
+            True if creation is to be enabled, false if not.
+        </description>
+	</type>
+
+	<default value="true">
+        The default value for the `-init stateRestore.create` option is `true` meaning that as standard creation of new states will be enabled.
+	</default>
+	<description>
+		<![CDATA[
+		This option allows for the creation of new states to be enabled or disabled.
+
+		As default the value is true, meaning that states can be created. If this option is set to false, then creation will be disabled.
+
+		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action.
+        ]]>
+	</description>
+
+<example title="Disable creation of new states"><![CDATA[
+$('#example').DataTable({
+    dom: 'Blfrtip',
+    buttons:[{
+        extend: 'savedStates',
+        config: {
+            creation: false
+        }
+    }]
+});
+]]></example>
+
+</dt-option>
