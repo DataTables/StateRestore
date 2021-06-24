@@ -19,7 +19,7 @@
         The action function for the StateRestore button loads the state that it represents into the table.
     </option>
 
-	<example title="StateRestore configuration using a button"><![CDATA[
+	<example title="stateRestore button modify action"><![CDATA[
 $.fn.dataTable.ext.buttons.stateRestore.action = function (e, dt, node, config) {
     e.stopPropagation();
     config._stateRestore.load(config._stateRestore.s.identifier);
