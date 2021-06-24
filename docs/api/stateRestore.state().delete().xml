@@ -6,6 +6,7 @@
 
 	<type type="function">
 		<signature>stateRestore.state().delete()</signature>
+        <parameter type="boolean" default="false">Boolean value indicating if the confirmation modal should be skipped or not.</parameter>
 		<description>Deletes a stored state from the StateRestore extension.</description>
 		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
 	</type>
@@ -14,7 +15,7 @@
 	<![CDATA[
 		This method provides the ability to delete a state that is managed by the `-init stateRestore` extension.
 
-		`-api stateRestore.state().delete()` takes no arguments, instead it works off of the state retrieved by the previous call to `-api stateRestore.state()` that does take an argument to identify the state.
+		`-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. It uses the state retrieved by the previous call to `-api stateRestore.state()` to identify the correct state.
         
         A Datatables Api is returned so that further chaining can occur.
 
@@ -31,6 +32,17 @@ $(document).ready(function() {
     });
 
     table.stateRestore.state("New State").delete()
+});
+]]></example>
+
+	<example title="Delete a state called 'New State', skipping the confirmation modal:"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates']
+    });
+
+    table.stateRestore.state("New State").delete(true)
 });
 ]]></example>
 
