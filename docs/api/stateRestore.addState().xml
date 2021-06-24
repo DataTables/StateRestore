@@ -15,7 +15,7 @@
 	<![CDATA[
 		This method provides the ability to create a new state that is managed by the `-init stateRestore` extension.
 
-		`-api searchBuilder.getDetails()` takes one argument, `identifier`. This string is used to identify the state throughout StateRestore. It is used when naming the state in whatever storage method is selected and is also shown in the states button.
+		`-api stateRestore.addState()` takes one argument, `identifier`. This string is used to identify the state throughout StateRestore. It is used when naming the state in whatever storage method is selected and is also shown in the states button.
         
         The object that is returned represents the state that is present in the table at the time of saving. 
 	]]>
