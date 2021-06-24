@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.states().delete()</name>
+	<summary>Delete states from StateRestore</summary>
+	<since>0.0.1</since>
+
+	<type type="function">
+		<signature>stateRestore.states().delete()</signature>
+		<description>Deletes stored states from the StateRestore extension.</description>
+		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+		This method provides the ability to delete multiple states that are managed by the `-init stateRestore` extension.
+
+		`-api stateRestore.states().delete()` takes no arguments, instead it works off of the state retrieved by the previous call to `-api stateRestore.states()` that does take an argument to identify the states.
+        
+        A Datatables Api is returned so that further chaining can occur.
+
+        If the `-init stateRestore.delete` initialisation option is set to false then this api method will not do anything.
+	]]>
+
+	</description>
+
+	<example title="Delete states called 'New State' and 'Old State':"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates']
+    });
+
+    table.stateRestore.states(["New State", "Old State"]).delete()
+});
+]]></example>
+
+</dt-api>
