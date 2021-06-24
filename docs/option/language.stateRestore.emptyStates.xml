@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                enotyStates: 'No States'
+                emptyStates: 'No States'
             }
         },
         buttons: [ 'createStateRestore', 'savedStates' ],
