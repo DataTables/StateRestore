@@ -9,7 +9,7 @@
         
         There are 2 other secondary buttons also within the split button - `-button deleteState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
 
-        This button is used within the `-init stateRestore` extension.
+        This button is used within the `-init stateRestore` extension. It won't do anything if saving is disabled using the `-init stateRestore.save` initialisation option.
 	</description>
 
     <option name="action" type="function">
