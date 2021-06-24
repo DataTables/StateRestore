@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>renameState</name>
+	<summary>Renames the relevant stateRestore instance.</summary>
+	<since>0.0.1</since>
+
+	<description>
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button renames the relevant `-init stateRestore` instance. This changes the text value that is displayed within the button for this state, and also the value that would be used to refer to it when using api methods.
+        
+        There are 2 other secondary buttons also within the split button - `-button deleteState` and `-button saveState`. Their documentation provides further details relevant to their functionality.
+
+        This button is used within the `-init stateRestore` extension.
+	</description>
+
+    <option name="action" type="function">
+        The action function for the StateRestore button loads the state that it represents into the table.
+    </option>
+    <option name="text" type="function">
+        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `buttons.renameState` property, or you could directly change the value of this function.
+    </option>
+
+	<example title="renameState button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.renameState.text = function (e, dt, node, config) {
+    return "Rename State";
+}
+]]></example>
+</dt-button>
