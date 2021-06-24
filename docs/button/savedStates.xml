@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>savedStates</name>
+	<summary>Collection used to provide interaction with the saved states</summary>
+	<since>0.0.1</since>
+
+	<description>
+        This is a collection that contains a number of `-button stateRestore` buttons, one for each state that is being stored by `-init stateRestore`.
+	</description>
+
+    <option name="text" type="function">
+        This function runs the `-api i18n()` function to decide the text value of the saved state collection button. The value of this button can be set using the `-init i18n` initialisation options `buttons.savedStates` property, or you could directly change the value of this function.
+    </option>
+    <option name="name" type="string">
+        The name of this button is set to 'SaveStateRestore', this allows StateRestore to know which button the `-button stateRestore` buttons should be placed under.
+    </option>
+    <option name="init" type="function">
+        This function initialises StateRestore if is has not already been initialised.
+    </option>
+
+	<example title="saveState button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.savedStates.text = function (e, dt, node, config) {
+    return "Saved states collection";
+}
+]]></example>
+</dt-button>
