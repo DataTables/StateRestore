@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.addState()</name>
+	<summary>Create a new state</summary>
+	<since>0.0.1</since>
+
+	<type type="function">
+		<signature>stateRestore.addState()</signature>
+        <parameter type="string" name="identifier">The string that is used to identify this state. This must be unique in order to differentiate between the different states that may be stored within StateRestore.</parameter>
+		<description>Creates a new StateRestore instance.</description>
+		<returns type="object">Returns an object containing the state that has been extracted from the table.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+		This method provides the ability to create a new state that is managed by the `-init stateRestore` extension.
+
+		`-api searchBuilder.getDetails()` takes one argument, `identifier`. This string is used to identify the state throughout StateRestore. It is used when naming the state in whatever storage method is selected and is also shown in the states button.
+        
+        The object that is returned represents the state that is present in the table at the time of saving. 
+	]]>
+
+	</description>
+
+	<example title="Add a new state called 'New State':"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates']
+    });
+
+    table.stateRestore.addState("New State")
+});
+]]></example>
+
+</dt-api>
