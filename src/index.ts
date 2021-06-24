@@ -186,10 +186,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
-			console.log(stateRestoreOpts)
 
 			// If creation/saving is not allowed then return
-			if (!stateRestoreOpts.creation || !stateRestoreOpts.save) {
+			if (!stateRestoreOpts.create || !stateRestoreOpts.save) {
 				return;
 			}
 			let prevStates = dt.stateRestore.states();

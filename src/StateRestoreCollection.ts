@@ -16,7 +16,7 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults = {
-		creation: true,
+		create: true,
 		delete: true,
 		i18n: {
 			deleteButton: 'Delete',
@@ -73,7 +73,7 @@ export default class StateRestoreCollection {
 	 */
 	public addState(identifier) {
 		// If creation/saving is not allowed then return
-		if (!this.c.creation || !this.c.save) {
+		if (!this.c.create || !this.c.save) {
 			return;
 		}
 
