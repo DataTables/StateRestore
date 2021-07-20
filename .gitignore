@@ -6,3 +6,4 @@ examples/testing
 
 types/index.d.ts
 testing
+package-lock.json
