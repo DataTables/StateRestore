@@ -82,11 +82,17 @@ export default class StateRestore {
 
 	private static defaults: restoreType.IDefaults = {
 		colReorder: true,
+		colReorderToggle: true,
 		columns: {
 			search: true,
 			visible: true
 		},
+		columnsToggle: {
+			search: true,
+			visible: true
+		},
 		create: true,
+		creationModal: true,
 		delete: true,
 		i18n: {
 			deleteButton: 'Delete',
@@ -96,13 +102,19 @@ export default class StateRestore {
 			renameLabel: 'New Name:'
 		},
 		order: true,
+		orderToggle: true,
 		paging: true,
+		pagingToggle: true,
 		rename: true,
 		save: true,
 		scroller: true,
+		scrollerToggle: true,
 		search: true,
 		searchBuilder: true,
-		searchPanes: true
+		searchBuilderToggle: true,
+		searchPanes: true,
+		searchPanesToggle: true,
+		searchToggle: true
 	};
 
 	public classes: IClasses;

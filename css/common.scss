@@ -1,4 +1,4 @@
-div.dtsr-confirmation {
+div.dtsr-confirmation, div.dtsr-creation {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -12,14 +12,27 @@ div.dtsr-confirmation {
     box-sizing: border-box;
     padding: 1.5em 2em;   
 
-    div.dtsr-confirmation-text {
+    div.dtsr-confirmation-text, div.dtsr-creation-text {
         text-align: center;
     }
 
-    div.dtsr-confirmation-buttons {
+    div.dtsr-confirmation-buttons, div.creation-form {
         text-align: center;
         margin-top: 1.5em;
     }
+}
+
+div.dtsr-form-row {
+    text-align: center;
+    padding: 10px;
+
+    input.dtsr-name-input {
+        margin-left: 5px;
+    }
+}
+
+div.dtsr-creation-text {
+    padding: 10px;
 }
 
 div.dtsr-background {
