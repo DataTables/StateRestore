@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.searchPanes</name>
+	<summary>Enable/Disable saving the searchPanes state</summary>
+	<since>0.0.1</since>
+
+	<type type="boolean">
+		<description>
+            True if `-init searchPanes` state is to be saved, false if not.
+        </description>
+	</type>
+
+	<default value="true">
+        The default value for the `-init stateRestore.searchPanes` option is `true` meaning that as standard the `-init searchPanes` state is to be saved.
+	</default>
+	<description>
+		<![CDATA[
+		This option allows for the saving of the `-init searchPanes` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init searchPanes` extensions are in use.
+
+		As default the value is true, meaning that the `-init searchPanes` state will be saved. If this option is set to false, then the `-init searchPanes` state saving will be disabled.
+
+		Take a look at [this example]([../extensions/StateRestore/examples/customisation/noSearchPanes.html) to see this in action.
+        ]]>
+	</description>
+
+<example title="Disable searchPanes state saving"><![CDATA[
+ $('#example').DataTable({
+    dom: 'BPlfrtip',
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                searchPanes: false
+            }
+        }
+    ]
+});
+]]></example>
+
+</dt-option>

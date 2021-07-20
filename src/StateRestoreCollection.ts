@@ -13,11 +13,24 @@ export interface IClasses {
 }
 
 export interface IDefaults {
+	colReorder: boolean;
+	columns: IColumnDefault | boolean;
 	create: boolean;
 	delete: boolean;
 	i18n: II18n;
+	order: boolean;
+	paging: boolean;
 	rename: boolean;
 	save: boolean;
+	scroller: boolean;
+	search: boolean;
+	searchBuilder: boolean;
+	searchPanes: boolean;
+}
+
+export interface IColumnDefault {
+	search: boolean;
+	visible: boolean;
 }
 
 export interface II18n {
@@ -41,6 +54,11 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults: IDefaults = {
+		colReorder: true,
+		columns: {
+			search: true,
+			visible: true
+		},
 		create: true,
 		delete: true,
 		i18n: {
@@ -50,8 +68,14 @@ export default class StateRestoreCollection {
 			renameButton: 'Rename',
 			renameLabel: 'New Name:'
 		},
+		order: true,
+		paging: true,
 		rename: true,
-		save: true
+		save: true,
+		scroller: true,
+		search: true,
+		searchBuilder: true,
+		searchPanes: true
 	};
 
 	public classes: IClasses;
@@ -65,6 +89,7 @@ export default class StateRestoreCollection {
 		}
 
 		// Check that Select is included
+		// eslint-disable-next-line no-extra-parens
 		if (! (dataTable as any).Buttons) {
 			throw new Error('StateRestore requires Buttons');
 		}
@@ -166,7 +191,7 @@ export default class StateRestoreCollection {
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
 				let loadedState = JSON.parse(sessionStorage.getItem(key));
 				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
-				newState.s.savedState = loadedState;
+				newState.save(loadedState);
 				this.s.states.push(newState);
 				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(loadedState.stateRestore.state));
 				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());

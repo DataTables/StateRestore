@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore searchpanes select"/>
+
+<js lib="jquery datatables staterestore buttons searchpanes select">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'BPlfrtip',
+        buttons:[
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    searchPanes: false
+                }
+            }
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Don't save SearchPanes</title>
+
+<info><![CDATA[
+This example shows how to use the `-init stateRestore.searchPanes` initialisation option to disable the saving of the table's current `-init searchPanes` search criteria by setting the value of the initialisation option to `false`. The default value is `true` meaning that the searchPanes search criteria will be saved.
+]]></info>
+
+</dt-example>

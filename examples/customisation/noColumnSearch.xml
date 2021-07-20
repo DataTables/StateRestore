@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#example tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+    $('#example').DataTable({
+        dom: 'BPlfrtip',
+        buttons:[
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    columns:{
+                        search: false
+                    }
+                }
+            }
+        ],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Don't save column searches</title>
+
+<info><![CDATA[
+This example shows how to use the `-init stateRestore.columns.visible` initialisation option to disable the saving of the table's current column visibility by setting the initialisation option to `false`. The default value is `true` meaning that the visibility of the columns will be saved.
+]]></info>
+
+</dt-example>

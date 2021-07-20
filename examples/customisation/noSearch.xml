@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:[
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    search: false
+                }
+            }
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Don't save search</title>
+
+<info><![CDATA[
+This example shows how to use the `-init stateRestore.search` initialisation option to disable the saving of the table's current search value by setting the value of the initialisation option to `false`. The default value is `true` meaning that the search value will be saved.
+]]></info>
+
+</dt-example>

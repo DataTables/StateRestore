@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.columns.search</name>
+	<summary>Enable/Disable saving the column searching</summary>
+	<since>0.0.1</since>
+
+	<type type="boolean">
+		<description>
+            True if column searches are to be saved, false if not.
+        </description>
+	</type>
+
+	<default value="true">
+        The default value for the `-init stateRestore.columns.search` option is `true` meaning that as standard the column searches are saved.
+	</default>
+	<description>
+		<![CDATA[
+		This option allows for the saving of the order of the columns to be enabled or disabled.
+
+		As default the value is true, meaning that the column searches will be saved. If this option is set to false, then column searches will not be saved.
+
+		Take a look at [this example]([../extensions/StateRestore/examples/customisation/noColumnSearch.html) to see this in action.
+
+        ]]>
+	</description>
+
+<example title="Disable column search saving"><![CDATA[
+// Setup - add a text input to each footer cell
+$('#example tfoot th').each( function () {
+    var title = $(this).text();
+    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+} );
+
+$('#example').DataTable({
+    dom: 'Blfrtip',
+    colReorder: true,
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                columns:{
+                    search: false
+                }
+            }
+        }
+    ],
+    initComplete: function () {
+        // Apply the search
+        this.api().columns().every( function () {
+            var that = this;
+
+            $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+    }
+});
+]]></example>
+
+</dt-option>

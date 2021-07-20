@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.searchBuilder</name>
+	<summary>Enable/Disable saving the searchBuilder state</summary>
+	<since>0.0.1</since>
+
+	<type type="boolean">
+		<description>
+            True if `-init searchBuilder` state is to be saved, false if not.
+        </description>
+	</type>
+
+	<default value="true">
+        The default value for the `-init stateRestore.searchBuilder` option is `true` meaning that as standard the `-init searchBuilder` state is to be saved.
+	</default>
+	<description>
+		<![CDATA[
+		This option allows for the saving of the `-init searchBuilder` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init searchBuilder` extensions are in use.
+
+		As default the value is true, meaning that the `-init searchBuilder` state will be saved. If this option is set to false, then the `-init searchBuilder` state saving will be disabled.
+
+		Take a look at [this example]([../extensions/StateRestore/examples/customisation/nosearchBuilder.html) to see this in action.
+        ]]>
+	</description>
+
+<example title="Disable searchBuilder state saving"><![CDATA[
+ $('#example').DataTable({
+    dom: 'BQlfrtip',
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                searchBuilder: false
+            }
+        }
+    ]
+});
+]]></example>
+
+</dt-option>

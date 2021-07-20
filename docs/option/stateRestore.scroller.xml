@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.scroller</name>
+	<summary>Enable/Disable saving the scroller state</summary>
+	<since>0.0.1</since>
+
+	<type type="boolean">
+		<description>
+            True if `-init scroller` position is to be saved, false if not.
+        </description>
+	</type>
+
+	<default value="true">
+        The default value for the `-init stateRestore.scroller` option is `true` meaning that as standard the `-init scroller` position is to be saved.
+	</default>
+	<description>
+		<![CDATA[
+		This option allows for the saving of the `-init scroller` position to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
+
+		As default the value is true, meaning that the `-init scroller` position will be saved. If this option is set to false, then the `-init scroller` position saving will be disabled.
+
+		Take a look at [this example]([../extensions/StateRestore/examples/customisation/noScroller.html) to see this in action.
+        ]]>
+	</description>
+
+<example title="Disable scroller position saving"><![CDATA[
+ $('#example').DataTable({
+    dom: 'Blfrtip',
+    ajax:           "../data/2500.txt",
+    deferRender:    true,
+    scrollY:        200,
+    scrollCollapse: true,
+    scroller:       true,
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                scroller: false
+            }
+        }
+    ]
+});
+]]></example>
+
+</dt-option>

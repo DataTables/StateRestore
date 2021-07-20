@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:[
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    order: false
+                }
+            }
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Don't save ordering</title>
+
+<info><![CDATA[
+This example shows how to use the `-init stateRestore.order` initialisation option to disable the saving of column ordering that is applied to the table by setting the value to `false`. The default value is `true` meaning that the column orders will be saved.
+]]></info>
+
+</dt-example>

@@ -32,10 +32,14 @@ export interface IDom {
 
 export interface IState {
 	childRows: number[];
+	colReorder: any;
 	columns: IColumn[];
 	length: number;
 	order: Array<Array<string|number>>;
+	scroller: any;
 	search: ISearch;
+	searchBuilder: any;
+	searchPanes: any;
 	start: number;
 	stateRestore: IStateRestore;
 	time: number;
@@ -77,6 +81,11 @@ export default class StateRestore {
 	};
 
 	private static defaults: restoreType.IDefaults = {
+		colReorder: true,
+		columns: {
+			search: true,
+			visible: true
+		},
 		create: true,
 		delete: true,
 		i18n: {
@@ -86,8 +95,14 @@ export default class StateRestore {
 			renameButton: 'Rename',
 			renameLabel: 'New Name:'
 		},
+		order: true,
+		paging: true,
 		rename: true,
-		save: true
+		save: true,
+		scroller: true,
+		search: true,
+		searchBuilder: true,
+		searchPanes: true
 	};
 
 	public classes: IClasses;
@@ -102,6 +117,7 @@ export default class StateRestore {
 		}
 
 		// Check that Select is included
+		// eslint-disable-next-line no-extra-parens
 		if (! (dataTable as any).Buttons) {
 			throw new Error('StateRestore requires Buttons');
 		}
@@ -227,7 +243,7 @@ export default class StateRestore {
 		let savedState: IState;
 
 		// If no state has been provided then create a new one from the current state
-		if (state !== undefined) {
+		if (state === undefined) {
 			this.s.dt.state.save();
 			savedState = this.s.dt.state();
 		}
@@ -241,10 +257,65 @@ export default class StateRestore {
 
 		this.s.savedState = savedState;
 
+		// Order
+		if (!this.c.order) {
+			this.s.savedState.order = undefined;
+		}
+
+		// Search
+		if (!this.c.search) {
+			this.s.savedState.search = undefined;
+		}
+
+		// Columns
+		if (this.c.columns && this.s.savedState.columns) {
+			for (let i=0, ien=this.s.savedState.columns.length ; i<ien ; i++) {
+				let col = this.s.savedState.columns[i];
+
+				// Visibility
+				if (typeof this.c.columns !== 'boolean' && !this.c.columns.visible) {
+					this.s.savedState.columns[i].visible = undefined;
+				}
+
+				// Search
+				if (typeof this.c.columns !== 'boolean' && this.c.columns.search) {
+					this.s.savedState.columns[i].search = undefined;
+				}
+			}
+		}
+		else if (!this.c.columns) {
+			this.s.savedState.columns = undefined;
+		}
+
+		// SearchBuilder
+		if (!this.c.searchBuilder) {
+			this.s.savedState.searchBuilder = undefined;
+		}
+
+		// SearchPanes
+		if (!this.c.searchPanes) {
+			this.s.savedState.searchPanes = undefined;
+		}
+
+		// ColReorder
+		if (!this.c.colReorder) {
+			this.s.savedState.colReorder = undefined;
+		}
+
+		// Scroller
+		if (!this.c.scroller) {
+			this.s.savedState.scroller = undefined;
+		}
+
+		// Paging
+		if (!this.c.paging) {
+			this.s.savedState.start = 0;
+		}
+
 		try {
 			sessionStorage.setItem(
 				'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
-				JSON.stringify(savedState)
+				JSON.stringify(this.s.savedState)
 			);
 		}
 		catch (e) {
@@ -279,57 +350,57 @@ export default class StateRestore {
 			settings.oLoadedState = $.extend(true, {}, loadedState);
 
 			// Order
-			if (loadedState.order !== undefined) {
+			if (this.c.order && loadedState.order !== undefined) {
 				settings.aaSorting = [];
 				$.each(loadedState.order, function(i, col) {
 					settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
-						[ 0, col[1] ] :
+						[0, col[1]] :
 						col
 					);
 				});
 			}
 
 			// Search
-			if (loadedState.search !== undefined) {
+			if (this.c.search && loadedState.search !== undefined) {
 				$.extend(settings.oPreviousSearch, this.searchToHung(loadedState.search));
 			}
 
 			// Columns
-			if (loadedState.columns) {
+			if (this.c.columns && loadedState.columns) {
 				for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
 					let col = loadedState.columns[i];
 
 					// Visibility
-					if (col.visible !== undefined) {
+					if (typeof this.c.columns !== 'boolean' && this.c.columns.visible && col.visible !== undefined) {
 						settings.aoColumns[i].bVisible = col.visible;
 					}
 
 					// Search
-					if (col.search !== undefined) {
+					if (typeof this.c.columns !== 'boolean' && this.c.columns.search && col.search !== undefined) {
 						$.extend(settings.aoPreSearchCols[i], this.searchToHung(col.search));
 					}
 				}
 			}
 
 			// SearchBuilder
-			if (loadedState.searchBuilder) {
+			if (this.c.searchBuilder && loadedState.searchBuilder) {
 				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
 			}
 
 			// SearchPanes
-			if (loadedState.searchPanes) {
+			if (this.c.searchPanes && loadedState.searchPanes) {
 				this.s.dt.context[0]._searchPanes.s.selectionList = loadedState.searchPanes.selectionList;
 				this.s.dt.context[0]._searchPanes.s.panes = loadedState.searchPanes.panes;
 				this.s.dt.searchPanes.rebuildPane(false, true);
 			}
 
 			// ColReorder
-			if (loadedState.ColReorder) {
+			if (this.c.colReorder && loadedState.ColReorder) {
 				this.s.dt.colReorder.order(loadedState.ColReorder, true);
 			}
 
 			// Scroller
-			if (loadedState.scroller) {
+			if (this.c.scroller && loadedState.scroller) {
 				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
 			}
 

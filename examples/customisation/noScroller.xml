@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore scroller"/>
+
+<js lib="jquery datatables staterestore buttons scroller">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        ajax:           "../data/2500.txt",
+        deferRender:    true,
+        scrollY:        200,
+        scrollCollapse: true,
+        scroller:       true,
+        buttons:[
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    scroller: false
+                },
+            }
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Don't save scroller</title>
+
+<info><![CDATA[
+This example shows how to use the `-init stateRestore.scroller` initialisation option to disable the saving of the table's current scroll position by setting the initialisation option to `false`. The default value is `true` meaning that the scroll position will be saved when using `-init scroller`.
+]]></info>
+
+<custom-table>
+<table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>ZIP / Post code</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
+</custom-table>
+
+</dt-example>
