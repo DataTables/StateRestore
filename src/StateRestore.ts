@@ -240,6 +240,7 @@ export default class StateRestore {
 			return;
 		}
 
+		// this.s.dt.state.save();
 		let savedState: IState;
 
 		// If no state has been provided then create a new one from the current state
@@ -389,8 +390,26 @@ export default class StateRestore {
 
 			// SearchPanes
 			if (this.c.searchPanes && loadedState.searchPanes) {
-				this.s.dt.context[0]._searchPanes.s.selectionList = loadedState.searchPanes.selectionList;
-				this.s.dt.context[0]._searchPanes.s.panes = loadedState.searchPanes.panes;
+				this.s.dt.searchPanes.clearSelections();
+				// Set the selection list for the panes so that the correct
+				// rows can be reselected and in the right order
+				this.s.dt.context[0]._searchPanes.s.selectionList =
+					loadedState.searchPanes.selectionList !== undefined ?
+						loadedState.searchPanes.selectionList :
+						[];
+
+				// Find the panes that match from the state and the actual instance
+				for (let loadedPane of loadedState.searchPanes.panes) {
+					for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
+						if (loadedPane.id === pane.s.index) {
+							// Set the value of the searchbox
+							pane.dom.searchBox.val(loadedPane.searchTerm);
+							// Set the value of the order
+							pane.s.dtPane.order(loadedPane.order);
+						}
+					}
+				}
+
 				this.s.dt.searchPanes.rebuildPane(false, true);
 			}
 

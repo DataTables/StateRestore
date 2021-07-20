@@ -13,15 +13,7 @@ $(document).ready(function() {
         scrollY:        200,
         scrollCollapse: true,
         scroller:       true,
-        buttons:[
-            {
-                extend: 'stateRestore',
-                config: {
-                    state: 1
-                },
-                text: 'State 1'
-            }
-        ]
+        buttons:['createStateRestore', 'savedStates']
     });
 });
 ]]>

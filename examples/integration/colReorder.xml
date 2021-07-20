@@ -9,15 +9,7 @@ $(document).ready(function() {
     $('#example').DataTable({
         dom: 'Blfrtip',
         colReorder: true,
-        buttons:[
-            {
-                extend: 'stateRestore',
-                config: {
-                    state: 1
-                },
-                text: 'State 1'
-            }
-        ]
+        buttons:['createStateRestore', 'savedStates']
     });
 });
 ]]>
