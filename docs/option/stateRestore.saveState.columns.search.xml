@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.columns.search</name>
+	<name>stateRestore.saveState.columns.search</name>
 	<summary>Enable/Disable saving the column searching</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.columns.search` option is `true` meaning that as standard the column searches are saved.
+        The default value for the `-init stateRestore.saveState.columns.search` option is `true` meaning that as standard the column searches are saved.
 	</default>
 	<description>
 		<![CDATA[

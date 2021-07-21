@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.order</name>
+	<name>stateRestore.saveState.order</name>
 	<summary>Enable/Disable saving the column order (sorting)</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.order` option is `true` meaning that as standard the column orders are saved.
+        The default value for the `-init stateRestore.saveState.order` option is `true` meaning that as standard the column orders are saved.
 	</default>
 	<description>
 		<![CDATA[

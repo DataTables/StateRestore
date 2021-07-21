@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.searchPanes</name>
+	<name>stateRestore.saveState.searchPanes</name>
 	<summary>Enable/Disable saving the searchPanes state</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.searchPanes` option is `true` meaning that as standard the `-init searchPanes` state is to be saved.
+        The default value for the `-init stateRestore.saveState.searchPanes` option is `true` meaning that as standard the `-init searchPanes` state is to be saved.
 	</default>
 	<description>
 		<![CDATA[

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.columns</name>
+	<name>stateRestore.saveState.columns</name>
 	<summary>Enable/Disable saving the column searching and/or visibility</summary>
 	<since>0.0.1</since>
 
 	<type type="object">
 		<description>
-            When this initialisation option is an object, it takes two properties - `-init stateRestore.columns.search` and `-init stateRestore.columns.visible`. These are both boolean values that enable/disable column searching and visibility respectively.
+            When this initialisation option is an object, it takes two properties - `-init stateRestore.saveState.columns.search` and `-init stateRestore.saveState.columns.visible`. These are both boolean values that enable/disable column searching and visibility respectively.
         </description>
 	</type>
 
@@ -17,13 +17,13 @@
 	</type>
 
 	<default value="object">
-        The default value for the `-init stateRestore.columns` option is and object containing the `-init stateRestore.columns.search` and `-init stateRestore.columns.visible` initialisation options. Both of these have a default value of `true`.
+        The default value for the `-init stateRestore.saveState.columns` option is and object containing the `-init stateRestore.columns.saveState.search` and `-init stateRestore.saveState.columns.visible` initialisation options. Both of these have a default value of `true`.
 	</default>
 	<description>
 		<![CDATA[
 		This option allows for the saving of column visibility and searching to be enabled or disabled.
 
-		As default the value is an object, containing the `-init stateRestore.columns.search` and `-init stateRestore.columns.visible` initialisation options. Both of these have a default value of `true`. The option can also be a boolean value that will either enable or disable both `-init stateRestore.columns.search` and `-init stateRestore.columns.visible`.
+		As default the value is an object, containing the `-init stateRestore.saveState.columns.search` and `-init stateRestore.saveState.columns.visible` initialisation options. Both of these have a default value of `true`. The option can also be a boolean value that will either enable or disable both `-init stateRestore.saveState.columns.search` and `-init stateRestore.saveState.columns.visible`.
 
         ]]>
 	</description>

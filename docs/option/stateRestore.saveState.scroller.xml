@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.scroller</name>
+	<name>stateRestore.saveState.scroller</name>
 	<summary>Enable/Disable saving the scroller state</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.scroller` option is `true` meaning that as standard the `-init scroller` position is to be saved.
+        The default value for the `-init stateRestore.saveState.scroller` option is `true` meaning that as standard the `-init scroller` position is to be saved.
 	</default>
 	<description>
 		<![CDATA[

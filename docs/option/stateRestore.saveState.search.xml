@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.search</name>
+	<name>stateRestore.saveState.search</name>
 	<summary>Enable/Disable saving the search</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.search` option is `true` meaning that as standard the search is to be saved.
+        The default value for the `-init stateRestore.saveState.search` option is `true` meaning that as standard the search is to be saved.
 	</default>
 	<description>
 		<![CDATA[

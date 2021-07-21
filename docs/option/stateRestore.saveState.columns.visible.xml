@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.columns.visible</name>
+	<name>stateRestore.saveState.columns.visible</name>
 	<summary>Enable/Disable saving the column visibility</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.columns.visible` option is `true` meaning that as standard the column visibilities are saved.
+        The default value for the `-init stateRestore.saveState.columns.visible` option is `true` meaning that as standard the column visibilities are saved.
 	</default>
 	<description>
 		<![CDATA[

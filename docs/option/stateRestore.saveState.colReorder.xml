@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>stateRestore.colReorder</name>
+	<name>stateRestore.saveState.colReorder</name>
 	<summary>Enable/Disable saving the order of the columns</summary>
 	<since>0.0.1</since>
 
@@ -11,7 +11,7 @@
 	</type>
 
 	<default value="true">
-        The default value for the `-init stateRestore.colReorder` option is `true` meaning that as standard the order of the columns across the table are saved.
+        The default value for the `-init stateRestore.saveState.colReorder` option is `true` meaning that as standard the order of the columns across the table are saved.
 	</default>
 	<description>
 		<![CDATA[
@@ -21,7 +21,7 @@ As default the value is true, meaning that the order of the columns across the t
 
 Take a look at [this example]([../extensions/StateRestore/examples/customisation/noColReorder.html) to see this in action.
 
-This option is different to the `-init stateRestore.order` option. It decides whether to save the order of the data within the columns (ascending/descending). This option decides whether to save the order of the columns horizontally across the table, something that is changeable with the `-init colReorder` option.
+This option is different to the `-init stateRestore.saveState.order` option. It decides whether to save the order of the data within the columns (ascending/descending). This option decides whether to save the order of the columns horizontally across the table, something that is changeable with the `-init colReorder` option.
         ]]>
 	</description>
 
