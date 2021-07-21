@@ -81,40 +81,60 @@ export default class StateRestore {
 	};
 
 	private static defaults: restoreType.IDefaults = {
-		colReorder: true,
-		colReorderToggle: true,
-		columns: {
-			search: true,
-			visible: true
-		},
-		columnsToggle: {
-			search: true,
-			visible: true
-		},
 		create: true,
-		creationModal: true,
+		creationModal: false,
 		delete: true,
 		i18n: {
+			creationModal: {
+				button: 'Create',
+				colReorder: 'Column Order:',
+				columns: {
+					search: 'Column Search:',
+					visible: 'Column Visibility:'
+				},
+				name: 'Name:',
+				order: 'Sorting:',
+				paging: 'Paging:',
+				scroller: 'Scroll Position:',
+				search: 'Search:',
+				searchBuilder: 'SearchBuilder:',
+				searchPanes: 'SearchPanes:',
+				title: 'Create New State',
+			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
-			renameLabel: 'New Name:'
+			renameLabel: 'New Name:',
 		},
-		order: true,
-		orderToggle: true,
-		paging: true,
-		pagingToggle: true,
 		rename: true,
 		save: true,
-		scroller: true,
-		scrollerToggle: true,
-		search: true,
-		searchBuilder: true,
-		searchBuilderToggle: true,
-		searchPanes: true,
-		searchPanesToggle: true,
-		searchToggle: true
+		saveState: {
+			colReorder: true,
+			columns: {
+				search: true,
+				visible: true
+			},
+			order: true,
+			paging: true,
+			scroller: true,
+			search: true,
+			searchBuilder: true,
+			searchPanes: true,
+		},
+		toggle: {
+			colReorder: false,
+			columns:{
+				search: false,
+				visible: false
+			},
+			order: false,
+			paging: false,
+			scroller: false,
+			search: false,
+			searchBuilder: false,
+			searchPanes: false,
+		}
 	};
 
 	public classes: IClasses;
@@ -271,57 +291,57 @@ export default class StateRestore {
 		this.s.savedState = savedState;
 
 		// Order
-		if (!this.c.order) {
+		if (!this.c.saveState.order) {
 			this.s.savedState.order = undefined;
 		}
 
 		// Search
-		if (!this.c.search) {
+		if (!this.c.saveState.search) {
 			this.s.savedState.search = undefined;
 		}
 
 		// Columns
-		if (this.c.columns && this.s.savedState.columns) {
+		if (this.c.saveState.columns && this.s.savedState.columns) {
 			for (let i=0, ien=this.s.savedState.columns.length ; i<ien ; i++) {
 				let col = this.s.savedState.columns[i];
 
 				// Visibility
-				if (typeof this.c.columns !== 'boolean' && !this.c.columns.visible) {
+				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.visible) {
 					this.s.savedState.columns[i].visible = undefined;
 				}
 
 				// Search
-				if (typeof this.c.columns !== 'boolean' && this.c.columns.search) {
+				if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns.search) {
 					this.s.savedState.columns[i].search = undefined;
 				}
 			}
 		}
-		else if (!this.c.columns) {
+		else if (!this.c.saveState.columns) {
 			this.s.savedState.columns = undefined;
 		}
 
 		// SearchBuilder
-		if (!this.c.searchBuilder) {
+		if (!this.c.saveState.searchBuilder) {
 			this.s.savedState.searchBuilder = undefined;
 		}
 
 		// SearchPanes
-		if (!this.c.searchPanes) {
+		if (!this.c.saveState.searchPanes) {
 			this.s.savedState.searchPanes = undefined;
 		}
 
 		// ColReorder
-		if (!this.c.colReorder) {
+		if (!this.c.saveState.colReorder) {
 			this.s.savedState.colReorder = undefined;
 		}
 
 		// Scroller
-		if (!this.c.scroller) {
+		if (!this.c.saveState.scroller) {
 			this.s.savedState.scroller = undefined;
 		}
 
 		// Paging
-		if (!this.c.paging) {
+		if (!this.c.saveState.paging) {
 			this.s.savedState.start = 0;
 		}
 
@@ -363,7 +383,7 @@ export default class StateRestore {
 			settings.oLoadedState = $.extend(true, {}, loadedState);
 
 			// Order
-			if (this.c.order && loadedState.order !== undefined) {
+			if (this.c.saveState.order && loadedState.order !== undefined) {
 				settings.aaSorting = [];
 				$.each(loadedState.order, function(i, col) {
 					settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
@@ -374,34 +394,42 @@ export default class StateRestore {
 			}
 
 			// Search
-			if (this.c.search && loadedState.search !== undefined) {
+			if (this.c.saveState.search && loadedState.search !== undefined) {
 				$.extend(settings.oPreviousSearch, this.searchToHung(loadedState.search));
 			}
 
 			// Columns
-			if (this.c.columns && loadedState.columns) {
+			if (this.c.saveState.columns && loadedState.columns) {
 				for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
 					let col = loadedState.columns[i];
 
 					// Visibility
-					if (typeof this.c.columns !== 'boolean' && this.c.columns.visible && col.visible !== undefined) {
+					if (
+						typeof this.c.saveState.columns !== 'boolean' &&
+						this.c.saveState.columns.visible &&
+						col.visible !== undefined
+					) {
 						settings.aoColumns[i].bVisible = col.visible;
 					}
 
 					// Search
-					if (typeof this.c.columns !== 'boolean' && this.c.columns.search && col.search !== undefined) {
+					if (
+						typeof this.c.saveState.columns !== 'boolean' &&
+						this.c.saveState.columns.search &&
+						col.search !== undefined
+					) {
 						$.extend(settings.aoPreSearchCols[i], this.searchToHung(col.search));
 					}
 				}
 			}
 
 			// SearchBuilder
-			if (this.c.searchBuilder && loadedState.searchBuilder) {
+			if (this.c.saveState.searchBuilder && loadedState.searchBuilder) {
 				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
 			}
 
 			// SearchPanes
-			if (this.c.searchPanes && loadedState.searchPanes) {
+			if (this.c.saveState.searchPanes && loadedState.searchPanes) {
 				this.s.dt.searchPanes.clearSelections();
 				// Set the selection list for the panes so that the correct
 				// rows can be reselected and in the right order
@@ -426,12 +454,12 @@ export default class StateRestore {
 			}
 
 			// ColReorder
-			if (this.c.colReorder && loadedState.ColReorder) {
+			if (this.c.saveState.colReorder && loadedState.ColReorder) {
 				this.s.dt.colReorder.order(loadedState.ColReorder, true);
 			}
 
 			// Scroller
-			if (this.c.scroller && loadedState.scroller) {
+			if (this.c.saveState.scroller && loadedState.scroller) {
 				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
 			}
 

@@ -16,10 +16,39 @@ div.dtsr-confirmation, div.dtsr-creation {
         text-align: center;
     }
 
-    div.dtsr-confirmation-buttons, div.creation-form {
+    div.dtsr-confirmation-buttons {
         text-align: center;
         margin-top: 1.5em;
     }
+
+    div.dtsr-creation-text {
+        text-align: left;
+        padding-left: 0px;
+
+        span {
+            font-size: 20px;
+        }
+    }
+    
+    div.dtsr-creation-form {
+        div.dtsr-left, div.dtsr-right {
+            display: inline-block;
+            width: 50%;
+        }
+    
+        div.dtsr-left {
+            text-align: right;
+        }
+    
+        div.dtsr-right {
+            text-align: left;
+        }
+    }
+}
+
+
+div.dtsr-creation {
+    top: 10%;
 }
 
 div.dtsr-form-row {
@@ -29,6 +58,10 @@ div.dtsr-form-row {
     input.dtsr-name-input {
         margin-left: 5px;
     }
+}
+
+div.dtsr-check-row {
+    padding-top: 0px;
 }
 
 div.dtsr-creation-text {

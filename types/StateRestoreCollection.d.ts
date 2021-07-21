@@ -3,6 +3,7 @@ import StateRestore from './StateRestore';
 export declare function setJQuery(jq: any): void;
 export interface IClasses {
     background: string;
+    checkRow: string;
     colReorderToggle: string;
     columnsSearchToggle: string;
     columnsVisibleToggle: string;
@@ -13,9 +14,11 @@ export interface IClasses {
     dtButton: string;
     emptyStates: string;
     formRow: string;
+    leftSide: string;
     nameInput: string;
     orderToggle: string;
     pagingToggle: string;
+    rightSide: string;
     scrollerToggle: string;
     searchBuilderToggle: string;
     searchPanesToggle: string;
@@ -29,6 +32,7 @@ export interface IDom {
     createButtonRow: JQuery<HTMLElement>;
     creation: JQuery<HTMLElement>;
     creationForm: JQuery<HTMLElement>;
+    creationTitle: JQuery<HTMLElement>;
     nameInputRow: JQuery<HTMLElement>;
     orderToggle: JQuery<HTMLElement>;
     pagingToggle: JQuery<HTMLElement>;
@@ -66,14 +70,35 @@ export interface IColumnDefault {
     visible: boolean;
 }
 export interface II18n {
+    creationModal?: II18nCreationModal;
     deleteButton: string;
     deleteConfirm: string;
     emptyStates: string;
     renameButton: string;
     renameLabel: string;
 }
+export interface II18nCreationModal {
+    button: string;
+    colReorder: string;
+    columns: {
+        search: string;
+        visible: string;
+    };
+    name: string;
+    order: string;
+    paging: string;
+    scroller: string;
+    search: string;
+    searchBuilder: string;
+    searchPanes: string;
+    title: string;
+}
 export interface IS {
     dt: any;
+    hasColReorder: boolean;
+    hasScroller: boolean;
+    hasSearchBuilder: boolean;
+    hasSearchPanes: boolean;
     states: StateRestore[];
 }
 export default class StateRestoreCollection {

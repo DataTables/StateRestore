@@ -25,7 +25,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Creation Modal</title>
 
 <info><![CDATA[
-This example shows how to use the `-init stateRestore.rename` initialisation option to disable the renaming of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that renaming is allowed.
+This example shows how to use the `-init stateRestore.creationModal` initialisation option to display a modal when creating a new state. This allows users to choose a name initially rather than having to rename. By using the toggle options, what is saved and restored by StateRestore can also be changed.
 ]]></info>
 
 </dt-example>

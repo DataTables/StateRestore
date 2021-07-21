@@ -11,6 +11,7 @@ export function setJQuery(jq) {
 
 export interface IClasses {
 	background: string;
+	checkRow: string;
 	colReorderToggle: string;
 	columnsSearchToggle: string;
 	columnsVisibleToggle: string;
@@ -21,9 +22,11 @@ export interface IClasses {
 	dtButton: string;
 	emptyStates: string;
 	formRow: string;
+	leftSide: string;
 	nameInput: string;
 	orderToggle: string;
 	pagingToggle: string;
+	rightSide: string;
 	scrollerToggle: string;
 	searchBuilderToggle: string;
 	searchPanesToggle: string;
@@ -38,6 +41,7 @@ export interface IDom {
 	createButtonRow: JQuery<HTMLElement>;
 	creation: JQuery<HTMLElement>;
 	creationForm: JQuery<HTMLElement>;
+	creationTitle: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
 	pagingToggle: JQuery<HTMLElement>;
@@ -48,28 +52,25 @@ export interface IDom {
 }
 
 export interface IDefaults {
-	colReorder: boolean;
-	colReorderToggle: boolean;
-	columns: IColumnDefault | boolean;
-	columnsToggle: IColumnDefault | boolean;
 	create: boolean;
 	creationModal: boolean;
 	delete: boolean;
 	i18n: II18n;
-	order: boolean;
-	orderToggle: boolean;
-	paging: boolean;
-	pagingToggle: boolean;
 	rename: boolean;
 	save: boolean;
+	saveState: ISaveState;
+	toggle: ISaveState;
+}
+
+export interface ISaveState {
+	colReorder: boolean;
+	columns: IColumnDefault | boolean;
+	order: boolean;
+	paging: boolean;
 	scroller: boolean;
-	scrollerToggle: boolean;
 	search: boolean;
 	searchBuilder: boolean;
-	searchBuilderToggle: boolean;
 	searchPanes: boolean;
-	searchPanesToggle: boolean;
-	searchToggle: boolean;
 }
 
 export interface IColumnDefault {
@@ -78,6 +79,7 @@ export interface IColumnDefault {
 }
 
 export interface II18n {
+	creationModal?: II18nCreationModal;
 	deleteButton: string;
 	deleteConfirm: string;
 	emptyStates: string;
@@ -85,8 +87,29 @@ export interface II18n {
 	renameLabel: string;
 }
 
+export interface II18nCreationModal {
+	button: string;
+	colReorder: string;
+	columns: {
+		search: string;
+		visible: string;
+	};
+	name: string;
+	order: string;
+	paging: string;
+	scroller: string;
+	search: string;
+	searchBuilder: string;
+	searchPanes: string;
+	title: string;
+}
+
 export interface IS {
 	dt: any;
+	hasColReorder: boolean;
+	hasScroller: boolean;
+	hasSearchBuilder: boolean;
+	hasSearchPanes: boolean;
 	states: StateRestore[];
 }
 
@@ -95,6 +118,7 @@ export default class StateRestoreCollection {
 
 	private static classes: IClasses = {
 		background: 'dtsr-background',
+		checkRow: 'dtsr-check-row',
 		colReorderToggle: 'dtsr-colReorder-toggle',
 		columnsSearchToggle: 'dtsr-columns-search-toggle',
 		columnsVisibleToggle: 'dtsr-columns-visible-toggle',
@@ -105,9 +129,11 @@ export default class StateRestoreCollection {
 		dtButton: 'dt-button',
 		emptyStates: 'dtsr-emptyStates',
 		formRow: 'dtsr-form-row',
+		leftSide: 'dtsr-left',
 		nameInput: 'dtsr-name-input',
 		orderToggle: 'dtsr-order-toggle',
 		pagingToggle: 'dtsr-paging-toggle',
+		rightSide: 'dtsr-right',
 		scrollerToggle: 'dtsr-scroller-toggle',
 		searchBuilderToggle: 'dtsr-searchBuilder-toggle',
 		searchPanesToggle: 'dtsr-searchPanes-toggle',
@@ -115,40 +141,60 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults: IDefaults = {
-		colReorder: true,
-		colReorderToggle: true,
-		columns: {
-			search: true,
-			visible: true
-		},
-		columnsToggle: {
-			search: true,
-			visible: true
-		},
 		create: true,
-		creationModal: true,
+		creationModal: false,
 		delete: true,
 		i18n: {
+			creationModal: {
+				button: 'Create',
+				colReorder: 'Column Order:',
+				columns: {
+					search: 'Column Search:',
+					visible: 'Column Visibility:'
+				},
+				name: 'Name:',
+				order: 'Sorting:',
+				paging: 'Paging:',
+				scroller: 'Scroll Position:',
+				search: 'Search:',
+				searchBuilder: 'SearchBuilder:',
+				searchPanes: 'SearchPanes:',
+				title: 'Create New State',
+			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
-			renameLabel: 'New Name:'
+			renameLabel: 'New Name:',
 		},
-		order: true,
-		orderToggle: true,
-		paging: true,
-		pagingToggle: true,
 		rename: true,
 		save: true,
-		scroller: true,
-		scrollerToggle: true,
-		search: true,
-		searchBuilder: true,
-		searchBuilderToggle: true,
-		searchPanes: true,
-		searchPanesToggle: true,
-		searchToggle: true
+		saveState: {
+			colReorder: true,
+			columns: {
+				search: true,
+				visible: true
+			},
+			order: true,
+			paging: true,
+			scroller: true,
+			search: true,
+			searchBuilder: true,
+			searchPanes: true,
+		},
+		toggle: {
+			colReorder: false,
+			columns:{
+				search: false,
+				visible: false
+			},
+			order: false,
+			paging: false,
+			scroller: false,
+			search: false,
+			searchBuilder: false,
+			searchPanes: false,
+		}
 	};
 
 	public classes: IClasses;
@@ -176,67 +222,185 @@ export default class StateRestoreCollection {
 
 		this.s = {
 			dt: table,
+			hasColReorder: (dataTable as any).colReorder,
+			hasScroller: (dataTable as any).scroller,
+			hasSearchBuilder: (dataTable as any).searchBuilder,
+			hasSearchPanes: (dataTable as any).searchPanes,
 			states: []
 		};
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
 			colReorderToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>ColReorder</span><input type="checkbox" class="'+this.classes.colReorderToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.colReorder',
+								this.c.i18n.creationModal.colReorder
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.colReorderToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			columnsSearchToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>Column Searches</span><input type="checkbox" class="'+this.classes.columnsSearchToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.columns.search',
+								this.c.i18n.creationModal.columns.search
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.columnsSearchToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			columnsVisibleToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>Column Visibility</span>'+
-					'<input type="checkbox" class="'+this.classes.columnsVisibleToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.columns.visible',
+								this.c.i18n.creationModal.columns.visible
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.columnsVisibleToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			createButtonRow: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<button class="'+this.classes.creationButton+' ' + this.classes.dtButton + '">Create</button>' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<button class="'+this.classes.creationButton+' ' + this.classes.dtButton + '">'+
+						this.s.dt.i18n(
+							'stateRestore.creationModal.button',
+							this.c.i18n.creationModal.button
+						)+
+					'</button>' +
 				'</div>'
 			),
 			creation: $('<div class="'+this.classes.creation+'"/>'),
 			creationForm: $('<div class="'+this.classes.creationForm+'"/>'),
+			creationTitle: $(
+				'<div class="'+this.classes.creationText+'">'+
+					'<span>'+
+						this.s.dt.i18n(
+							'stateRestore.creationModal.title',
+							this.c.i18n.creationModal.title
+						)+
+					'</span>'+
+				'</div>'
+			),
 			nameInputRow: $(
 				'<div class="'+this.classes.formRow+'">' +
-					'<span>Name</span><input class="'+this.classes.nameInput+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.name',
+								this.c.i18n.creationModal.name
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input class="'+this.classes.nameInput+'">' +
+					'</div>'+
 				'</div>'
 			),
 			orderToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>Order</span><input type="checkbox" class="'+this.classes.orderToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.order',
+								this.c.i18n.creationModal.order
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.orderToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			pagingToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>Paging</span><input type="checkbox" class="'+this.classes.pagingToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.paging',
+								this.c.i18n.creationModal.paging
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.pagingToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			scrollerToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>Scroller</span><input type="checkbox" class="'+this.classes.scrollerToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.scroller',
+								this.c.i18n.creationModal.scroller
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.scrollerToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			searchBuilderToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>SearchBuilder</span><input type="checkbox" class="'+this.classes.searchBuilderToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.searchBuilder',
+								this.c.i18n.creationModal.searchBuilder
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.searchBuilderToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			searchPanesToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>SearchPanes</span><input type="checkbox" class="'+this.classes.searchPanesToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.searchPanes',
+								this.c.i18n.creationModal.searchPanes
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.searchPanesToggle+'">' +
+					'</div>'+
 				'</div>'
 			),
 			searchToggle: $(
-				'<div class="'+this.classes.formRow+'">' +
-					'<span>Search</span><input type="checkbox" class="'+this.classes.searchToggle+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<div class="'+this.classes.leftSide+'">'+
+						'<span>'+
+							this.s.dt.i18n(
+								'stateRestore.creationModal.search',
+								this.c.i18n.creationModal.search
+							)+
+						'</span>'+
+					'</div>'+
+					'<div class="' + this.classes.rightSide+'">'+
+						'<input type="checkbox" class="'+this.classes.searchToggle+'">' +
+					'</div>'+
 				'</div>'
 			)
 		};
@@ -266,8 +430,8 @@ export default class StateRestoreCollection {
 		// Check if the state exists before creating a new ones
 		let state = this.getState(identifier);
 
-		let createFunction = (id) => {
-			let newState = new StateRestore(this.s.dt.settings()[0], this.c, id);
+		let createFunction = (id, toggles) => {
+			let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
 			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
 			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
 			this.s.states.push(newState);
@@ -276,10 +440,10 @@ export default class StateRestoreCollection {
 
 		if (state === null) {
 			if(this.c.creationModal) {
-				this._creationModal('Create State', createFunction);
+				this._creationModal(createFunction);
 			}
 			else {
-				createFunction(identifier);
+				createFunction(identifier, {});
 			}
 		}
 	}
@@ -322,52 +486,66 @@ export default class StateRestoreCollection {
 		return returnStates;
 	}
 
-	private _creationModal(message, buttonAction): void {
+	private _creationModal(buttonAction): void {
 		this.dom.creation.empty();
+		this.dom.nameInputRow.children('input').val('');
 		this.dom.creationForm.append(this.dom.nameInputRow);
-		if (this.c.orderToggle) {
+		if (this.c.toggle.order) {
 			this.dom.creationForm.append(this.dom.orderToggle);
 		}
-		if (this.c.searchToggle) {
+		if (this.c.toggle.search) {
 			this.dom.creationForm.append(this.dom.searchToggle);
 		}
-		if (this.c.pagingToggle) {
+		if (this.c.toggle.paging) {
 			this.dom.creationForm.append(this.dom.pagingToggle);
 		}
-		if (this.c.colReorderToggle) {
+		if (this.s.hasColReorder && this.c.toggle.colReorder) {
 			this.dom.creationForm.append(this.dom.colReorderToggle);
 		}
-		if (this.c.scrollerToggle) {
+		if (this.s.hasScroller &&this.c.toggle.scroller) {
 			this.dom.creationForm.append(this.dom.scrollerToggle);
 		}
-		if (this.c.searchBuilderToggle) {
+		if (this.s.hasSearchBuilder &&this.c.toggle.searchBuilder) {
 			this.dom.creationForm.append(this.dom.searchBuilderToggle);
 		}
-		if (this.c.searchPanesToggle) {
+		if (this.s.hasSearchPanes &&this.c.toggle.searchPanes) {
 			this.dom.creationForm.append(this.dom.searchPanesToggle);
 		}
 
-		if (typeof this.c.columnsToggle === 'boolean' && this.c.columnsToggle) {
+		if (typeof this.c.toggle.columns === 'boolean' && this.c.toggle.columns) {
 			this.dom.creationForm.append(this.dom.columnsSearchToggle);
 			this.dom.creationForm.append(this.dom.columnsVisibleToggle);
 		}
-		else if(typeof this.c.columnsToggle !== 'boolean') {
-			if (this.c.columnsToggle.search) {
+		else if(typeof this.c.toggle.columns !== 'boolean') {
+			if (this.c.toggle.columns.search) {
 				this.dom.creationForm.append(this.dom.columnsSearchToggle);
 			}
-			if (this.c.columnsToggle.visible) {
+			if (this.c.toggle.columns.visible) {
 				this.dom.creationForm.append(this.dom.columnsVisibleToggle);
 			}
 		}
 		this.dom.creationForm.append(this.dom.createButtonRow);
 		this.dom.creation
-			.append($('<div class="'+this.classes.creationText+'"><span>'+message+'</span></div>'))
+			.append(this.dom.creationTitle)
 			.append(this.dom.creationForm);
 		this.dom.background.appendTo('body');
 		this.dom.creation.appendTo('body');
 
 		$('button.'+this.classes.creationButton).one('click', () => {
-			buttonAction($('input.' + this.classes.nameInput).val());
+			let toggles = {
+				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
+				columns: {
+					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
+					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
+				},
+				order: this.dom.orderToggle.children('input').is(':checked'),
+				paging: this.dom.pagingToggle.children('input').is(':checked'),
+				scroller: this.dom.scrollerToggle.children('input').is(':checked'),
+				search: this.dom.searchToggle.children('input').is(':checked'),
+				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
+				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
+			};
+			buttonAction($('input.' + this.classes.nameInput).val(), toggles);
 			this.dom.background.remove();
 			this.dom.creation.remove();
 		});
