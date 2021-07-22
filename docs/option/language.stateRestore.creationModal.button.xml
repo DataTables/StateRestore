@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.creationModal.button</name>
+	<summary>Set the text within the StateRestore creation modal button</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the button that is shown in the creation modal.
+		</description>
+    </type>
+
+	<default value="Create"/>
+
+	<description>
+		<![CDATA[
+            This string is displayed in the confirmation button within the creation modal that is shown when a state is being created.
+
+            The value set here is passed through the `-api i18n()` function.
+		]]>
+	</description>
+
+	<example title="Change text within creation confirmation button"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                creationModal:{
+                    button: 'Create a new state'
+                }
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>

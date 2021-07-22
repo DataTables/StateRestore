@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.creationModal.name</name>
+	<summary>Set the text for the label of the name input within the creation modal</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the label next to the input for the new states name that is shown in the creation modal when enabled within `-init stateRestore.creationModal`.
+		</description>
+    </type>
+
+	<default value="Name:"/>
+
+	<description>
+		<![CDATA[
+            This string is displayed in the label next to the input that allows a custom name to be set in the creation modal that is shown when creating a new state using `-init stateRestore`.
+
+            The value set here is passed through the `-api i18n()` function.
+		]]>
+	</description>
+
+	<example title="Change text of the name input label"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                creationModal:{
+                    name: 'State Name:'
+                }
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.creationModal.columns.search</name>
+	<summary>Set the text for the label of the columns search checkbox within the creation modal</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the label next to the checkbox for the columns search that is shown in the creation modal when enabled within `-init stateRestore.creationModal`.
+		</description>
+    </type>
+
+	<default value="Column Search:"/>
+
+	<description>
+		<![CDATA[
+            This string is displayed in the label next to the checkbox that allows toggling of column specific search state saving within the creation modal that is shown when a state is being created.
+
+            The value set here is passed through the `-api i18n()` function.
+		]]>
+	</description>
+
+	<example title="Change text of the columns search checkbox label"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                creationModal: {
+                    columns: {
+                        search: 'Searching:'
+                    }
+                }
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>

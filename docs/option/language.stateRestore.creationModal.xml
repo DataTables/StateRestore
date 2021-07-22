@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.creationModal</name>
+	<summary>Set the text for the elements that are shown within the creation modal</summary>
+	<since>0.0.1</since>
+
+	<type type="object">
+		<description>
+            An object containing all of the strings that are used within the creation modal (enabled using `-init stateRestore.creationModal`).
+		</description>
+    </type>
+
+	<default value='object'>
+        The default value for this language option is an object containing strings that allow for internationalisation of all of the text within the creation modal. The default for this object is as follows.
+
+        ```
+        {
+            button: 'Create',
+            colReorder: 'Column Order:',
+            columns: {
+                search: 'Column Search:',
+                visible: 'Column Visibility:'
+            },
+            name: 'Name:',
+            order: 'Sorting:',
+            paging: 'Paging:',
+            scroller: 'Scroll Position:',
+            search: 'Search:',
+            searchBuilder: 'SearchBuilder:',
+            searchPanes: 'SearchPanes:',
+            title: 'Create New State',
+        }
+        ```
+    </default>
+
+	<description>
+		<![CDATA[
+            This is an object that contains all of the language options needed to fully customise the creation modal. All language options within the object are passed through the `-api i18n()` function.
+		]]>
+	</description>
+
+	<example title="Change text of the columns search checkbox label"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                creationModal: {
+                    columns: {
+                        visible: 'Visible Columns:'
+                    }
+                }
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>
