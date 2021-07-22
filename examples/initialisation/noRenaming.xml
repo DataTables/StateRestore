@@ -23,7 +23,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="stateRestore">No state creation</title>
+<title lib="stateRestore">No state renaming</title>
 
 <info><![CDATA[
 This example shows how to use the `-init stateRestore.rename` initialisation option to disable the renaming of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that renaming is allowed.
