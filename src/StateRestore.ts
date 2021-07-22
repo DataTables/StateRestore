@@ -21,6 +21,7 @@ export interface IClasses {
 
 export interface IS {
 	dt: any;
+	fromServer: boolean;
 	identifier: string;
 	savedState: null | IState;
 }
@@ -81,6 +82,7 @@ export default class StateRestore {
 	};
 
 	private static defaults: restoreType.IDefaults = {
+		ajax: false,
 		create: true,
 		creationModal: false,
 		delete: true,
@@ -142,7 +144,7 @@ export default class StateRestore {
 	public c: restoreType.IDefaults;
 	public s: IS;
 
-	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string) {
+	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string, fromServer=false) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -162,6 +164,7 @@ export default class StateRestore {
 
 		this.s = {
 			dt: table,
+			fromServer,
 			identifier,
 			savedState: null
 		};
@@ -188,13 +191,19 @@ export default class StateRestore {
 				return;
 			}
 
-			let deleteFunction = () => {
-				sessionStorage.removeItem(
-					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
-				);
+			let deleteFunction;
+			if(!this.s.fromServer) {
+				deleteFunction = () => {
+					sessionStorage.removeItem(
+						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+					);
 
-				this.dom.confirmation.trigger('dtsr-delete');
-			};
+					this.dom.confirmation.trigger('dtsr-delete');
+				};
+			}
+			else {
+				deleteFunction = () => null;
+			}
 
 			if (skipModal) {
 				this.dom.confirmation.appendTo('body');
@@ -228,9 +237,14 @@ export default class StateRestore {
 
 			let renameFunction = (newId) => {
 				try {
-					sessionStorage.removeItem(
-						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
-					);
+					if(!this.s.fromServer) {
+						sessionStorage.removeItem(
+							'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+						);
+					}
+					else {
+						return;
+					}
 				}
 				catch (e) {
 					return;
@@ -346,10 +360,12 @@ export default class StateRestore {
 		}
 
 		try {
-			sessionStorage.setItem(
-				'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
-				JSON.stringify(this.s.savedState)
-			);
+			if(this.s.fromServer) {
+				sessionStorage.setItem(
+					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
+					JSON.stringify(this.s.savedState)
+				);
+			}
 		}
 		catch (e) {
 			return;
@@ -364,15 +380,7 @@ export default class StateRestore {
 	 */
 	public load(): void | IState {
 		try {
-			let loadedState = JSON.parse(
-				sessionStorage.getItem(
-					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
-				)
-			);
-
-			if (loadedState === null) {
-				return;
-			}
+			let loadedState = this.s.savedState;
 
 			let settings = this.s.dt.settings()[0];
 
@@ -454,8 +462,8 @@ export default class StateRestore {
 			}
 
 			// ColReorder
-			if (this.c.saveState.colReorder && loadedState.ColReorder) {
-				this.s.dt.colReorder.order(loadedState.ColReorder, true);
+			if (this.c.saveState.colReorder && loadedState.colReorder) {
+				this.s.dt.colReorder.order(loadedState.colReorder, true);
 			}
 
 			// Scroller

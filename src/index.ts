@@ -163,7 +163,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			e.stopPropagation();
 			config.parent._stateRestore.save();
 		},
-		text(dt){
+		text(dt) {
 			return dt.i18n('buttons.saveState', 'Save');
 		}
 	};
@@ -266,7 +266,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		_stateRegen(dt, SRC);
 	}
 
-	function _stateRegen(dt, src){
+	function _stateRegen(dt, src) {
 		let states = dt.stateRestore.states();
 		let stateButtons = [];
 		let stateRestoreOpts = dt.settings()[0]._stateRestore.c;

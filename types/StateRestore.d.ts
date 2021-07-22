@@ -12,6 +12,7 @@ export interface IClasses {
 }
 export interface IS {
     dt: any;
+    fromServer: boolean;
     identifier: string;
     savedState: null | IState;
 }
@@ -60,7 +61,7 @@ export default class StateRestore {
     dom: IDom;
     c: restoreType.IDefaults;
     s: IS;
-    constructor(settings: any, opts: restoreType.IDefaults, identifier: string);
+    constructor(settings: any, opts: restoreType.IDefaults, identifier: string, fromServer?: boolean);
     /**
      * Removes a state from storage and
      * then triggers the dtsr-delete event so that the StateRestoreCollection class can remove it's references as well.

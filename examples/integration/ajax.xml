@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore scroller"/>
+
+<js lib="jquery datatables staterestore buttons scroller">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        ajax: {
+          url: "../data/2500States.txt",
+          dataSrc: 'data'
+        },
+        deferRender:    true,
+        scrollY:        200,
+        scrollCollapse: true,
+        scroller:       true,
+        buttons:['createStateRestore', 'savedStates']
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Ajax States</title>
+
+<info><![CDATA[
+This is the `-init stateRestore`extension for DataTables.
+]]></info>
+
+<custom-table>
+<table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>ZIP / Post code</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
+</custom-table>
+
+</dt-example>

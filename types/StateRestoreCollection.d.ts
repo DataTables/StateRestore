@@ -42,6 +42,7 @@ export interface IDom {
     searchToggle: JQuery<HTMLElement>;
 }
 export interface IDefaults {
+    ajax: boolean | string;
     create: boolean;
     creationModal: boolean;
     delete: boolean;

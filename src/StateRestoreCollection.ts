@@ -2,6 +2,7 @@ let $;
 let dataTable;
 
 import { create } from 'domain';
+import { data } from 'jquery';
 import StateRestore from './StateRestore';
 
 export function setJQuery(jq) {
@@ -52,6 +53,7 @@ export interface IDom {
 }
 
 export interface IDefaults {
+	ajax: boolean | string;
 	create: boolean;
 	creationModal: boolean;
 	delete: boolean;
@@ -141,6 +143,7 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults: IDefaults = {
+		ajax: false,
 		create: true,
 		creationModal: false,
 		delete: true,
@@ -228,6 +231,32 @@ export default class StateRestoreCollection {
 			hasSearchPanes: (dataTable as any).SearchPanes !== undefined,
 			states: []
 		};
+
+		this.s.dt.on('xhr', (e, xhrsettings, json, xhr) => {
+			if(json && json.stateRestore) {
+				let states = Object.keys(json.stateRestore);
+				for (let state of states) {
+					let loadedState = json.stateRestore[state];
+					let newState = new StateRestore(
+						this.s.dt,
+						$.extend(true, {}, this.c, {delete: false, save: false}),
+						state,
+						true
+					);
+					newState.s.savedState = loadedState;
+					this.s.states.push(newState);
+					newState.dom.confirmation.on(
+						'dtsr-delete',
+						() => this._deleteCallback(loadedState.stateRestore.state)
+					);
+					newState.dom.confirmation.on(
+						'dtsr-rename',
+						() => this._collectionRebuild()
+					);
+					this._collectionRebuild();
+				}
+			}
+		});
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
@@ -429,14 +458,39 @@ export default class StateRestoreCollection {
 
 		// Check if the state exists before creating a new ones
 		let state = this.getState(identifier);
+		let createFunction;
 
-		let createFunction = (id, toggles) => {
-			let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
-			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
-			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
-			this.s.states.push(newState);
-			this._collectionRebuild();
-		};
+		if (typeof this.c.ajax === 'string') {
+			createFunction = (id, toggles) => {
+				let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
+				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
+				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+				this.s.states.push(newState);
+				this._collectionRebuild();
+				let ajaxData = {
+					stateRestore: {}
+				};
+
+				for (let ste of this.s.states) {
+					ajaxData.stateRestore[ste.s.identifier] = ste.s.savedState;
+				}
+
+				$.ajax({
+					ajaxData,
+					type: 'POST',
+					url: this.c.ajax,
+				});
+			};
+		}
+		else {
+			createFunction = (id, toggles) => {
+				let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
+				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
+				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+				this.s.states.push(newState);
+				this._collectionRebuild();
+			};
+		}
 
 		if (state === null) {
 			if(this.c.creationModal) {
@@ -632,14 +686,20 @@ export default class StateRestoreCollection {
 		}
 		else {
 			for (let state of this.s.states) {
+				let split = [];
+				if(this.c.save && state.c.save) {
+					split.push('saveState');
+				}
+				if(this.c.delete && state.c.delete) {
+					split.push('deleteState');
+				}
+				if(this.c.save && state.c.save && this.c.rename && state.c.rename) {
+					split.push('renameState');
+				}
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: [
-							this.c.save ? 'saveState' : '',
-							this.c.delete ? 'deleteState' : '',
-							this.c.save && this.c.rename ? 'renameState' : ''
-						],
+						split
 					},
 					extend: 'stateRestore',
 					text: state.s.identifier
