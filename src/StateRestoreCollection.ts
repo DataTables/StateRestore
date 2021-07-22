@@ -440,7 +440,7 @@ export default class StateRestoreCollection {
 
 		if (state === null) {
 			if(this.c.creationModal) {
-				this._creationModal(createFunction);
+				this._creationModal(createFunction, identifier);
 			}
 			else {
 				createFunction(identifier, {});
@@ -486,9 +486,9 @@ export default class StateRestoreCollection {
 		return returnStates;
 	}
 
-	private _creationModal(buttonAction): void {
+	private _creationModal(buttonAction, identifier): void {
 		this.dom.creation.empty();
-		this.dom.nameInputRow.children('input').val('');
+		this.dom.nameInputRow.children('div.dtsr-right').children('input').val(identifier);
 		this.dom.creationForm.append(this.dom.nameInputRow);
 		if (this.c.toggle.order) {
 			this.dom.creationForm.append(this.dom.orderToggle);

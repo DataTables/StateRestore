@@ -42,28 +42,24 @@ export interface IDom {
     searchToggle: JQuery<HTMLElement>;
 }
 export interface IDefaults {
-    colReorder: boolean;
-    colReorderToggle: boolean;
-    columns: IColumnDefault | boolean;
-    columnsToggle: IColumnDefault | boolean;
     create: boolean;
     creationModal: boolean;
     delete: boolean;
     i18n: II18n;
-    order: boolean;
-    orderToggle: boolean;
-    paging: boolean;
-    pagingToggle: boolean;
     rename: boolean;
     save: boolean;
+    saveState: ISaveState;
+    toggle: ISaveState;
+}
+export interface ISaveState {
+    colReorder: boolean;
+    columns: IColumnDefault | boolean;
+    order: boolean;
+    paging: boolean;
     scroller: boolean;
-    scrollerToggle: boolean;
     search: boolean;
     searchBuilder: boolean;
-    searchBuilderToggle: boolean;
     searchPanes: boolean;
-    searchPanesToggle: boolean;
-    searchToggle: boolean;
 }
 export interface IColumnDefault {
     search: boolean;
