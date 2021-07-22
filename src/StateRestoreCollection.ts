@@ -490,37 +490,61 @@ export default class StateRestoreCollection {
 		this.dom.creation.empty();
 		this.dom.nameInputRow.children('div.dtsr-right').children('input').val(identifier);
 		this.dom.creationForm.append(this.dom.nameInputRow);
-		if (this.c.toggle.order) {
+
+		// Order toggle - check toggle and saving enabled
+		if (this.c.toggle.order && this.c.saveState.order) {
 			this.dom.creationForm.append(this.dom.orderToggle);
 		}
-		if (this.c.toggle.search) {
+
+		// Search toggle - check toggle and saving enabled
+		if (this.c.toggle.search && this.c.saveState.search) {
 			this.dom.creationForm.append(this.dom.searchToggle);
 		}
-		if (this.c.toggle.paging) {
+
+		// Paging toggle - check toggle and saving enabled
+		if (this.c.toggle.paging && this.c.saveState.paging) {
 			this.dom.creationForm.append(this.dom.pagingToggle);
 		}
-		if (this.s.hasColReorder && this.c.toggle.colReorder) {
+
+		// ColReorder toggle - check toggle and saving enabled
+		if (this.s.hasColReorder && this.c.toggle.colReorder && this.c.saveState.colReorder) {
 			this.dom.creationForm.append(this.dom.colReorderToggle);
 		}
-		if (this.s.hasScroller &&this.c.toggle.scroller) {
+
+		// Scroller toggle - check toggle and saving enabled
+		if (this.s.hasScroller &&this.c.toggle.scroller && this.c.saveState.scroller) {
 			this.dom.creationForm.append(this.dom.scrollerToggle);
 		}
-		if (this.s.hasSearchBuilder &&this.c.toggle.searchBuilder) {
+
+		// SearchBuilder toggle - check toggle and saving enabled
+		if (this.s.hasSearchBuilder &&this.c.toggle.searchBuilder && this.c.saveState.searchBuilder) {
 			this.dom.creationForm.append(this.dom.searchBuilderToggle);
 		}
-		if (this.s.hasSearchPanes &&this.c.toggle.searchPanes) {
+
+		// SearchPanes toggle - check toggle and saving enabled
+		if (this.s.hasSearchPanes &&this.c.toggle.searchPanes && this.c.saveState.searchPanes) {
 			this.dom.creationForm.append(this.dom.searchPanesToggle);
 		}
 
-		if (typeof this.c.toggle.columns === 'boolean' && this.c.toggle.columns) {
+		// Columns toggle - check toggle and saving enabled
+		if (typeof this.c.toggle.columns === 'boolean' && this.c.toggle.columns && this.c.saveState.columns) {
 			this.dom.creationForm.append(this.dom.columnsSearchToggle);
 			this.dom.creationForm.append(this.dom.columnsVisibleToggle);
 		}
-		else if(typeof this.c.toggle.columns !== 'boolean') {
-			if (this.c.toggle.columns.search) {
-				this.dom.creationForm.append(this.dom.columnsSearchToggle);
+		else if (typeof this.c.toggle.columns !== 'boolean') {
+			if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns) {
+				// Column search toggle - check toggle and saving enabled
+				if (this.c.toggle.columns.search && this.c.saveState.columns.search) {
+					this.dom.creationForm.append(this.dom.columnsSearchToggle);
+				}
+
+				// Column visiblity toggle - check toggle and saving enabled
+				if (this.c.toggle.columns.visible && this.c.saveState.columns.visible) {
+					this.dom.creationForm.append(this.dom.columnsVisibleToggle);
+				}
 			}
-			if (this.c.toggle.columns.visible) {
+			else if (this.c.saveState.columns) {
+				this.dom.creationForm.append(this.dom.columnsSearchToggle);
 				this.dom.creationForm.append(this.dom.columnsVisibleToggle);
 			}
 		}
@@ -533,17 +557,17 @@ export default class StateRestoreCollection {
 
 		$('button.'+this.classes.creationButton).one('click', () => {
 			let toggles = {
-				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
+				colReorder: this.dom.colReorderToggle.children('div.dtsr-right').children('input').is(':checked'),
 				columns: {
-					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
-					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
+					search: this.dom.columnsSearchToggle.children('div.dtsr-right').children('input').is(':checked'),
+					visible: this.dom.columnsVisibleToggle.children('div.dtsr-right').children('input').is(':checked')
 				},
-				order: this.dom.orderToggle.children('input').is(':checked'),
-				paging: this.dom.pagingToggle.children('input').is(':checked'),
-				scroller: this.dom.scrollerToggle.children('input').is(':checked'),
-				search: this.dom.searchToggle.children('input').is(':checked'),
-				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
-				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
+				order: this.dom.orderToggle.children('div.dtsr-right').children('input').is(':checked'),
+				paging: this.dom.pagingToggle.children('div.dtsr-right').children('input').is(':checked'),
+				scroller: this.dom.scrollerToggle.children('div.dtsr-right').children('input').is(':checked'),
+				search: this.dom.searchToggle.children('div.dtsr-right').children('input').is(':checked'),
+				searchBuilder: this.dom.searchBuilderToggle.children('div.dtsr-right').children('input').is(':checked'),
+				searchPanes: this.dom.searchPanesToggle.children('div.dtsr-right').children('input').is(':checked'),
 			};
 			buttonAction($('input.' + this.classes.nameInput).val(), toggles);
 			this.dom.background.remove();
