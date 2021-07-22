@@ -3,6 +3,8 @@ import StateRestore from './StateRestore';
 export declare function setJQuery(jq: any): void;
 export interface IClasses {
     background: string;
+    checkBox: string;
+    checkLabel: string;
     checkRow: string;
     colReorderToggle: string;
     columnsSearchToggle: string;
@@ -11,11 +13,15 @@ export interface IClasses {
     creationButton: string;
     creationForm: string;
     creationText: string;
+    creationTitle: string;
     dtButton: string;
     emptyStates: string;
     formRow: string;
     leftSide: string;
+    modalFoot: string;
     nameInput: string;
+    nameLabel: string;
+    nameRow: string;
     orderToggle: string;
     pagingToggle: string;
     rightSide: string;

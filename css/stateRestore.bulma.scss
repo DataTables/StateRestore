@@ -1,1 +1,17 @@
 @import './common.scss';
+
+div.dtsr-form-row {
+    display: block;
+}
+
+div.dtsr-creation-form {
+    width: 100%;
+}
+
+div.checkbox {
+    cursor: default;
+}
+
+span.dtsr-check-label {
+    padding-left: 3px;
+}
