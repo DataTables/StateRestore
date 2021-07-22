@@ -64,4 +64,6 @@ This option allows a creation modal to be displayed to the user. This allows the
 });
 ]]></example>
 
+<related type="option">stateRestore.toggle</related>
+
 </dt-option>

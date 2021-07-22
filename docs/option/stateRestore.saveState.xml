@@ -132,6 +132,6 @@ Take a look at [this example]([../extensions/StateRestore/examples/customisation
 });
 ]]></example>
 
-
+<related type="option">stateRestore.toggle</related>
 
 </dt-option>

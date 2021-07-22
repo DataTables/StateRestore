@@ -136,6 +136,8 @@ As default the value is true, meaning that the user can decide whether the `-ini
 });
 ]]></example>
 
+<related type="option">stateRestore.saveState</related>
+<related type="option">stateRestore.creationModal</related>
 
 
 </dt-option>
