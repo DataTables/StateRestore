@@ -222,10 +222,10 @@ export default class StateRestoreCollection {
 
 		this.s = {
 			dt: table,
-			hasColReorder: (dataTable as any).colReorder,
-			hasScroller: (dataTable as any).scroller,
-			hasSearchBuilder: (dataTable as any).searchBuilder,
-			hasSearchPanes: (dataTable as any).searchPanes,
+			hasColReorder: (dataTable as any).ColReorder !== undefined,
+			hasScroller: (dataTable as any).Scroller !== undefined,
+			hasSearchBuilder: (dataTable as any).SearchBuilder !== undefined,
+			hasSearchPanes: (dataTable as any).SearchPanes !== undefined,
 			states: []
 		};
 
@@ -242,7 +242,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.colReorderToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.colReorderToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -257,7 +257,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.columnsSearchToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.columnsSearchToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -272,7 +272,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.columnsVisibleToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.columnsVisibleToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -324,7 +324,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.orderToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.orderToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -339,7 +339,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.pagingToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.pagingToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -354,7 +354,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.scrollerToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.scrollerToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -369,7 +369,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.searchBuilderToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.searchBuilderToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -384,7 +384,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.searchPanesToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.searchPanesToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			),
@@ -399,7 +399,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.rightSide+'">'+
-						'<input type="checkbox" class="'+this.classes.searchToggle+'">' +
+						'<input type="checkbox" class="'+this.classes.searchToggle+'" checked>' +
 					'</div>'+
 				'</div>'
 			)
