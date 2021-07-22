@@ -103,7 +103,9 @@ Take a look at [this example]([../extensions/StateRestore/examples/customisation
         {
             extend: 'savedStates',
             config: {
-                paging: false
+                saveState: {
+                    paging: false
+                }
             }
         },
         'colvis'
@@ -118,8 +120,10 @@ Take a look at [this example]([../extensions/StateRestore/examples/customisation
         {
             extend: 'savedStates',
             config: {
-                columns:{
-                    visible: false
+                saveState: {
+                    columns: {
+                        visible: false
+                    }
                 }
             }
         },
