@@ -1,8 +1,6 @@
 let $;
 let dataTable;
 
-import { create } from 'domain';
-import { data } from 'jquery';
 import StateRestore from './StateRestore';
 
 export function setJQuery(jq) {

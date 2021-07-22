@@ -1,7 +1,6 @@
 let $;
 let dataTable;
 
-import { IfStatement } from 'estree';
 import * as restoreType from './StateRestoreCollection';
 
 export function setJQuery(jq) {
