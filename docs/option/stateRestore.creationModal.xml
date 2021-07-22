@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.creationModal</name>
+	<summary>Display a modal on creation that allows the state to be customised</summary>
+	<since>0.0.1</since>
+
+	<type type="boolean">
+		<description>
+            When this option is set to `true`, a modal is displayed to the user on creation that allows them to customise the state that will be saved. If the value is set to `false` (the default) then no creation modal is displayed. In this case a name is automatically generated and all of the elements of datatables that support state saving will be saved within the new state.
+        </description>
+	</type>
+
+	<default value="false">
+        The default value for `-init stateRestore.creationModal` is `false`. Meaning that a name is automatically generated and all of the elements of datatables that support state saving will be saved within the new state.
+	</default>
+	<description>
+		<![CDATA[
+This option allows a creation modal to be displayed to the user. This allows them to set custom state names on initialisation and also customise what elements of datatables are saved in the new state. This is done by configuring the `-init stateRestore.toggle` option.
+        ]]>
+	</description>
+
+<example title="Enable creation modal"><![CDATA[
+ $('#example').DataTable({
+    dom: 'Blfrtip',
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                creationModal: true
+            }
+        },
+        'colvis'
+    ]
+});
+]]></example>
+
+<example title="Enable creation modal with toggling options"><![CDATA[
+ $('#example').DataTable({
+    dom: 'Blfrtip',
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                creationModal: true,
+                toggle: {
+                    colReorder: true,
+                    columns: {
+                        search: true,
+                        visible: true
+                    },
+                    order: true,
+                    paging: true,
+                    scroller: true,
+                    search: true,
+                    searchBuilder: true,
+                    searchPanes: true
+                }
+            }
+        },
+        'colvis'
+    ]
+});
+]]></example>
+
+</dt-option>
