@@ -501,13 +501,13 @@ export default class StateRestore {
 		this.dom.background.appendTo('body');
 		this.dom.confirmation.appendTo('body');
 
-		$('button.'+this.classes.confirmationButton).one('click', () => {
+		$('button.'+this.classes.confirmationButton.replace(/ /g, '.')).one('click', () => {
 			buttonAction();
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
 		});
 
-		$('div.'+this.classes.background).one('click', (event) => {
+		$('div.'+this.classes.background.replace(/ /g, '.')).one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
@@ -541,13 +541,13 @@ export default class StateRestore {
 		this.dom.background.appendTo('body');
 		this.dom.confirmation.appendTo('body');
 
-		$('button.'+this.classes.confirmationButton).one('click', () => {
-			buttonAction($('input.'+this.classes.input).val());
+		$('button.'+this.classes.confirmationButton.replace(/ /g, '.')).one('click', () => {
+			buttonAction($('input.'+this.classes.input.replace(/ /g, '.')).val());
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
 		});
 
-		$('div.'+this.classes.background).one('click', (event) => {
+		$('div.'+this.classes.background.replace(/ /g, '.')).one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.confirmation.remove();

@@ -605,7 +605,7 @@ export default class StateRestoreCollection {
 		this.dom.background.appendTo('body');
 		this.dom.creation.appendTo('body');
 
-		$('button.'+this.classes.creationButton).one('click', () => {
+		$('button.'+this.classes.creationButton.replace(/ /g, '.')).one('click', () => {
 			let toggles = {
 				colReorder: this.dom.colReorderToggle.children('div.dtsr-right').children('input').is(':checked'),
 				columns: {
@@ -619,12 +619,12 @@ export default class StateRestoreCollection {
 				searchBuilder: this.dom.searchBuilderToggle.children('div.dtsr-right').children('input').is(':checked'),
 				searchPanes: this.dom.searchPanesToggle.children('div.dtsr-right').children('input').is(':checked'),
 			};
-			buttonAction($('input.' + this.classes.nameInput).val(), toggles);
+			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), toggles);
 			this.dom.background.remove();
 			this.dom.creation.remove();
 		});
 
-		$('div.'+this.classes.background).one('click', (event) => {
+		$('div.'+this.classes.background.replace(/ /g, '.')).one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.creation.remove();
