@@ -3,3 +3,35 @@
 span.dtsr-check-label {
     padding-left: 3px;
 }
+
+span.dtsr-name-label, span.dtsr-confirmation-message {
+    padding-right: 3px;
+}
+
+div.dtsr-confirmation {
+    text-align: center;
+}
+
+span.dtsr-confirmation-message {
+    padding-top: 0.678571em;
+    padding-bottom: 0.678571em;
+    font-size: 1rem;
+}
+
+div.dt-btn-split-wrapper {
+    button.button {
+        width: calc(100% - 36px) !important;
+        margin: 0px !important;
+        display: inline-block !important;
+        border-top-left-radius: .28571429rem !important;
+        border-bottom-left-radius: .28571429rem !important;
+        border-top-right-radius: 0px !important;
+    }
+    button.dt-btn-split-drop {
+        border-top-right-radius: .28571429rem !important;
+        border-bottom-right-radius: .28571429rem !important;
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+        width: 36px !important;
+    }
+}

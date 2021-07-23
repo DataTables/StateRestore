@@ -50,6 +50,10 @@
 	});
 
 	$.extend(true, dataTable.StateRestore.classes, {
+		confirmation: 'dtsr-confirmation modal',
+		confirmationButton: 'dtsr-confirmation-button ui button',
+		confirmationText: 'modal-body',
+		renameModal: 'dtsr-rename-modal ui input'
 	});
 
 	return dataTable.searchPanes;

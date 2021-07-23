@@ -13,9 +13,11 @@ export interface IClasses {
 	confirmation: string;
 	confirmationButton: string;
 	confirmationButtons: string;
+	confirmationMessage: string;
 	confirmationText: string;
 	dtButton: string;
 	input: string;
+	renameModal: string;
 }
 
 export interface IS {
@@ -74,9 +76,11 @@ export default class StateRestore {
 		confirmation: 'dtsr-confirmation',
 		confirmationButton: 'dtsr-confirmation-button',
 		confirmationButtons: 'dtsr-confirmation-buttons',
+		confirmationMessage: 'dtsr-confirmation-message',
 		confirmationText: 'dtsr-confirmation-text',
 		dtButton: 'dt-button',
-		input: 'dtsr-input'
+		input: 'dtsr-input',
+		renameModal: 'dtsr-rename-modal'
 	};
 
 	private static defaults: restoreType.IDefaults = {
@@ -525,8 +529,8 @@ export default class StateRestore {
 		this.dom.confirmation.empty();
 		this.dom.confirmation
 			.append(
-				$('<div class="'+this.classes.confirmationText+'">' +
-					'<span>'+message+'</span>' +
+				$('<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
+					'<span class='+this.classes.confirmationMessage+'>'+message+'</span>' +
 					'<input class="'+this.classes.input+'"></input>' +
 				'</div>')
 			)
