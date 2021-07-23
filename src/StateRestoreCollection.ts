@@ -1,6 +1,7 @@
 let $;
 let dataTable;
 
+import { ajax } from 'jquery';
 import StateRestore from './StateRestore';
 
 export function setJQuery(jq) {
@@ -249,9 +250,8 @@ export default class StateRestoreCollection {
 					let loadedState = json.stateRestore[state];
 					let newState = new StateRestore(
 						this.s.dt,
-						$.extend(true, {}, this.c, {delete: false, save: false}),
-						state,
-						true
+						$.extend(true, {}, this.c),
+						state
 					);
 					newState.s.savedState = loadedState;
 					this.s.states.push(newState);
@@ -261,7 +261,15 @@ export default class StateRestoreCollection {
 					);
 					newState.dom.confirmation.on(
 						'dtsr-rename',
-						() => this._collectionRebuild()
+						() => {
+							this._collectionRebuild();
+						}
+					);
+					newState.dom.confirmation.on(
+						'dtsr-save',
+						() => {
+							this._collectionRebuild();
+						}
 					);
 					this._collectionRebuild();
 				}
@@ -468,19 +476,6 @@ export default class StateRestoreCollection {
 				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
 				this.s.states.push(newState);
 				this._collectionRebuild();
-				let ajaxData = {
-					stateRestore: {}
-				};
-
-				for (let ste of this.s.states) {
-					ajaxData.stateRestore[ste.s.identifier] = ste.s.savedState;
-				}
-
-				$.ajax({
-					ajaxData,
-					type: 'POST',
-					url: this.c.ajax,
-				});
 			};
 		}
 		else {
@@ -677,6 +672,9 @@ export default class StateRestoreCollection {
 	 */
 	private _collectionRebuild(): void {
 		let stateButtons = [];
+		let ajaxData = {
+			stateRestore: {}
+		};
 
 		if(this.s.states.length === 0) {
 			stateButtons.push(
@@ -705,8 +703,22 @@ export default class StateRestoreCollection {
 					extend: 'stateRestore',
 					text: state.s.identifier
 				});
+
+				if (typeof this.c.ajax === 'string') {
+					ajaxData.stateRestore[state.s.identifier] = state.s.savedState;
+				}
 			}
 		}
+
+
+		if (typeof this.c.ajax === 'string') {
+			$.ajax({
+				data: ajaxData,
+				type: 'POST',
+				url: this.c.ajax
+			});
+		}
+
 
 		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}

@@ -9,28 +9,20 @@ $(document).ready(function() {
     $('#example').DataTable({
         dom: 'Blfrtip',
         ajax: {
-          url: "../data/stateRestoreLoad.php",
+          url: "../data/2500States.txt",
           dataSrc: 'data'
         },
         deferRender:    true,
         scrollY:        200,
         scrollCollapse: true,
         scroller:       true,
-        buttons:[
-            'createStateRestore',
-            {
-                extend: 'savedStates',
-                config: {
-                    ajax: '../data/stateRestoreSave.php'
-                }
-            }
-        ]
+        buttons:['savedStates']
     });
 });
 ]]>
 </js>
 
-<title lib="stateRestore">Ajax States</title>
+<title lib="stateRestore">Predefined States</title>
 
 <info><![CDATA[
 This is the `-init stateRestore`extension for DataTables.

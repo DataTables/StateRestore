@@ -20,7 +20,6 @@ export interface IClasses {
 
 export interface IS {
 	dt: any;
-	fromServer: boolean;
 	identifier: string;
 	savedState: null | IState;
 }
@@ -143,7 +142,7 @@ export default class StateRestore {
 	public c: restoreType.IDefaults;
 	public s: IS;
 
-	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string, fromServer=false) {
+	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -163,7 +162,6 @@ export default class StateRestore {
 
 		this.s = {
 			dt: table,
-			fromServer,
 			identifier,
 			savedState: null
 		};
@@ -191,7 +189,7 @@ export default class StateRestore {
 			}
 
 			let deleteFunction;
-			if(!this.s.fromServer) {
+			if(!this.c.ajax) {
 				deleteFunction = () => {
 					sessionStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
@@ -201,7 +199,7 @@ export default class StateRestore {
 				};
 			}
 			else {
-				deleteFunction = () => null;
+				deleteFunction = () => this.dom.confirmation.trigger('dtsr-delete');
 			}
 
 			if (skipModal) {
@@ -236,13 +234,10 @@ export default class StateRestore {
 
 			let renameFunction = (newId) => {
 				try {
-					if(!this.s.fromServer) {
+					if(!this.c.ajax) {
 						sessionStorage.removeItem(
 							'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 						);
-					}
-					else {
-						return;
 					}
 				}
 				catch (e) {
@@ -359,11 +354,16 @@ export default class StateRestore {
 		}
 
 		try {
-			if(this.s.fromServer) {
+			if(!this.c.ajax) {
 				sessionStorage.setItem(
 					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 					JSON.stringify(this.s.savedState)
 				);
+
+				this.dom.confirmation.trigger('dtsr-save');
+			}
+			else {
+				this.dom.confirmation.trigger('dtsr-save');
 			}
 		}
 		catch (e) {

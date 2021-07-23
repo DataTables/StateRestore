@@ -161,6 +161,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.saveState = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
+			$('div.dt-button-background').click();
 			config.parent._stateRestore.save();
 		},
 		text(dt) {
