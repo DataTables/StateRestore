@@ -449,6 +449,7 @@ export default class StateRestoreCollection {
 
 		table.settings()[0]._stateRestore = this;
 		this._searchForStates();
+		this._collectionRebuild();
 
 		return this;
 	}
