@@ -629,6 +629,7 @@ export default class StateRestoreCollection {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.creation.remove();
+			this._collectionRebuild();
 		});
 	}
 

@@ -1,1 +1,29 @@
 @import './common.scss';
+
+div.dt-button-collection {
+    z-index: 2002;
+}
+
+span.dtsr-emptyStates {
+    background: white;
+    padding-top: 2px !important;
+}
+
+div.dt-btn-split-wrapper {
+    display: inline-block !important;
+    width: 100%;
+    
+    button.ui-button {
+        display: inline-block !important;
+        width: calc(100% - 24px);
+    }
+
+    button.dt-btn-split-drop {
+        display: inline-block !important;
+        width: 24px;
+    }
+}
+
+span.dtsr-confirmation-message {
+    padding-right: 3px;
+}

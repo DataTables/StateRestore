@@ -50,6 +50,8 @@
 	});
 
 	$.extend(true, dataTable.StateRestore.classes, {
+		// eslint-disable-next-line max-len
+		confirmationButton: 'dtsr-confirmation-button ui-button ui-state-default ui-button-text-only ui-corner-all ui-widget'
 	});
 
 	return dataTable.searchPanes;
