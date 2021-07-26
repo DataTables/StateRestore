@@ -50,6 +50,7 @@
 	});
 
 	$.extend(true, dataTable.StateRestore.classes, {
+		confirmationButton: 'dtsr-confirmation-button button'
 	});
 
 	return dataTable.searchPanes;

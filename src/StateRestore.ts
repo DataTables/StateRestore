@@ -531,7 +531,7 @@ export default class StateRestore {
 			.append(
 				$('<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<span class='+this.classes.confirmationMessage+'>'+message+'</span>' +
-					'<input class="'+this.classes.input+'"></input>' +
+					'<input class="'+this.classes.input+'" type="text"></input>' +
 				'</div>')
 			)
 			.append(

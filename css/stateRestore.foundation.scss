@@ -11,3 +11,25 @@ input.dtsr-check-box {
 button.dtsr-creation-button {
     margin-bottom: 0px;
 }
+
+div.dt-btn-split-wrapper {
+    a.button {
+        width: calc(100% - 43px);
+        flex: none !important;
+        height: 41px;
+    }
+
+    button.dt-btn-split-drop {
+        width: 43px;
+        flex: none !important;
+        margin-left: -1px;
+        height: 41px;
+    }
+}
+
+input.dtsr-input {
+    display: inline-block;
+    width: auto;
+    font-size: 1rem;
+    margin-left: 3px;
+}

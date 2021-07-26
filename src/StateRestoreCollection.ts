@@ -353,7 +353,7 @@ export default class StateRestoreCollection {
 						'</span>'+
 					'</div>'+
 					'<div class="' + this.classes.nameRow+'">'+
-						'<input class="'+this.classes.nameInput+'">' +
+						'<input class="'+this.classes.nameInput+'" type="text">' +
 					'</div>'+
 				'</div>'
 			),
