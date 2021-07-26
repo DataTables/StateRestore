@@ -46,6 +46,8 @@
 	});
 
 	$.extend(true, dataTable.StateRestore.classes, {
+		confirmationButton: 'dtsr-confirmation-button btn btn-secondary',
+		input: 'dtsr-input form-control'
 	});
 
 	return dataTable.searchPanes;

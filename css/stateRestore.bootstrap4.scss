@@ -1,1 +1,13 @@
 @import './common.scss';
+
+div.dt-btn-split-wrapper {
+    margin-right: 2px;
+    margin-left: 2px;
+    width: 96% !important;
+}
+
+input.dtsr-input {
+    display: inline-block;
+    width: auto;
+    margin-left: 3px;
+}
