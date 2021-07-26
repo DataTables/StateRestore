@@ -3,3 +3,19 @@
 span.dtsr-check-label {
     padding-left: 3px;
 }
+
+div.dt-btn-split-wrapper {
+    button.btn {
+        width: calc(100% - 30px);
+    }
+
+    button.dt-btn-split-drop {
+        width: 30px;
+    }
+}
+
+input.dtsr-input {
+    margin-left: 3px;
+    display: inline-block;
+    width: auto;
+}
