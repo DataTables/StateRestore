@@ -24,6 +24,41 @@ div.dt-btn-split-wrapper {
     }
 }
 
+div.dt-button-split-left {
+    padding-bottom: 0px;
+
+    button.dt-btn-split-drop-button {
+        width: 100%;
+        display: block;
+        margin-bottom: 8px;
+    }
+}
+
 span.dtsr-confirmation-message {
     padding-right: 3px;
+}
+
+
+div.dtsr-creation-form {
+    div.dtsr-form-row {
+        label.dtsr-name-label {
+            width: 33.3%;
+            display: inline-block;
+            text-align: left !important;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+
+        input.dtsr-name-input {
+            width: 64.6%;
+            display: inline-block;
+        }
+
+        input.dtsr-check-box {
+            margin-left: 33.3%;
+            margin-right: 14px;
+            display: inline-block;
+            position: relative;
+        }
+    }
 }

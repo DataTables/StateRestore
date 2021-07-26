@@ -4,16 +4,33 @@ span.dtsr-check-label {
     padding-left: 3px;
 }
 
-div.dt-btn-split-wrapper {
-    width: 96% !important;
-    margin-left: 4px;
-
-    button.btn {
-        width: calc(100% - 32px);
+div.dt-button-collection {
+    ul.dropdown-menu {
+        padding-top: 0px;
+   
+        div.dt-btn-split-wrapper {
+            width: 96% !important;
+            margin-left: 4px !important;
+            margin-top: 4px;
+        
+            button.btn {
+                width: calc(100% - 32px);
+            }
+            
+            button.dt-btn-split-drop {
+                width: 32px;
+            }
+        }
     }
-    
-    button.dt-btn-split-drop {
-        width: 32px;
+}
+
+div.dt-button-split-left {
+    button.dt-btn-split-drop-button {
+        background-color: white;
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
     }
 }
 

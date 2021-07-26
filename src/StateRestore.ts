@@ -104,6 +104,7 @@ export default class StateRestore {
 				searchBuilder: 'SearchBuilder:',
 				searchPanes: 'SearchPanes:',
 				title: 'Create New State',
+				toggleTitle: 'Includes:'
 			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',

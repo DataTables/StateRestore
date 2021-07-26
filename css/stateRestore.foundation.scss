@@ -12,18 +12,41 @@ button.dtsr-creation-button {
     margin-bottom: 0px;
 }
 
-div.dt-btn-split-wrapper {
-    a.button {
-        width: calc(100% - 43px);
-        flex: none !important;
-        height: 41px;
-    }
+div.dt-button-collection {
+    width: 150px;
 
-    button.dt-btn-split-drop {
-        width: 43px;
-        flex: none !important;
-        margin-left: -1px;
-        height: 41px;
+    div.dropdown-pane {
+        width: 150px;
+        padding: 4px !important;
+        padding-bottom: 0px !important;
+        
+        div.dt-btn-split-wrapper {
+            margin-bottom: 4px;
+
+            a.button {
+                width: calc(100% - 43px);
+                flex: none !important;
+                height: 41px;
+            }
+        
+            button.dt-btn-split-drop {
+                width: 43px;
+                flex: none !important;
+                margin-left: -1px;
+                height: 41px;
+            }
+        }
+
+        button.dt-btn-split-drop-button {
+            width: 100%;
+            margin-bottom: 4px;
+        }
+    }
+}
+
+div.dt-button-split-left {
+    div.dropdown-pane {
+        padding-bottom: 4px !important;
     }
 }
 

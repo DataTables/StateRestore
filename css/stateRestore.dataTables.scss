@@ -1,1 +1,10 @@
 @import './common.scss';
+
+div.dt-btn-split-wrapper {
+    background-color: rgba(255, 255, 255, 1) !important;
+    margin-bottom: 2px !important;
+
+    button {
+        margin-bottom: 0px !important;
+    }
+}

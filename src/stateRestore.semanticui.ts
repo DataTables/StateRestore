@@ -40,7 +40,7 @@
 		checkBox: 'dtsr-check-box form-check-input',
 		checkLabel: 'dtsr-check-label form-check-label',
 		checkRow: 'dtsr-check-row form',
-		creationButton: 'dtsr-creation-button ui button',
+		creationButton: 'dtsr-creation-button ui button primary',
 		creationForm: 'dtsr-creation-form modal-body',
 		creationText: 'dtsr-creation-text modal-header',
 		creationTitle: 'dtsr-creation-title modal-title',
@@ -51,7 +51,7 @@
 
 	$.extend(true, dataTable.StateRestore.classes, {
 		confirmation: 'dtsr-confirmation modal',
-		confirmationButton: 'dtsr-confirmation-button ui button',
+		confirmationButton: 'dtsr-confirmation-button ui button primary',
 		confirmationText: 'modal-body',
 		renameModal: 'dtsr-rename-modal ui input'
 	});

@@ -4,13 +4,37 @@ span.dtsr-check-label {
     padding-left: 3px;
 }
 
-div.dt-btn-split-wrapper {
-    button.btn {
-        width: calc(100% - 30px);
-    }
+div.dt-button-collection {
+    div.dropdown-menu {
+        padding-top: 0px;
+        padding-bottom: 4px;
 
-    button.dt-btn-split-drop {
-        width: 30px;
+        div.dt-btn-split-wrapper {
+            margin-top: 4px;
+            padding-left: 3px;
+            padding-right: 3px;
+            button.btn {
+                width: calc(100% - 30px);
+            }
+        
+            button.dt-btn-split-drop {
+                width: 30px;
+            }
+        }
+
+        button.dt-btn-split-drop-button {
+            margin-left: -2px;
+            margin-right: -2px;
+        }
+    }
+}
+
+div.dt-button-split-left {
+    div.dropdown-menu {
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 }
 
@@ -18,4 +42,29 @@ input.dtsr-input {
     margin-left: 3px;
     display: inline-block;
     width: auto;
+}
+
+
+div.dtsr-creation-form {
+    div.dtsr-form-row {
+        label.dtsr-name-label {
+            width: 33.3%;
+            display: inline-block;
+            text-align: left !important;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        input.dtsr-name-input {
+            width: 66.6%;
+            display: inline-block;
+        }
+
+        input.dtsr-check-box {
+            margin-left: 33.3%;
+            margin-right: 14px;
+            display: inline-block;
+            position: relative;
+        }
+    }
 }
