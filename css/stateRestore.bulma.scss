@@ -15,3 +15,15 @@ div.checkbox {
 span.dtsr-check-label {
     padding-left: 3px;
 }
+
+input.dtsr-input {
+    display: inline-block;
+    width: auto;
+}
+
+span.dtsr-confirmation-message {
+    font-size: 1rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    line-height: 2.5em;
+}
