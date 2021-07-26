@@ -51,6 +51,8 @@ declare let define: {
 	});
 
 	$.extend(true, dataTable.StateRestore.classes, {
+		confirmationButton: 'dtsr-confirmation-button btn btn-default',
+		input: 'dtsr-input form-control'
 	});
 
 	return dataTable.searchPanes;
