@@ -180,11 +180,11 @@ export default class StateRestoreCollection {
 				toggleTitle: 'Includes:'
 			},
 			deleteButton: 'Delete',
-			deleteConfirm: 'Are you sure you want to delete this state?',
+			deleteConfirm: 'Are you sure you want to delete %s?',
 			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
-			renameLabel: 'New Name:',
+			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
 		},
 		rename: true,

@@ -10,11 +10,11 @@
 		</description>
     </type>
 
-	<default value="Are you sure you want to delete this state?" />
+	<default value="Are you sure you want to delete %s?" />
 
 	<description>
 		<![CDATA[
-            This string is displayed within the delete modal to confirm that a user wants to delete this state.
+            This string is displayed within the delete modal to confirm that a user wants to delete this state. The %s token will be replaced with the name of the state that is being deleted.
 		]]>
 	</description>
 

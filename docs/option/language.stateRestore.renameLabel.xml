@@ -10,11 +10,11 @@
 		</description>
     </type>
 
-	<default value="New Name:" />
+	<default value="New Name for %s:" />
 
 	<description>
 		<![CDATA[
-            The string that will be displayed next to the input element within the rename modal to indicate the input should take the new name for this state.
+            The string that will be displayed next to the input element within the rename modal to indicate the input should take the new name for this state. The %s token will be replaced with the name of the state that is being deleted.
 		]]>
 	</description>
 

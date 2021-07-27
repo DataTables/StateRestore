@@ -113,11 +113,11 @@ export default class StateRestore {
 				toggleTitle: 'Includes:'
 			},
 			deleteButton: 'Delete',
-			deleteConfirm: 'Are you sure you want to delete this state?',
+			deleteConfirm: 'Are you sure you want to delete %s?',
 			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
-			renameLabel: 'New Name:',
+			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State',
 		},
 		rename: true,
@@ -242,7 +242,9 @@ export default class StateRestore {
 			}
 			else {
 				this.deleteModal(
-					this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
+					this.s.dt
+						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+						.replace(/%s/g, this.s.identifier),
 					this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
 					deleteFunction
 				);
@@ -290,7 +292,9 @@ export default class StateRestore {
 			}
 			else {
 				this.renameModal(
-					this.s.dt.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel),
+					this.s.dt
+						.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel)
+						.replace(/%s/g, this.s.identifier),
 					this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
 					renameFunction
 				);
