@@ -8,3 +8,22 @@ div.dt-btn-split-wrapper {
         margin-bottom: 0px !important;
     }
 }
+
+div.dt-button-collection {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+div.dtsr-creation-form {
+    div.dtsr-form-row {
+        input.dtsr-name-input {
+            width: 57% !important;
+            padding: 5px 4px;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+        }
+
+        input.dtsr-check-box {
+            margin-left: calc(33.3% + 30px) !important;
+        }
+    }
+}
