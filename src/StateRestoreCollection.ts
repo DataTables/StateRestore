@@ -744,6 +744,7 @@ export default class StateRestoreCollection {
 			});
 			for (let state of this.s.states) {
 				let split = [];
+				split.push('<h3>'+state.s.identifier+'</h3>');
 				if(this.c.save && state.c.save) {
 					split.push('updateState');
 				}
