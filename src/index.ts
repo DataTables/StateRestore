@@ -235,6 +235,16 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 	};
 
+	$.fn.dataTable.ext.buttons.deleteAllStates = {
+		action(e, dt, node, config) {
+			e.stopPropagation();
+			dt.stateRestore.states().delete(true);
+		},
+		text(dt) {
+			return dt.i18n('buttons.deleteAllStates', 'Delete All States');
+		}
+	};
+
 	$.fn.dataTable.ext.buttons.renameState = {
 		action(e, dt, node, config) {
 			e.stopPropagation();
