@@ -4,7 +4,6 @@ div.dtsr-confirmation, div.dtsr-creation {
     left: 50%;
     width: 500px;
     margin-left: -250px;
-    background-color: white;
     border-radius: 6px;
     box-shadow: 0 0 5px #555;
     border: 2px solid #444;
@@ -138,8 +137,6 @@ div.dtsr-background {
 }
 
 div.dt-button-collection {
-    background: rgba(255,255, 255, 0.8);
-
     h3 {
         text-align: center;
         margin-top: 0px;
@@ -147,13 +144,8 @@ div.dt-button-collection {
         font-size: 1.5em;
     }
 
-    div, ul {
-        background: rgba(255,255, 255, 0.8);
-    }
-
     span.dtsr-emptyStates {
         border-radius: 5px;
-        background: white;
         display: inline-block;
         line-height: 1.6em;
         white-space: nowrap;

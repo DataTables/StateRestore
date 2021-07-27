@@ -1,7 +1,6 @@
 @import './common.scss';
 
 div.dt-btn-split-wrapper {
-    background-color: rgba(255, 255, 255, 1) !important;
     margin-bottom: 2px !important;
 
     button {
@@ -10,8 +9,6 @@ div.dt-btn-split-wrapper {
 }
 
 div.dt-button-collection {
-    background-color: rgba(255, 255, 255, 1);
-
     h3 {
         font-size: 1.32em;
     }

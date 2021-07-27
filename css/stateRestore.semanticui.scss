@@ -48,6 +48,11 @@ div.dt-button-collection {
         padding: 4px;
         padding-bottom: 0px;
         background: white !important;
+
+        h3 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
         div.dt-btn-split-wrapper {
             margin-bottom: 4px;
     
@@ -59,6 +64,12 @@ div.dt-button-collection {
             button.dt-btn-split-drop {
                 margin-left: -1px;
             }
+        }
+
+        button.dt-btn-split-drop-button {
+            border: 1px solid rgba(34, 36, 38, 0.15);
+            border-radius: 0.285714rem;
+            margin-bottom: 4px;
         }
     }
 }
