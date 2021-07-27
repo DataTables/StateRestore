@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.button.stateRestore</name>
+	<summary>Set the text within the StateRestore `-button stateRestore` split dropdown button</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within StateRestore's `-button stateRestore` split dropdown button.
+		</description>
+    </type>
+
+	<default value="State %d"/>
+
+	<description>
+		<![CDATA[
+            This string is displayed in StateRestore's `-button stateRestore` button. The button is fully documented at `-button renameState`.
+
+            Here the `%d` token in the string is replaced by the number of states that have been created including this one. This allows for the default name of states to change actively as more are created.
+
+            The value set here is passed through the `-api i18n()` function.
+		]]>
+	</description>
+
+	<example title="Change text within the savedStates button"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+				stateRestore: 'State Number %d'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+<related type="button">stateRestore</related>
+
+</dt-option>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.button.renameState</name>
+	<summary>Set the text within the StateRestore rename button</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within StateRestore's rename button.
+		</description>
+    </type>
+
+	<default value="Rename"/>
+
+	<description>
+		<![CDATA[
+            This string is displayed in StateRestore's rename button. The button is fully documented at `-button renameState`.
+
+            The value set here is passed through the `-api i18n()` function.
+		]]>
+	</description>
+
+	<example title="Change text within rename button"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+				renameState: 'Change Name'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+<related type="button">renameState</related>
+
+</dt-option>
