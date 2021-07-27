@@ -534,18 +534,32 @@ export default class StateRestore {
 			);
 		this.dom.background.appendTo('body');
 		this.dom.confirmation.appendTo('body');
+		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
+		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
+		let keyupFunction = function(e) {
+			if (e.key === 'Enter') {
+				confirmationButton.click();
+			}
+			else if (e.key === 'Escape') {
+				background.click();
+			}
+		};
 
-		$('button.'+this.classes.confirmationButton.replace(/ /g, '.')).one('click', () => {
+		confirmationButton.one('click', () => {
 			buttonAction();
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
+			$(document).unbind('keyup', keyupFunction);
 		});
 
-		$('div.'+this.classes.background.replace(/ /g, '.')).one('click', (event) => {
+		background.one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
+			$(document).unbind('keyup', keyupFunction);
 		});
+
+		$(document).on('keyup', keyupFunction);
 	}
 
 	/**
@@ -576,18 +590,32 @@ export default class StateRestore {
 			);
 		this.dom.background.appendTo('body');
 		this.dom.confirmation.appendTo('body');
+		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
+		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
+		let keyupFunction = function(e) {
+			if (e.key === 'Enter') {
+				confirmationButton.click();
+			}
+			else if (e.key === 'Escape') {
+				background.click();
+			}
+		};
 
-		$('button.'+this.classes.confirmationButton.replace(/ /g, '.')).one('click', () => {
+		confirmationButton.one('click', () => {
 			buttonAction($('input.'+this.classes.input.replace(/ /g, '.')).val());
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
+			$(document).unbind('keyup', keyupFunction);
 		});
 
-		$('div.'+this.classes.background.replace(/ /g, '.')).one('click', (event) => {
+		background.one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
+			$(document).unbind('keyup', keyupFunction);
 		});
+
+		$(document).on('keyup', keyupFunction);
 	}
 
 	/**

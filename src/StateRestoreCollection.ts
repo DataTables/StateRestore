@@ -636,7 +636,18 @@ export default class StateRestoreCollection {
 		this.dom.background.appendTo('body');
 		this.dom.creation.appendTo('body');
 
-		$('button.'+this.classes.creationButton.replace(/ /g, '.')).one('click', () => {
+		let creationButton = $('button.'+this.classes.creationButton.replace(/ /g, '.'));
+		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
+		let keyupFunction = function(e) {
+			if (e.key === 'Enter') {
+				creationButton.click();
+			}
+			else if (e.key === 'Escape') {
+				background.click();
+			}
+		};
+
+		creationButton.one('click', () => {
 			let toggles = {
 				colReorder: this.dom.colReorderToggle.children('div.dtsr-right').children('input').is(':checked'),
 				columns: {
@@ -653,14 +664,18 @@ export default class StateRestoreCollection {
 			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), toggles);
 			this.dom.background.remove();
 			this.dom.creation.remove();
+			$(document).unbind('keyup', keyupFunction);
 		});
 
-		$('div.'+this.classes.background.replace(/ /g, '.')).one('click', (event) => {
+		background.one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
 			this.dom.creation.remove();
+			$(document).unbind('keyup', keyupFunction);
 			this._collectionRebuild();
 		});
+
+		$(document).on('keyup', keyupFunction);
 	}
 
 	/**
