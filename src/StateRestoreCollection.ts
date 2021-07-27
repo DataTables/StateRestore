@@ -731,6 +731,17 @@ export default class StateRestoreCollection {
 			);
 		}
 		else {
+			this.s.states = this.s.states.sort((a, b)=> {
+				if (a.s.identifier < b.s.identifier) {
+					return -1;
+				}
+				else if (a.s.identifier > b.s.identifier) {
+					return 1;
+				}
+				else {
+					return 0;
+				}
+			});
 			for (let state of this.s.states) {
 				let split = [];
 				if(this.c.save && state.c.save) {
