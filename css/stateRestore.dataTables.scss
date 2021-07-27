@@ -29,5 +29,10 @@ div.dtsr-creation-form {
         input.dtsr-check-box {
             margin-left: calc(33.3% + 30px) !important;
         }
+
+
+        label.dtsr-toggle-title {
+            margin-right: calc(-33.3% - 30px);
+        }
     }
 }

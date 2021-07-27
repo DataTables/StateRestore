@@ -1,7 +1,6 @@
 let $;
 let dataTable;
 
-import { ajax } from 'jquery';
 import StateRestore from './StateRestore';
 
 export function setJQuery(jq) {
@@ -36,6 +35,7 @@ export interface IClasses {
 	searchBuilderToggle: string;
 	searchPanesToggle: string;
 	searchToggle: string;
+	toggleTitle: string;
 }
 
 export interface IDom {
@@ -152,7 +152,8 @@ export default class StateRestoreCollection {
 		scrollerToggle: 'dtsr-scroller-toggle',
 		searchBuilderToggle: 'dtsr-searchBuilder-toggle',
 		searchPanesToggle: 'dtsr-searchPanes-toggle',
-		searchToggle: 'dtsr-search-toggle'
+		searchToggle: 'dtsr-search-toggle',
+		toggleTitle: 'dtsr-toggle-title'
 	};
 
 	private static defaults: IDefaults = {
@@ -443,14 +444,12 @@ export default class StateRestoreCollection {
 				'</div>'
 			),
 			toggleTitle: $(
-				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
-					'<label class="'+this.classes.nameLabel+'">'+
-						this.s.dt.i18n(
-							'stateRestore.creationModal.toggleTitle',
-							this.c.i18n.creationModal.toggleTitle
-						)+
-					'</label>'+
-				'</div>'
+				'<label class="'+this.classes.nameLabel+' '+ this.classes.toggleTitle +'">'+
+					this.s.dt.i18n(
+						'stateRestore.creationModal.toggleTitle',
+						this.c.i18n.creationModal.toggleTitle
+					)+
+				'</label>'
 			)
 		};
 
@@ -550,83 +549,84 @@ export default class StateRestoreCollection {
 
 	private _creationModal(buttonAction, identifier): void {
 		this.dom.creation.empty();
+		this.dom.creationForm.empty();
 		this.dom.nameInputRow.children('input').val(identifier);
 		this.dom.creationForm.append(this.dom.nameInputRow);
 		let toggleInserted = false;
 
 		let addToggleTitle = () => {
 			if(!toggleInserted) {
-				this.dom.creationForm.append(this.dom.toggleTitle);
+				$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleTitle);
 				toggleInserted = true;
 			}
 		};
 
 		// Order toggle - check toggle and saving enabled
 		if (this.c.toggle.order && this.c.saveState.order) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.orderToggle);
+			addToggleTitle();
 		}
 
 		// Search toggle - check toggle and saving enabled
 		if (this.c.toggle.search && this.c.saveState.search) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.searchToggle);
+			addToggleTitle();
 		}
 
 		// Paging toggle - check toggle and saving enabled
 		if (this.c.toggle.paging && this.c.saveState.paging) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.pagingToggle);
+			addToggleTitle();
 		}
 
 		// ColReorder toggle - check toggle and saving enabled
 		if (this.s.hasColReorder && this.c.toggle.colReorder && this.c.saveState.colReorder) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.colReorderToggle);
+			addToggleTitle();
 		}
 
 		// Scroller toggle - check toggle and saving enabled
 		if (this.s.hasScroller &&this.c.toggle.scroller && this.c.saveState.scroller) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.scrollerToggle);
+			addToggleTitle();
 		}
 
 		// SearchBuilder toggle - check toggle and saving enabled
 		if (this.s.hasSearchBuilder &&this.c.toggle.searchBuilder && this.c.saveState.searchBuilder) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.searchBuilderToggle);
+			addToggleTitle();
 		}
 
 		// SearchPanes toggle - check toggle and saving enabled
 		if (this.s.hasSearchPanes &&this.c.toggle.searchPanes && this.c.saveState.searchPanes) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.searchPanesToggle);
+			addToggleTitle();
 		}
 
 		// Columns toggle - check toggle and saving enabled
 		if (typeof this.c.toggle.columns === 'boolean' && this.c.toggle.columns && this.c.saveState.columns) {
-			addToggleTitle();
 			this.dom.creationForm.append(this.dom.columnsSearchToggle);
 			this.dom.creationForm.append(this.dom.columnsVisibleToggle);
+			addToggleTitle();
 		}
 		else if (typeof this.c.toggle.columns !== 'boolean') {
 			if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns) {
 				// Column search toggle - check toggle and saving enabled
 				if (this.c.toggle.columns.search && this.c.saveState.columns.search) {
-					addToggleTitle();
 					this.dom.creationForm.append(this.dom.columnsSearchToggle);
+					addToggleTitle();
 				}
 
 				// Column visiblity toggle - check toggle and saving enabled
 				if (this.c.toggle.columns.visible && this.c.saveState.columns.visible) {
-					addToggleTitle();
 					this.dom.creationForm.append(this.dom.columnsVisibleToggle);
+					addToggleTitle();
 				}
 			}
 			else if (this.c.saveState.columns) {
-				addToggleTitle();
 				this.dom.creationForm.append(this.dom.columnsSearchToggle);
 				this.dom.creationForm.append(this.dom.columnsVisibleToggle);
+				addToggleTitle();
 			}
 		}
 		this.dom.creation

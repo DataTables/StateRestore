@@ -54,15 +54,19 @@ div.dtsr-creation-form {
         }
 
         input.dtsr-name-input {
-            width: 64.6%;
+            width: 57.6% !important;
             display: inline-block;
         }
 
         input.dtsr-check-box {
-            margin-left: 33.3%;
+            margin-left: calc(33.3% + 30px) !important;
             margin-right: 14px;
             display: inline-block;
             position: relative;
+        }
+
+        label.dtsr-toggle-title {
+            margin-right: calc(-33.3% - 30px) !important;
         }
     }
 }

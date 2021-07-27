@@ -57,6 +57,9 @@ input.dtsr-input {
 
 
 div.dtsr-creation-form {
+    div.dtsr-check-row {
+        height: 25px;
+    }
     div.dtsr-form-row {
         label.dtsr-name-label {
             width: 33.3%;
@@ -76,6 +79,8 @@ div.dtsr-creation-form {
             margin-right: 14px;
             display: inline-block;
             position: relative;
+            float: none;
+            line-height: normal;
         }
     }
 }
