@@ -349,12 +349,12 @@ export default class StateRestoreCollection {
 			),
 			nameInputRow: $(
 				'<div class="'+this.classes.formRow+'">' +
-					'<label class="'+this.classes.nameLabel+'"><b>'+
+					'<label class="'+this.classes.nameLabel+'">'+
 						this.s.dt.i18n(
 							'stateRestore.creationModal.name',
 							this.c.i18n.creationModal.name
 						)+
-					'</b></label>'+
+					'</label>'+
 					'<input class="'+this.classes.nameInput+'" type="text">' +
 				'</div>'
 			),
@@ -444,12 +444,12 @@ export default class StateRestoreCollection {
 			),
 			toggleTitle: $(
 				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
-					'<label class="'+this.classes.nameLabel+'"><b>'+
+					'<label class="'+this.classes.nameLabel+'">'+
 						this.s.dt.i18n(
 							'stateRestore.creationModal.toggleTitle',
 							this.c.i18n.creationModal.toggleTitle
 						)+
-					'</b></label>'+
+					'</label>'+
 				'</div>'
 			)
 		};
