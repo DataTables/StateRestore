@@ -37,10 +37,6 @@ div.dt-button-collection {
         padding-top: 0.5rem;
         padding-bottom: 0px;
 
-        .dt-btn-split-drop-button {
-            
-        }
-
         div.dropdown-trigger {
             margin-bottom: 0px !important;
             padding-right: 0.5rem;
@@ -54,9 +50,13 @@ div.dt-button-collection {
     }
 }
 
-div.dtsr-form-row {
+div.dtsr-form-row, div.dtsr-confirmation-text {
     label.dtsr-name-label {
         line-height: 1.5;
         padding-top: 10px;
     }
+}
+
+div.dtsr-confirmation-text, div.dtsr-creation-form {
+    margin-top: 1.5em;
 }

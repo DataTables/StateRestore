@@ -12,12 +12,22 @@ div.dtsr-confirmation, div.dtsr-creation {
     box-sizing: border-box;
     padding: 1.5em 2em;   
 
-    div.dtsr-confirmation-text, div.dtsr-creation-text {
+    div.dtsr-confirmation-title-row {
+        text-align: left;
+
+        h2 {
+            border-bottom: 0px;
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+    }
+
+    div.dtsr-confirmation-text {
         text-align: center;
     }
 
     div.dtsr-confirmation-buttons {
-        text-align: center;
+        text-align: right;
         margin-top: 1.5em;
     }
 
@@ -64,6 +74,27 @@ div.dtsr-confirmation, div.dtsr-creation {
                 margin-right: 14px;
                 display: inline-block;
             }
+        }
+    }
+
+    div.dtsr-confirmation-text {
+        label.dtsr-name-label {
+            width: 33.3%;
+            display: inline-block;
+            text-align: right;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        input.dtsr-name-input {
+            width: 66.6%;
+            display: inline-block;
+        }
+
+        input.dtsr-check-box {
+            margin-left: 33.3%;
+            margin-right: 14px;
+            display: inline-block;
         }
     }
 

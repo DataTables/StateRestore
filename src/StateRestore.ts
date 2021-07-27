@@ -15,6 +15,8 @@ export interface IClasses {
 	confirmationButtons: string;
 	confirmationMessage: string;
 	confirmationText: string;
+	confirmationTitle: string;
+	confirmationTitleRow: string;
 	dtButton: string;
 	input: string;
 	renameModal: string;
@@ -29,6 +31,8 @@ export interface IS {
 export interface IDom {
 	background: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
+	deleteTitle: JQuery<HTMLElement>;
+	renameTitle: JQuery<HTMLElement>;
 }
 
 export interface IState {
@@ -76,8 +80,10 @@ export default class StateRestore {
 		confirmation: 'dtsr-confirmation',
 		confirmationButton: 'dtsr-confirmation-button',
 		confirmationButtons: 'dtsr-confirmation-buttons',
-		confirmationMessage: 'dtsr-confirmation-message',
+		confirmationMessage: 'dtsr-confirmation-message dtsr-name-label',
 		confirmationText: 'dtsr-confirmation-text',
+		confirmationTitle: 'dtsr-confirmation-title',
+		confirmationTitleRow: 'dtsr-confirmation-title-row',
 		dtButton: 'dt-button',
 		input: 'dtsr-input',
 		renameModal: 'dtsr-rename-modal'
@@ -108,9 +114,11 @@ export default class StateRestore {
 			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',
+			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
 			renameLabel: 'New Name:',
+			renameTitle: 'Rename State',
 		},
 		rename: true,
 		save: true,
@@ -173,7 +181,27 @@ export default class StateRestore {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
-			confirmation: $('<div class="'+this.classes.confirmation+'"/>')
+			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
+			deleteTitle: $(
+				'<div class="'+this.classes.confirmationTitleRow+'">'+
+					'<h2 class="'+this.classes.confirmationTitle+'">'+
+						this.s.dt.i18n(
+							'stateRestore.deleteTitle',
+							this.c.i18n.deleteTitle
+						)+
+					'</h2>'+
+				'</div>'
+			),
+			renameTitle: $(
+				'<div class="'+this.classes.confirmationTitleRow+'">'+
+					'<h2 class="'+this.classes.confirmationTitle+'">'+
+						this.s.dt.i18n(
+							'stateRestore.renameTitle',
+							this.c.i18n.renameTitle
+						)+
+					'</h2>'+
+				'</div>'
+			),
 		};
 
 		// When a StateRestore instance is created the current state of the table should also be saved.
@@ -213,7 +241,7 @@ export default class StateRestore {
 				this.dom.confirmation.remove();
 			}
 			else {
-				this.confirmationModal(
+				this.deleteModal(
 					this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm),
 					this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
 					deleteFunction
@@ -491,9 +519,10 @@ export default class StateRestore {
 	 * @param buttonText The text that should be displayed in the confirmation button.
 	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
 	 */
-	private confirmationModal(message: string, buttonText: string, buttonAction: () => void): void {
+	private deleteModal(message: string, buttonText: string, buttonAction: () => void): void {
 		this.dom.confirmation.empty();
 		this.dom.confirmation
+			.append(this.dom.deleteTitle)
 			.append($('<div class="'+this.classes.confirmationText+'"><span>'+message+'</span></div>'))
 			.append(
 				$('<div class="'+this.classes.confirmationButtons+'">' +
@@ -528,10 +557,12 @@ export default class StateRestore {
 	 */
 	private renameModal(message: string, buttonText: string, buttonAction: (newIdentifier: string) => void): void {
 		this.dom.confirmation.empty();
+		console.log(this.classes.confirmationMessage);
 		this.dom.confirmation
+			.append(this.dom.renameTitle)
 			.append(
 				$('<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
-					'<span class='+this.classes.confirmationMessage+'>'+message+'</span>' +
+					'<label class="'+this.classes.confirmationMessage+'"><b>'+message+'</b></label>' +
 					'<input class="'+this.classes.input+'" type="text"></input>' +
 				'</div>')
 			)

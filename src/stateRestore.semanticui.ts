@@ -52,7 +52,7 @@
 	$.extend(true, dataTable.StateRestore.classes, {
 		confirmation: 'dtsr-confirmation modal',
 		confirmationButton: 'dtsr-confirmation-button ui button primary',
-		confirmationText: 'modal-body',
+		confirmationText: 'dtsr-confirmation-text modal-body',
 		renameModal: 'dtsr-rename-modal ui input'
 	});
 

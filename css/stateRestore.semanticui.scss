@@ -75,3 +75,35 @@ input.dtsr-name-input {
 label.dtsr-name-label, label.form-check-label {
     font-size: 14.9px;
 }
+
+div.dtsr-form-row, div.dtsr-confirmation-text {
+    label.dtsr-name-label {
+        line-height: 1.5;
+        padding-top: 5px;
+    }
+}
+
+div.dtsr-confirmation-text, div.dtsr-creation-form {
+    margin-top: 1.5em;
+    width: 100%;
+
+    label.dtsr-name-label {
+        width: 33.3%;
+        display: inline-block;
+        text-align: left !important;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    input.dtsr-name-input {
+        width: 66.6%;
+        display: inline-block;
+    }
+
+    input.dtsr-check-box {
+        margin-left: 33.3%;
+        margin-right: 14px;
+        display: inline-block;
+        position: relative;
+    }
+}

@@ -53,3 +53,27 @@ div.dtsr-creation-form {
         }
     }
 }
+
+div.dtsr-confirmation-text {
+    margin-top: 1.5em;
+
+    label.dtsr-name-label {
+        width: 33.3%;
+        display: inline-block;
+        text-align: left !important;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    input.dtsr-name-input {
+        width: 66.6%;
+        display: inline-block;
+    }
+
+    input.dtsr-check-box {
+        margin-left: 33.3%;
+        margin-right: 14px;
+        display: inline-block;
+        position: relative;
+    }
+}

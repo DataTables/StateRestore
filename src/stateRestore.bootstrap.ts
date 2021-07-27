@@ -52,6 +52,7 @@ declare let define: {
 
 	$.extend(true, dataTable.StateRestore.classes, {
 		confirmationButton: 'dtsr-confirmation-button btn btn-default',
+		confirmationTitle: 'dtsr-confirmation title modal-header',
 		input: 'dtsr-input form-control'
 	});
 

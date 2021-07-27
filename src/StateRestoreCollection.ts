@@ -89,9 +89,11 @@ export interface II18n {
 	creationModal?: II18nCreationModal;
 	deleteButton: string;
 	deleteConfirm: string;
+	deleteTitle: string;
 	emptyStates: string;
 	renameButton: string;
 	renameLabel: string;
+	renameTitle: string;
 }
 
 export interface II18nCreationModal {
@@ -178,9 +180,11 @@ export default class StateRestoreCollection {
 			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete this state?',
+			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
 			renameLabel: 'New Name:',
+			renameTitle: 'Rename State'
 		},
 		rename: true,
 		save: true,
