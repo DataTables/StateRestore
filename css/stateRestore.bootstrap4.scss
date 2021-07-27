@@ -1,6 +1,10 @@
 @import './common.scss';
 
 div.dt-button-collection {
+    h3 {
+        margin-top: 8px;
+        font-size: 1.5rem;
+    }
     div.dropdown-menu {
         padding-top: 0px;
         padding-bottom: 4px;
