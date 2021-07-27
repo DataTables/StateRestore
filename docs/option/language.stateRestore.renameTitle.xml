@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.renameTitle</name>
+	<summary>Set the title shown in the StateRestore rename modal</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed as a title within the rename modal.
+		</description>
+    </type>
+
+	<default value="Rename State" />
+
+	<description>
+		<![CDATA[
+            This string is displayed as a title within the rename modal which confirms that a user wants to rename the given state.
+		]]>
+	</description>
+
+	<example title="Change rename modal title"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                renameTitle: 'Rename'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>
