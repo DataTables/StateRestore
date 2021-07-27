@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.toggleTitle</name>
+	<summary>Set the label text shown beside the toggle check boxes</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed as a label next to the toggle check boxes within the creation modal.
+		</description>
+    </type>
+
+	<default value="Includes:" />
+
+	<description>
+		<![CDATA[
+            This string is displayed as a label within the creation modal next to the toggle check boxes. These check boxes allow the user to set what is saved by that state. They are configured using `-init stateRestore.toggle`.
+		]]>
+	</description>
+
+	<example title="Change rename modal title"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                toggleTitle: 'Toggles'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+<related type="option">stateRestore.toggle</related>
+
+</dt-option>
