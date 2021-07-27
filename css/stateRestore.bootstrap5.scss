@@ -31,10 +31,18 @@ div.dt-button-collection {
 
 div.dt-button-split-left {
     div.dropdown-menu {
-        padding-bottom: 0.5rem;
-        padding-top: 0.5rem;
-        padding-left: 0px;
-        padding-right: 0px;
+        padding-left: 4px;
+        padding-right: 4px;
+        button.dt-btn-split-drop-button {
+            color: rgb(255, 255, 255);
+            border-radius: 4px;
+            background-color: rgb(107, 117, 125);
+            margin-top: 4px;
+
+            &:hover {
+                background-color: rgb(90, 98, 104);
+            }
+        }
     }
 }
 

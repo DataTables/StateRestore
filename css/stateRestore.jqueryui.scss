@@ -2,6 +2,10 @@
 
 div.dt-button-collection {
     z-index: 2002;
+
+    div, ul {
+        background: none;
+    }
 }
 
 span.dtsr-emptyStates {
