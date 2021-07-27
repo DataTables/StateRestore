@@ -6,7 +6,7 @@ examples/testing
 
 types/stateRestore.*.d.ts
 types/StateRestore.d.ts
-types/StateRestoreCollection.ts
+types/StateRestoreCollection.d.ts
 types/index.d.ts
 testing
 package-lock.json
