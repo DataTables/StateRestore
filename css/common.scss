@@ -136,6 +136,12 @@ div.dtsr-background {
 div.dt-button-collection {
     background: rgba(255,255, 255, 0.8);
 
+    h3 {
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 4px;
+    }
+
     div, ul {
         background: rgba(255,255, 255, 0.8);
     }

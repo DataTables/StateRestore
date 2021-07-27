@@ -151,21 +151,21 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			config._stateRestore.load(config._stateRestore.s.identifier);
 		},
 		config: {
-			split: ['saveState', 'deleteState', 'renameState']
+			split: ['updateState', 'deleteState', 'renameState']
 		},
 		text(dt) {
 			return dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1);
 		}
 	};
 
-	$.fn.dataTable.ext.buttons.saveState = {
+	$.fn.dataTable.ext.buttons.updateState = {
 		action(e, dt, node, config, parentConfig) {
 			e.stopPropagation();
 			$('div.dt-button-background').click();
 			config.parent._stateRestore.save();
 		},
 		text(dt) {
-			return dt.i18n('buttons.saveState', 'Save');
+			return dt.i18n('buttons.updateState', 'Update');
 		}
 	};
 
@@ -203,7 +203,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 					_stateRestore: state,
 					config: {
 						split: [
-							stateRestoreOpts.save ? 'saveState' : '',
+							'<h3>'+state.s.identifier+'</h3>',
+							stateRestoreOpts.save ? 'updateState' : '',
 							stateRestoreOpts.delete ? 'deleteState' : '',
 							stateRestoreOpts.save && stateRestoreOpts.rename ? 'renameState' : ''
 						],
@@ -284,7 +285,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 					_stateRestore: state,
 					config: {
 						split: [
-							stateRestoreOpts.save ? 'saveState' : '',
+							'<h3>'+state.s.identifier+'</h3>',
+							stateRestoreOpts.save ? 'updateState' : '',
 							stateRestoreOpts.delete ? 'deleteState' : '',
 							stateRestoreOpts.save && stateRestoreOpts.rename ? 'renameState' : ''
 						],

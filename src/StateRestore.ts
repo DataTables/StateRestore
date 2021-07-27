@@ -571,7 +571,6 @@ export default class StateRestore {
 	 */
 	private renameModal(message: string, buttonText: string, buttonAction: (newIdentifier: string) => void): void {
 		this.dom.confirmation.empty();
-		console.log(this.classes.confirmationMessage);
 		this.dom.confirmation
 			.append(this.dom.renameTitle)
 			.append(

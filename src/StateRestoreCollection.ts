@@ -734,7 +734,7 @@ export default class StateRestoreCollection {
 			for (let state of this.s.states) {
 				let split = [];
 				if(this.c.save && state.c.save) {
-					split.push('saveState');
+					split.push('updateState');
 				}
 				if(this.c.delete && state.c.delete) {
 					split.push('deleteState');
