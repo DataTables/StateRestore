@@ -10,7 +10,7 @@
 		</description>
     </type>
 
-	<default value="Search:"/>
+	<default value="Search"/>
 
 	<description>
 		<![CDATA[

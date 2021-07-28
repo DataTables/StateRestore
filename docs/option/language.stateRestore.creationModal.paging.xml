@@ -10,7 +10,7 @@
 		</description>
     </type>
 
-	<default value="Paging:"/>
+	<default value="Paging"/>
 
 	<description>
 		<![CDATA[

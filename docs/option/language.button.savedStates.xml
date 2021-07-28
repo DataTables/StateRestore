@@ -14,7 +14,7 @@
 
 	<description>
 		<![CDATA[
-            This string is displayed in StateRestore's `-button savedStates` button. The button is fully documented at `-button renameState`.
+            This string is displayed in StateRestore's `-button savedStates` button. The button is fully documented at `-button savedStates`.
 
             The value set here is passed through the `-api i18n()` function.
 		]]>
