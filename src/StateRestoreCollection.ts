@@ -547,6 +547,80 @@ export default class StateRestoreCollection {
 		return returnStates;
 	}
 
+	/**
+	 * Rebuilds all of the buttons in the collection of states to make sure that states and text is up to date
+	 */
+	private _collectionRebuild(): void {
+		let stateButtons = [];
+		let ajaxData = {
+			stateRestore: {}
+		};
+
+		if(this.s.states.length === 0) {
+			stateButtons.push(
+				'<span class="'+this.classes.emptyStates+'">' +
+					this.s.dt.i18n('stateRestore.emptyStates', this.c.i18n.emptyStates) +
+				'</span>'
+			);
+		}
+		else {
+			this.s.states = this.s.states.sort((a, b)=> {
+				if (a.s.identifier < b.s.identifier) {
+					return -1;
+				}
+				else if (a.s.identifier > b.s.identifier) {
+					return 1;
+				}
+				else {
+					return 0;
+				}
+			});
+			for (let state of this.s.states) {
+				let split = [];
+				split.push('<h3>'+state.s.identifier+'</h3>');
+				if(this.c.save && state.c.save) {
+					split.push('updateState');
+				}
+				if(this.c.delete && state.c.delete) {
+					split.push('deleteState');
+				}
+				if(this.c.save && state.c.save && this.c.rename && state.c.rename) {
+					split.push('renameState');
+				}
+				stateButtons.push({
+					_stateRestore: state,
+					config: {
+						split
+					},
+					extend: 'stateRestore',
+					text: state.s.identifier
+				});
+
+				if (typeof this.c.ajax === 'string') {
+					ajaxData.stateRestore[state.s.identifier] = state.s.savedState;
+				}
+			}
+		}
+
+
+		if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
+			$.ajax({
+				data: ajaxData,
+				type: 'POST',
+				url: this.c.ajax
+			});
+		}
+
+
+		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+	}
+
+	/**
+	 * Displays a modal that is used to get information from the user to create a new state.
+	 *
+	 * @param buttonAction The action that should be taken when the button is pressed
+	 * @param identifier The default identifier for the next new state
+	 */
 	private _creationModal(buttonAction, identifier): void {
 		this.dom.creation.empty();
 		this.dom.creationForm.empty();
@@ -696,25 +770,6 @@ export default class StateRestoreCollection {
 	}
 
 	/**
-	 * Private method that checks for previously created states on initialisation
-	 */
-	private _searchForStates(): void {
-		let keys = Object.keys(sessionStorage);
-		for (let key of keys) {
-			// eslint-disable-next-line no-useless-escape
-			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
-				let loadedState = JSON.parse(sessionStorage.getItem(key));
-				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
-				newState.save(loadedState);
-				this.s.states.push(newState);
-				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(loadedState.stateRestore.state));
-				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
-				this._collectionRebuild();
-			}
-		}
-	}
-
-	/**
 	 * This callback is called when a state is deleted.
 	 * This removes the state from storage and also strips it's button from the container
 	 *
@@ -732,70 +787,21 @@ export default class StateRestoreCollection {
 	}
 
 	/**
-	 * Rebuilds all of the buttons in the collection of states to make sure that states and text is up to date
+	 * Private method that checks for previously created states on initialisation
 	 */
-	private _collectionRebuild(): void {
-		let stateButtons = [];
-		let ajaxData = {
-			stateRestore: {}
-		};
-
-		if(this.s.states.length === 0) {
-			stateButtons.push(
-				'<span class="'+this.classes.emptyStates+'">' +
-					this.s.dt.i18n('stateRestore.emptyStates', this.c.i18n.emptyStates) +
-				'</span>'
-			);
-		}
-		else {
-			this.s.states = this.s.states.sort((a, b)=> {
-				if (a.s.identifier < b.s.identifier) {
-					return -1;
-				}
-				else if (a.s.identifier > b.s.identifier) {
-					return 1;
-				}
-				else {
-					return 0;
-				}
-			});
-			for (let state of this.s.states) {
-				let split = [];
-				split.push('<h3>'+state.s.identifier+'</h3>');
-				if(this.c.save && state.c.save) {
-					split.push('updateState');
-				}
-				if(this.c.delete && state.c.delete) {
-					split.push('deleteState');
-				}
-				if(this.c.save && state.c.save && this.c.rename && state.c.rename) {
-					split.push('renameState');
-				}
-				stateButtons.push({
-					_stateRestore: state,
-					config: {
-						split
-					},
-					extend: 'stateRestore',
-					text: state.s.identifier
-				});
-
-				if (typeof this.c.ajax === 'string') {
-					ajaxData.stateRestore[state.s.identifier] = state.s.savedState;
-				}
+	private _searchForStates(): void {
+		let keys = Object.keys(sessionStorage);
+		for (let key of keys) {
+			// eslint-disable-next-line no-useless-escape
+			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
+				let loadedState = JSON.parse(sessionStorage.getItem(key));
+				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
+				newState.save(loadedState);
+				this.s.states.push(newState);
+				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(loadedState.stateRestore.state));
+				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+				this._collectionRebuild();
 			}
 		}
-
-
-		if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
-			$.ajax({
-				data: ajaxData,
-				type: 'POST',
-				url: this.c.ajax
-			});
-		}
-
-
-		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}
 }
