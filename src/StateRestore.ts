@@ -369,7 +369,6 @@ export default class StateRestore {
 		}
 
 		// ColReorder
-		console.log(this.c.saveState, loadedState);
 		if (this.c.saveState.ColReorder && loadedState.ColReorder) {
 			this.s.dt.colReorder.order(loadedState.ColReorder, true);
 		}
@@ -380,6 +379,9 @@ export default class StateRestore {
 		}
 
 		this.s.dt.draw();
+
+		// Click on a background if there is one to shut the collection
+		$('div.dt-button-background').click();
 
 		return loadedState;
 	}
