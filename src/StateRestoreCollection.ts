@@ -625,6 +625,21 @@ export default class StateRestoreCollection {
 			}
 		}
 
+		togglesToInsert.sort((a, b) => {
+			let aVal = a.children('label.dtsr-check-label')[0].innerHTML;
+			let bVal = b.children('label.dtsr-check-label')[0].innerHTML;
+
+			if (aVal < bVal) {
+				return -1;
+			}
+			else if (aVal > bVal) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		});
+
 		for(let toggle of togglesToInsert) {
 			this.dom.creationForm.append(toggle);
 		}
