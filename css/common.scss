@@ -82,8 +82,9 @@ div.dtsr-confirmation, div.dtsr-creation {
     }
 
     div.dtsr-confirmation-text {
+        text-align: left;
         label.dtsr-name-label {
-            width: 33.3%;
+            width: auto;
             display: inline-block;
             text-align: right;
             padding-right: 15px;
