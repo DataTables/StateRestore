@@ -256,7 +256,7 @@ export default class StateRestoreCollection {
 					let loadedState = json.stateRestore[state];
 					let newState = new StateRestore(
 						this.s.dt,
-						$.extend(true, {}, this.c),
+						$.extend(true, {}, this.c, loadedState.c),
 						state
 					);
 					newState.s.savedState = loadedState;
@@ -649,19 +649,19 @@ export default class StateRestoreCollection {
 
 		creationButton.one('click', () => {
 			let toggles = {
-				colReorder: this.dom.colReorderToggle.children('div.dtsr-right').children('input').is(':checked'),
+				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
 				columns: {
-					search: this.dom.columnsSearchToggle.children('div.dtsr-right').children('input').is(':checked'),
-					visible: this.dom.columnsVisibleToggle.children('div.dtsr-right').children('input').is(':checked')
+					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
+					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
 				},
-				order: this.dom.orderToggle.children('div.dtsr-right').children('input').is(':checked'),
-				paging: this.dom.pagingToggle.children('div.dtsr-right').children('input').is(':checked'),
-				scroller: this.dom.scrollerToggle.children('div.dtsr-right').children('input').is(':checked'),
-				search: this.dom.searchToggle.children('div.dtsr-right').children('input').is(':checked'),
-				searchBuilder: this.dom.searchBuilderToggle.children('div.dtsr-right').children('input').is(':checked'),
-				searchPanes: this.dom.searchPanesToggle.children('div.dtsr-right').children('input').is(':checked'),
+				order: this.dom.orderToggle.children('input').is(':checked'),
+				paging: this.dom.pagingToggle.children('input').is(':checked'),
+				scroller: this.dom.scrollerToggle.children('input').is(':checked'),
+				search: this.dom.searchToggle.children('input').is(':checked'),
+				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
+				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
 			};
-			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), toggles);
+			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), {saveState: toggles});
 			this.dom.background.remove();
 			this.dom.creation.remove();
 			$(document).unbind('keyup', keyupFunction);

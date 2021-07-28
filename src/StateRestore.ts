@@ -36,6 +36,7 @@ export interface IDom {
 }
 
 export interface IState {
+	c: restoreType.IDefaults;
 	childRows: number[];
 	colReorder: any;
 	columns: IColumn[];
@@ -389,6 +390,8 @@ export default class StateRestore {
 		if (!this.c.saveState.paging) {
 			this.s.savedState.start = 0;
 		}
+
+		this.s.savedState.c = this.c;
 
 		try {
 			if(!this.c.ajax) {
