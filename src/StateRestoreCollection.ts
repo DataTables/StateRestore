@@ -770,7 +770,7 @@ export default class StateRestoreCollection {
 		}
 
 
-		if (typeof this.c.ajax === 'string') {
+		if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
 			$.ajax({
 				data: ajaxData,
 				type: 'POST',
