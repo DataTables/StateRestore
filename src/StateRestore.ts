@@ -39,9 +39,10 @@ export interface IDom {
 }
 
 export interface IState {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	ColReorder: any;
 	c: restoreType.IDefaults;
 	childRows: number[];
-	colReorder: any;
 	columns: IColumn[];
 	length: number;
 	order: Array<Array<string|number>>;
@@ -127,7 +128,8 @@ export default class StateRestore {
 		rename: true,
 		save: true,
 		saveState: {
-			colReorder: true,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			ColReorder: true,
 			columns: {
 				search: true,
 				visible: true
@@ -140,7 +142,8 @@ export default class StateRestore {
 			searchPanes: true,
 		},
 		toggle: {
-			colReorder: false,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			ColReorder: false,
 			columns:{
 				search: false,
 				visible: false
@@ -366,8 +369,9 @@ export default class StateRestore {
 		}
 
 		// ColReorder
-		if (this.c.saveState.colReorder && loadedState.colReorder) {
-			this.s.dt.colReorder.order(loadedState.colReorder, true);
+		console.log(this.c.saveState, loadedState);
+		if (this.c.saveState.ColReorder && loadedState.ColReorder) {
+			this.s.dt.colReorder.order(loadedState.ColReorder, true);
 		}
 
 		// Scroller
@@ -493,8 +497,8 @@ export default class StateRestore {
 		}
 
 		// ColReorder
-		if (!this.c.saveState.colReorder) {
-			this.s.savedState.colReorder = undefined;
+		if (!this.c.saveState.ColReorder) {
+			this.s.savedState.ColReorder = undefined;
 		}
 
 		// Scroller
