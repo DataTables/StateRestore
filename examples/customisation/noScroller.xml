@@ -18,7 +18,9 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    scroller: false
+                    saveState: {
+                        scroller: false
+                    }
                 },
             }
         ]

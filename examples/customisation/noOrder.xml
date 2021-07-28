@@ -13,7 +13,9 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    order: false
+                    saveState: {
+                        order: false
+                    }
                 }
             }
         ]

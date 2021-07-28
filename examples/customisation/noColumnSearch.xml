@@ -18,8 +18,10 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    columns:{
-                        search: false
+                    saveState: {
+                        columns:{
+                            search: false
+                        }
                     }
                 }
             }

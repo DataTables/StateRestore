@@ -35,7 +35,7 @@ $(document).ready(function() {
 <title lib="stateRestore">StateRestore Language Options</title>
 
 <info><![CDATA[
-This example shows all of the language options that are available for `-init stateRestore` and how to configure them.
+This example shows a selection of the language options that are available for `-init stateRestore` and how to configure them.
 ]]></info>
 
 </dt-example>

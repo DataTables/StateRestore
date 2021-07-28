@@ -13,7 +13,9 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    searchBuilder: false
+                    saveState: {
+                        searchBuilder: false
+                    }
                 }
             }
         ]

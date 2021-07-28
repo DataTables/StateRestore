@@ -13,8 +13,10 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    columns:{
-                        visible: false
+                    saveState: {
+                        columns:{
+                            visible: false
+                        }
                     }
                 }
             },

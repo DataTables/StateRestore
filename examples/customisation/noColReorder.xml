@@ -14,7 +14,9 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    colReorder: false
+                    saveState:{
+                        colReorder: false
+                    }
                 }
             }
         ]
