@@ -32,7 +32,9 @@ export interface IDom {
 	background: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
 	confirmationTitleRow: JQuery<HTMLElement>;
+	deleteContents: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
+	renameContents: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
 
@@ -185,6 +187,13 @@ export default class StateRestore {
 			background: $('<div class="'+this.classes.background+'"/>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
+			deleteContents: $(
+				'<div class="'+this.classes.confirmationText+'"><span>'+
+					this.s.dt
+						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+						.replace(/%s/g, this.s.identifier) +
+				'</span></div>'
+			),
 			deleteTitle: $(
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
 					this.s.dt.i18n(
@@ -192,6 +201,16 @@ export default class StateRestore {
 						this.c.i18n.deleteTitle
 					)+
 				'</h2>'
+			),
+			renameContents:$(
+				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
+					'<label class="'+this.classes.confirmationMessage+'">'+
+						this.s.dt
+							.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel)
+							.replace(/%s/g, this.s.identifier)+
+					'</label>' +
+					'<input class="'+this.classes.input+'" type="text"></input>' +
+				'</div>'
 			),
 			renameTitle: $(
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
@@ -214,43 +233,48 @@ export default class StateRestore {
 	 * @param skipModal Flag to indicate if the modal should be skipped or not
 	 */
 	public delete(skipModal = false): void {
-		try {
-			// Check if deletion of states is allowed
-			if (!this.c.delete) {
-				return;
-			}
+		// Check if deletion of states is allowed
+		if (!this.c.delete) {
+			return;
+		}
 
-			let deleteFunction;
-			if(!this.c.ajax) {
-				deleteFunction = () => {
+		let deleteFunction;
+
+		// If the delete is not happening over ajax remove it from local storage and then trigger the event
+		if (!this.c.ajax) {
+			deleteFunction = () => {
+				try {
 					sessionStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 
 					this.dom.confirmation.trigger('dtsr-delete');
-				};
-			}
-			else {
-				deleteFunction = () => this.dom.confirmation.trigger('dtsr-delete');
-			}
+				}
+				catch (e) {
+					return;
+				}
 
-			if (skipModal) {
-				this.dom.confirmation.appendTo('body');
-				deleteFunction();
-				this.dom.confirmation.remove();
-			}
-			else {
-				this._deleteModal(
-					this.s.dt
-						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
-						.replace(/%s/g, this.s.identifier),
-					this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
-					deleteFunction
-				);
-			}
+			};
 		}
-		catch (e) {
-			return;
+		// Otherwise when it occurs just trigger the event
+		else {
+			deleteFunction = () => this.dom.confirmation.trigger('dtsr-delete');
+		}
+
+		// If the modal is to be skipped then delete straight away
+		if (skipModal) {
+			this.dom.confirmation.appendTo('body');
+			deleteFunction();
+			this.dom.confirmation.remove();
+		}
+		// Otherwise display the modal
+		else {
+			this._newModal(
+				this.dom.deleteTitle,
+				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
+				deleteFunction,
+				this.dom.deleteContents
+			);
 		}
 	}
 
@@ -261,105 +285,99 @@ export default class StateRestore {
 	 * @returns the state that has been loaded
 	 */
 	public load(): void | IState {
-		try {
-			let loadedState = this.s.savedState;
+		let loadedState = this.s.savedState;
+		let settings = this.s.dt.settings()[0];
 
-			let settings = this.s.dt.settings()[0];
-
-			if (settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
-				return;
-			}
-
-			settings.oLoadedState = $.extend(true, {}, loadedState);
-
-			// Order
-			if (this.c.saveState.order && loadedState.order !== undefined) {
-				settings.aaSorting = [];
-				$.each(loadedState.order, function(i, col) {
-					settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
-						[0, col[1]] :
-						col
-					);
-				});
-			}
-
-			// Search
-			if (this.c.saveState.search && loadedState.search !== undefined) {
-				$.extend(settings.oPreviousSearch, this._searchToHung(loadedState.search));
-			}
-
-			// Columns
-			if (this.c.saveState.columns && loadedState.columns) {
-				for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
-					let col = loadedState.columns[i];
-
-					// Visibility
-					if (
-						typeof this.c.saveState.columns !== 'boolean' &&
-						this.c.saveState.columns.visible &&
-						col.visible !== undefined
-					) {
-						settings.aoColumns[i].bVisible = col.visible;
-					}
-
-					// Search
-					if (
-						typeof this.c.saveState.columns !== 'boolean' &&
-						this.c.saveState.columns.search &&
-						col.search !== undefined
-					) {
-						$.extend(settings.aoPreSearchCols[i], this._searchToHung(col.search));
-					}
-				}
-			}
-
-			// SearchBuilder
-			if (this.c.saveState.searchBuilder && loadedState.searchBuilder) {
-				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
-			}
-
-			// SearchPanes
-			if (this.c.saveState.searchPanes && loadedState.searchPanes) {
-				this.s.dt.searchPanes.clearSelections();
-				// Set the selection list for the panes so that the correct
-				// rows can be reselected and in the right order
-				this.s.dt.context[0]._searchPanes.s.selectionList =
-					loadedState.searchPanes.selectionList !== undefined ?
-						loadedState.searchPanes.selectionList :
-						[];
-
-				// Find the panes that match from the state and the actual instance
-				for (let loadedPane of loadedState.searchPanes.panes) {
-					for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
-						if (loadedPane.id === pane.s.index) {
-							// Set the value of the searchbox
-							pane.dom.searchBox.val(loadedPane.searchTerm);
-							// Set the value of the order
-							pane.s.dtPane.order(loadedPane.order);
-						}
-					}
-				}
-
-				this.s.dt.searchPanes.rebuildPane(false, true);
-			}
-
-			// ColReorder
-			if (this.c.saveState.colReorder && loadedState.colReorder) {
-				this.s.dt.colReorder.order(loadedState.colReorder, true);
-			}
-
-			// Scroller
-			if (this.c.saveState.scroller && loadedState.scroller) {
-				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
-			}
-
-			this.s.dt.draw();
-
-			return loadedState;
-		}
-		catch (e) {
+		if (settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
 			return;
 		}
+
+		settings.oLoadedState = $.extend(true, {}, loadedState);
+
+		// Order
+		if (this.c.saveState.order && loadedState.order !== undefined) {
+			settings.aaSorting = [];
+			$.each(loadedState.order, function(i, col) {
+				settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
+					[0, col[1]] :
+					col
+				);
+			});
+		}
+
+		// Search
+		if (this.c.saveState.search && loadedState.search !== undefined) {
+			$.extend(settings.oPreviousSearch, this._searchToHung(loadedState.search));
+		}
+
+		// Columns
+		if (this.c.saveState.columns && loadedState.columns) {
+			for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
+				let col = loadedState.columns[i];
+
+				// Visibility
+				if (
+					typeof this.c.saveState.columns !== 'boolean' &&
+					this.c.saveState.columns.visible &&
+					col.visible !== undefined
+				) {
+					settings.aoColumns[i].bVisible = col.visible;
+				}
+
+				// Search
+				if (
+					typeof this.c.saveState.columns !== 'boolean' &&
+					this.c.saveState.columns.search &&
+					col.search !== undefined
+				) {
+					$.extend(settings.aoPreSearchCols[i], this._searchToHung(col.search));
+				}
+			}
+		}
+
+		// SearchBuilder
+		if (this.c.saveState.searchBuilder && loadedState.searchBuilder) {
+			this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
+		}
+
+		// SearchPanes
+		if (this.c.saveState.searchPanes && loadedState.searchPanes) {
+			this.s.dt.searchPanes.clearSelections();
+			// Set the selection list for the panes so that the correct
+			// rows can be reselected and in the right order
+			this.s.dt.context[0]._searchPanes.s.selectionList =
+				loadedState.searchPanes.selectionList !== undefined ?
+					loadedState.searchPanes.selectionList :
+					[];
+
+			// Find the panes that match from the state and the actual instance
+			for (let loadedPane of loadedState.searchPanes.panes) {
+				for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
+					if (loadedPane.id === pane.s.index) {
+						// Set the value of the searchbox
+						pane.dom.searchBox.val(loadedPane.searchTerm);
+						// Set the value of the order
+						pane.s.dtPane.order(loadedPane.order);
+					}
+				}
+			}
+
+			this.s.dt.searchPanes.rebuildPane(false, true);
+		}
+
+		// ColReorder
+		if (this.c.saveState.colReorder && loadedState.colReorder) {
+			this.s.dt.colReorder.order(loadedState.colReorder, true);
+		}
+
+		// Scroller
+		if (this.c.saveState.scroller && loadedState.scroller) {
+			this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
+		}
+
+		this.s.dt.draw();
+
+		return loadedState;
 	}
 
 	/**
@@ -368,48 +386,41 @@ export default class StateRestore {
 	 * @param newIdentifier Optional. The new identifier for this state
 	 */
 	public rename(newIdentifier: null|string = null): void {
-		try {
-			// Check if renaming of states is allowed
-			if (!this.c.rename) {
-				return;
-			}
+		// Check if renaming of states is allowed
+		if (!this.c.rename) {
+			return;
+		}
 
-			let renameFunction = (newId) => {
+		let renameFunction = () => {
+			if (!this.c.ajax) {
 				try {
-					if(!this.c.ajax) {
-						sessionStorage.removeItem(
-							'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
-						);
-					}
+					sessionStorage.removeItem(
+						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+					);
 				}
 				catch (e) {
 					return;
 				}
-
-				this.s.identifier = newId;
-				this.save(this.s.savedState);
-				this.dom.confirmation.trigger('dtsr-rename');
-			};
-
-			// Check if a new identifier has been provided, if so no need for a modal
-			if (newIdentifier !== null) {
-				this.dom.confirmation.appendTo('body');
-				renameFunction(newIdentifier);
-				this.dom.confirmation.remove();
-			}
-			else {
-				this._renameModal(
-					this.s.dt
-						.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel)
-						.replace(/%s/g, this.s.identifier),
-					this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
-					renameFunction
-				);
 			}
 
+			this.s.identifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
+			this.save(this.s.savedState);
+			this.dom.confirmation.trigger('dtsr-rename');
+		};
+
+		// Check if a new identifier has been provided, if so no need for a modal
+		if (newIdentifier !== null) {
+			this.dom.confirmation.appendTo('body');
+			renameFunction();
+			this.dom.confirmation.remove();
 		}
-		catch (e) {
-			return;
+		else {
+			this._newModal(
+				this.dom.renameTitle,
+				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
+				renameFunction,
+				this.dom.renameContents
+			);
 		}
 	}
 
@@ -455,7 +466,6 @@ export default class StateRestore {
 		// Columns
 		if (this.c.saveState.columns && this.s.savedState.columns) {
 			for (let i=0, ien=this.s.savedState.columns.length ; i<ien ; i++) {
-				let col = this.s.savedState.columns[i];
 
 				// Visibility
 				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.visible) {
@@ -499,37 +509,41 @@ export default class StateRestore {
 
 		this.s.savedState.c = this.c;
 
-		try {
-			if(!this.c.ajax) {
+		if (!this.c.ajax) {
+			try {
 				sessionStorage.setItem(
 					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 					JSON.stringify(this.s.savedState)
 				);
-
 				this.dom.confirmation.trigger('dtsr-save');
 			}
-			else {
-				this.dom.confirmation.trigger('dtsr-save');
+			catch (e) {
+				return;
 			}
 		}
-		catch (e) {
-			return;
+		else {
+			this.dom.confirmation.trigger('dtsr-save');
 		}
 	}
 
-	/**
-	 * Displays a confirmation modal for the user to confirm their action
+	/* Displays a confirmation modal for the user to confirm their action
 	 *
 	 * @param message The message that should be displayed within the confirmation modal.
 	 * @param buttonText The text that should be displayed in the confirmation button.
 	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
 	 */
-	private _deleteModal(message: string, buttonText: string, buttonAction: () => void): void {
-		this.dom.confirmation.empty();
-		this.dom.confirmationTitleRow.empty().append(this.dom.deleteTitle);
+	private _newModal(
+		title: JQuery<HTMLElement>,
+		buttonText: string,
+		buttonAction: () => void,
+		modalContents: JQuery<HTMLElement>
+	): void {
+		this.dom.background.appendTo('body');
+		this.dom.confirmationTitleRow.empty().append(title);
 		this.dom.confirmation
+			.empty()
 			.append(this.dom.confirmationTitleRow)
-			.append($('<div class="'+this.classes.confirmationText+'"><span>'+message+'</span></div>'))
+			.append(modalContents)
 			.append(
 				$('<div class="'+this.classes.confirmationButtons+'">' +
 						'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
@@ -537,20 +551,25 @@ export default class StateRestore {
 						'</button>' +
 					'</div>'
 				)
-			);
-		this.dom.background.appendTo('body');
-		this.dom.confirmation.appendTo('body');
+			)
+			.appendTo('body');
+
 		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
+
 		let keyupFunction = function(e) {
+			// If enter same action as pressing the button
 			if (e.key === 'Enter') {
 				confirmationButton.click();
 			}
+			// If escape close modal
 			else if (e.key === 'Escape') {
 				background.click();
 			}
 		};
 
+		// When the button is clicked, call the appropriate action,
+		// remove the background and modal from the screen and unbind the keyup event.
 		confirmationButton.one('click', () => {
 			buttonAction();
 			this.dom.background.remove();
@@ -558,62 +577,7 @@ export default class StateRestore {
 			$(document).unbind('keyup', keyupFunction);
 		});
 
-		background.one('click', (event) => {
-			event.stopPropagation();
-			this.dom.background.remove();
-			this.dom.confirmation.remove();
-			$(document).unbind('keyup', keyupFunction);
-		});
-
-		$(document).on('keyup', keyupFunction);
-	}
-
-	/**
-	 * Displays a rename modal for the user to rename the selected state
-	 *
-	 * @param message The message that should be displayed within the confirmation modal.
-	 * @param buttonText The text that should be displayed in the confirmation button.
-	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
-	 */
-	private _renameModal(message: string, buttonText: string, buttonAction: (newIdentifier: string) => void): void {
-		this.dom.confirmation.empty();
-		this.dom.confirmationTitleRow.empty().append(this.dom.renameTitle);
-		this.dom.confirmation
-			.append(this.dom.confirmationTitleRow)
-			.append(
-				$('<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
-					'<label class="'+this.classes.confirmationMessage+'">'+message+'</label>' +
-					'<input class="'+this.classes.input+'" type="text"></input>' +
-				'</div>')
-			)
-			.append(
-				$('<div class="'+this.classes.confirmationButtons+'">' +
-						'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
-							buttonText+
-						'</button>' +
-					'</div>'
-				)
-			);
-		this.dom.background.appendTo('body');
-		this.dom.confirmation.appendTo('body');
-		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
-		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
-		let keyupFunction = function(e) {
-			if (e.key === 'Enter') {
-				confirmationButton.click();
-			}
-			else if (e.key === 'Escape') {
-				background.click();
-			}
-		};
-
-		confirmationButton.one('click', () => {
-			buttonAction($('input.'+this.classes.input.replace(/ /g, '.')).val());
-			this.dom.background.remove();
-			this.dom.confirmation.remove();
-			$(document).unbind('keyup', keyupFunction);
-		});
-
+		// When the button is clicked, remove the background and modal from the screen and unbind the keyup event.
 		background.one('click', (event) => {
 			event.stopPropagation();
 			this.dom.background.remove();
