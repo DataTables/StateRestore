@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="4">
+
+<css lib="datatables buttons staterestore scroller"/>
+
+<js lib="jquery datatables staterestore buttons scroller">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        ajax: {
+          url: "../data/2500States.txt",
+          dataSrc: 'data'
+        },
+        deferRender:    true,
+        scrollY:        200,
+        scrollCollapse: true,
+        scroller:       true,
+        buttons:[{
+            extend: 'savedStates',
+            config: {
+                save: false,
+                rename: false,
+                delete: false
+            }
+        }]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Predefined States - No Save, Delete, Rename or Create</title>
+
+<info><![CDATA[
+This example shows how predefined states can be supplied using the `-init stateRestore`extension. The state present under the `Saved States` button contains a predefined state that will scroll the table and apply an order to the third column.
+
+Renaming, updating and deleting this state are all disabled using the `-init stateRestore.rename`, `-init stateRestore.save` and `-init stateRestore.delete` options. This means that there is no reason for the state to be a split button. It is instead just a normal button that provides solely a load function.
+]]></info>
+
+<custom-table>
+<table id="example" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>ZIP / Post code</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
+</custom-table>
+
+</dt-example>

@@ -200,15 +200,25 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			let states = dt.stateRestore.states();
 			let stateButtons = [];
 			for(let state of states) {
+				let split = [];
+
+				if (stateRestoreOpts.save) {
+					split.push('updateState');
+				}
+				if (stateRestoreOpts.delete) {
+					split.push('deleteState');
+				}
+				if (stateRestoreOpts.save && stateRestoreOpts.rename) {
+					split.push('renameState');
+				}
+				if (split.length > 0) {
+					split.unshift('<h3>'+state.s.identifier+'</h3>');
+				}
+
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: [
-							'<h3>'+state.s.identifier+'</h3>',
-							stateRestoreOpts.save ? 'updateState' : '',
-							stateRestoreOpts.delete ? 'deleteState' : '',
-							stateRestoreOpts.save && stateRestoreOpts.rename ? 'renameState' : ''
-						],
+						split
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state
@@ -292,15 +302,25 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 		else {
 			for(let state of states) {
+				let split = [];
+
+				if (stateRestoreOpts.save) {
+					split.push('updateState');
+				}
+				if (stateRestoreOpts.delete) {
+					split.push('deleteState');
+				}
+				if (stateRestoreOpts.save && stateRestoreOpts.rename) {
+					split.push('renameState');
+				}
+				if (split.length > 0) {
+					split.unshift('<h3>'+state.s.identifier+'</h3>');
+				}
+
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
-						split: [
-							'<h3>'+state.s.identifier+'</h3>',
-							stateRestoreOpts.save ? 'updateState' : '',
-							stateRestoreOpts.delete ? 'deleteState' : '',
-							stateRestoreOpts.save && stateRestoreOpts.rename ? 'renameState' : ''
-						],
+						split
 					},
 					extend: 'stateRestore',
 					text: state.s.savedState.stateRestore.state

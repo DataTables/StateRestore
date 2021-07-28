@@ -572,7 +572,6 @@ export default class StateRestoreCollection {
 			// Construct the split property of each button
 			for (let state of this.s.states) {
 				let split = [];
-				split.push('<h3>'+state.s.identifier+'</h3>');
 
 				if (this.c.save && state.c.save) {
 					split.push('updateState');
@@ -582,6 +581,9 @@ export default class StateRestoreCollection {
 				}
 				if (this.c.save && state.c.save && this.c.rename && state.c.rename) {
 					split.push('renameState');
+				}
+				if (split.length > 0) {
+					split.unshift('<h3>'+state.s.identifier+'</h3>');
 				}
 
 				stateButtons.push({
