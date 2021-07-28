@@ -35,7 +35,7 @@ export interface IClasses {
 	searchBuilderToggle: string;
 	searchPanesToggle: string;
 	searchToggle: string;
-	toggleTitle: string;
+	toggleLabel: string;
 }
 
 export interface IDom {
@@ -54,7 +54,7 @@ export interface IDom {
 	searchBuilderToggle: JQuery<HTMLElement>;
 	searchPanesToggle: JQuery<HTMLElement>;
 	searchToggle: JQuery<HTMLElement>;
-	toggleTitle: JQuery<HTMLElement>;
+	toggleLabel: JQuery<HTMLElement>;
 }
 
 export interface IDefaults {
@@ -111,7 +111,7 @@ export interface II18nCreationModal {
 	searchBuilder: string;
 	searchPanes: string;
 	title: string;
-	toggleTitle: string;
+	toggleLabel: string;
 }
 
 export interface IS {
@@ -153,7 +153,7 @@ export default class StateRestoreCollection {
 		searchBuilderToggle: 'dtsr-searchBuilder-toggle',
 		searchPanesToggle: 'dtsr-searchPanes-toggle',
 		searchToggle: 'dtsr-search-toggle',
-		toggleTitle: 'dtsr-toggle-title'
+		toggleLabel: 'dtsr-toggle-title'
 	};
 
 	private static defaults: IDefaults = {
@@ -177,7 +177,7 @@ export default class StateRestoreCollection {
 				searchBuilder: 'SearchBuilder',
 				searchPanes: 'SearchPanes',
 				title: 'Create New State',
-				toggleTitle: 'Includes:'
+				toggleLabel: 'Includes:'
 			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete %s?',
@@ -237,6 +237,10 @@ export default class StateRestoreCollection {
 		let table = new dataTable.Api(settings);
 		this.classes = $.extend(true, {}, StateRestoreCollection.classes);
 
+		if (table.settings()[0]._stateRestore !== undefined) {
+			return;
+		}
+
 		// Get options from user
 		this.c = $.extend(true, {}, StateRestoreCollection.defaults, opts);
 
@@ -250,8 +254,10 @@ export default class StateRestoreCollection {
 		};
 
 		this.s.dt.on('xhr', (e, xhrsettings, json, xhr) => {
-			if(json && json.stateRestore) {
+			// Has staterestore been used before? Is there anything to load?
+			if (json && json.stateRestore) {
 				let states = Object.keys(json.stateRestore);
+
 				for (let state of states) {
 					let loadedState = json.stateRestore[state];
 					let newState = new StateRestore(
@@ -259,24 +265,29 @@ export default class StateRestoreCollection {
 						$.extend(true, {}, this.c, loadedState.c),
 						state
 					);
+
 					newState.s.savedState = loadedState;
 					this.s.states.push(newState);
+
 					newState.dom.confirmation.on(
 						'dtsr-delete',
 						() => this._deleteCallback(loadedState.stateRestore.state)
 					);
+
 					newState.dom.confirmation.on(
 						'dtsr-rename',
 						() => {
 							this._collectionRebuild();
 						}
 					);
+
 					newState.dom.confirmation.on(
 						'dtsr-save',
 						() => {
 							this._collectionRebuild();
 						}
 					);
+
 					this._collectionRebuild();
 				}
 			}
@@ -443,19 +454,15 @@ export default class StateRestoreCollection {
 					'</label>'+
 				'</div>'
 			),
-			toggleTitle: $(
-				'<label class="'+this.classes.nameLabel+' '+ this.classes.toggleTitle +'">'+
+			toggleLabel: $(
+				'<label class="'+this.classes.nameLabel+' '+ this.classes.toggleLabel +'">'+
 					this.s.dt.i18n(
-						'stateRestore.creationModal.toggleTitle',
-						this.c.i18n.creationModal.toggleTitle
+						'stateRestore.creationModal.toggleLabel',
+						this.c.i18n.creationModal.toggleLabel
 					)+
 				'</label>'
 			)
 		};
-
-		if (table.settings()[0]._stateRestore !== undefined) {
-			return;
-		}
 
 		table.settings()[0]._stateRestore = this;
 		this._searchForStates();
@@ -478,27 +485,15 @@ export default class StateRestoreCollection {
 
 		// Check if the state exists before creating a new ones
 		let state = this.getState(identifier);
-		let createFunction;
+		let createFunction = (id, toggles) => {
+			let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
+			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
+			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+			this.s.states.push(newState);
+			this._collectionRebuild();
+		};
 
-		if (typeof this.c.ajax === 'string') {
-			createFunction = (id, toggles) => {
-				let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
-				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
-				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
-				this.s.states.push(newState);
-				this._collectionRebuild();
-			};
-		}
-		else {
-			createFunction = (id, toggles) => {
-				let newState = new StateRestore(this.s.dt.settings()[0], $.extend(true, {}, this.c, toggles), id);
-				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
-				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
-				this.s.states.push(newState);
-				this._collectionRebuild();
-			};
-		}
-
+		// If there isn't already a state with this identifier
 		if (state === null) {
 			if(this.c.creationModal) {
 				this._creationModal(createFunction, identifier);
@@ -526,25 +521,12 @@ export default class StateRestoreCollection {
 	}
 
 	/**
-	 * Gets an array of states that match an idenfitier that has been passed in
+	 * Gets an array of all of the states
 	 *
-	 * @param identifier The value that is used to identify a state
 	 * @returns Any states that have been identified
 	 */
-	public getStates(identifier: string): StateRestore[] {
-		if (identifier === undefined) {
-			return this.s.states;
-		}
-
-		let returnStates = [];
-
-		for (let state of this.s.states) {
-			if (state.s.identifier === identifier) {
-				returnStates.push(state);
-			}
-		}
-
-		return returnStates;
+	public getStates(): StateRestore[] {
+		return this.s.states;
 	}
 
 	/**
@@ -556,6 +538,7 @@ export default class StateRestoreCollection {
 			stateRestore: {}
 		};
 
+		// If there are no states display an empty message
 		if(this.s.states.length === 0) {
 			stateButtons.push(
 				'<span class="'+this.classes.emptyStates+'">' +
@@ -564,6 +547,7 @@ export default class StateRestoreCollection {
 			);
 		}
 		else {
+			// Sort the states so that they appear alphabetically
 			this.s.states = this.s.states.sort((a, b)=> {
 				if (a.s.identifier < b.s.identifier) {
 					return -1;
@@ -575,18 +559,22 @@ export default class StateRestoreCollection {
 					return 0;
 				}
 			});
+
+			// Construct the split property of each button
 			for (let state of this.s.states) {
 				let split = [];
 				split.push('<h3>'+state.s.identifier+'</h3>');
-				if(this.c.save && state.c.save) {
+
+				if (this.c.save && state.c.save) {
 					split.push('updateState');
 				}
-				if(this.c.delete && state.c.delete) {
+				if (this.c.delete && state.c.delete) {
 					split.push('deleteState');
 				}
-				if(this.c.save && state.c.save && this.c.rename && state.c.rename) {
+				if (this.c.save && state.c.save && this.c.rename && state.c.rename) {
 					split.push('renameState');
 				}
+
 				stateButtons.push({
 					_stateRestore: state,
 					config: {
@@ -596,13 +584,15 @@ export default class StateRestoreCollection {
 					text: state.s.identifier
 				});
 
+				// If operation over ajax add this state to the object
 				if (typeof this.c.ajax === 'string') {
 					ajaxData.stateRestore[state.s.identifier] = state.s.savedState;
 				}
 			}
 		}
 
-
+		// Ajax property has to be a string, not just true
+		// Also only want to save if the table has been initialised and the states have been loaded in
 		if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
 			$.ajax({
 				data: ajaxData,
@@ -699,6 +689,7 @@ export default class StateRestoreCollection {
 			}
 		}
 
+		// Make sure that the toggles are displayed alphabetically
 		togglesToInsert.sort((a, b) => {
 			let aVal = a.children('label.dtsr-check-label')[0].innerHTML;
 			let bVal = b.children('label.dtsr-check-label')[0].innerHTML;
@@ -714,18 +705,21 @@ export default class StateRestoreCollection {
 			}
 		});
 
+		// Append all of the toggles that are to be inserted
 		for(let toggle of togglesToInsert) {
 			this.dom.creationForm.append(toggle);
 		}
 
-		$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleTitle);
+		// Insert the toggle label next to the first check box
+		$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleLabel);
 
+		// Insert the creation modal and the background
+		this.dom.background.appendTo('body');
 		this.dom.creation
 			.append(this.dom.creationTitle)
 			.append(this.dom.creationForm)
-			.append(this.dom.createButtonRow);
-		this.dom.background.appendTo('body');
-		this.dom.creation.appendTo('body');
+			.append(this.dom.createButtonRow)
+			.appendTo('body');
 
 		let creationButton = $('button.'+this.classes.creationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
@@ -739,7 +733,8 @@ export default class StateRestoreCollection {
 		};
 
 		creationButton.one('click', () => {
-			let toggles = {
+			// Get the values of the checkBoxes
+			let saveState = {
 				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
 				columns: {
 					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
@@ -752,20 +747,32 @@ export default class StateRestoreCollection {
 				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
 				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
 			};
-			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), {saveState: toggles});
+
+			// Call the buttons functionality passing in the identifier and what should be saved
+			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), {saveState});
+
+			// Remove the dom elements as operation has completed
 			this.dom.background.remove();
 			this.dom.creation.remove();
+
+			// Unbind the keyup function  - don't want it to run unnecessarily on every keypress that occurs
 			$(document).unbind('keyup', keyupFunction);
 		});
 
 		background.one('click', (event) => {
 			event.stopPropagation();
+
+			// Remove the dome elements as operation has been cancelled
 			this.dom.background.remove();
 			this.dom.creation.remove();
+			// Unbind the keyup function - don't want it to run unnecessarily on every keypress that occurs
 			$(document).unbind('keyup', keyupFunction);
+
+			// Rebuild the collection to ensure that the latest changes are present
 			this._collectionRebuild();
 		});
 
+		// Have to listen to the keyup event as `escape` doesn't trigger keypress
 		$(document).on('keyup', keyupFunction);
 	}
 

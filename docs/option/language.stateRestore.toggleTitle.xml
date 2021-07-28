@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.toggleTitle</name>
+	<name>language.stateRestore.toggleLabel</name>
 	<summary>Set the label text shown beside the toggle check boxes</summary>
 	<since>0.0.1</since>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                toggleTitle: 'Toggles'
+                toggleLabel: 'Toggles'
             }
         },
         buttons: [ 'createStateRestore', 'savedStates' ],
