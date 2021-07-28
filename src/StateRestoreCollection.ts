@@ -1,6 +1,7 @@
 let $;
 let dataTable;
 
+import { table } from 'console';
 import StateRestore from './StateRestore';
 
 export function setJQuery(jq) {
@@ -553,6 +554,8 @@ export default class StateRestoreCollection {
 		this.dom.nameInputRow.children('input').val(identifier);
 		this.dom.creationForm.append(this.dom.nameInputRow);
 		let toggleInserted = false;
+		let tableConfig = this.s.dt.settings()[0].oInit;
+		console.log(tableConfig)
 
 		let addToggleTitle = () => {
 			if(!toggleInserted) {
@@ -562,19 +565,31 @@ export default class StateRestoreCollection {
 		};
 
 		// Order toggle - check toggle and saving enabled
-		if (this.c.toggle.order && this.c.saveState.order) {
+		if (
+			this.c.toggle.order &&
+			this.c.saveState.order &&
+			(tableConfig.ordering === undefined || tableConfig.ordering)
+		) {
 			this.dom.creationForm.append(this.dom.orderToggle);
 			addToggleTitle();
 		}
 
 		// Search toggle - check toggle and saving enabled
-		if (this.c.toggle.search && this.c.saveState.search) {
+		if (
+			this.c.toggle.search &&
+			this.c.saveState.search &&
+			(tableConfig.searching === undefined || tableConfig.searching)
+		) {
 			this.dom.creationForm.append(this.dom.searchToggle);
 			addToggleTitle();
 		}
 
 		// Paging toggle - check toggle and saving enabled
-		if (this.c.toggle.paging && this.c.saveState.paging) {
+		if (
+			this.c.toggle.paging &&
+			this.c.saveState.paging &&
+			(tableConfig.paging === undefined || tableConfig.paging)
+		) {
 			this.dom.creationForm.append(this.dom.pagingToggle);
 			addToggleTitle();
 		}
@@ -586,7 +601,7 @@ export default class StateRestoreCollection {
 		}
 
 		// Scroller toggle - check toggle and saving enabled
-		if (this.s.hasScroller &&this.c.toggle.scroller && this.c.saveState.scroller) {
+		if (this.s.hasScroller && this.c.toggle.scroller && this.c.saveState.scroller) {
 			this.dom.creationForm.append(this.dom.scrollerToggle);
 			addToggleTitle();
 		}
