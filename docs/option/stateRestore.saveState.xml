@@ -132,36 +132,6 @@ Take a look at [this example]([../extensions/StateRestore/examples/customisation
 });
 ]]></example>
 
-<related type="option">stateRestore.toggle<?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="1">
-
-<css lib="datatables buttons staterestore"/>
-
-<js lib="jquery datatables staterestore buttons">
-<![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createStateRestore',
-            {
-                extend: 'savedStates',
-                config: {
-                    creationModal: true
-                }
-            }
-        ]
-    });
-});
-]]>
-</js>
-
-<title lib="stateRestore">Creation Modal</title>
-
-<info><![CDATA[
-This example shows how to use the `-init stateRestore.creationModal` initialisation option to display a modal when creating a new state. This allows users to choose a name initially rather than having to rename. By using the toggle options, what is saved and restored by StateRestore can also be changed.
-]]></info>
-
-</dt-example></related>
+<related type="option">stateRestore.toggle</related>
 
 </dt-option>

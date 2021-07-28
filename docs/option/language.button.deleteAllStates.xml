@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.button.createStateRestore</name>
+	<name>language.button.deleteAllStates</name>
 	<summary>Set the text within the StateRestore delete all button</summary>
 	<since>0.0.1</since>
 
