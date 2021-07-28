@@ -13,16 +13,16 @@
 
 	<description>
 	<![CDATA[
-		This method provides the ability to retrieve states that are managed by the `-init stateRestore` extension.
+This method provides the ability to retrieve states that are managed by the `-init stateRestore` extension.
 
-		`-api stateRestore.states()` takes one argument, `identifier`. This is an array of string that are used to identify the states throughout StateRestore.
-        
-        A Datatables Api is returned containing the states that are desired. This method will mainly be used for chaining. 
+`-api stateRestore.states()` takes one argument, `identifier`. This is an array of string that are used to identify the states throughout StateRestore.
+
+A Datatables Api is returned containing the states that are desired. This method will mainly be used for chaining. 
 	]]>
 
 	</description>
 
-	<example title="Get states called 'New State' and 'Old State':"><![CDATA[
+	<example title="Get states called 'New State' and 'Old State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
@@ -32,5 +32,8 @@ $(document).ready(function() {
     table.stateRestore.states(["New State", "old State"])
 });
 ]]></example>
+
+<related type="api">stateRestore.state()</related>
+<related type="api">stateRestore.states().delete()</related>
 
 </dt-api>

@@ -12,18 +12,18 @@
 
 	<description>
 	<![CDATA[
-		This method provides the ability to save a state that is managed by the `-init stateRestore` extension.
+This method provides the ability to save a state that is managed by the `-init stateRestore` extension.
 
-		`-api stateRestore.state().save()` takes no arguments. It uses the state retrieved by the previous call to `-api stateRestore.state()` to identify the correct state.
-        
-        A Datatables Api is returned so that further chaining can occur.
+`-api stateRestore.state().save()` takes no arguments. It saves the state retrieved by the previous call to `-api stateRestore.state()`.
 
-        If the `-init stateRestore.save` initialisation option is set to false then this api method will not do anything.
+A Datatables Api is returned so that further chaining can occur.
+
+If the `-init stateRestore.save` initialisation option is set to false then this api method will not do anything.
 	]]>
 
 	</description>
 
-	<example title="Save a state called 'New State':"><![CDATA[
+	<example title="Save a state called 'New State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
@@ -33,5 +33,10 @@ $(document).ready(function() {
     table.stateRestore.state("New State").save()
 });
 ]]></example>
+
+<related type="api">stateRestore.state()</related>
+<related type="api">stateRestore.state().delete()</related>
+<related type="api">stateRestore.state().load()</related>
+<related type="api">stateRestore.state().rename()</related>
 
 </dt-api>

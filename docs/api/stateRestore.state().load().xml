@@ -12,16 +12,16 @@
 
 	<description>
 	<![CDATA[
-		This method provides the ability to load a state that is managed by the `-init stateRestore` extension into the table.
+This method provides the ability to load a state that is managed by the `-init stateRestore` extension into the table.
 
-		`-api stateRestore.state().load()` takes no arguments. It uses the state retrieved by the previous call to `-api stateRestore.state()` to identify the correct state.
-        
-        A Datatables Api is returned so that further chaining can occur.
+`-api stateRestore.state().load()` takes no arguments. It loads the state retrieved by the previous call to `-api stateRestore.state()`.
+
+A Datatables Api is returned so that further chaining can occur.
 	]]>
 
 	</description>
 
-	<example title="Load a state called 'New State':"><![CDATA[
+	<example title="Load a state called 'New State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
@@ -31,5 +31,10 @@ $(document).ready(function() {
     table.stateRestore.state("New State").load()
 });
 ]]></example>
+
+<related type="api">stateRestore.state()</related>
+<related type="api">stateRestore.state().delete()</related>
+<related type="api">stateRestore.state().rename()</related>
+<related type="api">stateRestore.state().save()</related>
 
 </dt-api>

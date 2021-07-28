@@ -13,18 +13,18 @@
 
 	<description>
 	<![CDATA[
-		This method provides the ability to delete a state that is managed by the `-init stateRestore` extension.
+This method provides the ability to delete a state that is managed by the `-init stateRestore` extension.
 
-		`-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. It uses the state retrieved by the previous call to `-api stateRestore.state()` to identify the correct state.
-        
-        A Datatables Api is returned so that further chaining can occur.
+`-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. It deletes the state retrieved by the previous call to `-api stateRestore.state()`.
 
-        If the `-init stateRestore.delete` initialisation option is set to false then this api method will not do anything.
+A Datatables Api is returned so that further chaining can occur.
+
+If the `-init stateRestore.delete` initialisation option is set to false then this api method will not do anything.
 	]]>
 
 	</description>
 
-	<example title="Delete a state called 'New State':"><![CDATA[
+	<example title="Delete a state called 'New State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
@@ -35,7 +35,7 @@ $(document).ready(function() {
 });
 ]]></example>
 
-	<example title="Delete a state called 'New State', skipping the confirmation modal:"><![CDATA[
+	<example title="Delete a state called 'New State', skipping the confirmation modal"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
@@ -45,5 +45,11 @@ $(document).ready(function() {
     table.stateRestore.state("New State").delete(true)
 });
 ]]></example>
+
+<related type="api">stateRestore.state()</related>
+<related type="api">stateRestore.states().delete()</related>
+<related type="api">stateRestore.state().load()</related>
+<related type="api">stateRestore.state().rename()</related>
+<related type="api">stateRestore.state().save()</related>
 
 </dt-api>

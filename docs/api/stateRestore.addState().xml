@@ -22,7 +22,7 @@ The object that is returned represents the state that is present in the table at
 
 	</description>
 
-	<example title="Add a new state called 'New State':"><![CDATA[
+	<example title="Add a new state called 'New State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',

@@ -13,18 +13,18 @@
 
 	<description>
 	<![CDATA[
-		This method provides the ability to delete multiple states that are managed by the `-init stateRestore` extension.
+This method provides the ability to delete multiple states that are managed by the `-init stateRestore` extension.
 
-		`-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed for each state. It uses the states retrieved by the previous call to `-api stateRestore.states()` to identify the correct states to delete.
-        
-        A Datatables Api is returned so that further chaining can occur.
+`-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed for each state. It deletes the states retrieved by the previous call to `-api stateRestore.states()`.
 
-        If the `-init stateRestore.delete` initialisation option is set to false then this api method will not do anything.
+A Datatables Api is returned so that further chaining can occur.
+
+If the `-init stateRestore.delete` initialisation option is set to false then this api method will not do anything.
 	]]>
 
 	</description>
 
-	<example title="Delete states called 'New State' and 'Old State':"><![CDATA[
+	<example title="Delete states called 'New State' and 'Old State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
@@ -34,5 +34,8 @@ $(document).ready(function() {
     table.stateRestore.states(["New State", "Old State"]).delete()
 });
 ]]></example>
+
+<related type="api">stateRestore.states()</related>
+<related type="api">stateRestore.state().delete()</related>
 
 </dt-api>
