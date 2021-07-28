@@ -259,6 +259,12 @@ export default class StateRestoreCollection {
 				let states = Object.keys(json.stateRestore);
 
 				for (let state of states) {
+					for(let i = 0; i < this.s.states.length; i++) {
+						if(this.s.states[i].s.identifier === state) {
+							this.s.states.splice(i, 1);
+						}
+					}
+
 					let loadedState = json.stateRestore[state];
 					let newState = new StateRestore(
 						this.s.dt,
