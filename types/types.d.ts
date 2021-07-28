@@ -29,20 +29,20 @@ declare namespace DataTables {
 		/**
 		 * Creates a new state, adding it to the collection.
 		 *
-		 * @param stateSelector The identifier that is to be used for the new state
+		 * @param identifier The identifier that is to be used for the new state
 		 *
 		 * @returns DatatTables Api for chaining
 		 */
-		addState(stateSelector: string): void | Api<any>;
+		addState(identifier: string): void | Api<any>;
 
 		/**
 		 * Retrieves a state from the collection.
 		 *
-		 * @param stateSelector The identifier of the state that is to be retrieved.
+		 * @param identifier The identifier of the state that is to be retrieved.
 		 *
 		 * @returns StateRestore instance, or further api methods.
 		 */
-		state(stateSelector: string): stateRestoreType.default | null | StateRestoreSubApi;
+		state(identifier: string): stateRestoreType.default | null | StateRestoreSubApi;
 
 		/**
 		 * Retrieves all of the states from the collection.

@@ -78,25 +78,25 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		return this;
 	});
 
-	apiRegister('stateRestore.state()', function(stateSelector) {
+	apiRegister('stateRestore.state()', function(identifier) {
 		let ctx = this.context[0];
 		if (ctx._stateRestore) {
-			return ctx._stateRestore.getState(stateSelector);
+			return ctx._stateRestore.getState(identifier);
 		}
 	});
 
-	apiRegister('stateRestore.addState()', function(stateSelector) {
+	apiRegister('stateRestore.addState()', function(identifier) {
 		let ctx = this.context[0];
 		if (ctx._stateRestore.addState) {
-			ctx._stateRestore.addState(stateSelector);
+			ctx._stateRestore.addState(identifier);
 			return this;
 		}
 	});
 
-	apiRegister('stateRestore.states()', function(stateSelector) {
+	apiRegister('stateRestore.states()', function() {
 		let res = this.iterator(true, 'table', function(ctx) {
 			if(ctx._stateRestore) {
-				return ctx._stateRestore.getStates(stateSelector);
+				return ctx._stateRestore.getStates();
 			}
 		});
 
@@ -313,7 +313,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	// Attach a listener to the document which listens for DataTables initialisation
 	// events so we can automatically initialise
-	$(document).on('preInit.dt.dtsp', function(e, settings, json) {
+	$(document).on('preInit.dt.dtsr', function(e, settings, json) {
 		if (e.namespace !== 'dt') {
 			return;
 		}
