@@ -1,7 +1,6 @@
 let $;
 let dataTable;
 
-import { table } from 'console';
 import StateRestore from './StateRestore';
 
 export function setJQuery(jq) {
@@ -553,16 +552,8 @@ export default class StateRestoreCollection {
 		this.dom.creationForm.empty();
 		this.dom.nameInputRow.children('input').val(identifier);
 		this.dom.creationForm.append(this.dom.nameInputRow);
-		let toggleInserted = false;
 		let tableConfig = this.s.dt.settings()[0].oInit;
-		console.log(tableConfig)
-
-		let addToggleTitle = () => {
-			if(!toggleInserted) {
-				$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleTitle);
-				toggleInserted = true;
-			}
-		};
+		let togglesToInsert = [];
 
 		// Order toggle - check toggle and saving enabled
 		if (
@@ -570,8 +561,7 @@ export default class StateRestoreCollection {
 			this.c.saveState.order &&
 			(tableConfig.ordering === undefined || tableConfig.ordering)
 		) {
-			this.dom.creationForm.append(this.dom.orderToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.orderToggle);
 		}
 
 		// Search toggle - check toggle and saving enabled
@@ -580,8 +570,7 @@ export default class StateRestoreCollection {
 			this.c.saveState.search &&
 			(tableConfig.searching === undefined || tableConfig.searching)
 		) {
-			this.dom.creationForm.append(this.dom.searchToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.searchToggle);
 		}
 
 		// Paging toggle - check toggle and saving enabled
@@ -590,60 +579,58 @@ export default class StateRestoreCollection {
 			this.c.saveState.paging &&
 			(tableConfig.paging === undefined || tableConfig.paging)
 		) {
-			this.dom.creationForm.append(this.dom.pagingToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.pagingToggle);
 		}
 
 		// ColReorder toggle - check toggle and saving enabled
 		if (this.s.hasColReorder && this.c.toggle.colReorder && this.c.saveState.colReorder) {
-			this.dom.creationForm.append(this.dom.colReorderToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.colReorderToggle);
 		}
 
 		// Scroller toggle - check toggle and saving enabled
 		if (this.s.hasScroller && this.c.toggle.scroller && this.c.saveState.scroller) {
-			this.dom.creationForm.append(this.dom.scrollerToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.scrollerToggle);
 		}
 
 		// SearchBuilder toggle - check toggle and saving enabled
 		if (this.s.hasSearchBuilder &&this.c.toggle.searchBuilder && this.c.saveState.searchBuilder) {
-			this.dom.creationForm.append(this.dom.searchBuilderToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.searchBuilderToggle);
 		}
 
 		// SearchPanes toggle - check toggle and saving enabled
 		if (this.s.hasSearchPanes &&this.c.toggle.searchPanes && this.c.saveState.searchPanes) {
-			this.dom.creationForm.append(this.dom.searchPanesToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.searchPanesToggle);
 		}
 
 		// Columns toggle - check toggle and saving enabled
 		if (typeof this.c.toggle.columns === 'boolean' && this.c.toggle.columns && this.c.saveState.columns) {
-			this.dom.creationForm.append(this.dom.columnsSearchToggle);
-			this.dom.creationForm.append(this.dom.columnsVisibleToggle);
-			addToggleTitle();
+			togglesToInsert.push(this.dom.columnsSearchToggle);
+			togglesToInsert.push(this.dom.columnsVisibleToggle);
 		}
 		else if (typeof this.c.toggle.columns !== 'boolean') {
 			if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns) {
 				// Column search toggle - check toggle and saving enabled
 				if (this.c.toggle.columns.search && this.c.saveState.columns.search) {
-					this.dom.creationForm.append(this.dom.columnsSearchToggle);
-					addToggleTitle();
+					togglesToInsert.push(this.dom.columnsSearchToggle);
 				}
 
 				// Column visiblity toggle - check toggle and saving enabled
 				if (this.c.toggle.columns.visible && this.c.saveState.columns.visible) {
-					this.dom.creationForm.append(this.dom.columnsVisibleToggle);
-					addToggleTitle();
+					togglesToInsert.push(this.dom.columnsVisibleToggle);
 				}
 			}
 			else if (this.c.saveState.columns) {
-				this.dom.creationForm.append(this.dom.columnsSearchToggle);
-				this.dom.creationForm.append(this.dom.columnsVisibleToggle);
-				addToggleTitle();
+				togglesToInsert.push(this.dom.columnsSearchToggle);
+				togglesToInsert.push(this.dom.columnsVisibleToggle);
 			}
 		}
+
+		for(let toggle of togglesToInsert) {
+			this.dom.creationForm.append(toggle);
+		}
+
+		$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleTitle);
+
 		this.dom.creation
 			.append(this.dom.creationTitle)
 			.append(this.dom.creationForm)
