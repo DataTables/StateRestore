@@ -16,7 +16,7 @@
         The action function for the `-button deleteState` button calls the `-api stateRestore.states().delete()` function to delete the state.
     </option>
     <option name="text" type="function">
-        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `buttons.deleteAllStates` property, or you could directly change the value of this function.
+        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `-init language.button.deleteAllStates` property, or you could directly change the value of this function.
     </option>
 
 	<example title="deleteAllStates button modify text"><![CDATA[
