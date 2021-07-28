@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="1">
+<dt-example table-type="html" table-class="display nowrap" order="2">
 
 <css lib="datatables buttons staterestore"/>
 
@@ -42,7 +42,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="stateRestore">Basic StateRestore Example</title>
+<title lib="stateRestore">Basic StateRestore Example - API</title>
 
 <info><![CDATA[
 This example demonstrates all of the API methods that are available within stateRestore and how they can be used outwith the usual buttons interactions.
