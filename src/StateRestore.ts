@@ -31,6 +31,7 @@ export interface IS {
 export interface IDom {
 	background: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
+	confirmationTitleRow: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
@@ -183,26 +184,23 @@ export default class StateRestore {
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
+			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
 			deleteTitle: $(
-				'<div class="'+this.classes.confirmationTitleRow+'">'+
-					'<h2 class="'+this.classes.confirmationTitle+'">'+
-						this.s.dt.i18n(
-							'stateRestore.deleteTitle',
-							this.c.i18n.deleteTitle
-						)+
-					'</h2>'+
-				'</div>'
+				'<h2 class="'+this.classes.confirmationTitle+'">'+
+					this.s.dt.i18n(
+						'stateRestore.deleteTitle',
+						this.c.i18n.deleteTitle
+					)+
+				'</h2>'
 			),
 			renameTitle: $(
-				'<div class="'+this.classes.confirmationTitleRow+'">'+
-					'<h2 class="'+this.classes.confirmationTitle+'">'+
-						this.s.dt.i18n(
-							'stateRestore.renameTitle',
-							this.c.i18n.renameTitle
-						)+
-					'</h2>'+
-				'</div>'
-			),
+				'<h2 class="'+this.classes.confirmationTitle+'">'+
+					this.s.dt.i18n(
+						'stateRestore.renameTitle',
+						this.c.i18n.renameTitle
+					)+
+				'</h2>'
+			)
 		};
 
 		// When a StateRestore instance is created the current state of the table should also be saved.
@@ -210,8 +208,8 @@ export default class StateRestore {
 	}
 
 	/**
-	 * Removes a state from storage and
-	 * then triggers the dtsr-delete event so that the StateRestoreCollection class can remove it's references as well.
+	 * Removes a state from storage and then triggers the dtsr-delete event
+	 * so that the StateRestoreCollection class can remove it's references as well.
 	 *
 	 * @param skipModal Flag to indicate if the modal should be skipped or not
 	 */
@@ -242,7 +240,7 @@ export default class StateRestore {
 				this.dom.confirmation.remove();
 			}
 			else {
-				this.deleteModal(
+				this._deleteModal(
 					this.s.dt
 						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
 						.replace(/%s/g, this.s.identifier),
@@ -250,6 +248,114 @@ export default class StateRestore {
 					deleteFunction
 				);
 			}
+		}
+		catch (e) {
+			return;
+		}
+	}
+
+	/**
+	 * Loads the state referenced by the identifier from storage
+	 *
+	 * @param state The identifier of the state that should be loaded
+	 * @returns the state that has been loaded
+	 */
+	public load(): void | IState {
+		try {
+			let loadedState = this.s.savedState;
+
+			let settings = this.s.dt.settings()[0];
+
+			if (settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
+				return;
+			}
+
+			settings.oLoadedState = $.extend(true, {}, loadedState);
+
+			// Order
+			if (this.c.saveState.order && loadedState.order !== undefined) {
+				settings.aaSorting = [];
+				$.each(loadedState.order, function(i, col) {
+					settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
+						[0, col[1]] :
+						col
+					);
+				});
+			}
+
+			// Search
+			if (this.c.saveState.search && loadedState.search !== undefined) {
+				$.extend(settings.oPreviousSearch, this._searchToHung(loadedState.search));
+			}
+
+			// Columns
+			if (this.c.saveState.columns && loadedState.columns) {
+				for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
+					let col = loadedState.columns[i];
+
+					// Visibility
+					if (
+						typeof this.c.saveState.columns !== 'boolean' &&
+						this.c.saveState.columns.visible &&
+						col.visible !== undefined
+					) {
+						settings.aoColumns[i].bVisible = col.visible;
+					}
+
+					// Search
+					if (
+						typeof this.c.saveState.columns !== 'boolean' &&
+						this.c.saveState.columns.search &&
+						col.search !== undefined
+					) {
+						$.extend(settings.aoPreSearchCols[i], this._searchToHung(col.search));
+					}
+				}
+			}
+
+			// SearchBuilder
+			if (this.c.saveState.searchBuilder && loadedState.searchBuilder) {
+				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
+			}
+
+			// SearchPanes
+			if (this.c.saveState.searchPanes && loadedState.searchPanes) {
+				this.s.dt.searchPanes.clearSelections();
+				// Set the selection list for the panes so that the correct
+				// rows can be reselected and in the right order
+				this.s.dt.context[0]._searchPanes.s.selectionList =
+					loadedState.searchPanes.selectionList !== undefined ?
+						loadedState.searchPanes.selectionList :
+						[];
+
+				// Find the panes that match from the state and the actual instance
+				for (let loadedPane of loadedState.searchPanes.panes) {
+					for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
+						if (loadedPane.id === pane.s.index) {
+							// Set the value of the searchbox
+							pane.dom.searchBox.val(loadedPane.searchTerm);
+							// Set the value of the order
+							pane.s.dtPane.order(loadedPane.order);
+						}
+					}
+				}
+
+				this.s.dt.searchPanes.rebuildPane(false, true);
+			}
+
+			// ColReorder
+			if (this.c.saveState.colReorder && loadedState.colReorder) {
+				this.s.dt.colReorder.order(loadedState.colReorder, true);
+			}
+
+			// Scroller
+			if (this.c.saveState.scroller && loadedState.scroller) {
+				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
+			}
+
+			this.s.dt.draw();
+
+			return loadedState;
 		}
 		catch (e) {
 			return;
@@ -292,7 +398,7 @@ export default class StateRestore {
 				this.dom.confirmation.remove();
 			}
 			else {
-				this.renameModal(
+				this._renameModal(
 					this.s.dt
 						.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel)
 						.replace(/%s/g, this.s.identifier),
@@ -412,124 +518,17 @@ export default class StateRestore {
 	}
 
 	/**
-	 * Loads the state referenced by the identifier from storage
-	 *
-	 * @param state The identifier of the state that should be loaded
-	 * @returns the state that has been loaded
-	 */
-	public load(): void | IState {
-		try {
-			let loadedState = this.s.savedState;
-
-			let settings = this.s.dt.settings()[0];
-
-			if (settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
-				return;
-			}
-
-			settings.oLoadedState = $.extend(true, {}, loadedState);
-
-			// Order
-			if (this.c.saveState.order && loadedState.order !== undefined) {
-				settings.aaSorting = [];
-				$.each(loadedState.order, function(i, col) {
-					settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
-						[0, col[1]] :
-						col
-					);
-				});
-			}
-
-			// Search
-			if (this.c.saveState.search && loadedState.search !== undefined) {
-				$.extend(settings.oPreviousSearch, this.searchToHung(loadedState.search));
-			}
-
-			// Columns
-			if (this.c.saveState.columns && loadedState.columns) {
-				for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
-					let col = loadedState.columns[i];
-
-					// Visibility
-					if (
-						typeof this.c.saveState.columns !== 'boolean' &&
-						this.c.saveState.columns.visible &&
-						col.visible !== undefined
-					) {
-						settings.aoColumns[i].bVisible = col.visible;
-					}
-
-					// Search
-					if (
-						typeof this.c.saveState.columns !== 'boolean' &&
-						this.c.saveState.columns.search &&
-						col.search !== undefined
-					) {
-						$.extend(settings.aoPreSearchCols[i], this.searchToHung(col.search));
-					}
-				}
-			}
-
-			// SearchBuilder
-			if (this.c.saveState.searchBuilder && loadedState.searchBuilder) {
-				this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
-			}
-
-			// SearchPanes
-			if (this.c.saveState.searchPanes && loadedState.searchPanes) {
-				this.s.dt.searchPanes.clearSelections();
-				// Set the selection list for the panes so that the correct
-				// rows can be reselected and in the right order
-				this.s.dt.context[0]._searchPanes.s.selectionList =
-					loadedState.searchPanes.selectionList !== undefined ?
-						loadedState.searchPanes.selectionList :
-						[];
-
-				// Find the panes that match from the state and the actual instance
-				for (let loadedPane of loadedState.searchPanes.panes) {
-					for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
-						if (loadedPane.id === pane.s.index) {
-							// Set the value of the searchbox
-							pane.dom.searchBox.val(loadedPane.searchTerm);
-							// Set the value of the order
-							pane.s.dtPane.order(loadedPane.order);
-						}
-					}
-				}
-
-				this.s.dt.searchPanes.rebuildPane(false, true);
-			}
-
-			// ColReorder
-			if (this.c.saveState.colReorder && loadedState.colReorder) {
-				this.s.dt.colReorder.order(loadedState.colReorder, true);
-			}
-
-			// Scroller
-			if (this.c.saveState.scroller && loadedState.scroller) {
-				this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
-			}
-
-			this.s.dt.draw();
-
-			return loadedState;
-		}
-		catch (e) {
-			return;
-		}
-	}
-
-	/**
 	 * Displays a confirmation modal for the user to confirm their action
 	 *
 	 * @param message The message that should be displayed within the confirmation modal.
 	 * @param buttonText The text that should be displayed in the confirmation button.
 	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
 	 */
-	private deleteModal(message: string, buttonText: string, buttonAction: () => void): void {
+	private _deleteModal(message: string, buttonText: string, buttonAction: () => void): void {
 		this.dom.confirmation.empty();
+		this.dom.confirmationTitleRow.empty().append(this.dom.deleteTitle);
 		this.dom.confirmation
-			.append(this.dom.deleteTitle)
+			.append(this.dom.confirmationTitleRow)
 			.append($('<div class="'+this.classes.confirmationText+'"><span>'+message+'</span></div>'))
 			.append(
 				$('<div class="'+this.classes.confirmationButtons+'">' +
@@ -576,10 +575,11 @@ export default class StateRestore {
 	 * @param buttonText The text that should be displayed in the confirmation button.
 	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
 	 */
-	private renameModal(message: string, buttonText: string, buttonAction: (newIdentifier: string) => void): void {
+	private _renameModal(message: string, buttonText: string, buttonAction: (newIdentifier: string) => void): void {
 		this.dom.confirmation.empty();
+		this.dom.confirmationTitleRow.empty().append(this.dom.renameTitle);
 		this.dom.confirmation
-			.append(this.dom.renameTitle)
+			.append(this.dom.confirmationTitleRow)
 			.append(
 				$('<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<label class="'+this.classes.confirmationMessage+'">'+message+'</label>' +
@@ -625,14 +625,14 @@ export default class StateRestore {
 	}
 
 	/**
-	 * Convert from camelCase notation to the internal Hungarian. We could use the
-	 * Hungarian convert function here, but this is cleaner
+	 * Convert from camelCase notation to the internal Hungarian.
+	 * We could use the Hungarian convert function here, but this is cleaner
 	 *
 	 * @param {object} obj Object to convert
 	 * @returns {object} Inverted object
 	 * @memberof DataTable#oApi
 	 */
-	private searchToHung(obj: ISearch): IHungSearch {
+	private _searchToHung(obj: ISearch): IHungSearch {
 		return {
 			bCaseInsensitive: obj.caseInsensitive,
 			bRegex:           obj.regex,
