@@ -148,7 +148,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.stateRestore = {
 		action(e, dt, node, config) {
-			e.stopPropagation();
 			config._stateRestore.load(config._stateRestore.s.identifier);
 		},
 		config: {
@@ -161,7 +160,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.updateState = {
 		action(e, dt, node, config, parentConfig) {
-			e.stopPropagation();
 			$('div.dt-button-background').click();
 			config.parent._stateRestore.save();
 		},
@@ -186,7 +184,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.createStateRestore = {
 		action(e, dt, node, config, parentConfig) {
-			e.stopPropagation();
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 
 			// If creation/saving is not allowed then return
@@ -238,7 +235,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.deleteState = {
 		action(e, dt, node, config) {
-			e.stopPropagation();
 			config.parent._stateRestore.delete();
 		},
 		text(dt) {
@@ -248,7 +244,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.deleteAllStates = {
 		action(e, dt, node, config) {
-			e.stopPropagation();
 			dt.stateRestore.states().delete(true);
 		},
 		text(dt) {
@@ -258,7 +253,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.renameState = {
 		action(e, dt, node, config) {
-			e.stopPropagation();
 			config.parent._stateRestore.rename();
 		},
 		text(dt) {
