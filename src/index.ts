@@ -159,7 +159,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	};
 
 	$.fn.dataTable.ext.buttons.updateState = {
-		action(e, dt, node, config, parentConfig) {
+		action(e, dt, node, config) {
 			$('div.dt-button-background').click();
 			config.parent._stateRestore.save();
 		},
@@ -183,7 +183,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	};
 
 	$.fn.dataTable.ext.buttons.createStateRestore = {
-		action(e, dt, node, config, parentConfig) {
+		action(e, dt) {
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 
 			// If creation/saving is not allowed then return
@@ -243,7 +243,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	};
 
 	$.fn.dataTable.ext.buttons.deleteAllStates = {
-		action(e, dt, node, config) {
+		action(e, dt) {
 			dt.stateRestore.states().delete(true);
 		},
 		text(dt) {
@@ -327,7 +327,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	// Attach a listener to the document which listens for DataTables initialisation
 	// events so we can automatically initialise
-	$(document).on('preInit.dt.dtsr', function(e, settings, json) {
+	$(document).on('preInit.dt.dtsr', function(e, settings) {
 		if (e.namespace !== 'dt') {
 			return;
 		}

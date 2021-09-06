@@ -256,7 +256,7 @@ export default class StateRestoreCollection {
 			states: []
 		};
 
-		this.s.dt.on('xhr', (e, xhrsettings, json, xhr) => {
+		this.s.dt.on('xhr', (e, xhrsettings, json) => {
 			// Has staterestore been used before? Is there anything to load?
 			if (json && json.stateRestore) {
 				let states = Object.keys(json.stateRestore);
