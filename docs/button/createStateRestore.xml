@@ -14,14 +14,14 @@
         The action function creates a new StateRestore instance and then calls `-api button().collectionRebuild()` to rebuild the `-button savedStates` button, adding the new state to the collection.
     </option>
     <option name="init" type="function">
-        This function initialises StateRestore if is has not already been initialised and the `-button savedStates` button is not present.
+        This function initialises StateRestore if it has not already been initialised and the `-button savedStates` button is not present.
     </option>
     <option name="text" type="function">
         This function runs the `-api i18n()` function to decide the text value of the saved state collection button. The value of this button can be set using the `-init i18n` initialisation options `-init language.button.createStateRestore` property, or you could directly change the value of this function.
     </option>
 
 	<example title="createStateRestore button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.savedStates.text = function (e, dt, node, config) {
+$.fn.dataTable.ext.buttons.createStateRestore.text = function (e, dt, node, config) {
     return "Create new state";
 }
 ]]></example>
