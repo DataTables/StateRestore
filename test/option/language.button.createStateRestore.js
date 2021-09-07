@@ -19,16 +19,14 @@ describe('stateRestore - options - language.buttons.stateRestore.count', functio
 
 		dt.html('basic');
 		it('Change text', function () {
-			$.fn.dataTable.ext.buttons.createStateRestore.text = "Create new state";
-
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createStateRestore'],
-				// language: {
-				// 	buttons: {
-				// 		createStateRestore: 'unit test'
-				// 	}
-				// }
+				language: {
+					buttons: {
+						createStateRestore: 'unit test'
+					}
+				}
 			});
 
 			expect($('.dt-button').text()).toBe('unit test');
