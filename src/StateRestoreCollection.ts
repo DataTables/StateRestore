@@ -477,6 +477,10 @@ export default class StateRestoreCollection {
 		this._searchForStates();
 		this._collectionRebuild();
 
+		this.s.dt.on('destroy', () => {
+			this.destroy();
+		});
+
 		return this;
 	}
 
@@ -511,6 +515,19 @@ export default class StateRestoreCollection {
 				createFunction(identifier, {});
 			}
 		}
+	}
+
+	/**
+	 * Removes all of the dom elements from the document for the collection and the stored states
+	 */
+	public destroy(): void {
+		for(let state of this.s.states) {
+			state.destroy();
+		}
+
+		Object.values(this.dom).forEach((node)=> node.remove());
+
+		this.s.states = [];
 	}
 
 	/**

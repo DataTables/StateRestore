@@ -282,6 +282,13 @@ export default class StateRestore {
 	}
 
 	/**
+	 * Removes all of the dom elements from the document
+	 */
+	public destroy(): void {
+		Object.values(this.dom).forEach((node)=> node.remove());
+	}
+
+	/**
 	 * Loads the state referenced by the identifier from storage
 	 *
 	 * @param state The identifier of the state that should be loaded
