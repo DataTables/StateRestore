@@ -194,16 +194,36 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			let prevStates = dt.stateRestore.states().toArray();
 
 			// Create a replacement regex based on the i18n values
-			let replaceRegex = new RegExp(
-				language.buttons !== undefined && language.buttons.stateRestore !== undefined ?
-					language.buttons.stateRestore.replace(/%d/g, '') :
-					'State '
-			);
+			let defaultString = language.buttons !== undefined && language.buttons.stateRestore !== undefined ?
+				language.buttons.stateRestore :
+				'State ';
+			let replaceRegex;
+
+			if (defaultString.indexOf('%d') === defaultString.length - 3) {
+				replaceRegex = new RegExp(defaultString.replace(/%d/g, ''));
+			}
+			else {
+				let splitString = defaultString.split('%d');
+				replaceRegex = [];
+				for(let split of splitString) {
+					replaceRegex.push(new RegExp(split));
+				}
+			}
 
 			// Extract the numbers from the identifiers that use the standard naming convention
 			let identifiers = prevStates
 				.map((state) => {
-					let id = state.s.identifier.replace(replaceRegex, '');
+					let id;
+					if (Array.isArray(replaceRegex)) {
+						id = state.s.identifier;
+						for (let reg of replaceRegex) {
+							id = id.replace(reg, '');
+							console.log(id, reg);
+						}
+					}
+					else {
+						id = state.s.identifier.replace(replaceRegex, '');
+					}
 
 					// If the id after replacement is not a number, or the length is the same as before,
 					//  it has been customised so return 0
@@ -218,6 +238,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				.sort()
 				.reverse();
 
+			console.log(identifiers)
 			let lastNumber = identifiers[0];
 
 			dt.stateRestore.addState(
