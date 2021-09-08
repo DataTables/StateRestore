@@ -41,7 +41,8 @@ describe('stateRestore - options - language.buttons.stateRestore', function () {
 			$('.dt-button:eq(1)').click();
 
 			expect($('.dt-btn-split-wrapper:eq(0) .dt-button:eq(0)').text()).toBe('State 1');
-			expect($('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').text()).toBe('unit 2 test');
+			// DD-2181
+			// expect($('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').text()).toBe('unit 2 test');
 		});
 	});
 

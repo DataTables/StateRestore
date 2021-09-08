@@ -185,15 +185,45 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.createStateRestore = {
 		action(e, dt) {
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
+			let language = dt.settings()[0].oLanguage;
 
 			// If creation/saving is not allowed then return
 			if (!stateRestoreOpts.create || !stateRestoreOpts.save) {
 				return;
 			}
-			let prevStates = dt.stateRestore.states();
-			dt.stateRestore.addState(
-				dt.i18n('buttons.stateRestore', 'State %d', prevStates !== undefined ? prevStates.length + 1 : 1)
+			let prevStates = dt.stateRestore.states().toArray();
+
+			// Create a replacement regex based on the i18n values
+			let replaceRegex = new RegExp(
+				language.buttons !== undefined && language.buttons.stateRestore !== undefined ?
+					language.buttons.stateRestore.replace(/%d/g, '') :
+					'State '
 			);
+
+			// Extract the numbers from the identifiers that use the standard naming convention
+			let identifiers = prevStates
+				.map((state) => {
+					let id = state.s.identifier.replace(replaceRegex, '');
+
+					// If the id after replacement is not a number, or the length is the same as before,
+					//  it has been customised so return 0
+					if (isNaN(+id) || id.length === state.s.identifier) {
+						return 0;
+					}
+					// Otherwise return the number that has been assigned previously
+					else {
+						return +id;
+					}
+				})
+				.sort()
+				.reverse();
+
+			let lastNumber = identifiers[0];
+
+			dt.stateRestore.addState(
+				dt.i18n('buttons.stateRestore', 'State %d', lastNumber !== undefined ? lastNumber + 1 : 1)
+			);
+
 			let states = dt.stateRestore.states();
 			let stateButtons = [];
 			for(let state of states) {
