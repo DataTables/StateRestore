@@ -218,7 +218,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						id = state.s.identifier;
 						for (let reg of replaceRegex) {
 							id = id.replace(reg, '');
-							console.log(id, reg);
 						}
 					}
 					else {
@@ -238,7 +237,6 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				.sort()
 				.reverse();
 
-			console.log(identifiers)
 			let lastNumber = identifiers[0];
 
 			dt.stateRestore.addState(
