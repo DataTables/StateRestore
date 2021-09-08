@@ -5,7 +5,7 @@
 	<since>0.0.1</since>
 
 	<description>
-        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button saves the current state of the table into the relevant `-init stateRestore` instance. This means that when this states load button is pressed, the table will return to the state it was in when this save button was pressed.
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button saves the current state of the table into the relevant `-init stateRestore` instance. This means that when this state's load button is pressed, the table will return to the state it was in when this save button was pressed.
         
         There are 2 other secondary buttons also within the split button - `-button deleteState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
 
