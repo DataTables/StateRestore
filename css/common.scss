@@ -10,7 +10,7 @@ div.dtsr-confirmation, div.dtsr-creation {
     border: 2px solid #444;
     z-index: 2003;
     box-sizing: border-box;
-    padding: 1.5em 2em;   
+    padding: 1em;   
 
     div.dtsr-confirmation-title-row {
         text-align: left;
@@ -28,7 +28,11 @@ div.dtsr-confirmation, div.dtsr-creation {
 
     div.dtsr-confirmation-buttons {
         text-align: right;
-        margin-top: 1.5em;
+        margin-top: 1em;
+
+        button.dtsr-confirmation-button {
+            margin: 0px;
+        }
     }
 
     div.dtsr-creation-text {
