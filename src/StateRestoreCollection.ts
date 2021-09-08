@@ -770,9 +770,7 @@ export default class StateRestoreCollection {
 			$(document).unbind('keyup', keyupFunction);
 		});
 
-		background.one('click', (event) => {
-			event.stopPropagation();
-
+		background.one('click', () => {
 			// Remove the dome elements as operation has been cancelled
 			this.dom.background.remove();
 			this.dom.creation.remove();

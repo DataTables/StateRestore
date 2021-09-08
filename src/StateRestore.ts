@@ -584,8 +584,7 @@ export default class StateRestore {
 		});
 
 		// When the button is clicked, remove the background and modal from the screen and unbind the keyup event.
-		background.one('click', (event) => {
-			event.stopPropagation();
+		background.one('click', () => {
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
 			$(document).unbind('keyup', keyupFunction);
