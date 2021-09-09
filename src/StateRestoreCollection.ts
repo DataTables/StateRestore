@@ -16,6 +16,13 @@ export interface IClasses {
 	colReorderToggle: string;
 	columnsSearchToggle: string;
 	columnsVisibleToggle: string;
+	confirmation: string;
+	confirmationButton: string;
+	confirmationButtons: string;
+	confirmationMessage: string;
+	confirmationText: string;
+	confirmationTitle: string;
+	confirmationTitleRow: string;
 	creation: string;
 	creationButton: string;
 	creationForm: string;
@@ -43,10 +50,14 @@ export interface IDom {
 	colReorderToggle: JQuery<HTMLElement>;
 	columnsSearchToggle: JQuery<HTMLElement>;
 	columnsVisibleToggle: JQuery<HTMLElement>;
+	confirmation: JQuery<HTMLElement>;
+	confirmationTitleRow: JQuery<HTMLElement>;
 	createButtonRow: JQuery<HTMLElement>;
 	creation: JQuery<HTMLElement>;
 	creationForm: JQuery<HTMLElement>;
 	creationTitle: JQuery<HTMLElement>;
+	deleteContents: JQuery<HTMLElement>;
+	deleteTitle: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
 	pagingToggle: JQuery<HTMLElement>;
@@ -135,6 +146,13 @@ export default class StateRestoreCollection {
 		colReorderToggle: 'dtsr-colReorder-toggle',
 		columnsSearchToggle: 'dtsr-columns-search-toggle',
 		columnsVisibleToggle: 'dtsr-columns-visible-toggle',
+		confirmation: 'dtsr-confirmation',
+		confirmationButton: 'dtsr-confirmation-button',
+		confirmationButtons: 'dtsr-confirmation-buttons',
+		confirmationMessage: 'dtsr-confirmation-message dtsr-name-label',
+		confirmationText: 'dtsr-confirmation-text',
+		confirmationTitle: 'dtsr-confirmation-title',
+		confirmationTitleRow: 'dtsr-confirmation-title-row',
 		creation: 'dtsr-creation',
 		creationButton: 'dtsr-creation-button',
 		creationForm: 'dtsr-creation-form',
@@ -346,6 +364,8 @@ export default class StateRestoreCollection {
 					'</label>'+
 				'</div>'
 			),
+			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
+			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
 			createButtonRow: $(
 				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+' '+this.classes.modalFoot+'">' +
 					'<button class="'+this.classes.creationButton+' ' + this.classes.dtButton + '">'+
@@ -364,6 +384,19 @@ export default class StateRestoreCollection {
 						this.s.dt.i18n(
 							'stateRestore.creationModal.title',
 							this.c.i18n.creationModal.title
+						)+
+					'</h2>'+
+				'</div>'
+			),
+			deleteContents: $(
+				'<div class="'+this.classes.confirmationText+'"><span></span></div>'
+			),
+			deleteTitle: $(
+				'<div class="'+this.classes.creationText+'">'+
+					'<h2 class="'+this.classes.creationTitle+'">'+
+						this.s.dt.i18n(
+							'stateRestore.deleteTitle',
+							this.c.i18n.deleteTitle
 						)+
 					'</h2>'+
 				'</div>'
@@ -515,6 +548,27 @@ export default class StateRestoreCollection {
 				createFunction(identifier, {});
 			}
 		}
+	}
+
+	/**
+	 * Deletes all of the states, showing a modal to the user for confirmation
+	 *
+	 * @param deleteFunction The action to be taken when the action is confirmed
+	 */
+	public deleteAll(deleteFunction): void {
+		let ids = this.s.states.map(state => state.s.identifier);
+
+		$(this.dom.deleteContents.children('span')).text(
+			this.s.dt
+				.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+				.replace(/%s/g, ids.slice(0, -1).join(', ') + ' and ' + ids.slice(-1))
+		);
+		this._newModal(
+			this.dom.deleteTitle,
+			this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteButton),
+			deleteFunction,
+			this.dom.deleteContents
+		);
 	}
 
 	/**
@@ -823,6 +877,69 @@ export default class StateRestoreCollection {
 		}
 
 		this._collectionRebuild();
+	}
+
+	/**
+	 * Creates a new confirmation modal for the user to approve an action
+	 *
+	 * @param title The title that is to be displayed at the top of the modal
+	 * @param buttonText The text that is to be displayed in the confirmation button of the modal
+	 * @param buttonAction The action that should be taken when the confirmation button is pressed
+	 * @param modalContents The contents for the main body of the modal
+	 */
+	private _newModal(
+		title: JQuery<HTMLElement>,
+		buttonText: string,
+		buttonAction: (skipModal: boolean) => void,
+		modalContents: JQuery<HTMLElement>
+	): void {
+		this.dom.background.appendTo('body');
+		this.dom.confirmationTitleRow.empty().append(title);
+		this.dom.confirmation
+			.empty()
+			.append(this.dom.confirmationTitleRow)
+			.append(modalContents)
+			.append(
+				$('<div class="'+this.classes.confirmationButtons+'">' +
+						'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
+							buttonText+
+						'</button>' +
+					'</div>'
+				)
+			)
+			.appendTo('body');
+
+		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
+		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
+
+		let keyupFunction = function(e) {
+			// If enter same action as pressing the button
+			if (e.key === 'Enter') {
+				confirmationButton.click();
+			}
+			// If escape close modal
+			else if (e.key === 'Escape') {
+				background.click();
+			}
+		};
+
+		// When the button is clicked, call the appropriate action,
+		// remove the background and modal from the screen and unbind the keyup event.
+		confirmationButton.one('click', () => {
+			buttonAction(true);
+			this.dom.background.remove();
+			this.dom.confirmation.remove();
+			$(document).unbind('keyup', keyupFunction);
+		});
+
+		// When the button is clicked, remove the background and modal from the screen and unbind the keyup event.
+		background.one('click', () => {
+			this.dom.background.remove();
+			this.dom.confirmation.remove();
+			$(document).unbind('keyup', keyupFunction);
+		});
+
+		$(document).on('keyup', keyupFunction);
 	}
 
 	/**

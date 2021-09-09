@@ -545,11 +545,13 @@ export default class StateRestore {
 		}
 	}
 
-	/* Displays a confirmation modal for the user to confirm their action
+	/**
+	 * Creates a new confirmation modal for the user to approve an action
 	 *
-	 * @param message The message that should be displayed within the confirmation modal.
-	 * @param buttonText The text that should be displayed in the confirmation button.
-	 * @param buttonAction The action that should be taken when the confirmation button is pressed.
+	 * @param title The title that is to be displayed at the top of the modal
+	 * @param buttonText The text that is to be displayed in the confirmation button of the modal
+	 * @param buttonAction The action that should be taken when the confirmation button is pressed
+	 * @param modalContents The contents for the main body of the modal
 	 */
 	private _newModal(
 		title: JQuery<HTMLElement>,

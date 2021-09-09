@@ -137,12 +137,21 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	});
 
 	apiRegister('stateRestore.states().delete()', function(skipModal) {
-		this.each(function(set) {
-			// Check if deletion of states is allowed
-			if(set.c.delete) {
-				set.delete(skipModal);
-			}
-		});
+		let deleteAllCallBack = (skipModalIn) => {
+			this.each(function(set) {
+				// Check if deletion of states is allowed
+				if(set.c.delete) {
+					set.delete(skipModalIn);
+				}
+			});
+		};
+
+		if (skipModal) {
+			deleteAllCallBack(skipModal);
+		}
+		else {
+			this.context[0]._stateRestore.deleteAll(deleteAllCallBack);
+		}
 		return this;
 	});
 
