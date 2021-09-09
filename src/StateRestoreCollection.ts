@@ -59,6 +59,7 @@ export interface IDom {
 	creationTitle: JQuery<HTMLElement>;
 	deleteContents: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
+	dtContainer: JQuery<HTMLElement>;
 	keyTableToggle: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
@@ -411,6 +412,7 @@ export default class StateRestoreCollection {
 					'</h2>'+
 				'</div>'
 			),
+			dtContainer: $(this.s.dt.table().container()),
 			keyTableToggle: $(
 				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
 					'<input type="checkbox" class="'+
@@ -836,12 +838,12 @@ export default class StateRestoreCollection {
 		$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleLabel);
 
 		// Insert the creation modal and the background
-		this.dom.background.appendTo('body');
+		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.creation
 			.append(this.dom.creationTitle)
 			.append(this.dom.creationForm)
 			.append(this.dom.createButtonRow)
-			.appendTo('body');
+			.appendTo(this.dom.dtContainer);
 
 		let creationButton = $('button.'+this.classes.creationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
@@ -932,7 +934,7 @@ export default class StateRestoreCollection {
 		buttonAction: (skipModal: boolean) => void,
 		modalContents: JQuery<HTMLElement>
 	): void {
-		this.dom.background.appendTo('body');
+		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.confirmationTitleRow.empty().append(title);
 		this.dom.confirmation
 			.empty()
@@ -946,7 +948,7 @@ export default class StateRestoreCollection {
 					'</div>'
 				)
 			)
-			.appendTo('body');
+			.appendTo(this.dom.dtContainer);
 
 		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));

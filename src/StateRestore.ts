@@ -34,6 +34,7 @@ export interface IDom {
 	confirmationTitleRow: JQuery<HTMLElement>;
 	deleteContents: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
+	dtContainer: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
@@ -210,6 +211,7 @@ export default class StateRestore {
 					)+
 				'</h2>'
 			),
+			dtContainer: $(this.s.dt.table().container()),
 			renameContents:$(
 				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<label class="'+this.classes.confirmationMessage+'">'+
@@ -271,7 +273,7 @@ export default class StateRestore {
 
 		// If the modal is to be skipped then delete straight away
 		if (skipModal) {
-			this.dom.confirmation.appendTo('body');
+			this.dom.confirmation.appendTo(this.dom.dtContainer);
 			deleteFunction();
 			this.dom.confirmation.remove();
 		}
@@ -445,7 +447,7 @@ export default class StateRestore {
 
 		// Check if a new identifier has been provided, if so no need for a modal
 		if (newIdentifier !== null) {
-			this.dom.confirmation.appendTo('body');
+			this.dom.confirmation.appendTo(this.dom.dtContainer);
 			renameFunction();
 			this.dom.confirmation.remove();
 		}
@@ -580,7 +582,7 @@ export default class StateRestore {
 		buttonAction: () => void,
 		modalContents: JQuery<HTMLElement>
 	): void {
-		this.dom.background.appendTo('body');
+		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.confirmationTitleRow.empty().append(title);
 		this.dom.confirmation
 			.empty()
@@ -594,7 +596,7 @@ export default class StateRestore {
 					'</div>'
 				)
 			)
-			.appendTo('body');
+			.appendTo(this.dom.dtContainer);
 
 		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
