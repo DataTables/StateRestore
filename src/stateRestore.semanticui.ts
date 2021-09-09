@@ -1,4 +1,4 @@
-/*! Bootstrap integration for DataTables' SearchPanes
+/*! Bootstrap integration for DataTables' StateRestore
  * ©2016 SpryMedia Ltd - datatables.net/license
  */
 (function(factory) {
@@ -20,7 +20,7 @@
 				$ = require('datatables.net-se')(root, $).$;
 			}
 
-			if (! $.fn.dataTable.SearchPanes) {
+			if (! $.fn.dataTable.StateRestore) {
 				// eslint-disable-next-line @typescript-eslint/no-var-requires
 				require('datatables.net-staterestore')(root, $);
 			}
@@ -56,5 +56,5 @@
 		renameModal: 'dtsr-rename-modal ui input'
 	});
 
-	return dataTable.searchPanes;
+	return dataTable.stateRestore;
 }));
