@@ -32,37 +32,36 @@ describe('stateRestore - options - language.stateRestore.creationModal.scroller'
 			expect($('.dtsr-check-label').text()).toBe('Scroll Position');
 		});
 
-		// DD-2230
-		// dt.html('basic');
-		// it('Change text', function () {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		scrollY: 200,
-		// 		scroller: true,
-		// 		buttons: [
-		// 			'createStateRestore',
-		// 			{
-		// 				extend: 'savedStates',
-		// 				config: {
-		// 					creationModal: true,
-		// 					toggle: {
-		// 						scroller: true
-		// 					}
-		// 				}
-		// 			}
-		// 		],
-		// 		language: {
-		// 			stateRestore: {
-		// 				creationModal: {
-		// 					scroller: 'unit test'
-		// 				}
-		// 			}
-		// 		}
-		// 	});
+		dt.html('basic');
+		it('Change text', function () {
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				scrollY: 200,
+				scroller: true,
+				buttons: [
+					'createStateRestore',
+					{
+						extend: 'savedStates',
+						config: {
+							creationModal: true,
+							toggle: {
+								scroller: true
+							}
+						}
+					}
+				],
+				language: {
+					stateRestore: {
+						creationModal: {
+							scroller: 'unit test'
+						}
+					}
+				}
+			});
 
-		// 	$('.dt-button:eq(0)').click();
+			$('.dt-button:eq(0)').click();
 
-		// 	expect($('.dtsr-check-label').text()).toBe('unit test');
-		// });
+			expect($('.dtsr-check-label').text()).toBe('unit test');
+		});
 	});
 });

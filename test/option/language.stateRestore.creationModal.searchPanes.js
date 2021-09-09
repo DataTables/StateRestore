@@ -30,7 +30,6 @@ describe('stateRestore - options - language.stateRestore.creationModal.searchPan
 			expect($('.dtsr-check-label').text()).toBe('SearchPanes');
 		});
 
-		// DD-2230
 		dt.html('basic');
 		it('Change text', function () {
 			table = $('#example').DataTable({

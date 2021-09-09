@@ -27,32 +27,31 @@ describe('stateRestore - options - language.stateRestore.creationModal.title', f
 			expect($('.dtsr-creation-title').text()).toBe('Create New State');
 		});
 
-		// DD-2230
-		// dt.html('basic');
-		// it('Change text', function () {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		buttons: [
-		// 			'createStateRestore',
-		// 			{
-		// 				extend: 'savedStates',
-		// 				config: {
-		// 					creationModal: true
-		// 				}
-		// 			}
-		// 		],
-		// 		language: {
-		// 			stateRestore: {
-		// 				creationModal: {
-		// 					title: 'unit test'
-		// 				}
-		// 			}
-		// 		}
-		// 	});
+		dt.html('basic');
+		it('Change text', function () {
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: [
+					'createStateRestore',
+					{
+						extend: 'savedStates',
+						config: {
+							creationModal: true
+						}
+					}
+				],
+				language: {
+					stateRestore: {
+						creationModal: {
+							title: 'unit test'
+						}
+					}
+				}
+			});
 
-		// 	$('.dt-button:eq(0)').click();
+			$('.dt-button:eq(0)').click();
 
-		// 	expect($('.dtsr-creation-title').text()).toBe('unit test');
-		// });
+			expect($('.dtsr-creation-title').text()).toBe('unit test');
+		});
 	});
 });
