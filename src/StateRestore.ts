@@ -46,6 +46,7 @@ export interface IState {
 	columns: IColumn[];
 	length: number;
 	order: Array<Array<string|number>>;
+	paging: any;
 	scroller: any;
 	search: ISearch;
 	searchBuilder: any;
@@ -315,6 +316,11 @@ export default class StateRestore {
 			});
 		}
 
+		// Paging
+		if(this.c.saveState.paging && loadedState.start !== undefined) {
+			this.s.dt.page(loadedState.start / loadedState.length);
+		}
+
 		// Search
 		if (this.c.saveState.search && loadedState.search !== undefined) {
 			$.extend(settings.oPreviousSearch, this._searchToHung(loadedState.search));
@@ -385,7 +391,7 @@ export default class StateRestore {
 			this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
 		}
 
-		this.s.dt.draw();
+		this.s.dt.draw(false);
 
 		// Click on a background if there is one to shut the collection
 		$('div.dt-button-background').click();
