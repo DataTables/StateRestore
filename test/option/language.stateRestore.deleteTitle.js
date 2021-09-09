@@ -28,25 +28,24 @@ describe('stateRestore - options - language.stateRestore.deleteTitle', function 
 			expect($('.dtsr-confirmation-title').text()).toBe('Delete State');
 		});
 
-		// DD-2241
-		// dt.html('basic');
-		// it('Change text', function () {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		buttons: ['createStateRestore', 'savedStates'],
-		// 		language: {
-		// 			stateRestore: {
-		// 				deleteTitle: 'unit test'
-		// 			}
-		// 		}
-		// 	});
+		dt.html('basic');
+		it('Change text', function () {
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: ['createStateRestore', 'savedStates'],
+				language: {
+					stateRestore: {
+						deleteTitle: 'unit test'
+					}
+				}
+			});
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-drop-button:eq(1)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 
-		// 	expect($('.dtsr-confirmation-title').text()).toBe('unit test');
-		// });
+			expect($('.dtsr-confirmation-title').text()).toBe('unit test');
+		});
 	});
 
 	describe('Tidy up', function () {

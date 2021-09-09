@@ -28,25 +28,24 @@ describe('stateRestore - options - language.stateRestore.renameLabel', function 
 			expect($('.dtsr-confirmation-text').text()).toBe('New Name for State 1:');
 		});
 
-		// DD-2241
-		// dt.html('basic');
-		// it('Change text', function () {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		buttons: ['createStateRestore', 'savedStates'],
-		// 		language: {
-		// 			stateRestore: {
-		// 				renameLabel: 'unit %s test'
-		// 			}
-		// 		}
-		// 	});
+		dt.html('basic');
+		it('Change text', function () {
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: ['createStateRestore', 'savedStates'],
+				language: {
+					stateRestore: {
+						renameLabel: 'unit %s test'
+					}
+				}
+			});
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(2)').click();
 
-		// 	expect($('.dtsr-confirmation-text').text()).toBe('unit State 1 test');
-		// });
+			expect($('.dtsr-confirmation-text').text()).toBe('unit State 1 test');
+		});
 	});
 
 	describe('Tidy up', function () {
