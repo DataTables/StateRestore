@@ -1,9 +1,9 @@
-describe('stateRestore - options - language.stateRestore.creationModal.searchPanes', function () {
+describe('stateRestore - options - language.stateRestore.creationModal.keyTable', function () {
 	let table;
 
 	dt.libs({
-		js: ['jquery', 'datatables', 'buttons', 'select', 'searchpanes', 'keyTable', 'staterestore'],
-		css: ['datatables', 'buttons', 'select', 'searchpanes', 'keyTable', 'staterestore']
+		js: ['jquery', 'datatables', 'buttons', 'select', 'searchpanes', 'keytable', 'staterestore'],
+		css: ['datatables', 'buttons', 'select', 'searchpanes', 'keytable', 'staterestore']
 	});
 
 	describe('Functional tests', function () {
