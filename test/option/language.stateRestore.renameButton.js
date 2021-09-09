@@ -28,25 +28,24 @@ describe('stateRestore - options - language.stateRestore.renameButton', function
 			expect($('.dtsr-confirmation-button').text()).toBe('Rename');
 		});
 
-		// DD-2241
-		// dt.html('basic');
-		// it('Change text', function () {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		buttons: ['createStateRestore', 'savedStates'],
-		// 		language: {
-		// 			stateRestore: {
-		// 				renameButton: 'unit test'
-		// 			}
-		// 		}
-		// 	});
+		dt.html('basic');
+		it('Change text', function () {
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: ['createStateRestore', 'savedStates'],
+				language: {
+					stateRestore: {
+						renameButton: 'unit test'
+					}
+				}
+			});
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(2)').click();
 
-		// 	expect($('.dtsr-confirmation-button').text()).toBe('unit test');
-		// });
+			expect($('.dtsr-confirmation-button').text()).toBe('unit test');
+		});
 	});
 
 	describe('Tidy up', function () {
