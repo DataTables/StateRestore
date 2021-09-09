@@ -44,6 +44,7 @@ export interface IState {
 	c: restoreType.IDefaults;
 	childRows: number[];
 	columns: IColumn[];
+	keyTable: any;
 	length: number;
 	order: Array<Array<string|number>>;
 	paging: any;
@@ -108,6 +109,7 @@ export default class StateRestore {
 					search: 'Column Search:',
 					visible: 'Column Visibility:'
 				},
+				keyTable: 'KeyTable:',
 				name: 'Name:',
 				order: 'Sorting:',
 				paging: 'Paging:',
@@ -135,6 +137,7 @@ export default class StateRestore {
 				search: true,
 				visible: true
 			},
+			keyTable: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -149,6 +152,7 @@ export default class StateRestore {
 				search: false,
 				visible: false
 			},
+			keyTable: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -163,7 +167,7 @@ export default class StateRestore {
 	public c: restoreType.IDefaults;
 	public s: IS;
 
-	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string) {
+	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string, state: IState = undefined) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -227,7 +231,7 @@ export default class StateRestore {
 		};
 
 		// When a StateRestore instance is created the current state of the table should also be saved.
-		this.save();
+		this.save(state);
 	}
 
 	/**
@@ -367,13 +371,15 @@ export default class StateRestore {
 					[];
 
 			// Find the panes that match from the state and the actual instance
-			for (let loadedPane of loadedState.searchPanes.panes) {
-				for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
-					if (loadedPane.id === pane.s.index) {
-						// Set the value of the searchbox
-						pane.dom.searchBox.val(loadedPane.searchTerm);
-						// Set the value of the order
-						pane.s.dtPane.order(loadedPane.order);
+			if(loadedState.searchPanes.panes) {
+				for (let loadedPane of loadedState.searchPanes.panes) {
+					for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
+						if (loadedPane.id === pane.s.index) {
+							// Set the value of the searchbox
+							pane.dom.searchBox.val(loadedPane.searchTerm);
+							// Set the value of the order
+							pane.s.dtPane.order(loadedPane.order);
+						}
 					}
 				}
 			}
@@ -395,6 +401,16 @@ export default class StateRestore {
 
 		// Click on a background if there is one to shut the collection
 		$('div.dt-button-background').click();
+
+		// KeyTable
+		if (this.c.saveState.keyTable && loadedState.keyTable !== undefined) {
+			let cell = this.s.dt.cell(loadedState.keyTable);
+
+			// Ensure that the saved cell still exists
+			if (cell.any()) {
+				cell.focus();
+			}
+		}
 
 		return loadedState;
 	}
@@ -499,6 +515,11 @@ export default class StateRestore {
 		}
 		else if (!this.c.saveState.columns) {
 			this.s.savedState.columns = undefined;
+		}
+
+		// KeyTable
+		if (!this.c.saveState.keyTable) {
+			this.s.savedState.keyTable = undefined;
 		}
 
 		// SearchBuilder

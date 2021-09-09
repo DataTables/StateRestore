@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="2">
 
-<css lib="datatables buttons staterestore searchbuilder datetime searchpanes select scroller colreorder"/>
+<css lib="datatables buttons staterestore searchbuilder datetime searchpanes keytable select scroller colreorder"/>
 
-<js lib="jquery datatables staterestore buttons searchbuilder datetime searchpanes select scroller colreorder">
+<js lib="jquery datatables staterestore buttons searchbuilder datetime searchpanes keytable select scroller colreorder">
 <![CDATA[
 $(document).ready(function() {
     $('#example').DataTable({
@@ -11,6 +11,7 @@ $(document).ready(function() {
         colReorder: true,
         ajax:           "../data/2500.txt",
         deferRender:    true,
+        keys: true,
         scrollY:        200,
         scrollCollapse: true,
         scroller:       true,
@@ -26,6 +27,7 @@ $(document).ready(function() {
                             search: true,
                             visible: true
                         },
+                        keyTable: true,
                         order: true,
                         paging: true,
                         scroller: true,
@@ -52,6 +54,7 @@ This example includes all of the extensions that have a state saving element bui
 * SearchBuilder
 * Scroller
 * ColReorder
+* KeyTable
 ]]></info>
 
 <custom-table>

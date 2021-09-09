@@ -21,6 +21,7 @@
                 search: 'Column Search:',
                 visible: 'Column Visibility:'
             },
+            keyTable: 'KeyTable:',
             name: 'Name:',
             order: 'Sorting:',
             paging: 'Paging:',

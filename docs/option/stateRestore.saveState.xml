@@ -20,6 +20,7 @@
 				search: true,
 				visible: true
 			},
+            keyTable: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -73,6 +74,12 @@ As default the value is true, meaning that the order of the columns across the t
 Take a look at [this example]([../extensions/StateRestore/examples/customisation/noColReorder.html) to see this in action.
 
 This option is different to the `stateRestore.saveState.order` option. It decides whether to save the order of the data within the columns (ascending/descending). This option decides whether to save the order of the columns horizontally across the table, something that is changeable with the `-init colReorder` option.
+### keyTable
+This option allows for the saving of the `-init keyTable` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init keyTable` extensions are in use.
+
+As default the value is true, meaning that the `-init keyTable` state will be saved. If this option is set to false, then the `-init keyTable` state saving will be disabled.
+
+Take a look at [this example]([../extensions/StateRestore/examples/customisation/noKeyTable.html) to see this in action.
 ### scroller
 This option allows for the saving of the `-init scroller` position to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
 
