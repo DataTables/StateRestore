@@ -477,7 +477,7 @@ export default class StateRestoreCollection {
 		this._searchForStates();
 		this._collectionRebuild();
 
-		this.s.dt.on('destroy', () => {
+		this.s.dt.on('destroy.dtsr', () => {
 			this.destroy();
 		});
 
@@ -525,9 +525,15 @@ export default class StateRestoreCollection {
 			state.destroy();
 		}
 
-		Object.values(this.dom).forEach((node)=> node.remove());
+		Object.values(this.dom).forEach((node)=> {
+			node.off();
+			node.remove();
+		});
 
 		this.s.states = [];
+
+		this.s.dt.off('.dtsr');
+		$(this.s.dt.table().node()).off('.dtsr');
 	}
 
 	/**
