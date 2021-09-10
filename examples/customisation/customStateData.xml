@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore select"/>
+
+<js lib="jquery datatables staterestore select buttons">
+<![CDATA[
+$(document).ready(function() {
+    var savedSelected;
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createStateRestore', 'savedStates'],
+        select: true,
+        stateSaveParams: function(settings, data) {
+            data.selected = this.api().rows({selected:true})[0];
+        },
+        stateLoadParams: function(settings, data) {
+            this.api().rows(data.selected).select();
+        }
+    });
+
+    table.on('select deselect', function() {
+        table.state.save();
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Custom State Data</title>
+
+<info><![CDATA[
+This example shows how custom data can be saved in the state object. Here the selected rows are being stored in the state on the `-event stateSaveParams` event, then loaded back in on the `-event stateLoadParams` event which is triggered when StateRestore reloads a state.
+
+This means that it is possible to store and reload any custom elements that you may have on your page.
+]]></info>
+
+</dt-example>
