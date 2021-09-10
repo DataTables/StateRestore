@@ -31,7 +31,6 @@ export interface IClasses {
 	dtButton: string;
 	emptyStates: string;
 	formRow: string;
-	keyTableToggle: string;
 	leftSide: string;
 	modalFoot: string;
 	nameInput: string;
@@ -60,7 +59,6 @@ export interface IDom {
 	deleteContents: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
-	keyTableToggle: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
 	pagingToggle: JQuery<HTMLElement>;
@@ -88,7 +86,6 @@ export interface ISaveState {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	ColReorder: boolean;
 	columns: IColumnDefault | boolean;
-	keyTable: boolean;
 	order: boolean;
 	paging: boolean;
 	scroller: boolean;
@@ -120,7 +117,6 @@ export interface II18nCreationModal {
 		search: string;
 		visible: string;
 	};
-	keyTable: string;
 	name: string;
 	order: string;
 	paging: string;
@@ -135,7 +131,6 @@ export interface II18nCreationModal {
 export interface IS {
 	dt: any;
 	hasColReorder: boolean;
-	hasKeyTable: boolean;
 	hasScroller: boolean;
 	hasSearchBuilder: boolean;
 	hasSearchPanes: boolean;
@@ -168,7 +163,6 @@ export default class StateRestoreCollection {
 		dtButton: 'dt-button',
 		emptyStates: 'dtsr-emptyStates',
 		formRow: 'dtsr-form-row',
-		keyTableToggle: 'dtsr-keyTable-toggle',
 		leftSide: 'dtsr-left',
 		modalFoot: 'dtsr-modal-foot',
 		nameInput: 'dtsr-name-input',
@@ -196,7 +190,6 @@ export default class StateRestoreCollection {
 					search: 'Column Search',
 					visible: 'Column Visibility'
 				},
-				keyTable: 'KeyTable',
 				name: 'Name:',
 				order: 'Sorting',
 				paging: 'Paging',
@@ -225,7 +218,6 @@ export default class StateRestoreCollection {
 				search: true,
 				visible: true
 			},
-			keyTable: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -240,7 +232,6 @@ export default class StateRestoreCollection {
 				search: false,
 				visible: false
 			},
-			keyTable: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -280,7 +271,6 @@ export default class StateRestoreCollection {
 		this.s = {
 			dt: table,
 			hasColReorder: (dataTable as any).ColReorder !== undefined,
-			hasKeyTable: (dataTable as any).KeyTable !== undefined,
 			hasScroller: (dataTable as any).Scroller !== undefined,
 			hasSearchBuilder: (dataTable as any).SearchBuilder !== undefined,
 			hasSearchPanes: (dataTable as any).SearchPanes !== undefined,
@@ -377,20 +367,6 @@ export default class StateRestoreCollection {
 				'</div>'
 			),
 			dtContainer: $(this.s.dt.table().container()),
-			keyTableToggle: $(
-				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
-					'<input type="checkbox" class="'+
-						this.classes.keyTableToggle+' ' +
-						this.classes.checkBox +
-					'" checked>' +
-					'<label class="'+this.classes.checkLabel+'">'+
-						this.s.dt.i18n(
-							'stateRestore.creationModal.keyTable',
-							this.c.i18n.creationModal.keyTable
-						)+
-					'</label>'+
-				'</div>'
-			),
 			nameInputRow: $(
 				'<div class="'+this.classes.formRow+'">' +
 					'<label class="'+this.classes.nameLabel+'">'+
@@ -779,11 +755,6 @@ export default class StateRestoreCollection {
 			togglesToInsert.push(this.dom.pagingToggle);
 		}
 
-		// KeyTable toggle - check toggle and saving enabled
-		if (this.s.hasKeyTable && this.c.toggle.keyTable && this.c.saveState.keyTable) {
-			togglesToInsert.push(this.dom.keyTableToggle);
-		}
-
 		// ColReorder toggle - check toggle and saving enabled
 		if (this.s.hasColReorder && this.c.toggle.ColReorder && this.c.saveState.ColReorder) {
 			togglesToInsert.push(this.dom.colReorderToggle);
@@ -878,7 +849,6 @@ export default class StateRestoreCollection {
 					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
 					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
 				},
-				keyTable: this.dom.keyTableToggle.children('input').is(':checked'),
 				order: this.dom.orderToggle.children('input').is(':checked'),
 				paging: this.dom.pagingToggle.children('input').is(':checked'),
 				scroller: this.dom.scrollerToggle.children('input').is(':checked'),
@@ -913,7 +883,6 @@ export default class StateRestoreCollection {
 		$(document).on('keyup', keyupFunction);
 
 		// Need to save the state before the focus is lost when the modal is interacted with
-		// This is specifically for KeyTable integration
 		this.s.dt.state.save();
 	}
 

@@ -45,7 +45,6 @@ export interface IState {
 	c: restoreType.IDefaults;
 	childRows: number[];
 	columns: IColumn[];
-	keyTable: any;
 	length: number;
 	order: Array<Array<string|number>>;
 	paging: any;
@@ -110,7 +109,6 @@ export default class StateRestore {
 					search: 'Column Search:',
 					visible: 'Column Visibility:'
 				},
-				keyTable: 'KeyTable:',
 				name: 'Name:',
 				order: 'Sorting:',
 				paging: 'Paging:',
@@ -138,7 +136,6 @@ export default class StateRestore {
 				search: true,
 				visible: true
 			},
-			keyTable: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -153,7 +150,6 @@ export default class StateRestore {
 				search: false,
 				visible: false
 			},
-			keyTable: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -422,11 +418,6 @@ export default class StateRestore {
 		}
 		else if (!this.c.saveState.columns) {
 			this.s.savedState.columns = undefined;
-		}
-
-		// KeyTable
-		if (!this.c.saveState.keyTable) {
-			this.s.savedState.keyTable = undefined;
 		}
 
 		// SearchBuilder
