@@ -85,7 +85,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 	});
 
-	apiRegister('stateRestore.addState()', function(identifier) {
+	apiRegister('stateRestore.state.add()', function(identifier) {
 		let ctx = this.context[0];
 		if (ctx._stateRestore.addState) {
 			ctx._stateRestore.addState(identifier);

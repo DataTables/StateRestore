@@ -36,7 +36,7 @@ $(document).ready(function() {
     })
 
     $('#add').on('click', function() {
-        table.stateRestore.addState($('#state-selector').val());
+        table.stateRestore.state.add($('#state-selector').val());
     })
 });
 ]]>
