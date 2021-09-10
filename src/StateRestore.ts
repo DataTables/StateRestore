@@ -358,7 +358,7 @@ export default class StateRestore {
 			this.s.identifier = identifier;
 			this.save(this.s.savedState);
 			this.dom.confirmation.trigger('dtsr-rename');
-			return false;
+			return true;
 		};
 
 		// Check if a new identifier has been provided, if so no need for a modal
