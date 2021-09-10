@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="2">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function(index) {
+    var table;
+    // Setup - add a text input to each footer cell
+    $('#example tfoot th').each( function () {
+        var title = $(this).text();
+        var input = $('<input type="text" placeholder="Search '+title+'" />');
+        console.log(input, $(this))
+        $(this).empty().append(input);
+        $('#example').on('stateLoaded', () => {
+            $(input).val(table.column(index).search());
+        })
+    } );
+    table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:[
+            'colvis',
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    creationModal: true,
+                    toggle: {
+                        colReorder: true,
+                        columns:{
+                            search: true,
+                            visible: true
+                        }
+                    }
+                }
+            }
+        ],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Creation Modal with Toggle for Columns</title>
+
+<info><![CDATA[
+This example shows how the `-init stateRestore.toggle` option can be used to decide what elements of datatables should save their state when creating a new state. This example shows all of the options that are available with the `-init stateRestore.toggle` option for columns specifically.
+]]></info>
+
+</dt-example>

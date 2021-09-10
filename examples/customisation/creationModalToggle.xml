@@ -23,10 +23,6 @@ $(document).ready(function() {
                     creationModal: true,
                     toggle: {
                         colReorder: true,
-                        columns:{
-                            search: true,
-                            visible: true
-                        },
                         order: true,
                         paging: true,
                         scroller: true,
@@ -45,7 +41,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Creation Modal with Toggle</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore.toggle` option can be used to decide what elements of datatables should save their state when creating a new state. This example shows all of the options that are available with the `-init stateRestore.toggle` option.
+This example shows how the `-init stateRestore.toggle` option can be used to decide what elements of datatables should save their state when creating a new state. This example shows all of the options that are available with the `-init stateRestore.toggle` option, apart from the column specific options. They are in a [separate example](/extensions/StateRestore/examples/customisation/columns.html). 
 
 This example includes all of the extensions that have a state saving element built into them. These are...
 

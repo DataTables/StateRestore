@@ -411,7 +411,7 @@ export default class StateRestore {
 				}
 
 				// Search
-				if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns.search) {
+				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.search) {
 					this.s.savedState.columns[i].search = undefined;
 				}
 			}
