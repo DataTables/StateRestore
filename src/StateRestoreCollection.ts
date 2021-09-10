@@ -713,6 +713,7 @@ export default class StateRestoreCollection {
 			});
 		}
 
+		console.log(stateButtons);
 		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}
 

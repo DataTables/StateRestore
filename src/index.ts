@@ -248,7 +248,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 			let lastNumber = identifiers[0];
 
-			dt.stateRestore.addState(
+			dt.stateRestore.state.add(
 				dt.i18n('buttons.stateRestore', 'State %d', lastNumber !== undefined ? lastNumber + 1 : 1)
 			);
 
