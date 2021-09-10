@@ -75,7 +75,9 @@ export interface IDefaults {
 	creationModal: boolean;
 	delete: boolean;
 	i18n: II18n;
-	preDefined?: object;
+	preDefined?: {
+		[keys: string]: any;
+	};
 	rename: boolean;
 	save: boolean;
 	saveState: ISaveState;
