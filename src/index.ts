@@ -157,7 +157,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.stateRestore = {
 		action(e, dt, node, config) {
-			config._stateRestore.load(config._stateRestore.s.identifier);
+			config._stateRestore.load();
 		},
 		config: {
 			split: ['updateState', 'deleteState', 'renameState']

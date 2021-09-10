@@ -77,6 +77,7 @@ export interface IDefaults {
 	creationModal: boolean;
 	delete: boolean;
 	i18n: II18n;
+	preDefined?: object;
 	rename: boolean;
 	save: boolean;
 	saveState: ISaveState;
@@ -214,6 +215,7 @@ export default class StateRestoreCollection {
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
 		},
+		preDefined: {},
 		rename: true,
 		save: true,
 		saveState: {
@@ -288,46 +290,8 @@ export default class StateRestoreCollection {
 		this.s.dt.on('xhr', (e, xhrsettings, json) => {
 			// Has staterestore been used before? Is there anything to load?
 			if (json && json.stateRestore) {
-				let states = Object.keys(json.stateRestore);
-
-				for (let state of states) {
-					for(let i = 0; i < this.s.states.length; i++) {
-						if(this.s.states[i].s.identifier === state) {
-							this.s.states.splice(i, 1);
-						}
-					}
-
-					let loadedState = json.stateRestore[state];
-					let newState = new StateRestore(
-						this.s.dt,
-						$.extend(true, {}, this.c, loadedState.c),
-						state
-					);
-
-					newState.s.savedState = loadedState;
-					this.s.states.push(newState);
-
-					newState.dom.confirmation.on(
-						'dtsr-delete',
-						() => this._deleteCallback(loadedState.stateRestore.state)
-					);
-
-					newState.dom.confirmation.on(
-						'dtsr-rename',
-						() => {
-							this._collectionRebuild();
-						}
-					);
-
-					newState.dom.confirmation.on(
-						'dtsr-save',
-						() => {
-							this._collectionRebuild();
-						}
-					);
-
-					this._collectionRebuild();
-				}
+				this._addPreDefined(json.stateRestore);
+				this._collectionRebuild();
 			}
 		});
 
@@ -534,6 +498,10 @@ export default class StateRestoreCollection {
 
 		table.settings()[0]._stateRestore = this;
 		this._searchForStates();
+
+		// Has staterestore been used before? Is there anything to load?
+		this._addPreDefined(this.c.preDefined);
+
 		this._collectionRebuild();
 
 		this.s.dt.on('destroy.dtsr', () => {
@@ -644,6 +612,53 @@ export default class StateRestoreCollection {
 	 */
 	public getStates(): StateRestore[] {
 		return this.s.states;
+	}
+
+	/**
+	 * Reloads states that are set via datatables config or over ajax
+	 *
+	 * @param preDefined Object containing the predefined states that are to be reintroduced
+	 */
+	private _addPreDefined(preDefined) {
+		let states = Object.keys(preDefined);
+
+		for (let state of states) {
+			for(let i = 0; i < this.s.states.length; i++) {
+				if(this.s.states[i].s.identifier === state) {
+					this.s.states.splice(i, 1);
+				}
+			}
+
+			let loadedState = preDefined[state];
+			let newState = new StateRestore(
+				this.s.dt,
+				$.extend(true, {}, this.c, loadedState.c),
+				state,
+				loadedState
+			);
+
+			newState.s.savedState = loadedState;
+			this.s.states.push(newState);
+
+			newState.dom.confirmation.on(
+				'dtsr-delete',
+				() => this._deleteCallback(loadedState.stateRestore.state)
+			);
+
+			newState.dom.confirmation.on(
+				'dtsr-rename',
+				() => {
+					this._collectionRebuild();
+				}
+			);
+
+			newState.dom.confirmation.on(
+				'dtsr-save',
+				() => {
+					this._collectionRebuild();
+				}
+			);
+		}
 	}
 
 	/**

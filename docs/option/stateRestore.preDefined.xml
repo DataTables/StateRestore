@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.preDefined</name>
+	<summary>Set preDefined states in DataTables initialisation</summary>
+	<since>0.0.1</since>
+
+    <type type="object">
+		<description>
+            This option is an object. The key is the identifier of the state, and the value is the state that is to be reloaded. This value can be retrieved from the DataTable at any time using the `-api state()` method.
+        </description>
+	</type>
+
+	<default value="{}">
+        The default value for the `-init stateRestore.preDefined` option is `{}` meaning that as standard there are no preDefined states.
+	</default>
+	<description>
+		<![CDATA[
+		This option allows StateRestore to load preDefined states that are set in the DataTables initialisation. This object contains key-value pairs where the key is the identifier, and the value is the state that is to be reloaded. This can be retrieved from the DataTable at any time using the `-api state()` method.
+
+		As default the value is an empty object, meaning that there will be no preDefined states loaded into StateRestore.
+
+		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/preDefined.html) to see this in action.
+        ]]>
+	</description>
+
+<example title="Set PreDefined state for StateRestore"><![CDATA[
+$('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:[
+            'createStateRestore',
+            {
+                extend: 'savedStates',
+                config: {
+                    preDefined: {
+                        "Order 3": {"time":1631268298903,"start":0,"length":10,"order":[[1,"asc"]],"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true},"columns":[{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}}],"childRows":[]}
+                    }
+                }
+            }
+        ]
+    });
+]]></example>
+
+</dt-option>
