@@ -19,6 +19,7 @@ export interface IClasses {
 	confirmationTitleRow: string;
 	dtButton: string;
 	input: string;
+	modalError: string;
 	renameModal: string;
 }
 
@@ -35,6 +36,7 @@ export interface IDom {
 	deleteContents: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
+	modalError: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
@@ -93,6 +95,7 @@ export default class StateRestore {
 		confirmationTitleRow: 'dtsr-confirmation-title-row',
 		dtButton: 'dt-button',
 		input: 'dtsr-input',
+		modalError: 'dtsr-modal-error',
 		renameModal: 'dtsr-rename-modal'
 	};
 
@@ -123,6 +126,7 @@ export default class StateRestore {
 			deleteConfirm: 'Are you sure you want to delete %s?',
 			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
+			modalError: 'Error processing action. Check that you have completed the modal properly.',
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State',
@@ -208,6 +212,10 @@ export default class StateRestore {
 				'</h2>'
 			),
 			dtContainer: $(this.s.dt.table().container()),
+			modalError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.modalError', this.c.i18n.modalError) +
+				'</span>'),
 			renameContents:$(
 				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<label class="'+this.classes.confirmationMessage+'">'+
@@ -257,7 +265,7 @@ export default class StateRestore {
 					this.dom.confirmation.trigger('dtsr-delete');
 				}
 				catch (e) {
-					return;
+					return false;
 				}
 
 			};
@@ -330,6 +338,12 @@ export default class StateRestore {
 		}
 
 		let renameFunction = () => {
+			let identifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
+
+			if (identifier.length === 0) {
+				return false;
+			}
+
 			if (!this.c.ajax) {
 				try {
 					sessionStorage.removeItem(
@@ -337,13 +351,14 @@ export default class StateRestore {
 					);
 				}
 				catch (e) {
-					return;
+					return false;
 				}
 			}
 
-			this.s.identifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
+			this.s.identifier = identifier;
 			this.save(this.s.savedState);
 			this.dom.confirmation.trigger('dtsr-rename');
+			return false;
 		};
 
 		// Check if a new identifier has been provided, if so no need for a modal
@@ -475,7 +490,7 @@ export default class StateRestore {
 	private _newModal(
 		title: JQuery<HTMLElement>,
 		buttonText: string,
-		buttonAction: () => void,
+		buttonAction: () => boolean,
 		modalContents: JQuery<HTMLElement>
 	): void {
 		this.dom.background.appendTo(this.dom.dtContainer);
@@ -510,11 +525,21 @@ export default class StateRestore {
 
 		// When the button is clicked, call the appropriate action,
 		// remove the background and modal from the screen and unbind the keyup event.
-		confirmationButton.one('click', () => {
-			buttonAction();
-			this.dom.background.remove();
-			this.dom.confirmation.remove();
-			$(document).unbind('keyup', keyupFunction);
+		confirmationButton.on('click', () => {
+			let success = buttonAction();
+			if (success) {
+				this.dom.background.remove();
+				this.dom.confirmation.remove();
+				$(document).unbind('keyup', keyupFunction);
+				confirmationButton.off('click');
+			}
+			else {
+				this.dom.confirmation.append(this.dom.modalError);
+			}
+		});
+
+		this.dom.confirmation.on('click', (e) => {
+			e.stopPropagation();
 		});
 
 		// When the button is clicked, remove the background and modal from the screen and unbind the keyup event.

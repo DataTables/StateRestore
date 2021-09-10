@@ -107,6 +107,7 @@ export interface II18n {
 	deleteConfirm: string;
 	deleteTitle: string;
 	emptyStates: string;
+	modalError: string;
 	renameButton: string;
 	renameLabel: string;
 	renameTitle: string;
@@ -206,6 +207,7 @@ export default class StateRestoreCollection {
 			deleteConfirm: 'Are you sure you want to delete %s?',
 			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
+			modalError: 'Error processing action. Check that you have completed the modal properly.',
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
