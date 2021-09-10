@@ -311,108 +311,13 @@ export default class StateRestore {
 
 		settings.oLoadedState = $.extend(true, {}, loadedState);
 
-		// Order
-		if (this.c.saveState.order && loadedState.order !== undefined) {
-			settings.aaSorting = [];
-			$.each(loadedState.order, function(i, col) {
-				settings.aaSorting.push(col[0] >= settings.aoColumns.length ?
-					[0, col[1]] :
-					col
-				);
-			});
-		}
-
-		// Paging
-		if(this.c.saveState.paging && loadedState.start !== undefined) {
-			this.s.dt.page(loadedState.start / loadedState.length);
-		}
-
-		// Search
-		if (this.c.saveState.search && loadedState.search !== undefined) {
-			$.extend(settings.oPreviousSearch, this._searchToHung(loadedState.search));
-		}
-
-		// Columns
-		if (this.c.saveState.columns && loadedState.columns) {
-			for (let i=0, ien=loadedState.columns.length ; i<ien ; i++) {
-				let col = loadedState.columns[i];
-
-				// Visibility
-				if (
-					typeof this.c.saveState.columns !== 'boolean' &&
-					this.c.saveState.columns.visible &&
-					col.visible !== undefined
-				) {
-					settings.aoColumns[i].bVisible = col.visible;
-				}
-
-				// Search
-				if (
-					typeof this.c.saveState.columns !== 'boolean' &&
-					this.c.saveState.columns.search &&
-					col.search !== undefined
-				) {
-					$.extend(settings.aoPreSearchCols[i], this._searchToHung(col.search));
-				}
-			}
-		}
-
-		// SearchBuilder
-		if (this.c.saveState.searchBuilder && loadedState.searchBuilder) {
-			this.s.dt.searchBuilder.rebuild(loadedState.searchBuilder);
-		}
-
-		// SearchPanes
-		if (this.c.saveState.searchPanes && loadedState.searchPanes) {
-			this.s.dt.searchPanes.clearSelections();
-			// Set the selection list for the panes so that the correct
-			// rows can be reselected and in the right order
-			this.s.dt.context[0]._searchPanes.s.selectionList =
-				loadedState.searchPanes.selectionList !== undefined ?
-					loadedState.searchPanes.selectionList :
-					[];
-
-			// Find the panes that match from the state and the actual instance
-			if(loadedState.searchPanes.panes) {
-				for (let loadedPane of loadedState.searchPanes.panes) {
-					for (let pane of this.s.dt.context[0]._searchPanes.s.panes) {
-						if (loadedPane.id === pane.s.index) {
-							// Set the value of the searchbox
-							pane.dom.searchBox.val(loadedPane.searchTerm);
-							// Set the value of the order
-							pane.s.dtPane.order(loadedPane.order);
-						}
-					}
-				}
-			}
-
-			this.s.dt.searchPanes.rebuildPane(false, true);
-		}
-
-		// ColReorder
-		if (this.c.saveState.ColReorder && loadedState.ColReorder) {
-			this.s.dt.colReorder.order(loadedState.ColReorder, true);
-		}
-
-		// Scroller
-		if (this.c.saveState.scroller && loadedState.scroller) {
-			this.s.dt.scroller.toPosition(loadedState.scroller.topRow);
-		}
-
-		this.s.dt.draw(false);
-
 		// Click on a background if there is one to shut the collection
 		$('div.dt-button-background').click();
 
-		// KeyTable
-		if (this.c.saveState.keyTable && loadedState.keyTable !== undefined) {
-			let cell = this.s.dt.cell(loadedState.keyTable);
-
-			// Ensure that the saved cell still exists
-			if (cell.any()) {
-				cell.focus();
-			}
-		}
+		// Call the internal datatables function to implement the state on the table
+		$.fn.dataTable.ext.oApi._fnImplementState(settings, loadedState, () => {
+			this.s.dt.draw();
+		});
 
 		return loadedState;
 	}
