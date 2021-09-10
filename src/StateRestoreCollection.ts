@@ -713,7 +713,6 @@ export default class StateRestoreCollection {
 			});
 		}
 
-		console.log(stateButtons);
 		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}
 
@@ -897,7 +896,7 @@ export default class StateRestoreCollection {
 	 */
 	private _deleteCallback(identifier: string): void {
 		for (let i = 0; i < this.s.states.length; i++) {
-			if (this.s.states[i].s.savedState.stateRestore.state === identifier) {
+			if (this.s.states[i].s.identifier === identifier) {
 				this.s.states.splice(i, 1);
 				i--;
 			}

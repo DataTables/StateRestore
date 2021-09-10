@@ -375,7 +375,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						split
 					},
 					extend: 'stateRestore',
-					text: state.s.savedState.stateRestore.state
+					text: state.s.identifier
 				});
 			}
 		}
