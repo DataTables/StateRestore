@@ -7,6 +7,6 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 	});
 
 	describe('Functional tests', function () {
-		// DD-2186
+		// TK COLIN DD-2186
 	});
 });
