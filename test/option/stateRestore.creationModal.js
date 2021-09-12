@@ -1,4 +1,4 @@
-describe('stateRestore - options - stateRestore.create', function () {
+describe('stateRestore - options - stateRestore.creationModal', function () {
 	let table;
 
 	dt.libs({
@@ -9,7 +9,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 	describe('Functional tests', function () {
 		// No need to check default, as states created in other tests
 		dt.html('basic');
-		it('Create - true', function () {
+		it('createStateRestore - true', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -19,20 +19,25 @@ describe('stateRestore - options - stateRestore.create', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							create: true
+							creationModal: true
 						}
 					}
 				]
 			});
 
 			$('.dt-button:eq(0)').click();
+
+			expect($('.dtsr-creation').length).toBe(1);
+		});
+		it('... and not created', function () {
+			$('.dtsr-background').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(0);
 		});
 
 		dt.html('basic');
-		it('Create - false', function () {
+		it('createStateRestore - false', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -42,13 +47,18 @@ describe('stateRestore - options - stateRestore.create', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							create: false
+							creationModal: false
 						}
 					}
 				]
 			});
 
 			$('.dt-button:eq(0)').click();
+
+			expect($('.dtsr-creation').length).toBe(0);
+		});
+		it('... and is created', function () {
+			$('.dtsr-background').click();
 			$('.dt-button:eq(1)').click();
 
 			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);

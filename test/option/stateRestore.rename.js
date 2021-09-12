@@ -1,4 +1,4 @@
-describe('stateRestore - options - stateRestore.create', function () {
+describe('stateRestore - options - stateRestore.rename', function () {
 	let table;
 
 	dt.libs({
@@ -7,9 +7,9 @@ describe('stateRestore - options - stateRestore.create', function () {
 	});
 
 	describe('Functional tests', function () {
-		// No need to check default, as states created in other tests
+		// No need to check default, as states deleted in other tests
 		dt.html('basic');
-		it('Create - true', function () {
+		it('Rename - true', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -19,7 +19,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							create: true
+							rename: true
 						}
 					}
 				]
@@ -27,12 +27,13 @@ describe('stateRestore - options - stateRestore.create', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button').length).toBe(3);
 		});
 
 		dt.html('basic');
-		it('Create - false', function () {
+		it('Rename - false', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -42,7 +43,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							create: false
+							rename: false
 						}
 					}
 				]
@@ -50,8 +51,17 @@ describe('stateRestore - options - stateRestore.create', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
+			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Delete');
+		});
+		it('... unable to rename via API', function () {
+			// TK COLIN DD-2215
+			// table.stateRestore.state('State 1').rename('unit test');
+
+			// then check the rename didn't happen
 		});
 	});
 

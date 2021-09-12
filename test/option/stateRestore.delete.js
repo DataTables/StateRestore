@@ -1,4 +1,4 @@
-describe('stateRestore - options - stateRestore.create', function () {
+describe('stateRestore - options - stateRestore.delete', function () {
 	let table;
 
 	dt.libs({
@@ -7,9 +7,9 @@ describe('stateRestore - options - stateRestore.create', function () {
 	});
 
 	describe('Functional tests', function () {
-		// No need to check default, as states created in other tests
+		// No need to check default, as states deleted in other tests
 		dt.html('basic');
-		it('Create - true', function () {
+		it('Delete - true', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -19,7 +19,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							create: true
+							delete: true
 						}
 					}
 				]
@@ -27,12 +27,13 @@ describe('stateRestore - options - stateRestore.create', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button').length).toBe(3);
 		});
 
 		dt.html('basic');
-		it('Create - false', function () {
+		it('Delete - false', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -42,7 +43,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							create: false
+							delete: false
 						}
 					}
 				]
@@ -50,8 +51,18 @@ describe('stateRestore - options - stateRestore.create', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
+			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Rename');
+		});
+		it('... unable to delete via API', function () {
+			table.stateRestore.states().delete();
+
+			// TK COLIN DD-2258
+			// expect($('.dtsr-confirmation').length).toBe(0);
+			expect($('.dtsr-confirmation').length).toBe(1);
 		});
 	});
 
