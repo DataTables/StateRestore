@@ -896,7 +896,7 @@ export default class StateRestoreCollection {
 	 *
 	 * @param identifier The value that is used to identify a state
 	 */
-	private _deleteCallback(identifier: string): void {
+	private _deleteCallback(identifier: string): boolean {
 		for (let i = 0; i < this.s.states.length; i++) {
 			if (this.s.states[i].s.identifier === identifier) {
 				this.s.states.splice(i, 1);
@@ -905,6 +905,8 @@ export default class StateRestoreCollection {
 		}
 
 		this._collectionRebuild();
+
+		return true;
 	}
 
 	/**

@@ -246,10 +246,10 @@ export default class StateRestore {
 	 *
 	 * @param skipModal Flag to indicate if the modal should be skipped or not
 	 */
-	public delete(skipModal = false): void {
+	public delete(skipModal = false): boolean {
 		// Check if deletion of states is allowed
 		if (!this.c.delete) {
-			return;
+			return false;
 		}
 
 		let deleteFunction;
@@ -268,6 +268,7 @@ export default class StateRestore {
 					return false;
 				}
 
+				return true;
 			};
 		}
 		// Otherwise when it occurs just trigger the event
@@ -290,6 +291,8 @@ export default class StateRestore {
 				this.dom.deleteContents
 			);
 		}
+
+		return true;
 	}
 
 	/**
