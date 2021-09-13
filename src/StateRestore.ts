@@ -316,6 +316,9 @@ export default class StateRestore {
 			return;
 		}
 
+		// Always want the states stored here to be loaded in - regardless of when they were created
+		loadedState.time = + new Date();
+
 		settings.oLoadedState = $.extend(true, {}, loadedState);
 
 		// Click on a background if there is one to shut the collection

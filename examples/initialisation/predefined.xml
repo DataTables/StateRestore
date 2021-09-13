@@ -14,7 +14,74 @@ $(document).ready(function() {
                 extend: 'savedStates',
                 config: {
                     preDefined: {
-                        "Order 3": {"time":1631268298903,"start":0,"length":10,"order":[[1,"asc"]],"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true},"columns":[{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}}],"childRows":[]}
+                        "Order 3": {
+                            "start": 0,
+                            "length": 10,
+                            "order": [[2,"asc"]],
+                            "search": {
+                                "search": "",
+                                "smart": true,
+                                "regex": false,
+                                "caseInsensitive": true
+                            },
+                            "columns": [
+                                {
+                                    "visible": true,
+                                    "search": {
+                                        "search": "",
+                                        "smart": true,
+                                        "regex": false,
+                                        "caseInsensitive": true
+                                    }
+                                },
+                                {
+                                    "visible": true,
+                                    "search": {
+                                        "search": "",
+                                        "smart": true,
+                                        "regex": false,
+                                        "caseInsensitive": true
+                                    }
+                                },
+                                {
+                                    "visible": true,
+                                    "search":{
+                                        "search": "",
+                                        "smart": true,
+                                        "regex": false,
+                                        "caseInsensitive": true
+                                    }
+                                },
+                                {
+                                    "visible": true,
+                                    "search": {
+                                        "search": "",
+                                        "smart": true,
+                                        "regex": false,
+                                        "caseInsensitive": true
+                                    }
+                                },
+                                {
+                                    "visible": true,
+                                    "search": {
+                                        "search": "",
+                                        "smart": true,
+                                        "regex": false,
+                                        "caseInsensitive": true
+                                    }
+                                },
+                                {
+                                    "visible": true,
+                                    "search": {
+                                        "search": "",
+                                        "smart": true,
+                                        "regex": false,
+                                        "caseInsensitive": true
+                                    }
+                                }
+                            ],
+                            "childRows":[]
+                        }
                     }
                 }
             }
@@ -27,9 +94,9 @@ $(document).ready(function() {
 <title lib="stateRestore">Predefined States</title>
 
 <info><![CDATA[
-This example shows how predefined states can be supplied using the `-init stateRestore`extension. The state present under the `Saved States` button contains a predefined state that will scroll the table and apply an order to the third column.
+This example shows how predefined states can be supplied using the `-init stateRestore`extension. The state present under the `Saved States` button contains a predefined state that will apply an order to the third column.
 
-Renaming, updating and deleting this state could all be disabled using the `-init stateRestore.rename`, `-init stateRestore.save` and `-init stateRestore.delete` options. Because it is built into the ajax data that is sent initially, the state will always be present on a new page load, even if it has been deleted previously.
+Renaming, updating and deleting this state could all be disabled using the `-init stateRestore.rename`, `-init stateRestore.save` and `-init stateRestore.delete` options. Because it is built into the DataTable's initialisation, the state will always be present on a new page load, even if it has been deleted previously.
 ]]></info>
 
 </dt-example>

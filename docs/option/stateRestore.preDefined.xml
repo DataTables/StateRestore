@@ -1,43 +1,147 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
 	<name>stateRestore.preDefined</name>
-	<summary>Set preDefined states in DataTables initialisation</summary>
+	<summary>Set predefined states in DataTables initialisation</summary>
 	<since>0.0.1</since>
 
     <type type="object">
 		<description>
-            This option is an object. The key is the identifier of the state, and the value is the state that is to be reloaded. This value can be retrieved from the DataTable at any time using the `-api state()` method.
+This option is an object. The key is the identifier of the state, and the value is the state that is to be reloaded. This value can be retrieved from the DataTable at any time using the `-api state()` method.
+
+The corresponding value of the predefined state is structured as follows.
+
+* `-type number` `start` - The first row that should be displayed.
+* `-type number` `length` - The number of rows that should be displayed per page.
+* `-type array` `order` - The ordering that should be applied to the table. This value is the same as that used in the `-init order` initialisation option.
+* `-type object` `search` - This is an object that contains details about the search. This value is the same as that used in the `-init search` initialision option.
+* `-type array` `columns` - This is an array of objects, one for each column. It has two properties.
+    * `columns.visible` - This takes the same value as the initialisation option `-init columns.visible`, true for show and false for hide.
+    * `columns.search` - This again this takes the same value as the `-init columns.search` initialisation option.
+* `-type array` `ColReorder` - This array of numbers is used to indicate the order of the columns that should be loaded. This is the same value as the `-init colReorder.order` initialisation option.
+* `-type object` `scroller` - This object contains four properties.
+    * `-type number` `baseRowTop` - The distance that scroller has scrolled in terms of rows. For example 10.5 would set the top of the displayed table to be 10.5 rows from the top.
+    * `-type number` `topRow` - This takes the same value as `baseRowTop`.
+    * `-type number` `baseScrollTop` - The distance that scroller has scrolled in terms of pixels.
+    * `-type number` `scrollTop` - This takes the same value as `baseScrollTop`.
+* `-type object` `searchBuilder` - This is the same value as is returned from `-api searchBuilder.getDetails()`.
+* `-type object` `searchPanes` - This object contains the details necessary to rebuild SearchPanes as they were before.
+    * `-type array` `panes` - This array contains an object for each pane that is displayed. These objects contains details that are required to reload the data and setup of each SearchPane.
+        * `-type array` `arrayFilter` This is an array that contains an object for each option that is to be displayed within the SearchPane.
+            * `-type string` `display` - This is the string value that is displayed within the SearchPane.
+            * `-type string` `filter` - This is the string value that is used when filtering with/on the SearchPane.
+            * `-type string` `sort` - This is the string value that is used when sorting on the SearchPane.
+            * `-type string` `type` - This is the string value that is used when determining the type on the SearchPane.
+        * `-type object` `bins` - This object has a key value pair for each distinct value within this panes column. The key is the distinct value and the value is the number of times that that value appears in the column.
+        * `-type boolean` `collapsed` - Whether this pane was collapsed when the last state save occured, or not.
+        * `-type number` `id` - The pane id, corresponding to the column index that it is attached to.
+    * `-type array` `selectionList` - This array contains an object for each pane that is displayed. These objects contain details about the selections that have been made in each pane.
+        * `-type number` `index` - The pane index that the selections are attached to.
+        * `-type array` `rows` - This array contains objects that indicate which rows were selected at the last state save.
+            * `-type string` `className` - Any class name that was applied to the rows.
+            * `-type string` `display` - The display value for this row.
+            * `-type string` `filter` - The filter value for this row.
+            * `-type number` `index` - The index of this row within the pane.
+            * `-type number` `shown` - The number of rows with this value that are being shown within the DataTable.
+            * `-type string` `filter` - The sort value for this row.
+            * `-type number` `total` - The total number of rows with this value that are within the DataTable.
+            * `-type string` `type` - The value used to determine the type for this row.
         </description>
 	</type>
 
 	<default value="{}">
-        The default value for the `-init stateRestore.preDefined` option is `{}` meaning that as standard there are no preDefined states.
+        The default value for the `-init stateRestore.preDefined` option is `{}` meaning that as standard there are no predefined states.
 	</default>
 	<description>
 		<![CDATA[
-		This option allows StateRestore to load preDefined states that are set in the DataTables initialisation. This object contains key-value pairs where the key is the identifier, and the value is the state that is to be reloaded. This can be retrieved from the DataTable at any time using the `-api state()` method.
+		This option allows StateRestore to load predefined states that are set in the DataTables initialisation. This object contains key-value pairs where the key is the identifier, and the value is the state that is to be reloaded. This can be retrieved from the DataTable at any time using the `-api state()` method.
 
-		As default the value is an empty object, meaning that there will be no preDefined states loaded into StateRestore.
+		As default the value is an empty object, meaning that there will be no predefined states loaded into StateRestore.
 
 		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/preDefined.html) to see this in action.
         ]]>
 	</description>
 
-<example title="Set PreDefined state for StateRestore"><![CDATA[
+<example title="Set Predefined state for StateRestore"><![CDATA[
 $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createStateRestore',
-            {
-                extend: 'savedStates',
-                config: {
-                    preDefined: {
-                        "Order 3": {"time":1631268298903,"start":0,"length":10,"order":[[1,"asc"]],"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true},"columns":[{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}},{"visible":true,"search":{"search":"","smart":true,"regex":false,"caseInsensitive":true}}],"childRows":[]}
+    dom: 'Blfrtip',
+    buttons:[
+        'createStateRestore',
+        {
+            extend: 'savedStates',
+            config: {
+                preDefined: {
+                    "Order 3": {
+                        "start": 0,
+                        "length": 10,
+                        "order": [[1,"asc"]],
+                        "search": {
+                            "search": "",
+                            "smart": true,
+                            "regex": false,
+                            "caseInsensitive": true
+                        },
+                        "columns": [
+                            {
+                                "visible": true,
+                                "search": {
+                                    "search": "",
+                                    "smart": true,
+                                    "regex": false,
+                                    "caseInsensitive": true
+                                }
+                            },
+                            {
+                                "visible": true,
+                                "search": {
+                                    "search": "",
+                                    "smart": true,
+                                    "regex": false,
+                                    "caseInsensitive": true
+                                }
+                            },
+                            {
+                                "visible": true,
+                                "search":{
+                                    "search": "",
+                                    "smart": true,
+                                    "regex": false,
+                                    "caseInsensitive": true
+                                }
+                            },
+                            {
+                                "visible": true,
+                                "search": {
+                                    "search": "",
+                                    "smart": true,
+                                    "regex": false,
+                                    "caseInsensitive": true
+                                }
+                            },
+                            {
+                                "visible": true,
+                                "search": {
+                                    "search": "",
+                                    "smart": true,
+                                    "regex": false,
+                                    "caseInsensitive": true
+                                }
+                            },
+                            {
+                                "visible": true,
+                                "search": {
+                                    "search": "",
+                                    "smart": true,
+                                    "regex": false,
+                                    "caseInsensitive": true
+                                }
+                            }
+                        ]
                     }
                 }
             }
-        ]
-    });
+        }
+    ]
+});
 ]]></example>
 
 </dt-option>
