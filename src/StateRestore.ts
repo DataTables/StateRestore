@@ -39,6 +39,7 @@ export interface IDom {
 	dtContainer: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
 	renameError: JQuery<HTMLElement>;
+	renameInput: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
 
@@ -225,13 +226,16 @@ export default class StateRestore {
 							.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel)
 							.replace(/%s/g, this.s.identifier)+
 					'</label>' +
-					'<input class="'+this.classes.input+'" type="text"></input>' +
 				'</div>'
 			),
 			renameError: $(
 				'<span class="'+this.classes.modalError+'">' +
 					this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError) +
-				'</span>'),
+				'</span>'
+			),
+			renameInput: $(
+				'<input class="'+this.classes.input+'" type="text"></input>'
+			),
 			renameTitle: $(
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
 					this.s.dt.i18n(
@@ -381,6 +385,8 @@ export default class StateRestore {
 			this.dom.confirmation.remove();
 		}
 		else {
+			this.dom.renameInput.val(this.s.identifier);
+			this.dom.renameContents.append(this.dom.renameInput);
 			this._newModal(
 				this.dom.renameTitle,
 				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
@@ -523,6 +529,8 @@ export default class StateRestore {
 				)
 			)
 			.appendTo(this.dom.dtContainer);
+
+		$(modalContents.children('input')[0]).focus();
 
 		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
