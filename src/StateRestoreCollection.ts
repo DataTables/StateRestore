@@ -105,10 +105,11 @@ export interface II18n {
 	creationModal?: II18nCreationModal;
 	deleteButton: string;
 	deleteConfirm: string;
+	deleteError: string;
 	deleteTitle: string;
 	emptyStates: string;
-	modalError: string;
 	renameButton: string;
+	renameError: string;
 	renameLabel: string;
 	renameTitle: string;
 }
@@ -205,10 +206,11 @@ export default class StateRestoreCollection {
 			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete %s?',
+			deleteError: 'Failed to delete state.',
 			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
-			modalError: 'Error processing action. Check that you have completed the modal properly.',
 			renameButton: 'Rename',
+			renameError: 'Name cannot be empty.',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
 		},

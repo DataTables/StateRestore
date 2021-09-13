@@ -34,10 +34,11 @@ export interface IDom {
 	confirmation: JQuery<HTMLElement>;
 	confirmationTitleRow: JQuery<HTMLElement>;
 	deleteContents: JQuery<HTMLElement>;
+	deleteError: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
-	modalError: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
+	renameError: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
 
@@ -124,10 +125,11 @@ export default class StateRestore {
 			},
 			deleteButton: 'Delete',
 			deleteConfirm: 'Are you sure you want to delete %s?',
+			deleteError: 'Failed to delete state.',
 			deleteTitle: 'Delete State',
 			emptyStates: 'No saved states',
-			modalError: 'Error processing action. Check that you have completed the modal properly.',
 			renameButton: 'Rename',
+			renameError: 'Name cannot be empty.',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State',
 		},
@@ -203,6 +205,10 @@ export default class StateRestore {
 						.replace(/%s/g, this.s.identifier) +
 				'</span></div>'
 			),
+			deleteError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.deleteError', this.c.i18n.deleteError) +
+				'</span>'),
 			deleteTitle: $(
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
 					this.s.dt.i18n(
@@ -212,10 +218,6 @@ export default class StateRestore {
 				'</h2>'
 			),
 			dtContainer: $(this.s.dt.table().container()),
-			modalError: $(
-				'<span class="'+this.classes.modalError+'">' +
-					this.s.dt.i18n('stateRestore.modalError', this.c.i18n.modalError) +
-				'</span>'),
 			renameContents:$(
 				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<label class="'+this.classes.confirmationMessage+'">'+
@@ -226,6 +228,10 @@ export default class StateRestore {
 					'<input class="'+this.classes.input+'" type="text"></input>' +
 				'</div>'
 			),
+			renameError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError) +
+				'</span>'),
 			renameTitle: $(
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
 					this.s.dt.i18n(
@@ -288,7 +294,8 @@ export default class StateRestore {
 				this.dom.deleteTitle,
 				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
 				deleteFunction,
-				this.dom.deleteContents
+				this.dom.deleteContents,
+				this.dom.deleteError
 			);
 		}
 
@@ -378,7 +385,8 @@ export default class StateRestore {
 				this.dom.renameTitle,
 				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
 				renameFunction,
-				this.dom.renameContents
+				this.dom.renameContents,
+				this.dom.renameError
 			);
 		}
 	}
@@ -497,7 +505,8 @@ export default class StateRestore {
 		title: JQuery<HTMLElement>,
 		buttonText: string,
 		buttonAction: () => boolean,
-		modalContents: JQuery<HTMLElement>
+		modalContents: JQuery<HTMLElement>,
+		errorMessage: JQuery<HTMLElement>
 	): void {
 		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.confirmationTitleRow.empty().append(title);
@@ -540,7 +549,7 @@ export default class StateRestore {
 				confirmationButton.off('click');
 			}
 			else {
-				this.dom.confirmation.append(this.dom.modalError);
+				this.dom.confirmation.append(errorMessage);
 			}
 		});
 
