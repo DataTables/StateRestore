@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.deleteError</name>
+	<summary>Set the error message shown when incorrectly deleting a state</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the delete modal when an error occurs.
+		</description>
+    </type>
+
+	<default value="Failed to delete state." />
+
+	<description>
+		<![CDATA[
+            This string is displayed within the delete modal to indicate an error has occured when deleting the state.
+		]]>
+	</description>
+
+	<example title="Change text within delete confirmation modal"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                deleteError: 'ERROR!'
+            }
+        },
+        buttons: [ 'createStateRestore', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>

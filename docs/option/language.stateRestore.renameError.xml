@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.modalError</name>
-	<summary>Set the error message shown within StateRestore modals</summary>
+	<name>language.stateRestore.renameError</name>
+	<summary>Set the error message shown when incorrectly renaming a state</summary>
 	<since>0.0.1</since>
 
 	<type type="string">
 		<description>
-            The string that will be displayed within modals when an error occurs trying to process the action.
+            The string that will be displayed within the rename modal when an invalid name is provided.
 		</description>
     </type>
 
-	<default value="Error processing action. Check that you have completed the modal properly." />
+	<default value="Name cannot be empty." />
 
 	<description>
 		<![CDATA[
-            This string is displayed within a modal to indicate to the user that an error has occured and they probably have not completed the modal correctly.
+            This string is displayed within the rename modal to indicate to the user that they have not inputted a valid name for the state.
 		]]>
 	</description>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                modalError: 'ERROR!'
+                renameError: 'ERROR!'
             }
         },
         buttons: [ 'createStateRestore', 'savedStates' ],
