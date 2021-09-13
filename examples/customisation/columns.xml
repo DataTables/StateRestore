@@ -8,12 +8,11 @@
 $(document).ready(function(index) {
     var table;
     // Setup - add a text input to each footer cell
-    $('#example tfoot th').each( function () {
+    $('#example tfoot th').each( function (index) {
         var title = $(this).text();
         var input = $('<input type="text" placeholder="Search '+title+'" />');
-        console.log(input, $(this))
         $(this).empty().append(input);
-        $('#example').on('stateLoaded', () => {
+        $('#example').on('stateLoaded.dt', () => {
             $(input).val(table.column(index).search());
         })
     } );
