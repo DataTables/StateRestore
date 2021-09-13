@@ -81,7 +81,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	apiRegister('stateRestore.state()', function(identifier) {
 		let ctx = this.context[0];
 		if (ctx._stateRestore) {
-			return ctx._stateRestore.getState(identifier);
+			this[0] = ctx._stateRestore.getState(identifier);
+			return this;
 		}
 	});
 
@@ -94,13 +95,10 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	});
 
 	apiRegister('stateRestore.states()', function() {
-		let res = this.iterator(true, 'table', function(ctx) {
-			if(ctx._stateRestore) {
-				return ctx._stateRestore.getStates();
-			}
-		});
+		let ctx = this.context[0];
 
-		return res;
+		this.push(...ctx._stateRestore.getStates());
+		return this;
 	});
 
 	apiRegister('stateRestore.state().save()', function() {
@@ -114,9 +112,15 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.state().rename()', function(newIdentifier) {
 		let ctx = this.context[0];
+		let state = this[0];
 		// Check if renaming states is allowed
-		if(ctx.c.save) {
-			ctx.rename(newIdentifier);
+		if(state.c.save) {
+			let states = ctx._stateRestore.s.states;
+			let ids = [];
+			for (let intState of states) {
+				ids.push(intState.s.identifier);
+			}
+			state.rename(newIdentifier, ids);
 		}
 		return this;
 	});
@@ -138,12 +142,17 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.states().delete()', function(skipModal) {
 		let deleteAllCallBack = (skipModalIn) => {
+			let success = true;
 			this.each(function(set) {
 				// Check if deletion of states is allowed
 				if(set.c.delete) {
-					set.delete(skipModalIn);
+					let tempSuccess = set.delete(skipModalIn);
+					if(tempSuccess !== true) {
+						success = tempSuccess;
+					}
 				}
 			});
+			return success;
 		};
 
 		if (skipModal) {
@@ -311,7 +320,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	$.fn.dataTable.ext.buttons.renameState = {
 		action(e, dt, node, config) {
-			config.parent._stateRestore.rename();
+			let states = dt.settings()[0]._stateRestore.s.states;
+			let ids = [];
+			for (let state of states) {
+				ids.push(state.s.identifier);
+			}
+			config.parent._stateRestore.rename(undefined, ids);
 		},
 		text(dt) {
 			return dt.i18n('buttons.renameState', 'Rename');

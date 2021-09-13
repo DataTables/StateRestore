@@ -107,6 +107,7 @@ export interface II18n {
 	deleteConfirm: string;
 	deleteError: string;
 	deleteTitle: string;
+	duplicateError: string;
 	emptyStates: string;
 	renameButton: string;
 	renameError: string;
@@ -208,6 +209,7 @@ export default class StateRestoreCollection {
 			deleteConfirm: 'Are you sure you want to delete %s?',
 			deleteError: 'Failed to delete state.',
 			deleteTitle: 'Delete State',
+			duplicateError: 'A state with this name already exists.',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
 			renameError: 'Name cannot be empty.',
@@ -922,7 +924,7 @@ export default class StateRestoreCollection {
 	private _newModal(
 		title: JQuery<HTMLElement>,
 		buttonText: string,
-		buttonAction: (skipModal: boolean) => void,
+		buttonAction: (skipModal: boolean) => boolean | string,
 		modalContents: JQuery<HTMLElement>
 	): void {
 		this.dom.background.appendTo(this.dom.dtContainer);
@@ -941,6 +943,8 @@ export default class StateRestoreCollection {
 			)
 			.appendTo(this.dom.dtContainer);
 
+		$(modalContents.children('input')[0]).focus();
+
 		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
 
@@ -957,11 +961,21 @@ export default class StateRestoreCollection {
 
 		// When the button is clicked, call the appropriate action,
 		// remove the background and modal from the screen and unbind the keyup event.
-		confirmationButton.one('click', () => {
-			buttonAction(true);
-			this.dom.background.remove();
-			this.dom.confirmation.remove();
-			$(document).unbind('keyup', keyupFunction);
+		confirmationButton.on('click', () => {
+			let success = buttonAction(true);
+			if (success === true) {
+				this.dom.background.remove();
+				this.dom.confirmation.remove();
+				$(document).unbind('keyup', keyupFunction);
+				confirmationButton.off('click');
+			}
+			else {
+				this.dom.confirmation.append(this.dom[success+'Error']);
+			}
+		});
+
+		this.dom.confirmation.on('click', (e) => {
+			e.stopPropagation();
 		});
 
 		// When the button is clicked, remove the background and modal from the screen and unbind the keyup event.

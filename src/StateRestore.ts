@@ -37,6 +37,7 @@ export interface IDom {
 	deleteError: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
+	duplicateError: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
 	renameError: JQuery<HTMLElement>;
 	renameInput: JQuery<HTMLElement>;
@@ -128,6 +129,7 @@ export default class StateRestore {
 			deleteConfirm: 'Are you sure you want to delete %s?',
 			deleteError: 'Failed to delete state.',
 			deleteTitle: 'Delete State',
+			duplicateError: 'A state with this name already exists.',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
 			renameError: 'Name cannot be empty.',
@@ -219,6 +221,11 @@ export default class StateRestore {
 				'</h2>'
 			),
 			dtContainer: $(this.s.dt.table().container()),
+			duplicateError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError) +
+				'</span>'
+			),
 			renameContents:$(
 				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<label class="'+this.classes.confirmationMessage+'">'+
@@ -275,7 +282,7 @@ export default class StateRestore {
 					this.dom.confirmation.trigger('dtsr-delete');
 				}
 				catch (e) {
-					return false;
+					return 'delete';
 				}
 
 				return true;
@@ -298,8 +305,7 @@ export default class StateRestore {
 				this.dom.deleteTitle,
 				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
 				deleteFunction,
-				this.dom.deleteContents,
-				this.dom.deleteError
+				this.dom.deleteContents
 			);
 		}
 
@@ -348,7 +354,7 @@ export default class StateRestore {
 	 *
 	 * @param newIdentifier Optional. The new identifier for this state
 	 */
-	public rename(newIdentifier: null|string = null): void {
+	public rename(newIdentifier: null|string = null, currentIdentifiers: string[]): void {
 		// Check if renaming of states is allowed
 		if (!this.c.rename) {
 			return;
@@ -358,7 +364,10 @@ export default class StateRestore {
 			let identifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
 
 			if (identifier.length === 0) {
-				return false;
+				return 'length';
+			}
+			else if(currentIdentifiers.includes(identifier)) {
+				return 'duplicate';
 			}
 
 			if (!this.c.ajax) {
@@ -375,14 +384,23 @@ export default class StateRestore {
 			this.s.identifier = identifier;
 			this.save(this.s.savedState);
 			this.dom.confirmation.trigger('dtsr-rename');
+
 			return true;
 		};
 
 		// Check if a new identifier has been provided, if so no need for a modal
 		if (newIdentifier !== null) {
-			this.dom.confirmation.appendTo(this.dom.dtContainer);
-			renameFunction();
-			this.dom.confirmation.remove();
+			if(currentIdentifiers.includes(newIdentifier)) {
+				new Error(this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError));
+			}
+			else if(newIdentifier.length === 0) {
+				new Error(this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError));
+			}
+			else{
+				this.dom.confirmation.appendTo(this.dom.dtContainer);
+				renameFunction();
+				this.dom.confirmation.remove();
+			}
 		}
 		else {
 			this.dom.renameInput.val(this.s.identifier);
@@ -391,8 +409,7 @@ export default class StateRestore {
 				this.dom.renameTitle,
 				this.s.dt.i18n('stateRestore.renameButton', this.c.i18n.renameButton),
 				renameFunction,
-				this.dom.renameContents,
-				this.dom.renameError
+				this.dom.renameContents
 			);
 		}
 	}
@@ -510,9 +527,8 @@ export default class StateRestore {
 	private _newModal(
 		title: JQuery<HTMLElement>,
 		buttonText: string,
-		buttonAction: () => boolean,
+		buttonAction: () => boolean | string,
 		modalContents: JQuery<HTMLElement>,
-		errorMessage: JQuery<HTMLElement>
 	): void {
 		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.confirmationTitleRow.empty().append(title);
@@ -550,14 +566,14 @@ export default class StateRestore {
 		// remove the background and modal from the screen and unbind the keyup event.
 		confirmationButton.on('click', () => {
 			let success = buttonAction();
-			if (success) {
+			if (success === true) {
 				this.dom.background.remove();
 				this.dom.confirmation.remove();
 				$(document).unbind('keyup', keyupFunction);
 				confirmationButton.off('click');
 			}
 			else {
-				this.dom.confirmation.append(errorMessage);
+				this.dom.confirmation.append(this.dom[success+'Error']);
 			}
 		});
 

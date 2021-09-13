@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.renameError</name>
-	<summary>Set the error message shown when incorrectly renaming a state to an empty string</summary>
+	<name>language.stateRestore.duplicateError</name>
+	<summary>Set the error message shown when attempting to rename a state to one that already exists</summary>
 	<since>0.0.1</since>
 
 	<type type="string">
 		<description>
-            The string that will be displayed within the rename modal when an invalid name is provided.
+            The string that will be displayed within the rename modal when a duplicate name is provided.
 		</description>
     </type>
 
-	<default value="Name cannot be empty." />
+	<default value="A state with this name already exists." />
 
 	<description>
 		<![CDATA[
-            This string is displayed within the rename modal to indicate to the user that they have not inputted a valid name for the state, because the value is an empty string.
+            This string is displayed within the rename modal to indicate to the user that a stat with this name already exists and they should choose another.
 		]]>
 	</description>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                renameError: 'ERROR!'
+                duplicateError: 'ERROR!'
             }
         },
         buttons: [ 'createStateRestore', 'savedStates' ],
