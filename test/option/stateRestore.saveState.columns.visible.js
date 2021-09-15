@@ -45,9 +45,7 @@ describe('stateRestore - options - stateRestore.saveState.columns.visible', func
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
 
-			// TK COLIN DD-2271
-			// expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
-			expect($('tbody tr td:eq(0)').text()).toBe('Airi Satou');
+			expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
 		});
 
 		dt.html('basic');
