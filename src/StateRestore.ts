@@ -391,10 +391,10 @@ export default class StateRestore {
 		// Check if a new identifier has been provided, if so no need for a modal
 		if (newIdentifier !== null) {
 			if(currentIdentifiers.includes(newIdentifier)) {
-				new Error(this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError));
+				throw new Error(this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError));
 			}
 			else if(newIdentifier.length === 0) {
-				new Error(this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError));
+				throw new Error(this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError));
 			}
 			else{
 				this.dom.confirmation.appendTo(this.dom.dtContainer);
