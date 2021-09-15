@@ -856,7 +856,7 @@ export default class StateRestoreCollection {
 		});
 
 		// Append all of the toggles that are to be inserted
-		for(let toggle of togglesToInsert) {
+		for (let toggle of togglesToInsert) {
 			this.dom.creationForm.append(toggle);
 		}
 
@@ -870,6 +870,13 @@ export default class StateRestoreCollection {
 			.append(this.dom.creationForm)
 			.append(this.dom.createButtonRow)
 			.appendTo(this.dom.dtContainer);
+
+		// Allow the label to be clicked to toggle the checkbox
+		for (let toggle of togglesToInsert) {
+			$(toggle.children('label:last-child')).on('click', function() {
+				toggle.children('input').prop('checked', !toggle.children('input').prop('checked'));
+			});
+		}
 
 		let creationButton = $('button.'+this.classes.creationButton.replace(/ /g, '.'));
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
