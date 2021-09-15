@@ -343,7 +343,7 @@ export default class StateRestore {
 
 		// Call the internal datatables function to implement the state on the table
 		$.fn.dataTable.ext.oApi._fnImplementState(settings, loadedState, () => {
-			this.s.dt.draw();
+			this.s.dt.draw(false);
 		});
 
 		return loadedState;
@@ -361,19 +361,21 @@ export default class StateRestore {
 		}
 
 		let renameFunction = () => {
-			let identifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
+			if(newIdentifier === null) {
+				newIdentifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
 
-			if (identifier.length === 0) {
-				return 'empty';
-			}
-			else if(currentIdentifiers.includes(identifier)) {
-				return 'duplicate';
+				if (newIdentifier.length === 0) {
+					return 'empty';
+				}
+				else if(currentIdentifiers.includes(newIdentifier)) {
+					return 'duplicate';
+				}
 			}
 
 			if (!this.c.ajax) {
 				try {
 					sessionStorage.removeItem(
-						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+						'DataTables_stateRestore_'+newIdentifier+'_'+location.pathname
 					);
 				}
 				catch (e) {
@@ -381,7 +383,7 @@ export default class StateRestore {
 				}
 			}
 
-			this.s.identifier = identifier;
+			this.s.identifier = newIdentifier;
 			this.save(this.s.savedState);
 			this.dom.confirmation.trigger('dtsr-rename');
 
