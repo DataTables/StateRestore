@@ -3,7 +3,7 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons">
+<js lib="jquery datatables staterestore buttons buttons-colvis">
 <![CDATA[
 $(document).ready(function(index) {
     var table;
