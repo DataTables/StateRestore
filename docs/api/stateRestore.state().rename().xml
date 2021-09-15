@@ -19,7 +19,7 @@ This method provides the ability to rename a state that is managed by the `-init
 
 A Datatables API is returned so that further chaining can occur.
 
-If the `-init stateRestore.rename` initialisation option is set to false then this API method will not do anything.
+If the `-init stateRestore.rename` initialisation option is set to `false` then this API method will not do anything.
 	]]>
 
 	</description>

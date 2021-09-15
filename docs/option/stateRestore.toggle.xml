@@ -35,14 +35,14 @@ This option allows the user to specify which elements should be saved when creat
 
 For the extensions that support state saving, if the extension is not present then the toggling option will not be displayed regardless of the corresponding value here.
 
-In order to display the creation modal, `-init stateRestore.creationModal` must be set to true.
+In order to display the creation modal, `-init stateRestore.creationModal` must be set to `true`.
 
 The list of boolean values is as follows, it is the format as `-init stateRestore.saveState`.
 
 ### order
 This option allows for the saving of the order of the columns to be enabled or disabled by the user.
 
-As default the value is true, meaning that the user can decide whether the column order will be saved. If this option is set to false, then column order saving will not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the column order will be saved. If this option is set to `false`, then column order saving will not be given as an option to the user on creation.
 
 This option is different to the `stateRestore.toggle.colReorder` option. It decides whether to save the order of the columns horizontally across the table, something that is changeable with the `-init colReorder` option. This option decides whether to save the order of the data within the columns (ascending/descending).
 
@@ -50,31 +50,31 @@ This option is different to the `stateRestore.toggle.colReorder` option. It deci
 ### paging
 This option allows for the saving of the paging to be enabled or disabled by the user.
 
-As default the value is true, meaning that the user can decide whether the paging will be saved. If this option is set to false, then the paging saving will not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the paging will be saved. If this option is set to `false`, then the paging saving will not be given as an option to the user on creation.
 
 
 ### search
 This option allows for the saving of the search to be enabled or disabled by the user.
 
-As default the value is true, meaning that the user can decide whether the search will be saved. If this option is set to false, then the search saving will not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the search will be saved. If this option is set to `false`, then the search saving will not be given as an option to the user on creation.
 
 
 ### columns.search
 This option allows for the saving of the order of the columns to be enabled or disabled by the user.
 
-As default the value is true, meaning that the user can decide whether the column searches will be saved. If this option is set to false, then column searches will not not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the column searches will be saved. If this option is set to `false`, then column searches will not not be given as an option to the user on creation.
 
 
 ### columns.visible
 This option allows for the saving of the visibility of the columns to be enabled or disabled by the user.
 
-As default the value is true, meaning that the user can decide whether the column visibilities will be saved. If this option is set to false, then column visibilites will not not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the column visibilities will be saved. If this option is set to `false`, then column visibilites will not not be given as an option to the user on creation.
 
 
 ### colReorder
 This option allows for the saving of the order of the columns across the table to be enabled or disabled by the user. It is only applicable when `-init stateRestore` is being used with `-init colReorder`.
 
-As default the value is true, meaning that the user can decide whether the order of the columns across the table will be saved. If this option is set to false, the order of the columns across the table will not not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the order of the columns across the table will be saved. If this option is set to `false`, the order of the columns across the table will not not be given as an option to the user on creation.
 
 This option is different to the `stateRestore.saveState.order` option. It decides whether to save the order of the data within the columns (ascending/descending). This option decides whether to save the order of the columns horizontally across the table, something that is changeable with the `-init colReorder` option.
 
@@ -82,19 +82,19 @@ This option is different to the `stateRestore.saveState.order` option. It decide
 ### scroller
 This option allows for the saving of the `-init scroller` position to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
 
-As default the value is true, meaning that the user can decide whether the `-init scroller` position will be saved. If this option is set to false, then the `-init scroller` position saving will not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the `-init scroller` position will be saved. If this option is set to `false`, then the `-init scroller` position saving will not be given as an option to the user on creation.
 
 
 ### searchBuilder
 This option allows for the saving of the `-init searchBuilder` state to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init searchBuilder` extensions are in use.
 
-As default the value is true, meaning that the user can decide whether the `-init searchBuilder` state will be saved. If this option is set to false, then the `-init searchBuilder` state saving will not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the `-init searchBuilder` state will be saved. If this option is set to `false`, then the `-init searchBuilder` state saving will not be given as an option to the user on creation.
 
 
 ### searchPanes
 This option allows for the saving of the `-init searchPanes` state to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init searchPanes` extensions are in use.
 
-As default the value is true, meaning that the user can decide whether the `-init searchPanes` state will be saved. If this option is set to false, then the `-init searchPanes` state saving will not be given as an option to the user on creation.
+As default the value is `true`, meaning that the user can decide whether the `-init searchPanes` state will be saved. If this option is set to `false`, then the `-init searchPanes` state saving will not be given as an option to the user on creation.
 
         ]]>
 	</description>

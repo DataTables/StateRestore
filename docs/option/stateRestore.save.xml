@@ -6,7 +6,7 @@
 
 	<type type="boolean">
 		<description>
-            True if saving states is to be enabled, false if not.
+            `true` if saving states is to be enabled, false if not.
         </description>
 	</type>
 
@@ -17,7 +17,7 @@
 		<![CDATA[
 		This option allows for the saving of states to be enabled or disabled.
 
-		As default the value is true, meaning that states can be saved. If this option is set to false, then saving will be disabled as well as creation of new states at that is also a save operation.
+		As default the value is `true`, meaning that states can be saved. If this option is set to false, then saving will be disabled as well as creation of new states at that is also a save operation.
 
 		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/noSaving.html) to see this in action.
         ]]>

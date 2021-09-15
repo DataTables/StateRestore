@@ -6,7 +6,7 @@
 
 	<type type="boolean">
 		<description>
-            True if deleting states is to be enabled, false if not.
+            `true` if deleting states is to be enabled, `false` if not.
         </description>
 	</type>
 
@@ -17,7 +17,7 @@
 		<![CDATA[
 		This option allows for the deletion of states to be enabled or disabled.
 
-		As default the value is true, meaning that states can be deleted. If this option is set to false, then deletion will be disabled.
+		As default the value is `true`, meaning that states can be deleted. If this option is set to `false`,  then deletion will be disabled.
 
 		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/noDeletion.html) to see this in action.
         ]]>

@@ -23,7 +23,7 @@
 		<![CDATA[
 		This option allows StateRestore to load and save states over ajax. If the value provided for this option is a string, StateRestore will use it as the destination url for requests via ajax.
 
-		As default the value is false, meaning that the states will be saved in the local session storage. Setting the value of this option to true has no effect.
+		As default the value is `false`, meaning that the states will be saved in the local session storage. Setting the value of this option to `true` has no effect.
 
 		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/ajax.html) to see this in action.
         ]]>

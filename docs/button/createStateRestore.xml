@@ -7,7 +7,7 @@
 	<description>
         This button creates a new StateRestore instance and adds it to the `-button savedStates` collection. The state stored within this instance is based on the current state of the table.
 
-        This button won't do anything if `-init stateRestore.save` or `-init stateRestore.create` are set to false, disabling saving and creation of states.
+        This button won't do anything if `-init stateRestore.save` or `-init stateRestore.create` are set to `false`, disabling saving and creation of states.
 	</description>
 
     <option name="action" type="string">
