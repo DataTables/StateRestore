@@ -206,7 +206,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 	};
 
-	$.fn.dataTable.ext.buttons.createStateRestore = {
+	$.fn.dataTable.ext.buttons.createState = {
 		action(e, dt) {
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 			let language = dt.settings()[0].oLanguage;
@@ -302,7 +302,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			}
 		},
 		text(dt) {
-			return dt.i18n('buttons.createStateRestore', 'Create State');
+			return dt.i18n('buttons.createState', 'Create State');
 		}
 	};
 

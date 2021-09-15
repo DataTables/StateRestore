@@ -12,7 +12,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.search', 
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -35,7 +35,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.search', 
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

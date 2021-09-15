@@ -12,7 +12,7 @@ describe('stateRestore - options - stateRestore.toggle.order', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

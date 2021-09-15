@@ -13,7 +13,7 @@ describe('stateRestore - options - stateRestore.toggle.colReorder', function () 
 				dom: 'Blfrtip',
 				colReorder: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

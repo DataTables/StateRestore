@@ -12,7 +12,7 @@ describe('stateRestore - options - stateRestore.toggle.searchBuilder', function 
 			table = $('#example').DataTable({
 				dom: 'BQlfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

@@ -12,7 +12,7 @@ describe('stateRestore - options - stateRestore.toggle.search', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.buttons.createStateRestore', function () {
+describe('stateRestore - options - language.buttons.createState', function () {
 	let table;
 
 	dt.libs({
@@ -11,7 +11,7 @@ describe('stateRestore - options - language.buttons.createStateRestore', functio
 		it('Check defaults', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore']
+				buttons: ['createState']
 			});
 
 			expect($('.dt-button').text()).toBe('Create State');
@@ -21,10 +21,10 @@ describe('stateRestore - options - language.buttons.createStateRestore', functio
 		it('Change text', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore'],
+				buttons: ['createState'],
 				language: {
 					buttons: {
-						createStateRestore: 'unit test'
+						createState: 'unit test'
 					}
 				}
 			});

@@ -12,7 +12,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.name', fu
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -32,7 +32,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.name', fu
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

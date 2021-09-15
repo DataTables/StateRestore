@@ -13,7 +13,7 @@ describe('stateRestore - options - language.stateRestore.deleteTitle', function 
 
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore', 'savedStates']
+				buttons: ['createState', 'savedStates']
 			});
 
 			$('.dt-button:eq(0)').click();
@@ -32,7 +32,7 @@ describe('stateRestore - options - language.stateRestore.deleteTitle', function 
 		it('Change text', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore', 'savedStates'],
+				buttons: ['createState', 'savedStates'],
 				language: {
 					stateRestore: {
 						deleteTitle: 'unit test'
@@ -53,7 +53,7 @@ describe('stateRestore - options - language.stateRestore.deleteTitle', function 
 		it('Delete all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore', 'savedStates']
+				buttons: ['createState', 'savedStates']
 			});
 			table.stateRestore.states().delete(true);
 		});

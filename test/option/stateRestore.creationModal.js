@@ -9,13 +9,13 @@ describe('stateRestore - options - stateRestore.creationModal', function () {
 	describe('Functional tests', function () {
 		// No need to check default, as states created in other tests
 		dt.html('basic');
-		it('createStateRestore - true', function () {
+		it('createState - true', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -37,13 +37,13 @@ describe('stateRestore - options - stateRestore.creationModal', function () {
 		});
 
 		dt.html('basic');
-		it('createStateRestore - false', function () {
+		it('createState - false', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -70,7 +70,7 @@ describe('stateRestore - options - stateRestore.creationModal', function () {
 		it('Delete all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore', 'savedStates']
+				buttons: ['createState', 'savedStates']
 			});
 			table.stateRestore.states().delete(true);
 		});

@@ -15,7 +15,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -38,7 +38,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -60,7 +60,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 		it('Delete all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore', 'savedStates']
+				buttons: ['createState', 'savedStates']
 			});
 			table.stateRestore.states().delete(true);
 		});

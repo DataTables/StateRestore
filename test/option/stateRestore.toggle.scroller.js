@@ -14,7 +14,7 @@ describe('stateRestore - options - stateRestore.toggle.scroller', function () {
 				scrollY: 200,
 				scroller: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

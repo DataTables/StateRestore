@@ -12,7 +12,7 @@ describe('stateRestore - options - stateRestore.toggle.searchPanes', function ()
 			table = $('#example').DataTable({
 				dom: 'BPlfrtip',
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

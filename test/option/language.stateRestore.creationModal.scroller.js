@@ -14,7 +14,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.scroller'
 				scrollY: 200,
 				scroller: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -39,7 +39,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.scroller'
 				scrollY: 200,
 				scroller: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {

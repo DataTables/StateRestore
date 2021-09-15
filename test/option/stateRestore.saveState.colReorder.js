@@ -15,7 +15,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 				dom: 'Blfrtip',
 				colReorder: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -57,7 +57,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 				dom: 'Blfrtip',
 				colReorder: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -97,7 +97,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 				dom: 'Blfrtip',
 				colReorder: true,
 				buttons: [
-					'createStateRestore',
+					'createState',
 					{
 						extend: 'savedStates',
 						config: {
@@ -135,7 +135,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 		it('Delete all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['createStateRestore', 'savedStates']
+				buttons: ['createState', 'savedStates']
 			});
 			table.stateRestore.states().delete(true);
 		});
