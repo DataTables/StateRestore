@@ -80,14 +80,22 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.state()', function(identifier) {
 		let ctx = this.context[0];
-		if (ctx._stateRestore) {
-			this[0] = ctx._stateRestore.getState(identifier);
-			return this;
+		if (!ctx._stateRestore) {
+			let api = $.fn.DataTable.Api(ctx);
+			let src = new $.fn.dataTable.StateRestoreCollection(api, {});
+			_stateRegen(api, src);
 		}
+		this[0] = ctx._stateRestore.getState(identifier);
+		return this;
 	});
 
 	apiRegister('stateRestore.state.add()', function(identifier) {
 		let ctx = this.context[0];
+		if (!ctx._stateRestore) {
+			let api = $.fn.DataTable.Api(ctx);
+			let src = new $.fn.dataTable.StateRestoreCollection(api, {});
+			_stateRegen(api, src);
+		}
 		if (ctx._stateRestore.addState) {
 			let states = ctx._stateRestore.s.states;
 			let ids = [];
@@ -101,7 +109,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.states()', function() {
 		let ctx = this.context[0];
-
+		if (!ctx._stateRestore) {
+			let api = $.fn.DataTable.Api(ctx);
+			let src = new $.fn.dataTable.StateRestoreCollection(api, {});
+			_stateRegen(api, src);
+		}
 		this.length = 0;
 		this.push(...ctx._stateRestore.getStates());
 		return this;
