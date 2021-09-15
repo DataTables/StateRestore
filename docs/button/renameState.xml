@@ -16,7 +16,7 @@
         The action function for the `-button renameState` button calls the `-api stateRestore.state().rename()` function, renaming the stateRestore instance.
     </option>
     <option name="text" type="function">
-        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `-init language.button.renameState` property, or you could directly change the value of this function.
+        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `-init language.buttons.renameState` property, or you could directly change the value of this function.
     </option>
 
 	<example title="renameState button modify text"><![CDATA[

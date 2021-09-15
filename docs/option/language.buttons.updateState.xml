@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.button.updateState</name>
+	<name>language.buttons.updateState</name>
 	<summary>Set the text within the StateRestore update button</summary>
 	<since>0.0.1</since>
 
@@ -24,7 +24,7 @@
 $(document).ready(function() {
     $('#example').DataTable( {
         language: {
-            stateRestore: {
+            buttons: {
 				updateState: 'Change Name'
             }
         },

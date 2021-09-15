@@ -9,7 +9,7 @@
 	</description>
 
     <option name="text" type="function">
-        This function runs the `-api i18n()` function to decide the text value of the saved state collection button. The value of this button can be set using the `-init i18n` initialisation options `-init language.button.savedStates` property, or you could directly change the value of this function.
+        This function runs the `-api i18n()` function to decide the text value of the saved state collection button. The value of this button can be set using the `-init i18n` initialisation options `-init language.buttons.savedStates` property, or you could directly change the value of this function.
     </option>
     <option name="name" type="string">
         The name of this button is set to 'SaveStateRestore', this allows StateRestore to know which button the `-button stateRestore` buttons should be placed under.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.button.stateRestore</name>
+	<name>language.buttons.stateRestore</name>
 	<summary>Set the text within the StateRestore `-button stateRestore` split dropdown button</summary>
 	<since>0.0.1</since>
 
@@ -26,7 +26,7 @@
 $(document).ready(function() {
     $('#example').DataTable( {
         language: {
-            stateRestore: {
+            buttons: {
 				stateRestore: 'State Number %d'
             }
         },
