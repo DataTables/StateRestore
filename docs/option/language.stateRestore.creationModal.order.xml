@@ -30,7 +30,7 @@ $(document).ready(function() {
                 }
             }
         },
-        buttons: [ 'createStateRestore', 'savedStates' ],
+        buttons: [ 'createState', 'savedStates' ],
         dom: 'Bfrtip'
     });
 });

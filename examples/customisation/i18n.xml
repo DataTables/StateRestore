@@ -17,7 +17,7 @@ $(document).ready(function() {
                 renameLabel: 'Rename to:'
             },
             buttons: {
-                createStateRestore: 'New State',
+                createState: 'New State',
                 savedStates: 'Stored States',
                 updateState: 'Store',
                 stateRestore: 'New State %d',
@@ -26,7 +26,7 @@ $(document).ready(function() {
 
             }
         },
-        buttons:['createStateRestore', 'savedStates']
+        buttons:['createState', 'savedStates']
     });
 });
 ]]>

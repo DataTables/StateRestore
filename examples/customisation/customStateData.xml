@@ -9,7 +9,7 @@ $(document).ready(function() {
     var savedSelected;
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
-        buttons:['createStateRestore', 'savedStates'],
+        buttons:['createState', 'savedStates'],
         select: true,
         stateSaveParams: function(settings, data) {
             data.selected = this.api().rows({selected:true})[0];

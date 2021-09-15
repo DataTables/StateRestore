@@ -65,7 +65,7 @@ The corresponding value of the predefined state is structured as follows.
 $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {

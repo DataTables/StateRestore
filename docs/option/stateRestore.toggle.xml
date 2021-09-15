@@ -103,7 +103,7 @@ As default the value is `true`, meaning that the user can decide whether the `-i
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {
@@ -120,7 +120,7 @@ As default the value is `true`, meaning that the user can decide whether the `-i
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {

@@ -26,7 +26,7 @@ The object that is returned represents the state that is present in the table at
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
-        buttons:['createStateRestore', 'savedStates']
+        buttons:['createState', 'savedStates']
     });
 
     table.stateRestore.state.add("New State")

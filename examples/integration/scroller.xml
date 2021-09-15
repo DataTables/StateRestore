@@ -13,7 +13,7 @@ $(document).ready(function() {
         scrollY:        200,
         scrollCollapse: true,
         scroller:       true,
-        buttons:['createStateRestore', 'savedStates']
+        buttons:['createState', 'savedStates']
     });
 });
 ]]>

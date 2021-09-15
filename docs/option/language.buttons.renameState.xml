@@ -28,7 +28,7 @@ $(document).ready(function() {
 				renameState: 'Change Name'
             }
         },
-        buttons: [ 'createStateRestore', 'savedStates' ],
+        buttons: [ 'createState', 'savedStates' ],
         dom: 'Bfrtip'
     });
 });

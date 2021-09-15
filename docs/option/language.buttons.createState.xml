@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.buttons.createStateRestore</name>
+	<name>language.buttons.createState</name>
 	<summary>Set the text within the StateRestore creation button</summary>
 	<since>0.0.1</since>
 
@@ -14,7 +14,7 @@
 
 	<description>
 		<![CDATA[
-            This string is displayed in StateRestore's creation button. The button is fully documented at `-button createStateRestore`.
+            This string is displayed in StateRestore's creation button. The button is fully documented at `-button createState`.
 
             The value set here is passed through the `-api i18n()` function.
 		]]>
@@ -25,16 +25,16 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             buttons: {
-				createStateRestore: 'Create a new state'
+				createState: 'Create a new state'
             }
         },
-        buttons: [ 'createStateRestore', 'savedStates' ],
+        buttons: [ 'createState', 'savedStates' ],
         dom: 'Bfrtip'
     });
 });
 ]]></example>
 
 <related type="api">i18n()</related>
-<related type="button">createStateRestore</related>
+<related type="button">createState</related>
 
 </dt-option>

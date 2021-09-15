@@ -20,7 +20,7 @@ $(document).ready(function(index) {
         dom: 'Blfrtip',
         buttons:[
             'colvis',
-            'createStateRestore',
+            'createState',
             {
                 extend: 'savedStates',
                 config: {

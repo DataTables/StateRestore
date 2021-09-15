@@ -51,7 +51,7 @@ $(document).ready(function() {
                 }
             }
         },
-        buttons: [ 'createStateRestore', 'savedStates' ],
+        buttons: [ 'createStateedStates' ],
         dom: 'Bfrtip'
     });
 });

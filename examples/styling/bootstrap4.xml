@@ -8,7 +8,7 @@
 $(document).ready(function() {
     var table = $('#example').DataTable({
         buttons:[
-            'createStateRestore',
+            'createState',
             {
                 extend: 'savedStates',
                 config: {

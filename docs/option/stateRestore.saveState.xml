@@ -99,7 +99,7 @@ Take a look at [this example]([../extensions/StateRestore/examples/customisation
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {
@@ -116,7 +116,7 @@ Take a look at [this example]([../extensions/StateRestore/examples/customisation
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {

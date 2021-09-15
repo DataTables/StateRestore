@@ -27,7 +27,7 @@
 $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {

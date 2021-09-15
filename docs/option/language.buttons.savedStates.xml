@@ -28,7 +28,7 @@ $(document).ready(function() {
 				savedStates: 'States'
             }
         },
-        buttons: [ 'createStateRestore', 'savedStates' ],
+        buttons: [ 'createState', 'savedStates' ],
         dom: 'Bfrtip'
     });
 });

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
-	<name>createStateRestore</name>
+	<name>createState</name>
 	<summary>Creates a new StateRestore instance, based off of the current state of the table.</summary>
 	<since>0.0.1</since>
 
@@ -17,11 +17,11 @@
         This function initialises StateRestore if it has not already been initialised and the `-button savedStates` button is not present.
     </option>
     <option name="text" type="function">
-        This function runs the `-api i18n()` function to decide the text value of the saved state collection button. The value of this button can be set using the `-init i18n` initialisation options `-init language.buttons.createStateRestore` property, or you could directly change the value of this function.
+        This function runs the `-api i18n()` function to decide the text value of the saved state collection button. The value of this button can be set using the `-init i18n` initialisation options `-init language.buttons.createState` property, or you could directly change the value of this function.
     </option>
 
-	<example title="createStateRestore button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.createStateRestore.text = function (e, dt, node, config) {
+	<example title="createState button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.createState.text = function (e, dt, node, config) {
     return "Create new state";
 }
 ]]></example>

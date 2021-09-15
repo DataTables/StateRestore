@@ -37,7 +37,7 @@ $('#example').DataTable({
         dataSrc: 'data'
     },
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {

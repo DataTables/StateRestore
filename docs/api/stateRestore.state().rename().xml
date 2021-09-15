@@ -28,7 +28,7 @@ If the `-init stateRestore.rename` initialisation option is set to `false` then 
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
-        buttons:['createStateRestore', 'savedStates']
+        buttons:['createState', 'savedStates']
     });
 
     table.stateRestore.state("New State").rename('New Name')

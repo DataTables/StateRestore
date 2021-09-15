@@ -27,7 +27,7 @@ If the `-init stateRestore.save` initialisation option is set to `false` then th
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
-        buttons:['createStateRestore', 'savedStates']
+        buttons:['createState', 'savedStates']
     });
 
     table.stateRestore.state("New State").save()

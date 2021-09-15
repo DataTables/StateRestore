@@ -23,7 +23,7 @@ This option allows a creation modal to be displayed to the user. This allows the
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {
@@ -39,7 +39,7 @@ This option allows a creation modal to be displayed to the user. This allows the
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createStateRestore',
+        'createState',
         {
             extend: 'savedStates',
             config: {
