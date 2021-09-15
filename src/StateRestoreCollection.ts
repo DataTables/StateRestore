@@ -32,6 +32,7 @@ export interface IClasses {
 	emptyStates: string;
 	formRow: string;
 	leftSide: string;
+	modalError: string;
 	modalFoot: string;
 	nameInput: string;
 	nameLabel: string;
@@ -59,6 +60,8 @@ export interface IDom {
 	deleteContents: JQuery<HTMLElement>;
 	deleteTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
+	duplicateError: JQuery<HTMLElement>;
+	emptyError: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
 	pagingToggle: JQuery<HTMLElement>;
@@ -108,9 +111,9 @@ export interface II18n {
 	deleteError: string;
 	deleteTitle: string;
 	duplicateError: string;
+	emptyError: string;
 	emptyStates: string;
 	renameButton: string;
-	renameError: string;
 	renameLabel: string;
 	renameTitle: string;
 }
@@ -169,6 +172,7 @@ export default class StateRestoreCollection {
 		emptyStates: 'dtsr-emptyStates',
 		formRow: 'dtsr-form-row',
 		leftSide: 'dtsr-left',
+		modalError: 'dtsr-modal-error',
 		modalFoot: 'dtsr-modal-foot',
 		nameInput: 'dtsr-name-input',
 		nameLabel: 'dtsr-name-label',
@@ -210,9 +214,9 @@ export default class StateRestoreCollection {
 			deleteError: 'Failed to delete state.',
 			deleteTitle: 'Delete State',
 			duplicateError: 'A state with this name already exists.',
+			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
-			renameError: 'Name cannot be empty.',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
 		},
@@ -375,6 +379,16 @@ export default class StateRestoreCollection {
 				'</div>'
 			),
 			dtContainer: $(this.s.dt.table().container()),
+			duplicateError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError) +
+				'</span>'
+			),
+			emptyError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError) +
+				'</span>'
+			),
 			nameInputRow: $(
 				'<div class="'+this.classes.formRow+'">' +
 					'<label class="'+this.classes.nameLabel+'">'+
@@ -501,7 +515,7 @@ export default class StateRestoreCollection {
 	 * @param identifier The value that is used to identify a state.
 	 * @returns The state that has been created
 	 */
-	public addState(identifier: string): void {
+	public addState(identifier: string, currentIdentifiers): void {
 		// If creation/saving is not allowed then return
 		if (!this.c.create || !this.c.save) {
 			return;
@@ -510,6 +524,13 @@ export default class StateRestoreCollection {
 		// Check if the state exists before creating a new ones
 		let state = this.getState(identifier);
 		let createFunction = (id, toggles) => {
+			if (id.length === 0) {
+				return 'empty';
+			}
+			else if (currentIdentifiers.includes(id)) {
+				return 'duplicate';
+			}
+
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
 				$.extend(true, {}, this.c, toggles),
@@ -520,6 +541,8 @@ export default class StateRestoreCollection {
 			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
 			this.s.states.push(newState);
 			this._collectionRebuild();
+
+			return true;
 		};
 
 		// If there isn't already a state with this identifier
@@ -528,8 +551,18 @@ export default class StateRestoreCollection {
 				this._creationModal(createFunction, identifier);
 			}
 			else {
-				createFunction(identifier, {});
+				let success = createFunction(identifier, {});
+
+				if(success === 'empty') {
+					throw new Error(this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError));
+				}
+				else if(success === 'duplicate') {
+					throw new Error(this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError));
+				}
 			}
+		}
+		else {
+			throw new Error(this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError));
 		}
 	}
 
@@ -849,7 +882,7 @@ export default class StateRestoreCollection {
 			}
 		};
 
-		creationButton.one('click', () => {
+		creationButton.on('click', () => {
 			// Get the values of the checkBoxes
 			let saveState = {
 				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
@@ -866,14 +899,20 @@ export default class StateRestoreCollection {
 			};
 
 			// Call the buttons functionality passing in the identifier and what should be saved
-			buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), {saveState});
+			let success = buttonAction($('input.' + this.classes.nameInput.replace(/ /g, '.')).val(), {saveState});
 
-			// Remove the dom elements as operation has completed
-			this.dom.background.remove();
-			this.dom.creation.remove();
+			if(success === true) {
+				// Remove the dom elements as operation has completed
+				this.dom.background.remove();
+				this.dom.creation.remove();
 
-			// Unbind the keyup function  - don't want it to run unnecessarily on every keypress that occurs
-			$(document).unbind('keyup', keyupFunction);
+				// Unbind the keyup function  - don't want it to run unnecessarily on every keypress that occurs
+				$(document).unbind('keyup', keyupFunction);
+			}
+			else {
+				this.dom.creation.children('.'+this.classes.modalError).remove();
+				this.dom.creation.append(this.dom[success+'Error']);
+			}
 		});
 
 		background.one('click', () => {

@@ -89,7 +89,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	apiRegister('stateRestore.state.add()', function(identifier) {
 		let ctx = this.context[0];
 		if (ctx._stateRestore.addState) {
-			ctx._stateRestore.addState(identifier);
+			let states = ctx._stateRestore.s.states;
+			let ids = [];
+			for (let intState of states) {
+				ids.push(intState.s.identifier);
+			}
+			ctx._stateRestore.addState(identifier, ids);
 			return this;
 		}
 	});

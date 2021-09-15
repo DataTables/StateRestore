@@ -38,8 +38,8 @@ export interface IDom {
 	deleteTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
+	emptyError: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
-	renameError: JQuery<HTMLElement>;
 	renameInput: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
 }
@@ -130,9 +130,9 @@ export default class StateRestore {
 			deleteError: 'Failed to delete state.',
 			deleteTitle: 'Delete State',
 			duplicateError: 'A state with this name already exists.',
+			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
 			renameButton: 'Rename',
-			renameError: 'Name cannot be empty.',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State',
 		},
@@ -226,6 +226,11 @@ export default class StateRestore {
 					this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError) +
 				'</span>'
 			),
+			emptyError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError) +
+				'</span>'
+			),
 			renameContents:$(
 				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +
 					'<label class="'+this.classes.confirmationMessage+'">'+
@@ -234,11 +239,6 @@ export default class StateRestore {
 							.replace(/%s/g, this.s.identifier)+
 					'</label>' +
 				'</div>'
-			),
-			renameError: $(
-				'<span class="'+this.classes.modalError+'">' +
-					this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError) +
-				'</span>'
 			),
 			renameInput: $(
 				'<input class="'+this.classes.input+'" type="text"></input>'
@@ -364,7 +364,7 @@ export default class StateRestore {
 			let identifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
 
 			if (identifier.length === 0) {
-				return 'length';
+				return 'empty';
 			}
 			else if(currentIdentifiers.includes(identifier)) {
 				return 'duplicate';
@@ -394,7 +394,7 @@ export default class StateRestore {
 				throw new Error(this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError));
 			}
 			else if(newIdentifier.length === 0) {
-				throw new Error(this.s.dt.i18n('stateRestore.renameError', this.c.i18n.renameError));
+				throw new Error(this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError));
 			}
 			else{
 				this.dom.confirmation.appendTo(this.dom.dtContainer);
@@ -573,6 +573,7 @@ export default class StateRestore {
 				confirmationButton.off('click');
 			}
 			else {
+				this.dom.confirmation.children('.'+this.classes.modalError).remove();
 				this.dom.confirmation.append(this.dom[success+'Error']);
 			}
 		});

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.renameError</name>
+	<name>language.stateRestore.emptyError</name>
 	<summary>Set the error message shown when incorrectly renaming a state to an empty string</summary>
 	<since>0.0.1</since>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                renameError: 'ERROR!'
+                emptyError: 'ERROR!'
             }
         },
         buttons: [ 'createStateRestore', 'savedStates' ],
