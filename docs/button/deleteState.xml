@@ -9,7 +9,7 @@
 
         A confirmation modal is shown when the button is pressed to confirm that this is what the user wants to do.
         
-        There are 2 other secondary buttons also within the split button - `-button renameState` and `-button saveState`. Their documentation provides further details relevant to their functionality.
+        There are 2 other secondary buttons also within the split button - `-button renameState` and `-button updateState`. Their documentation provides further details relevant to their functionality.
 
         This button is used within the `-init stateRestore` extension. It won't do anything if deleting states is disabled using the `-init stateRestore.delete` initialisation option.
 	</description>

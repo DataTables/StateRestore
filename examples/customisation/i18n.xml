@@ -19,7 +19,7 @@ $(document).ready(function() {
             buttons: {
                 createStateRestore: 'New State',
                 savedStates: 'Stored States',
-                saveState: 'Store',
+                updateState: 'Store',
                 stateRestore: 'New State %d',
                 deleteState: 'Remove',
                 renameState: 'Change Name',

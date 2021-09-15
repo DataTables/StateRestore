@@ -18,7 +18,7 @@
         This function initialises StateRestore if is has not already been initialised.
     </option>
 
-	<example title="saveState button modify text"><![CDATA[
+	<example title="savedStates button modify text"><![CDATA[
 $.fn.dataTable.ext.buttons.savedStates.text = function (e, dt, node, config) {
     return "Saved states collection";
 }

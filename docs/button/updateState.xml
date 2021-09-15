@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>updateState</name>
+	<summary>Saves the state to the relevant stateRestore instance.</summary>
+	<since>0.0.1</since>
+
+	<description>
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button saves the current state of the table into the relevant `-init stateRestore` instance, updating the state that is stored within that instance. This means that when this state's load button is pressed, the table will return to the state it was in when this update button was pressed.
+        
+        There are 2 other secondary buttons also within the split button - `-button deleteState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
+
+        This button is used within the `-init stateRestore` extension. It won't do anything if saving is disabled using the `-init stateRestore.save` initialisation option.
+	</description>
+
+    <option name="action" type="function">
+        The action function for the `-button updateState` button updates the state currently in the table by calling the `-api stateRestore.state().save()` function.
+    </option>
+    <option name="text" type="function">
+        This function runs the `-api i18n()` function to decide the text value of the update button. The value of this button can be set using the `-init i18n` initialisation options `-init language.button.updateState` property, or you could directly change the value of this function.
+    </option>
+
+	<example title="updateState button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.updateState.text = function (e, dt, node, config) {
+    return "Save state";
+}
+]]></example>
+</dt-button>
