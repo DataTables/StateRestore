@@ -27,24 +27,23 @@ describe('stateRestore - options - language.buttons.saveState', function () {
 			expect($('.dt-btn-split-drop-button:eq(0)').text()).toBe('Update');
 		});
 
-		// DD-2226
-		// dt.html('basic');
-		// it('Change text', function () {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		buttons: ['createStateRestore', 'savedStates'],
-		// 		language: {
-		// 			buttons: {
-		// 				saveState: 'unit test'
-		// 			}
-		// 		}
-		// 	});
+		dt.html('basic');
+		it('Change text', function () {
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: ['createStateRestore', 'savedStates'],
+				language: {
+					buttons: {
+						updateState: 'unit test'
+					}
+				}
+			});
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
 
-		// 	expect($('.dt-btn-split-drop-button:eq(0)').text()).toBe('unit test');
-		// });
+			expect($('.dt-btn-split-drop-button:eq(0)').text()).toBe('unit test');
+		});
 	});
 
 	describe('Tidy up', function () {
