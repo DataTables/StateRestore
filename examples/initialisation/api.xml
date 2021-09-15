@@ -47,7 +47,7 @@ $(document).ready(function() {
 <info><![CDATA[
 This example demonstrates all of the API methods that are available within StateRestore and how they can be used outside of the usual buttons interactions.
 
-Use the input element to the right to input an identifier. The other buttons will then implement the relevant api methods.
+Use the input element to the right to input an identifier. The other buttons will then implement the relevant API methods.
 
 <input id="state-selector"></input>
 <button id="save">Save</button>

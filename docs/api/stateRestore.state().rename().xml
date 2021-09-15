@@ -8,7 +8,7 @@
 		<signature>stateRestore.state().rename()</signature>
         <parameter type="boolean" name="newIdentifier">The new name to be given to the state.</parameter>
 		<description>Renames a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
+		<returns type="DataTablesApi">Returns an DataTables API for chaining.</returns>
 	</type>
 
 	<description>
@@ -17,9 +17,9 @@ This method provides the ability to rename a state that is managed by the `-init
 
 `-api stateRestore.state().rename()` takes one argument, `newIdentifier` that is the new identifier for the selected state. It renames the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A Datatables Api is returned so that further chaining can occur.
+A Datatables API is returned so that further chaining can occur.
 
-If the `-init stateRestore.rename` initialisation option is set to false then this api method will not do anything.
+If the `-init stateRestore.rename` initialisation option is set to false then this API method will not do anything.
 	]]>
 
 	</description>

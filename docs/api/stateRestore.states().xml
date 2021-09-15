@@ -8,7 +8,7 @@
 		<signature>stateRestore.state()</signature>
         <parameter type="string[]" name="identifier">An array of strings that are used to identify the desired states.</parameter>
 		<description>Retrieves stored states from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables Api containing the desired states so that chaining can occur.</returns>
+		<returns type="DataTablesApi">Returns an DataTables API containing the desired states so that chaining can occur.</returns>
 	</type>
 
 	<description>
@@ -17,7 +17,7 @@ This method provides the ability to retrieve states that are managed by the `-in
 
 `-api stateRestore.states()` takes one argument, `identifier`. This is an array of string that are used to identify the states throughout StateRestore.
 
-A Datatables Api is returned containing the states that are desired. This method will mainly be used for chaining. 
+A Datatables API is returned containing the states that are desired. This method will mainly be used for chaining. 
 	]]>
 
 	</description>

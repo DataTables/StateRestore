@@ -5,7 +5,7 @@
 	<since>0.0.1</since>
 
 	<description>
-        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button renames the relevant `-init stateRestore` instance. This changes the text value that is displayed within the button for this state, and also the value that would be used to refer to it when using api methods.
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button renames the relevant `-init stateRestore` instance. This changes the text value that is displayed within the button for this state, and also the value that would be used to refer to it when using API methods.
         
         There are 2 other secondary buttons also within the split button - `-button deleteState` and `-button saveState`. Their documentation provides further details relevant to their functionality.
 

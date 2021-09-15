@@ -7,7 +7,7 @@
 	<type type="function">
 		<signature>stateRestore.state().load()</signature>
 		<description>Loads a stored state from the StateRestore extension into the table.</description>
-		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
+		<returns type="DataTablesApi">Returns an DataTables API for chaining.</returns>
 	</type>
 
 	<description>
@@ -16,7 +16,7 @@ This method provides the ability to load a state that is managed by the `-init s
 
 `-api stateRestore.state().load()` takes no arguments. It loads the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A Datatables Api is returned so that further chaining can occur.
+A Datatables API is returned so that further chaining can occur.
 	]]>
 
 	</description>

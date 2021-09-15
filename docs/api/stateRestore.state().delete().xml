@@ -8,7 +8,7 @@
 		<signature>stateRestore.state().delete()</signature>
         <parameter type="boolean" name="skipModal">Boolean value indicating if the confirmation modal should be skipped or not.</parameter>
 		<description>Deletes a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables Api for chaining.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
 	</type>
 
 	<description>
@@ -17,9 +17,9 @@ This method provides the ability to delete a state that is managed by the `-init
 
 `-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. It deletes the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A Datatables Api is returned so that further chaining can occur.
+A Datatables API is returned so that further chaining can occur.
 
-If the `-init stateRestore.delete` initialisation option is set to false then this api method will not do anything.
+If the `-init stateRestore.delete` initialisation option is set to false then this API method will not do anything.
 	]]>
 
 	</description>
