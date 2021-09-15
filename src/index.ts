@@ -97,12 +97,13 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	apiRegister('stateRestore.states()', function() {
 		let ctx = this.context[0];
 
+		this.length = 0;
 		this.push(...ctx._stateRestore.getStates());
 		return this;
 	});
 
 	apiRegister('stateRestore.state().save()', function() {
-		let ctx = this.context[0];
+		let ctx = this[0];
 		// Check if saving states is allowed
 		if(ctx.c.save) {
 			ctx.save();
@@ -126,13 +127,13 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	});
 
 	apiRegister('stateRestore.state().load()', function() {
-		let ctx = this.context[0];
+		let ctx = this[0];
 		ctx.load();
 		return this;
 	});
 
 	apiRegister('stateRestore.state().delete()', function(skipModal) {
-		let ctx = this.context[0];
+		let ctx = this[0];
 		// Check if deletion of states is allowed
 		if(ctx.c.delete) {
 			ctx.delete(skipModal);
