@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.toggleLabel</name>
+	<name>language.stateRestore.creationModal.toggleLabel</name>
 	<summary>Set the label text shown beside the toggle check boxes</summary>
 	<since>0.0.1</since>
 
@@ -23,10 +23,23 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                toggleLabel: 'Toggles'
+                creationModal: {
+                    toggleLabel: 'Toggles'
+                }
             }
         },
-        buttons: [ 'createState', 'savedStates' ],
+        buttons: [
+            {
+                extend: 'createState',
+                config:{
+                    creationModal: true,
+                    toggle: {
+                        search: true
+                    }
+                }
+            }
+            'savedStates'
+        ],
         dom: 'Bfrtip'
     });
 });

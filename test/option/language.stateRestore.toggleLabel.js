@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.stateRestore.toggleLabel', function () {
+describe('stateRestore - options - language.stateRestore.creationModal.toggleLabel', function () {
 	let table;
 
 	dt.libs({
@@ -48,7 +48,9 @@ describe('stateRestore - options - language.stateRestore.toggleLabel', function 
 				],
 				language: {
 					stateRestore: {
-						toggleLabel: 'unit test'
+						creationModal: {
+							toggleLabel: 'unit test'
+						}
 					}
 				}
 			});
@@ -56,8 +58,8 @@ describe('stateRestore - options - language.stateRestore.toggleLabel', function 
 			$('.dt-button:eq(0)').click();
 
 			// DD-2244
-			// expect($('.dtsr-toggle-title').text()).toBe('unit test');
-			expect($('.dtsr-toggle-title').text()).toBe('Includes:');
+			expect($('.dtsr-toggle-title').text()).toBe('unit test');
+			//expect($('.dtsr-toggle-title').text()).toBe('Includes:');
 		});
 	});
 });
