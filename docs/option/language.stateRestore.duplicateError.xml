@@ -14,7 +14,7 @@
 
 	<description>
 		<![CDATA[
-            This string is displayed within the rename modal to indicate to the user that a stat with this name already exists and they should choose another.
+            This string is displayed within the rename modal to indicate to the user that a state with this name already exists and they should choose another.
 		]]>
 	</description>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                duplicateError: 'ERROR!'
+                duplicateError: 'ERROR! Name already in use!'
             }
         },
         buttons: [ 'createState', 'savedStates' ],
