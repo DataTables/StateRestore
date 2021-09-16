@@ -548,7 +548,8 @@ export default class StateRestoreCollection {
 
 		// If there isn't already a state with this identifier
 		if (state === null) {
-			if(this.c.creationModal || options.creationModal) {
+			console.log(this.c.creationModal || options !== undefined && options.creationModal)
+			if(this.c.creationModal || options !== undefined && options.creationModal) {
 				this._creationModal(createFunction, identifier, options);
 			}
 			else {
@@ -756,10 +757,14 @@ export default class StateRestoreCollection {
 		this.dom.creationForm.append(this.dom.nameInputRow);
 		let tableConfig = this.s.dt.settings()[0].oInit;
 		let togglesToInsert = [];
+		let toggleDefined = options !== undefined && options.toggle !== undefined;
 
 		// Order toggle - check toggle and saving enabled
 		if (
-			(options.toggle.order === undefined && this.c.toggle.order || options.toggle.order) &&
+			(
+				(!toggleDefined || options.toggle.order === undefined) && this.c.toggle.order ||
+				toggleDefined && options.toggle.order
+			) &&
 			this.c.saveState.order &&
 			(tableConfig.ordering === undefined || tableConfig.ordering)
 		) {
@@ -768,7 +773,10 @@ export default class StateRestoreCollection {
 
 		// Search toggle - check toggle and saving enabled
 		if (
-			(options.toggle.search === undefined && this.c.toggle.search || options.toggle.search) &&
+			(
+				(!toggleDefined || options.toggle.search === undefined) && this.c.toggle.search ||
+				toggleDefined && options.toggle.search
+			) &&
 			this.c.saveState.search &&
 			(tableConfig.searching === undefined || tableConfig.searching)
 		) {
@@ -777,7 +785,10 @@ export default class StateRestoreCollection {
 
 		// Paging toggle - check toggle and saving enabled
 		if (
-			(options.toggle.paging === undefined && this.c.toggle.paging || options.toggle.paging) &&
+			(
+				(!toggleDefined || options.toggle.paging === undefined) && this.c.toggle.paging ||
+				toggleDefined && options.toggle.paging
+			) &&
 			this.c.saveState.paging &&
 			(tableConfig.paging === undefined || tableConfig.paging)
 		) {
@@ -787,7 +798,10 @@ export default class StateRestoreCollection {
 		// ColReorder toggle - check toggle and saving enabled
 		if (
 			this.s.hasColReorder &&
-			(options.toggle.colReorder === undefined && this.c.toggle.colReorder || options.toggle.colReorder) &&
+			(
+				(!toggleDefined || options.toggle.colReorder === undefined) && this.c.toggle.colReorder ||
+				toggleDefined && options.toggle.colReorder
+			) &&
 			this.c.saveState.colReorder
 		) {
 			togglesToInsert.push(this.dom.colReorderToggle);
@@ -796,7 +810,10 @@ export default class StateRestoreCollection {
 		// Scroller toggle - check toggle and saving enabled
 		if (
 			this.s.hasScroller &&
-			(options.toggle.scroller === undefined && this.c.toggle.scroller || options.toggle.scroller) &&
+			(
+				(!toggleDefined || options.toggle.scroller === undefined) && this.c.toggle.scroller ||
+				toggleDefined && options.toggle.scroller
+			) &&
 			this.c.saveState.scroller
 		) {
 			togglesToInsert.push(this.dom.scrollerToggle);
@@ -806,8 +823,8 @@ export default class StateRestoreCollection {
 		if (
 			this.s.hasSearchBuilder &&
 			(
-				options.toggle.searchBuilder === undefined && this.c.toggle.searchBuilder ||
-				options.toggle.searchBuilder
+				(!toggleDefined || options.toggle.searchBuilder === undefined) && this.c.toggle.searchBuilder ||
+				toggleDefined && options.toggle.searchBuilder
 			) &&
 			this.c.saveState.searchBuilder
 		) {
@@ -817,7 +834,10 @@ export default class StateRestoreCollection {
 		// SearchPanes toggle - check toggle and saving enabled
 		if (
 			this.s.hasSearchPanes &&
-			(options.toggle.searchPanes === undefined && this.c.toggle.searchPanes || options.toggle.searchPanes) &&
+			(
+				(!toggleDefined || options.toggle.searchPanes === undefined) && this.c.toggle.searchPanes ||
+				toggleDefined && options.toggle.searchPanes
+			) &&
 			this.c.saveState.searchPanes
 		) {
 			togglesToInsert.push(this.dom.searchPanesToggle);
@@ -826,32 +846,38 @@ export default class StateRestoreCollection {
 		// Columns toggle - check toggle and saving enabled
 		if (
 			typeof this.c.toggle.columns === 'boolean' &&
-			(options.toggle.order === undefined && this.c.toggle.columns || options.toggle.order) &&
+			(
+				(!toggleDefined || options.toggle.order === undefined) && this.c.toggle.columns ||
+				toggleDefined && options.toggle.order
+			) &&
 			this.c.saveState.columns
 		) {
 			togglesToInsert.push(this.dom.columnsSearchToggle);
 			togglesToInsert.push(this.dom.columnsVisibleToggle);
 		}
 		else if (
-			options.toggle.columns === undefined && typeof this.c.toggle.columns !== 'boolean' ||
+			(!toggleDefined || options.toggle.columns === undefined) && typeof this.c.toggle.columns !== 'boolean' ||
 			typeof options.toggle.order !== 'boolean'
 		) {
 			if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns) {
 				// Column search toggle - check toggle and saving enabled
 				if (
 					(
-						(
-							typeof options.toggle.columns !== 'boolean' &&
-							options.toggle.columns !== undefined &&
-							options.toggle.columns.search === undefined &&
-							typeof this.c.toggle.columns !== 'boolean' &&
-							this.c.toggle.columns.search
-						) ||
-						typeof options.toggle.columns !== 'boolean' &&
+						// columns.search is defined when passed in
+						toggleDefined &&
 						options.toggle.columns !== undefined &&
-						options.toggle.columns.search
+						typeof options.toggle.columns !== 'boolean' &&
+						options.toggle.columns.search ||
+						// Columns search is not defined when passed in but is in defaults
+						(
+							!toggleDefined ||
+							options.toggle.columns === undefined ||
+							typeof options.toggle.columns !== 'boolean' && options.toggle.columns.search === undefined
+						) &&
+						typeof this.c.toggle.columns !== 'boolean' &&
+						this.c.toggle.columns.search
 					) &&
-						this.c.saveState.columns.search
+					this.c.saveState.columns.search
 				) {
 					togglesToInsert.push(this.dom.columnsSearchToggle);
 				}
@@ -859,18 +885,21 @@ export default class StateRestoreCollection {
 				// Column visiblity toggle - check toggle and saving enabled
 				if (
 					(
-						(
-							typeof options.toggle.columns !== 'boolean' &&
-							options.toggle.columns !== undefined &&
-							options.toggle.columns.visible === undefined &&
-							typeof this.c.toggle.columns !== 'boolean' &&
-							this.c.toggle.columns.visible
-						) ||
-						typeof options.toggle.columns !== 'boolean' &&
+						// columns.visible is defined when passed in
+						toggleDefined &&
 						options.toggle.columns !== undefined &&
-						options.toggle.columns.visible
+						typeof options.toggle.columns !== 'boolean' &&
+						options.toggle.columns.visible ||
+						// Columns visible is not defined when passed in but is in defaults
+						(
+							!toggleDefined ||
+							options.toggle.columns === undefined ||
+							typeof options.toggle.columns !== 'boolean' && options.toggle.columns.visible === undefined
+						) &&
+						typeof this.c.toggle.columns !== 'boolean' &&
+						this.c.toggle.columns.visible
 					) &&
-						this.c.saveState.columns.visible
+					this.c.saveState.columns.visible
 				) {
 					togglesToInsert.push(this.dom.columnsVisibleToggle);
 				}

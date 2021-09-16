@@ -25,7 +25,6 @@ $(document).ready(function(index) {
                 config: {
                     creationModal: true,
                     toggle: {
-                        colReorder: true,
                         columns:{
                             search: true,
                             visible: true
