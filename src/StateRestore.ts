@@ -541,25 +541,34 @@ export default class StateRestore {
 	): void {
 		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.confirmationTitleRow.empty().append(title);
+		let confirmationButton = $(
+			'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
+				buttonText+
+			'</button>'
+		);
 		this.dom.confirmation
 			.empty()
 			.append(this.dom.confirmationTitleRow)
 			.append(modalContents)
 			.append(
-				$('<div class="'+this.classes.confirmationButtons+'">' +
-						'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
-							buttonText+
-						'</button>' +
-					'</div>'
-				)
+				$('<div class="'+this.classes.confirmationButtons+'"></div>')
+					.append(confirmationButton)
 			)
 			.appendTo(this.dom.dtContainer);
 
 		$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
 
-		$(modalContents.children('input')[0]).focus();
+		let inputs = modalContents.children('input');
 
-		let confirmationButton = $('button.'+this.classes.confirmationButton.replace(/ /g, '.'));
+		// If there is an input focus on that
+		if (inputs.length > 0) {
+			$(inputs[0]).focus();
+		}
+		// Otherwise focus on the confirmation button
+		else {
+			confirmationButton.focus();
+		}
+
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
 
 		let keyupFunction = function(e) {
