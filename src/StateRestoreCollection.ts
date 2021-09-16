@@ -537,8 +537,11 @@ export default class StateRestoreCollection {
 				id,
 				this.s.dt.state()
 			);
-			newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(id));
-			newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
+				newState.dom.confirmation.one('dtsr-delete', () => this._deleteCallback(newState.s.identifier));
+				newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
+				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
+			});
 			this.s.states.push(newState);
 			this._collectionRebuild();
 
@@ -657,24 +660,11 @@ export default class StateRestoreCollection {
 			newState.s.savedState = loadedState;
 			this.s.states.push(newState);
 
-			newState.dom.confirmation.on(
-				'dtsr-delete',
-				() => this._deleteCallback(loadedState.stateRestore.state)
-			);
-
-			newState.dom.confirmation.on(
-				'dtsr-rename',
-				() => {
-					this._collectionRebuild();
-				}
-			);
-
-			newState.dom.confirmation.on(
-				'dtsr-save',
-				() => {
-					this._collectionRebuild();
-				}
-			);
+			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
+				newState.dom.confirmation.one('dtsr-delete', () => this._deleteCallback(newState.s.identifier));
+				newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
+				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
+			});
 		}
 	}
 
@@ -1046,8 +1036,11 @@ export default class StateRestoreCollection {
 				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
 				newState.save(loadedState);
 				this.s.states.push(newState);
-				newState.dom.confirmation.on('dtsr-delete', () => this._deleteCallback(loadedState.stateRestore.state));
-				newState.dom.confirmation.on('dtsr-rename', () => this._collectionRebuild());
+				$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
+					newState.dom.confirmation.one('dtsr-delete', () => this._deleteCallback(newState.s.identifier));
+					newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
+					newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
+				});
 				this._collectionRebuild();
 			}
 		}

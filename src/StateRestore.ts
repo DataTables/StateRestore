@@ -375,7 +375,7 @@ export default class StateRestore {
 			if (!this.c.ajax) {
 				try {
 					sessionStorage.removeItem(
-						'DataTables_stateRestore_'+newIdentifier+'_'+location.pathname
+						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 				}
 				catch (e) {
@@ -384,6 +384,15 @@ export default class StateRestore {
 			}
 
 			this.s.identifier = newIdentifier;
+
+			this.dom.deleteContents = $(
+				'<div class="'+this.classes.confirmationText+'"><span>'+
+					this.s.dt
+						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+						.replace(/%s/g, this.s.identifier) +
+				'</span></div>'
+			);
+
 			this.save(this.s.savedState);
 			this.dom.confirmation.trigger('dtsr-rename');
 
@@ -547,6 +556,8 @@ export default class StateRestore {
 				)
 			)
 			.appendTo(this.dom.dtContainer);
+
+		$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
 
 		$(modalContents.children('input')[0]).focus();
 
