@@ -185,6 +185,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.stateRestore = {
 		action(e, dt, node, config) {
 			config._stateRestore.load();
+			node.blur();
 		},
 		config: {
 			split: ['updateState', 'deleteState', 'renameState']
@@ -308,6 +309,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				});
 			}
 			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+			node.blur();
 		},
 		init(dt, node, config) {
 			if(dt.settings()[0]._stateRestore === undefined && dt.button('SaveStateRestore:name').length > 1) {
@@ -322,6 +324,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	$.fn.dataTable.ext.buttons.deleteState = {
 		action(e, dt, node, config) {
 			config.parent._stateRestore.delete();
+			node.blur();
 		},
 		text(dt) {
 			return dt.i18n('buttons.deleteState', 'Delete');
@@ -329,8 +332,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	};
 
 	$.fn.dataTable.ext.buttons.deleteAllStates = {
-		action(e, dt) {
+		action(e, dt, node) {
 			dt.stateRestore.states().delete(true);
+			node.blur();
 		},
 		text(dt) {
 			return dt.i18n('buttons.deleteAllStates', 'Delete All States');
@@ -345,6 +349,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				ids.push(state.s.identifier);
 			}
 			config.parent._stateRestore.rename(undefined, ids);
+			node.blur();
 		},
 		text(dt) {
 			return dt.i18n('buttons.renameState', 'Rename');
