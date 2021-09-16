@@ -19,7 +19,7 @@
 
 		As default the value is `true`, meaning that states can be renamed. If this option is set to `false`,  then renaming will be disabled.
 
-		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/noRenaming.html) to see this in action.
+		Take a look at [this example](/extensions/StateRestore/examples/initialisation/noRenaming.html) to see this in action.
         ]]>
 	</description>
 

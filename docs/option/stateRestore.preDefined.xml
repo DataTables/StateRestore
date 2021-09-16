@@ -57,7 +57,7 @@ The corresponding value of the predefined state is structured as follows.
 
 		As default the value is an empty object, meaning that there will be no predefined states loaded into StateRestore.
 
-		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/preDefined.html) to see this in action.
+		Take a look at [this example](/extensions/StateRestore/examples/initialisation/preDefined.html) to see this in action.
         ]]>
 	</description>
 

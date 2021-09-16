@@ -25,7 +25,7 @@
 
 		As default the value is `false`, meaning that the states will be saved in the local session storage. Setting the value of this option to `true` has no effect.
 
-		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/ajax.html) to see this in action.
+		Take a look at [this example](/extensions/StateRestore/examples/initialisation/ajax.html) to see this in action.
         ]]>
 	</description>
 

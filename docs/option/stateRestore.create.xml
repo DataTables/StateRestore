@@ -19,7 +19,7 @@
 
 		As default the value is `true`, meaning that states can be created. If this option is set to `false`, then creation will be disabled.
 
-		Take a look at [this example]([../extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action.
+		Take a look at [this example](/extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action.
         ]]>
 	</description>
 
