@@ -30,7 +30,18 @@ $(document).ready(function() {
                 }
             }
         },
-        buttons: [ 'createState', 'savedStates' ],
+        buttons: [
+            {
+                extend: 'createState',
+                config:{
+                    creationModal: true,
+                    toggle: {
+                        searchPanes: true
+                    }
+                }
+            }
+            'savedStates'
+        ],
         dom: 'Bfrtip'
     });
 });

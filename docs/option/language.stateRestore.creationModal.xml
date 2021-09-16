@@ -51,7 +51,20 @@ $(document).ready(function() {
                 }
             }
         },
-        buttons: [ 'createStateedStates' ],
+        buttons: [
+            {
+                extend: 'createState',
+                config:{
+                    creationModal: true,
+                    toggle: {
+                        columns: {
+                            visible: true
+                        }
+                    }
+                }
+            }
+            'savedStates'
+        ],
         dom: 'Bfrtip'
     });
 });

@@ -32,7 +32,18 @@ $(document).ready(function() {
                 }
             }
         },
-        buttons: [ 'createState', 'savedStates' ],
+        buttons: [
+            {
+                extend: 'createState',
+                config:{
+                    creationModal: true,
+                    toggle: {
+                        search: true
+                    }
+                }
+            }
+            'savedStates'
+        ],
         dom: 'Bfrtip'
     });
 });
