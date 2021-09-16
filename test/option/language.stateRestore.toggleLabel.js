@@ -57,9 +57,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.toggleLab
 
 			$('.dt-button:eq(0)').click();
 
-			// DD-2244
 			expect($('.dtsr-toggle-title').text()).toBe('unit test');
-			//expect($('.dtsr-toggle-title').text()).toBe('Includes:');
 		});
 	});
 });
