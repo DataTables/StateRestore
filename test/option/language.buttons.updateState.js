@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.buttons.saveState', function () {
+describe('stateRestore - options - language.buttons.updateState', function () {
 	let table;
 
 	dt.libs({
