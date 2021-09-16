@@ -294,6 +294,7 @@ export default class StateRestore {
 		// If the modal is to be skipped then delete straight away
 		if (skipModal) {
 			this.dom.confirmation.appendTo(this.dom.dtContainer);
+			$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
 			deleteFunction();
 			this.dom.confirmation.remove();
 		}
@@ -410,6 +411,7 @@ export default class StateRestore {
 			}
 			else{
 				this.dom.confirmation.appendTo(this.dom.dtContainer);
+				$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
 				renameFunction();
 				this.dom.confirmation.remove();
 			}
@@ -589,7 +591,6 @@ export default class StateRestore {
 		// remove the background and modal from the screen and unbind the keyup event.
 		confirmationButton.on('click', () => {
 			let success = buttonAction();
-			console.log(success)
 			if (success === true) {
 				this.dom.background.remove();
 				this.dom.confirmation.remove();

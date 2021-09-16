@@ -940,6 +940,8 @@ export default class StateRestoreCollection {
 			.append(this.dom.createButtonRow)
 			.appendTo(this.dom.dtContainer);
 
+		$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
+
 		// Allow the label to be clicked to toggle the checkbox
 		for (let toggle of togglesToInsert) {
 			$(toggle.children('label:last-child')).on('click', function() {
@@ -1069,6 +1071,8 @@ export default class StateRestoreCollection {
 					.append(confirmationButton)
 			)
 			.appendTo(this.dom.dtContainer);
+
+		$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
 
 		let inputs = modalContents.children('input');
 
