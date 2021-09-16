@@ -60,9 +60,7 @@ describe('stateRestore - options - stateRestore.delete', function () {
 		it('... unable to delete via API', function () {
 			table.stateRestore.states().delete();
 
-			// TK COLIN DD-2258
-			// expect($('.dtsr-confirmation').length).toBe(0);
-			expect($('.dtsr-confirmation').length).toBe(1);
+			expect($('.dtsr-confirmation').length).toBe(0);
 		});
 	});
 

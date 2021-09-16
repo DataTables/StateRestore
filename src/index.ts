@@ -173,11 +173,13 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			return success;
 		};
 
-		if (skipModal) {
-			deleteAllCallBack(skipModal);
-		}
-		else {
-			this.context[0]._stateRestore.deleteAll(deleteAllCallBack);
+		if (this.context[0]._stateRestore.c.delete) {
+			if (skipModal) {
+				deleteAllCallBack(skipModal);
+			}
+			else {
+				this.context[0]._stateRestore.deleteAll(deleteAllCallBack);
+			}
 		}
 		return this;
 	});
