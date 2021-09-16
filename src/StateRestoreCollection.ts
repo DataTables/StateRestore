@@ -528,7 +528,6 @@ export default class StateRestoreCollection {
 				return 'duplicate';
 			}
 
-			console.log($.extend(true, {}, this.c, toggles, options));
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
 				$.extend(true, {}, this.c, toggles, options),
@@ -548,7 +547,6 @@ export default class StateRestoreCollection {
 
 		// If there isn't already a state with this identifier
 		if (state === null) {
-			console.log(this.c.creationModal || options !== undefined && options.creationModal)
 			if(this.c.creationModal || options !== undefined && options.creationModal) {
 				this._creationModal(createFunction, identifier, options);
 			}
