@@ -26,10 +26,9 @@ describe('stateRestore - options - language.stateRestore.creationModal.colReorde
 				]
 			});
 
-			// $('.dt-button:eq(0)').click();
+			$('.dt-button:eq(0)').click();
 
-			// DD-2231
-			// expect($('.dtsr-creation-button').text()).toBe('Create');
+			expect($('.dtsr-check-label').text()).toBe('Column Order');
 		});
 
 		dt.html('basic');
@@ -41,14 +40,17 @@ describe('stateRestore - options - language.stateRestore.creationModal.colReorde
 					{
 						extend: 'savedStates',
 						config: {
-							creationModal: true
+							creationModal: true,
+							toggle: {
+								colReorder: true
+							}
 						}
 					}
 				],
 				language: {
 					stateRestore: {
 						creationModal: {
-							button: 'unit test'
+							colReorder: 'unit test'
 						}
 					}
 				}
@@ -56,7 +58,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.colReorde
 
 			$('.dt-button:eq(0)').click();
 
-			expect($('.dtsr-creation-button').text()).toBe('unit test');
+			expect($('.dtsr-check-label').text()).toBe('unit test');
 		});
 	});
 });
