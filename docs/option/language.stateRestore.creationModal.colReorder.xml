@@ -30,7 +30,7 @@ $(document).ready(function() {
                 }
             }
         },
-         buttons: [
+        buttons: [
             {
                 extend: 'createState',
                 config:{
