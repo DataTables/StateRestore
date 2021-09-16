@@ -1102,7 +1102,6 @@ export default class StateRestoreCollection {
 		// remove the background and modal from the screen and unbind the keyup event.
 		confirmationButton.on('click', () => {
 			let success = buttonAction(true);
-			console.log(success)
 			if (success === true) {
 				this.dom.background.remove();
 				this.dom.confirmation.remove();
