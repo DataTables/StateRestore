@@ -11,7 +11,7 @@ $(document).ready(function() {
         buttons:[{
             extend: 'savedStates',
             config: {
-                creation: false
+                create: false
             }
         }]
     });

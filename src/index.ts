@@ -91,6 +91,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.state.add()', function(identifier, options) {
 		let ctx = this.context[0];
+		if(!ctx._stateRestore.c.create) {
+			return this;
+		}
 		if (!ctx._stateRestore) {
 			let api = $.fn.DataTable.Api(ctx);
 			let src = new $.fn.dataTable.StateRestoreCollection(api, {});
