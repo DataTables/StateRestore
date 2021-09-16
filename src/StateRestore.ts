@@ -360,13 +360,16 @@ export default class StateRestore {
 
 		let renameFunction = () => {
 			if(newIdentifier === null) {
-				newIdentifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
+				let tempIdentifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
 
-				if (newIdentifier.length === 0) {
+				if (tempIdentifier.length === 0) {
 					return 'empty';
 				}
-				else if(currentIdentifiers.includes(newIdentifier)) {
+				else if(currentIdentifiers.includes(tempIdentifier)) {
 					return 'duplicate';
+				}
+				else {
+					newIdentifier = tempIdentifier;
 				}
 			}
 
@@ -586,6 +589,7 @@ export default class StateRestore {
 		// remove the background and modal from the screen and unbind the keyup event.
 		confirmationButton.on('click', () => {
 			let success = buttonAction();
+			console.log(success)
 			if (success === true) {
 				this.dom.background.remove();
 				this.dom.confirmation.remove();
