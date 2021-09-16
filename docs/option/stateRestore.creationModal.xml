@@ -39,9 +39,8 @@ This option allows a creation modal to be displayed to the user. This allows the
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createState',
         {
-            extend: 'savedStates',
+            extend: 'createState',
             config: {
                 creationModal: true,
                 toggle: {
@@ -59,6 +58,7 @@ This option allows a creation modal to be displayed to the user. This allows the
                 }
             }
         },
+        'savedStates',
         'colvis'
     ]
 });

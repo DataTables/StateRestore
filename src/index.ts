@@ -89,7 +89,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		return this;
 	});
 
-	apiRegister('stateRestore.state.add()', function(identifier) {
+	apiRegister('stateRestore.state.add()', function(identifier, options) {
 		let ctx = this.context[0];
 		if (!ctx._stateRestore) {
 			let api = $.fn.DataTable.Api(ctx);
@@ -102,7 +102,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			for (let intState of states) {
 				ids.push(intState.s.identifier);
 			}
-			ctx._stateRestore.addState(identifier, ids);
+			ctx._stateRestore.addState(identifier, ids, options);
 			return this;
 		}
 	});
@@ -219,7 +219,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	};
 
 	$.fn.dataTable.ext.buttons.createState = {
-		action(e, dt) {
+		action(e, dt, node, config) {
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 			let language = dt.settings()[0].oLanguage;
 
@@ -276,7 +276,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			let lastNumber = identifiers[0];
 
 			dt.stateRestore.state.add(
-				dt.i18n('buttons.stateRestore', 'State %d', lastNumber !== undefined ? lastNumber + 1 : 1)
+				dt.i18n('buttons.stateRestore', 'State %d', lastNumber !== undefined ? lastNumber + 1 : 1),
+				config.config
 			);
 
 			let states = dt.stateRestore.states();

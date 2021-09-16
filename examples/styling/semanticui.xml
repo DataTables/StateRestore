@@ -8,9 +8,8 @@
 $(document).ready(function() {
     let table = $('#example').DataTable({
         buttons:[
-            'createState',
             {
-                extend: 'savedStates',
+                extend: 'createState',
                 config: {
                     creationModal: true,
                     toggle: {
@@ -23,7 +22,8 @@ $(document).ready(function() {
                         search: true,
                     }
                 }
-            }
+            },
+            'savedStates'
         ],
         lengthChange: false
     });

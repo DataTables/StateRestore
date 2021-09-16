@@ -16,9 +16,8 @@ $(document).ready(function() {
         scrollCollapse: true,
         scroller:       true,
         buttons:[
-            'createState',
             {
-                extend: 'savedStates',
+                extend: 'createState',
                 config: {
                     creationModal: true,
                     toggle: {
@@ -31,7 +30,8 @@ $(document).ready(function() {
                         searchPanes: true
                     }
                 }
-            }
+            },
+            'savedStates'
         ]
     });
 });

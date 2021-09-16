@@ -103,15 +103,15 @@ As default the value is `true`, meaning that the user can decide whether the `-i
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createState',
         {
-            extend: 'savedStates',
+            extend: 'createState',
             config: {
                 toggle:{
                     paging: true
                 }
             }
         },
+        'savedStates',
         'colvis'
     ]
 });
@@ -120,9 +120,8 @@ As default the value is `true`, meaning that the user can decide whether the `-i
  $('#example').DataTable({
     dom: 'Blfrtip',
     buttons:[
-        'createState',
         {
-            extend: 'savedStates',
+            extend: 'createState',
             config: {
                 toggle:{
                     columns:{
@@ -131,6 +130,7 @@ As default the value is `true`, meaning that the user can decide whether the `-i
                 }
             }
         },
+        'savedStates',
         'colvis'
     ]
 });

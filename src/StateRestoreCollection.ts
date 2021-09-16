@@ -512,7 +512,7 @@ export default class StateRestoreCollection {
 	 * @param identifier The value that is used to identify a state.
 	 * @returns The state that has been created
 	 */
-	public addState(identifier: string, currentIdentifiers): void {
+	public addState(identifier: string, currentIdentifiers: string[], options: IDefaults): void {
 		// If creation/saving is not allowed then return
 		if (!this.c.create || !this.c.save) {
 			return;
@@ -528,9 +528,10 @@ export default class StateRestoreCollection {
 				return 'duplicate';
 			}
 
+			console.log($.extend(true, {}, this.c, toggles, options));
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
-				$.extend(true, {}, this.c, toggles),
+				$.extend(true, {}, this.c, toggles, options),
 				id,
 				this.s.dt.state()
 			);
@@ -547,8 +548,8 @@ export default class StateRestoreCollection {
 
 		// If there isn't already a state with this identifier
 		if (state === null) {
-			if(this.c.creationModal) {
-				this._creationModal(createFunction, identifier);
+			if(this.c.creationModal || options.creationModal) {
+				this._creationModal(createFunction, identifier, options);
 			}
 			else {
 				let success = createFunction(identifier, {});
@@ -748,7 +749,7 @@ export default class StateRestoreCollection {
 	 * @param buttonAction The action that should be taken when the button is pressed
 	 * @param identifier The default identifier for the next new state
 	 */
-	private _creationModal(buttonAction, identifier): void {
+	private _creationModal(buttonAction, identifier, options: IDefaults): void {
 		this.dom.creation.empty();
 		this.dom.creationForm.empty();
 		this.dom.nameInputRow.children('input').val(identifier);
@@ -758,7 +759,7 @@ export default class StateRestoreCollection {
 
 		// Order toggle - check toggle and saving enabled
 		if (
-			this.c.toggle.order &&
+			(options.toggle.order === undefined && this.c.toggle.order || options.toggle.order) &&
 			this.c.saveState.order &&
 			(tableConfig.ordering === undefined || tableConfig.ordering)
 		) {
@@ -767,7 +768,7 @@ export default class StateRestoreCollection {
 
 		// Search toggle - check toggle and saving enabled
 		if (
-			this.c.toggle.search &&
+			(options.toggle.search === undefined && this.c.toggle.search || options.toggle.search) &&
 			this.c.saveState.search &&
 			(tableConfig.searching === undefined || tableConfig.searching)
 		) {
@@ -776,7 +777,7 @@ export default class StateRestoreCollection {
 
 		// Paging toggle - check toggle and saving enabled
 		if (
-			this.c.toggle.paging &&
+			(options.toggle.paging === undefined && this.c.toggle.paging || options.toggle.paging) &&
 			this.c.saveState.paging &&
 			(tableConfig.paging === undefined || tableConfig.paging)
 		) {
@@ -784,39 +785,93 @@ export default class StateRestoreCollection {
 		}
 
 		// ColReorder toggle - check toggle and saving enabled
-		if (this.s.hasColReorder && this.c.toggle.colReorder && this.c.saveState.colReorder) {
+		if (
+			this.s.hasColReorder &&
+			(options.toggle.colReorder === undefined && this.c.toggle.colReorder || options.toggle.colReorder) &&
+			this.c.saveState.colReorder
+		) {
 			togglesToInsert.push(this.dom.colReorderToggle);
 		}
 
 		// Scroller toggle - check toggle and saving enabled
-		if (this.s.hasScroller && this.c.toggle.scroller && this.c.saveState.scroller) {
+		if (
+			this.s.hasScroller &&
+			(options.toggle.scroller === undefined && this.c.toggle.scroller || options.toggle.scroller) &&
+			this.c.saveState.scroller
+		) {
 			togglesToInsert.push(this.dom.scrollerToggle);
 		}
 
 		// SearchBuilder toggle - check toggle and saving enabled
-		if (this.s.hasSearchBuilder &&this.c.toggle.searchBuilder && this.c.saveState.searchBuilder) {
+		if (
+			this.s.hasSearchBuilder &&
+			(
+				options.toggle.searchBuilder === undefined && this.c.toggle.searchBuilder ||
+				options.toggle.searchBuilder
+			) &&
+			this.c.saveState.searchBuilder
+		) {
 			togglesToInsert.push(this.dom.searchBuilderToggle);
 		}
 
 		// SearchPanes toggle - check toggle and saving enabled
-		if (this.s.hasSearchPanes &&this.c.toggle.searchPanes && this.c.saveState.searchPanes) {
+		if (
+			this.s.hasSearchPanes &&
+			(options.toggle.searchPanes === undefined && this.c.toggle.searchPanes || options.toggle.searchPanes) &&
+			this.c.saveState.searchPanes
+		) {
 			togglesToInsert.push(this.dom.searchPanesToggle);
 		}
 
 		// Columns toggle - check toggle and saving enabled
-		if (typeof this.c.toggle.columns === 'boolean' && this.c.toggle.columns && this.c.saveState.columns) {
+		if (
+			typeof this.c.toggle.columns === 'boolean' &&
+			(options.toggle.order === undefined && this.c.toggle.columns || options.toggle.order) &&
+			this.c.saveState.columns
+		) {
 			togglesToInsert.push(this.dom.columnsSearchToggle);
 			togglesToInsert.push(this.dom.columnsVisibleToggle);
 		}
-		else if (typeof this.c.toggle.columns !== 'boolean') {
+		else if (
+			options.toggle.columns === undefined && typeof this.c.toggle.columns !== 'boolean' ||
+			typeof options.toggle.order !== 'boolean'
+		) {
 			if (typeof this.c.saveState.columns !== 'boolean' && this.c.saveState.columns) {
 				// Column search toggle - check toggle and saving enabled
-				if (this.c.toggle.columns.search && this.c.saveState.columns.search) {
+				if (
+					(
+						(
+							typeof options.toggle.columns !== 'boolean' &&
+							options.toggle.columns !== undefined &&
+							options.toggle.columns.search === undefined &&
+							typeof this.c.toggle.columns !== 'boolean' &&
+							this.c.toggle.columns.search
+						) ||
+						typeof options.toggle.columns !== 'boolean' &&
+						options.toggle.columns !== undefined &&
+						options.toggle.columns.search
+					) &&
+						this.c.saveState.columns.search
+				) {
 					togglesToInsert.push(this.dom.columnsSearchToggle);
 				}
 
 				// Column visiblity toggle - check toggle and saving enabled
-				if (this.c.toggle.columns.visible && this.c.saveState.columns.visible) {
+				if (
+					(
+						(
+							typeof options.toggle.columns !== 'boolean' &&
+							options.toggle.columns !== undefined &&
+							options.toggle.columns.visible === undefined &&
+							typeof this.c.toggle.columns !== 'boolean' &&
+							this.c.toggle.columns.visible
+						) ||
+						typeof options.toggle.columns !== 'boolean' &&
+						options.toggle.columns !== undefined &&
+						options.toggle.columns.visible
+					) &&
+						this.c.saveState.columns.visible
+				) {
 					togglesToInsert.push(this.dom.columnsVisibleToggle);
 				}
 			}

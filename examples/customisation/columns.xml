@@ -20,9 +20,8 @@ $(document).ready(function(index) {
         dom: 'Blfrtip',
         buttons:[
             'colvis',
-            'createState',
             {
-                extend: 'savedStates',
+                extend: 'createState',
                 config: {
                     creationModal: true,
                     toggle: {
@@ -33,7 +32,8 @@ $(document).ready(function(index) {
                         }
                     }
                 }
-            }
+            },
+            'savedStates'
         ],
         initComplete: function () {
             // Apply the search
