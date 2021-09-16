@@ -247,32 +247,38 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				}
 			}
 
+			let getId = (identifier) => {
+				let id;
+				if (Array.isArray(replaceRegex)) {
+					id = identifier;
+					for (let reg of replaceRegex) {
+						id = id.replace(reg, '');
+					}
+				}
+				else {
+					id = identifier.replace(replaceRegex, '');
+				}
+
+				// If the id after replacement is not a number, or the length is the same as before,
+				//  it has been customised so return 0
+				if (isNaN(+id) || id.length === identifier) {
+					return 0;
+				}
+				// Otherwise return the number that has been assigned previously
+				else {
+					return +id;
+				}
+			};
+
 			// Extract the numbers from the identifiers that use the standard naming convention
 			let identifiers = prevStates
-				.map((state) => {
-					let id;
-					if (Array.isArray(replaceRegex)) {
-						id = state.s.identifier;
-						for (let reg of replaceRegex) {
-							id = id.replace(reg, '');
-						}
-					}
-					else {
-						id = state.s.identifier.replace(replaceRegex, '');
-					}
-
-					// If the id after replacement is not a number, or the length is the same as before,
-					//  it has been customised so return 0
-					if (isNaN(+id) || id.length === state.s.identifier) {
-						return 0;
-					}
-					// Otherwise return the number that has been assigned previously
-					else {
-						return +id;
-					}
-				})
-				.sort()
-				.reverse();
+				.map((state) => getId(state.s.identifier))
+				.sort((a, b) => +a < +b ?
+					1 :
+					+a > +b ?
+						-1 :
+						0
+				);
 
 			let lastNumber = identifiers[0];
 
@@ -281,9 +287,20 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				config.config
 			);
 
-			let states = dt.stateRestore.states();
+			let states = dt.stateRestore.states().sort((a, b) => {
+				let aId = +getId(a.s.identifier);
+				let bId = +getId(b.s.identifier);
+
+				return aId > bId ?
+					1 :
+					aId < bId ?
+						-1 :
+						0;
+			});
+
 			let stateButtons = [];
-			for(let state of states) {
+
+			for (let state of states) {
 				let split = [];
 
 				if (stateRestoreOpts.save) {

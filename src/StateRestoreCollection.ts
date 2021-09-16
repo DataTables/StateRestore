@@ -637,7 +637,16 @@ export default class StateRestoreCollection {
 	 * @param preDefined Object containing the predefined states that are to be reintroduced
 	 */
 	private _addPreDefined(preDefined) {
-		let states = Object.keys(preDefined);
+		let states = Object.keys(preDefined).sort((a, b) => {
+			let aId = +this._getId(a);
+			let bId = +this._getId(b);
+
+			return aId > bId ?
+				1 :
+				aId < bId ?
+					-1 :
+					0;
+		});
 
 		for (let state of states) {
 			for(let i = 0; i < this.s.states.length; i++) {
@@ -684,16 +693,15 @@ export default class StateRestoreCollection {
 		}
 		else {
 			// Sort the states so that they appear alphabetically
-			this.s.states = this.s.states.sort((a, b)=> {
-				if (a.s.identifier < b.s.identifier) {
-					return -1;
-				}
-				else if (a.s.identifier > b.s.identifier) {
-					return 1;
-				}
-				else {
-					return 0;
-				}
+			this.s.states = this.s.states.sort((a, b) => {
+				let aId = +this._getId(a.s.identifier);
+				let bId = +this._getId(b.s.identifier);
+
+				return aId > bId ?
+					1 :
+					aId < bId ?
+						-1 :
+						0;
 			});
 
 			// Construct the split property of each button
@@ -1041,6 +1049,48 @@ export default class StateRestoreCollection {
 		return true;
 	}
 
+	private _getId(identifier) {
+		let replaceRegex;
+		let language = this.s.dt.settings()[0].oLanguage;
+
+		// Create a replacement regex based on the i18n values
+		let defaultString = language.buttons !== undefined && language.buttons.stateRestore !== undefined ?
+			language.buttons.stateRestore :
+			'State ';
+		if (defaultString.indexOf('%d') === defaultString.length - 3) {
+			replaceRegex = new RegExp(defaultString.replace(/%d/g, ''));
+		}
+		else {
+			let splitString = defaultString.split('%d');
+			replaceRegex = [];
+			for(let split of splitString) {
+				replaceRegex.push(new RegExp(split));
+			}
+		}
+
+		let id;
+
+		if (Array.isArray(replaceRegex)) {
+			id = identifier;
+			for (let reg of replaceRegex) {
+				id = id.replace(reg, '');
+			}
+		}
+		else {
+			id = identifier.replace(replaceRegex, '');
+		}
+
+		// If the id after replacement is not a number, or the length is the same as before,
+		//  it has been customised so return 0
+		if (isNaN(+id) || id.length === identifier) {
+			return 0;
+		}
+		// Otherwise return the number that has been assigned previously
+		else {
+			return +id;
+		}
+	}
+
 	/**
 	 * Creates a new confirmation modal for the user to approve an action
 	 *
@@ -1133,6 +1183,7 @@ export default class StateRestoreCollection {
 	 */
 	private _searchForStates(): void {
 		let keys = Object.keys(sessionStorage);
+
 		for (let key of keys) {
 			// eslint-disable-next-line no-useless-escape
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
@@ -1145,8 +1196,9 @@ export default class StateRestoreCollection {
 					newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
 					newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 				});
-				this._collectionRebuild();
 			}
 		}
+
+		this._collectionRebuild();
 	}
 }
