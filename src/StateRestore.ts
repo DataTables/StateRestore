@@ -139,8 +139,7 @@ export default class StateRestore {
 		rename: true,
 		save: true,
 		saveState: {
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			ColReorder: true,
+			colReorder: true,
 			columns: {
 				search: true,
 				visible: true
@@ -153,8 +152,7 @@ export default class StateRestore {
 			searchPanes: true,
 		},
 		toggle: {
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			ColReorder: false,
+			colReorder: false,
 			columns:{
 				search: false,
 				visible: false
@@ -494,7 +492,7 @@ export default class StateRestore {
 		}
 
 		// ColReorder
-		if (!this.c.saveState.ColReorder) {
+		if (!this.c.saveState.colReorder) {
 			this.s.savedState.ColReorder = undefined;
 		}
 

@@ -88,8 +88,7 @@ export interface IDefaults {
 }
 
 export interface ISaveState {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	ColReorder: boolean;
+	colReorder: boolean;
 	columns: IColumnDefault | boolean;
 	order: boolean;
 	paging: boolean;
@@ -224,8 +223,7 @@ export default class StateRestoreCollection {
 		rename: true,
 		save: true,
 		saveState: {
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			ColReorder: true,
+			colReorder: true,
 			columns: {
 				search: true,
 				visible: true
@@ -238,8 +236,7 @@ export default class StateRestoreCollection {
 			searchPanes: true,
 		},
 		toggle: {
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			ColReorder: false,
+			colReorder: false,
 			columns:{
 				search: false,
 				visible: false
@@ -787,7 +784,7 @@ export default class StateRestoreCollection {
 		}
 
 		// ColReorder toggle - check toggle and saving enabled
-		if (this.s.hasColReorder && this.c.toggle.ColReorder && this.c.saveState.ColReorder) {
+		if (this.s.hasColReorder && this.c.toggle.colReorder && this.c.saveState.colReorder) {
 			togglesToInsert.push(this.dom.colReorderToggle);
 		}
 
