@@ -343,7 +343,7 @@ export default class StateRestoreCollection {
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
 			createButtonRow: $(
-				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+' '+this.classes.modalFoot+'">' +
+				'<div class="'+this.classes.formRow+' '+this.classes.modalFoot+'">' +
 					'<button class="'+this.classes.creationButton+' ' + this.classes.dtButton + '">'+
 						this.s.dt.i18n(
 							'stateRestore.creationModal.button',
@@ -954,7 +954,7 @@ export default class StateRestoreCollection {
 		}
 
 		// Insert the toggle label next to the first check box
-		$(this.dom.creationForm.children('div.dtsr-check-row')[0]).prepend(this.dom.toggleLabel);
+		$(this.dom.creationForm.children('div.'+this.classes.checkRow)[0]).prepend(this.dom.toggleLabel);
 
 		// Insert the creation modal and the background
 		this.dom.background.appendTo(this.dom.dtContainer);
