@@ -19,6 +19,8 @@
 
 		As default the value is `true`, meaning that states can be saved. If this option is set to `false`, then saving will be disabled as well as creation of new states at that is also a save operation.
 
+		It is important to note that this does not only affect updating states, but also creating and renaming of states. These can be controlled independently using `-init stateRestore.create` and `-init stateRestore.rename`, but if this option is set to `false` it will override both of them. This is because creating and renaming are both, in their own way, a form of saving.
+
 		Take a look at [this example](/extensions/StateRestore/examples/initialisation/noSaving.html) to see this in action.
         ]]>
 	</description>

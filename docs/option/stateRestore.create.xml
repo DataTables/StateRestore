@@ -19,6 +19,8 @@
 
 		As default the value is `true`, meaning that states can be created. If this option is set to `false`, then creation will be disabled.
 
+		It is also worth noting that if `-init stateRestore.save` is set to `false`, the value set here will be overruled. This is because creation is a form of saving, and is therefore disabled when that option is.
+
 		Take a look at [this example](/extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action.
         ]]>
 	</description>
