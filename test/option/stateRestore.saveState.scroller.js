@@ -99,8 +99,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 		it('... reload state', function (done) {
 			$('.dt-button:eq(1)').click();
 
-			// TK COLIN DD-2275
-			// $('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').click();
+			$('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').click();
 			dt.sleep(200).then(() => {
 				expect($('.dataTables_info').text()).toBe('Showing 1 to 6 of 57 entries');
 				done();
