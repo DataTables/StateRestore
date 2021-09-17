@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.buttons.deleteAllStates', function () {
+describe('stateRestore - options - language.buttons.removeAllStates', function () {
 	let table;
 
 	dt.libs({
@@ -11,20 +11,20 @@ describe('stateRestore - options - language.buttons.deleteAllStates', function (
 		it('Check defaults', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['deleteAllStates']
+				buttons: ['removeAllStates']
 			});
 
-			expect($('.dt-button').text()).toBe('Delete All States');
+			expect($('.dt-button').text()).toBe('Remove All States');
 		});
 
 		dt.html('basic');
 		it('Change text', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
-				buttons: ['deleteAllStates'],
+				buttons: ['removeAllStates'],
 				language: {
 					buttons: {
-						deleteAllStates: 'unit test'
+						removeAllStates: 'unit test'
 					}
 				}
 			});

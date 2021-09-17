@@ -13,7 +13,7 @@ $(document).ready(function() {
             {
                 extend: 'savedStates',
                 config: {
-                    delete: false
+                    remove: false
                 }
             }
         ]
@@ -22,10 +22,10 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="stateRestore">No state delete</title>
+<title lib="stateRestore">No state remove</title>
 
 <info><![CDATA[
-This example shows how to use the `-init stateRestore.delete` initialisation option to disable the deletion of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that deletion is allowed.
+This example shows how to use the `-init stateRestore.remove` initialisation option to disable the removal of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that removal is allowed.
 ]]></info>
 
 </dt-example>

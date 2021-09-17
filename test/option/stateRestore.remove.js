@@ -1,4 +1,4 @@
-describe('stateRestore - options - stateRestore.delete', function () {
+describe('stateRestore - options - stateRestore.remove', function () {
 	let table;
 
 	dt.libs({
@@ -7,9 +7,9 @@ describe('stateRestore - options - stateRestore.delete', function () {
 	});
 
 	describe('Functional tests', function () {
-		// No need to check default, as states deleted in other tests
+		// No need to check default, as states removed in other tests
 		dt.html('basic');
-		it('Delete - true', function () {
+		it('Remove - true', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -19,7 +19,7 @@ describe('stateRestore - options - stateRestore.delete', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							delete: true
+							remove: true
 						}
 					}
 				]
@@ -33,7 +33,7 @@ describe('stateRestore - options - stateRestore.delete', function () {
 		});
 
 		dt.html('basic');
-		it('Delete - false', function () {
+		it('Remove - false', function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -43,7 +43,7 @@ describe('stateRestore - options - stateRestore.delete', function () {
 					{
 						extend: 'savedStates',
 						config: {
-							delete: false
+							remove: false
 						}
 					}
 				]
@@ -57,8 +57,8 @@ describe('stateRestore - options - stateRestore.delete', function () {
 			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
 			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Rename');
 		});
-		it('... unable to delete via API', function () {
-			table.stateRestore.states().delete();
+		it('... unable to remove via API', function () {
+			table.stateRestore.states().remove();
 
 			expect($('.dtsr-confirmation').length).toBe(0);
 		});
@@ -66,12 +66,12 @@ describe('stateRestore - options - stateRestore.delete', function () {
 
 	describe('Tidy up', function () {
 		dt.html('basic');
-		it('Delete all state', function () {
+		it('Remove all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates']
 			});
-			table.stateRestore.states().delete(true);
+			table.stateRestore.states().remove(true);
 		});
 	});
 });

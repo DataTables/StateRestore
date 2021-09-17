@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
 	<name>language.stateRestore.renameButton</name>
-	<summary>Set the text within the StateRestore delete button</summary>
+	<summary>Set the text within the StateRestore remove button</summary>
 	<since>0.0.1</since>
 
 	<type type="string">

@@ -152,22 +152,22 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		return this;
 	});
 
-	apiRegister('stateRestore.state().delete()', function(skipModal) {
+	apiRegister('stateRestore.state().remove()', function(skipModal) {
 		let ctx = this[0];
-		// Check if deletion of states is allowed
-		if(ctx.c.delete) {
-			ctx.delete(skipModal);
+		// Check if removal of states is allowed
+		if(ctx.c.remove) {
+			ctx.remove(skipModal);
 		}
 		return this;
 	});
 
-	apiRegister('stateRestore.states().delete()', function(skipModal) {
-		let deleteAllCallBack = (skipModalIn) => {
+	apiRegister('stateRestore.states().remove()', function(skipModal) {
+		let removeAllCallBack = (skipModalIn) => {
 			let success = true;
 			this.each(function(set) {
-				// Check if deletion of states is allowed
-				if(set.c.delete) {
-					let tempSuccess = set.delete(skipModalIn);
+				// Check if removal of states is allowed
+				if(set.c.remove) {
+					let tempSuccess = set.remove(skipModalIn);
 					if(tempSuccess !== true) {
 						success = tempSuccess;
 					}
@@ -176,12 +176,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			return success;
 		};
 
-		if (this.context[0]._stateRestore.c.delete) {
+		if (this.context[0]._stateRestore.c.remove) {
 			if (skipModal) {
-				deleteAllCallBack(skipModal);
+				removeAllCallBack(skipModal);
 			}
 			else {
-				this.context[0]._stateRestore.deleteAll(deleteAllCallBack);
+				this.context[0]._stateRestore.removeAll(removeAllCallBack);
 			}
 		}
 		return this;
@@ -193,7 +193,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			node.blur();
 		},
 		config: {
-			split: ['updateState', 'deleteState', 'renameState']
+			split: ['updateState', 'removeState', 'renameState']
 		},
 		text(dt) {
 			return dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1);
@@ -311,8 +311,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				if (stateRestoreOpts.save) {
 					split.push('updateState');
 				}
-				if (stateRestoreOpts.delete) {
-					split.push('deleteState');
+				if (stateRestoreOpts.remove) {
+					split.push('removeState');
 				}
 				if (stateRestoreOpts.save && stateRestoreOpts.rename) {
 					split.push('renameState');
@@ -343,23 +343,23 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 	};
 
-	$.fn.dataTable.ext.buttons.deleteState = {
+	$.fn.dataTable.ext.buttons.removeState = {
 		action(e, dt, node, config) {
-			config.parent._stateRestore.delete();
+			config.parent._stateRestore.remove();
 			node.blur();
 		},
 		text(dt) {
-			return dt.i18n('buttons.deleteState', 'Delete');
+			return dt.i18n('buttons.removeState', 'Remove');
 		}
 	};
 
-	$.fn.dataTable.ext.buttons.deleteAllStates = {
+	$.fn.dataTable.ext.buttons.removeAllStates = {
 		action(e, dt, node) {
-			dt.stateRestore.states().delete(true);
+			dt.stateRestore.states().remove(true);
 			node.blur();
 		},
 		text(dt) {
-			return dt.i18n('buttons.deleteAllStates', 'Delete All States');
+			return dt.i18n('buttons.removeAllStates', 'Remove All States');
 		}
 	};
 
@@ -419,8 +419,8 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				if (stateRestoreOpts.save) {
 					split.push('updateState');
 				}
-				if (stateRestoreOpts.delete) {
-					split.push('deleteState');
+				if (stateRestoreOpts.remove) {
+					split.push('removeState');
 				}
 				if (stateRestoreOpts.save && stateRestoreOpts.rename) {
 					split.push('renameState');

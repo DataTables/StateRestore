@@ -36,7 +36,7 @@ $(document).ready(function() {
 ]]></example>
 
 <related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.state().delete()</related>
+<related type="api">stateRestore.state().remove()</related>
 <related type="api">stateRestore.state().load()</related>
 <related type="api">stateRestore.state().save()</related>
 

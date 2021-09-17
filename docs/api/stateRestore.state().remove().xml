@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-api library="StateRestore">
-	<name>stateRestore.state().delete()</name>
-	<summary>Delete a state from StateRestore</summary>
+	<name>stateRestore.state().remove()</name>
+	<summary>Remove a state from StateRestore</summary>
 	<since>0.0.1</since>
 
 	<type type="function">
-		<signature>stateRestore.state().delete()</signature>
+		<signature>stateRestore.state().remove()</signature>
         <parameter type="boolean" name="skipModal" default="false">Boolean value indicating if the confirmation modal should be skipped or not. The default is `false` meaning that the modal will be shown.</parameter>
-		<description>Deletes a stored state from the StateRestore extension.</description>
+		<description>Removes a stored state from the StateRestore extension.</description>
 		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
 	</type>
 
 	<description>
 	<![CDATA[
-This method provides the ability to delete a state that is managed by the `-init stateRestore` extension.
+This method provides the ability to remove a state that is managed by the `-init stateRestore` extension.
 
-`-api stateRestore.state().delete()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. The default for `skipModal` is `false`, meaning that the modal will be shown. It deletes the state retrieved by the previous call to `-api stateRestore.state()`.
+`-api stateRestore.state().remove()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. The default for `skipModal` is `false`, meaning that the modal will be shown. It removes the state retrieved by the previous call to `-api stateRestore.state()`.
 
 A Datatables API is returned so that further chaining can occur.
 
-If the `-init stateRestore.delete` initialisation option is set to `false` then this API method will not do anything.
+If the `-init stateRestore.remove` initialisation option is set to `false` then this API method will not do anything.
 	]]>
 
 	</description>
 
-	<example title="Delete a state called 'New State'"><![CDATA[
+	<example title="Remove a state called 'New State'"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
         buttons:['createState', 'savedStates']
     });
 
-    table.stateRestore.state("New State").delete()
+    table.stateRestore.state("New State").remove()
 });
 ]]></example>
 
-	<example title="Delete a state called 'New State', skipping the confirmation modal"><![CDATA[
+	<example title="Remove a state called 'New State', skipping the confirmation modal"><![CDATA[
 $(document).ready(function() {
     var table = $('#example').DataTable({
         dom: 'Blfrtip',
         buttons:['createState', 'savedStates']
     });
 
-    table.stateRestore.state("New State").delete(true)
+    table.stateRestore.state("New State").remove(true)
 });
 ]]></example>
 
 <related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.states().delete()</related>
+<related type="api">stateRestore.states().remove()</related>
 <related type="api">stateRestore.state().load()</related>
 <related type="api">stateRestore.state().rename()</related>
 <related type="api">stateRestore.state().save()</related>

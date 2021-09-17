@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.stateRestore.deleteConfirm', function () {
+describe('stateRestore - options - language.stateRestore.removeConfirm', function () {
 	let table;
 
 	dt.libs({
@@ -25,7 +25,7 @@ describe('stateRestore - options - language.stateRestore.deleteConfirm', functio
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
 			$('.dt-btn-split-drop-button:eq(1)').click();
 
-			expect($('.dtsr-confirmation-text').text()).toBe('Are you sure you want to delete State 1?');
+			expect($('.dtsr-confirmation-text').text()).toBe('Are you sure you want to remove State 1?');
 		});
 
 		dt.html('basic');
@@ -35,7 +35,7 @@ describe('stateRestore - options - language.stateRestore.deleteConfirm', functio
 				buttons: ['createState', 'savedStates'],
 				language: {
 					stateRestore: {
-						deleteConfirm: 'unit %s test'
+						removeConfirm: 'unit %s test'
 					}
 				}
 			});
@@ -50,12 +50,12 @@ describe('stateRestore - options - language.stateRestore.deleteConfirm', functio
 
 	describe('Tidy up', function () {
 		dt.html('basic');
-		it('Delete all state', function () {
+		it('Remove all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates']
 			});
-			table.stateRestore.states().delete(true);
+			table.stateRestore.states().remove(true);
 		});
 	});
 });

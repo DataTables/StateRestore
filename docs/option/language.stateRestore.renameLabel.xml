@@ -14,11 +14,11 @@
 
 	<description>
 		<![CDATA[
-            The string that will be displayed next to the input element within the rename modal to indicate the input should take the new name for this state. The %s token will be replaced with the name of the state that is being deleted.
+            The string that will be displayed next to the input element within the rename modal to indicate the input should take the new name for this state. The %s token will be replaced with the name of the state that is being removed.
 		]]>
 	</description>
 
-	<example title="Change text within delete confirmation modal"><![CDATA[
+	<example title="Change text within remove confirmation modal"><![CDATA[
 $(document).ready(function() {
     $('#example').DataTable( {
         language: {

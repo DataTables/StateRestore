@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>language.stateRestore.removeConfirm</name>
+	<summary>Set the confirmation message shown within the StateRestore remove modal</summary>
+	<since>0.0.1</since>
+
+	<type type="string">
+		<description>
+            The string that will be displayed within the remove modal to confirm that a user wants to remove this state.
+		</description>
+    </type>
+
+	<default value="Are you sure you want to remove %s?" />
+
+	<description>
+		<![CDATA[
+            This string is displayed within the remove modal to confirm that a user wants to remove this state. The %s token will be replaced with the name of the state that is being removed.
+		]]>
+	</description>
+
+	<example title="Change text within remove confirmation modal"><![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable( {
+        language: {
+            stateRestore: {
+                removeButton: 'Confirm you want to remove this state.'
+            }
+        },
+        buttons: [ 'createState', 'savedStates' ],
+        dom: 'Bfrtip'
+    });
+});
+]]></example>
+
+<related type="api">i18n()</related>
+
+</dt-option>

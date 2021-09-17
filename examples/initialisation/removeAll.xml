@@ -8,16 +8,16 @@
 $(document).ready(function() {
     $('#example').DataTable({
         dom: 'Blfrtip',
-        buttons:['createState', 'savedStates', 'deleteAllStates']
+        buttons:['createState', 'savedStates', 'removeAllStates']
     });
 });
 ]]>
 </js>
 
-<title lib="stateRestore">Delete All Button</title>
+<title lib="stateRestore">Remove All Button</title>
 
 <info><![CDATA[
-This example shows how the `-button deleteAllStates` button can be used with StateRestore. This button deletes all of the states that are being stored by StateRestore.
+This example shows how the `-button removeAllStates` button can be used with StateRestore. This button removes all of the states that are being stored by StateRestore.
 ]]></info>
 
 </dt-example>

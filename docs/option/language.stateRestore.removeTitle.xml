@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.deleteError</name>
-	<summary>Set the error message shown when incorrectly deleting a state</summary>
+	<name>language.stateRestore.removeTitle</name>
+	<summary>Set the title shown in the StateRestore remove modal</summary>
 	<since>0.0.1</since>
 
 	<type type="string">
 		<description>
-            The string that will be displayed within the delete modal when an error occurs.
+            The string that will be displayed as a title within the remove modal.
 		</description>
     </type>
 
-	<default value="Failed to delete state." />
+	<default value="Remove State" />
 
 	<description>
 		<![CDATA[
-            This string is displayed within the delete modal to indicate an error has occured when deleting the state.
+            This string is displayed as a title within the remove modal which confirms that a user wants to remove the given state.
 		]]>
 	</description>
 
-	<example title="Change text within delete confirmation modal"><![CDATA[
+	<example title="Change remove confirmation modal title"><![CDATA[
 $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                deleteError: 'ERROR!'
+                removeTitle: 'Remove'
             }
         },
         buttons: [ 'createState', 'savedStates' ],

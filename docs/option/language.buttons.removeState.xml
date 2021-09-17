@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.buttons.deleteAllStates</name>
-	<summary>Set the text within the StateRestore delete all button</summary>
+	<name>language.buttons.removeState</name>
+	<summary>Set the text within the StateRestore remove button</summary>
 	<since>0.0.1</since>
 
 	<type type="string">
 		<description>
-            The string that will be displayed within StateRestore's delete all button.
+            The string that will be displayed within StateRestore's remove button.
 		</description>
     </type>
 
-	<default value="Delete All States"/>
+	<default value="Remove"/>
 
 	<description>
 		<![CDATA[
-            This string is displayed in StateRestore's delete all button. The button is fully documented at `-button deleteAllStates`.
+            This string is displayed in StateRestore's remove button. The button is fully documented at `-button removeState`.
 
             The value set here is passed through the `-api i18n()` function.
 		]]>
 	</description>
 
-	<example title="Change text within delete all button"><![CDATA[
+	<example title="Change text within remove button"><![CDATA[
 $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             buttons: {
-				deleteAllStates: 'Delete All'
+				removeState: 'Remove'
             }
         },
         buttons: [ 'createState', 'savedStates' ],
@@ -35,6 +35,6 @@ $(document).ready(function() {
 ]]></example>
 
 <related type="api">i18n()</related>
-<related type="button">deleteAllStates</related>
+<related type="button">removeState</related>
 
 </dt-option>

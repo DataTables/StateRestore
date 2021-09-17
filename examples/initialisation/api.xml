@@ -19,20 +19,20 @@ $(document).ready(function() {
         table.stateRestore.state($('#state-selector').val()).load();
     })
 
-    $('#delete').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).delete();
+    $('#remove').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).remove();
     })
 
-    $('#deleteAll').on('click', function() {
-        table.stateRestore.states().delete();
+    $('#removeAll').on('click', function() {
+        table.stateRestore.states().remove();
     })
 
-    $('#deleteSkip').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).delete(true);
+    $('#removeSkip').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).remove(true);
     })
 
-    $('#deleteAllSkip').on('click', function() {
-        table.stateRestore.states().delete(true);
+    $('#removeAllSkip').on('click', function() {
+        table.stateRestore.states().remove(true);
     })
 
     $('#add').on('click', function() {
@@ -53,10 +53,10 @@ Use the input element to the right to input an identifier. The other buttons wil
 <button id="save">Save</button>
 <button id="add">Add State</button>
 <button id="load">Load</button>
-<button id="delete">Delete</button>
-<button id="deleteSkip">Delete and skip modal</button>
-<button id="deleteAll">Delete All</button>
-<button id="deleteAllSkip">Delete All skipping modal</button>
+<button id="remove">Remove</button>
+<button id="removeSkip">Remove and skip modal</button>
+<button id="removeAll">Remove All</button>
+<button id="removeAllSkip">Remove All skipping modal</button>
 ]]></info>
 
 </dt-example>

@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.buttons.deleteState', function () {
+describe('stateRestore - options - language.stateRestore.removeButton', function () {
 	let table;
 
 	dt.libs({
@@ -23,8 +23,9 @@ describe('stateRestore - options - language.buttons.deleteState', function () {
 		});
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(1)').text()).toBe('Delete');
+			expect($('.dtsr-confirmation-button').text()).toBe('Remove');
 		});
 
 		dt.html('basic');
@@ -33,27 +34,28 @@ describe('stateRestore - options - language.buttons.deleteState', function () {
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates'],
 				language: {
-					buttons: {
-						deleteState: 'unit test'
+					stateRestore: {
+						removeButton: 'unit test'
 					}
 				}
 			});
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(1)').text()).toBe('unit test');
+			expect($('.dtsr-confirmation-button').text()).toBe('unit test');
 		});
 	});
 
 	describe('Tidy up', function () {
 		dt.html('basic');
-		it('Delete all state', function () {
+		it('Remove all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates']
 			});
-			table.stateRestore.states().delete(true);
+			table.stateRestore.states().remove(true);
 		});
 	});
 });

@@ -10,8 +10,8 @@ $(document).ready(function() {
         dom: 'Blfrtip',
         language:{
             stateRestore: {
-                deleteButton: 'Remove',
-                deleteConfirm: 'Confirm you want to remove this state.',
+                removeButton: 'Remove',
+                removeConfirm: 'Confirm you want to remove this state.',
                 emptyStates: 'No States',
                 renameButton: 'Change Name',
                 renameLabel: 'Rename to:'
@@ -21,7 +21,7 @@ $(document).ready(function() {
                 savedStates: 'Stored States',
                 updateState: 'Store',
                 stateRestore: 'New State %d',
-                deleteState: 'Remove',
+                removeState: 'Remove',
                 renameState: 'Change Name',
 
             }

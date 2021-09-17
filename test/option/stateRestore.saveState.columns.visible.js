@@ -92,12 +92,12 @@ describe('stateRestore - options - stateRestore.saveState.columns.visible', func
 
 	describe('Tidy up', function () {
 		dt.html('basic');
-		it('Delete all state', function () {
+		it('Remove all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates']
 			});
-			table.stateRestore.states().delete(true);
+			table.stateRestore.states().remove(true);
 		});
 	});
 });

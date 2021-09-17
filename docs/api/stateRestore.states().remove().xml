@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.states().remove()</name>
+	<summary>Remove states from StateRestore</summary>
+	<since>0.0.1</since>
+
+	<type type="function">
+		<signature>stateRestore.states().remove()</signature>
+        <parameter type="boolean" name="skipModal" default="false">Boolean value indicating if the confirmation modal should be skipped or not. The default value is `false` meaning that the modal will be shown.</parameter>
+		<description>Removes stored states from the StateRestore extension.</description>
+		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+This method provides the ability to remove multiple states that are managed by the `-init stateRestore` extension.
+
+`-api stateRestore.states().remove()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed for each state. The default value for `skipModal` is `false` meaning that the modal will be shown. It removes the states retrieved by the previous call to `-api stateRestore.states()`.
+
+A Datatables API is returned so that further chaining can occur.
+
+If the `-init stateRestore.remove` initialisation option is set to `false` then this API method will not do anything.
+	]]>
+
+	</description>
+
+	<example title="Remove states called 'New State' and 'Old State'"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createState', 'savedStates']
+    });
+
+    table.stateRestore.states(["New State", "Old State"]).remove()
+});
+]]></example>
+
+<related type="api">stateRestore.states()</related>
+<related type="api">stateRestore.state().remove()</related>
+
+</dt-api>

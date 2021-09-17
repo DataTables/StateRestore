@@ -18,7 +18,7 @@
 		]]>
 	</description>
 
-	<example title="Change text within delete confirmation modal"><![CDATA[
+	<example title="Change text within remove confirmation modal"><![CDATA[
 $(document).ready(function() {
     $('#example').DataTable( {
         language: {

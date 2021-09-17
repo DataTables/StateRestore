@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>removeAllStates</name>
+	<summary>Removes all stateRestore instances.</summary>
+	<since>0.0.1</since>
+
+	<description>
+        This button can be displayed at the top level alongside the `-button savedStates` and `-button createState` buttons. This button removes all `-init stateRestore` instances. This completely removes the states from storage, as well as removing the buttons that represent them.
+
+        No confirmation modal is shown as default when using this button.
+        
+        This button is used within the `-init stateRestore` extension. It won't do anything if removing states is disabled using the `-init stateRestore.remove` initialisation option.
+	</description>
+
+    <option name="action" type="function">
+        The action function for the `-button removeState` button calls the `-api stateRestore.states().remove()` function to remove the state.
+    </option>
+    <option name="text" type="function">
+        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `-init language.buttons.removeAllStates` property, or you could directly change the value of this function.
+    </option>
+
+	<example title="removeAllStates button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.removeAllStates.text = function (e, dt, node, config) {
+    return "Remove Everything";
+}
+]]></example>
+</dt-button>

@@ -55,11 +55,11 @@ declare namespace DataTables {
 
 	interface StateRestoreSubApi {
 		/**
-		 * Deletes the state previously identified in the call to `state()`.
+		 * Removes the state previously identified in the call to `state()`.
 		 *
 		 * @returns Datatables Api for chaining.
 		 */
-		delete(): Api<any>;
+		remove(): Api<any>;
 
 		/**
 		 * Loads the state previously identified in the call to `state()` into the table.
@@ -85,10 +85,10 @@ declare namespace DataTables {
 
 	interface StateRestoreMultiSubApi {
 		/**
-		 * Deletes all of the states that were previously identified in the call to `states()`.
+		 * Removes all of the states that were previously identified in the call to `states()`.
 		 *
 		 * @returns Datatables Api for chaining.
 		 */
-		delete(): Api<any>;
+		remove(): Api<any>;
 	}
 }

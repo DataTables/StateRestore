@@ -27,8 +27,8 @@ $(document).ready(function() {
         dom: 'Plfrtip',
         language: {
             stateRestore: {
-                deleteButton: 'Remove',
-                deleteConfirm: 'Confirm state removal.',
+                removeButton: 'Remove',
+                removeConfirm: 'Confirm state removal.',
                 emptyStates: 'No states',
                 renameButton: 'Change Name',
                 renameLabel: 'New value:'
@@ -39,8 +39,8 @@ $(document).ready(function() {
 ]]></example>
 
 
-<related type="option">language.stateRestore.deleteButton</related>
-<related type="option">language.stateRestore.deleteConfirm</related>
+<related type="option">language.stateRestore.removeButton</related>
+<related type="option">language.stateRestore.removeConfirm</related>
 <related type="option">language.stateRestore.emptyStates</related>
 <related type="option">language.stateRestore.renameButton</related>
 <related type="option">language.stateRestore.renameLabel</related>

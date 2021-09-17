@@ -56,7 +56,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
 			expect($('.dt-button-collection .dt-button').length).toBe(1);
-			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Delete');
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Remove');
 		});
 		it('... unable to update via API', function () {
 			table.page(5).draw(false);
@@ -81,12 +81,12 @@ describe('stateRestore - options - stateRestore.save', function () {
 
 	describe('Tidy up', function () {
 		dt.html('basic');
-		it('Delete all state', function () {
+		it('Remove all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates']
 			});
-			table.stateRestore.states().delete(true);
+			table.stateRestore.states().remove(true);
 		});
 	});
 });

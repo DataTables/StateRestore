@@ -55,7 +55,7 @@ describe('stateRestore - options - stateRestore.rename', function () {
 
 			expect($('.dt-button-collection .dt-button').length).toBe(2);
 			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
-			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Delete');
+			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Remove');
 		});
 		it('... unable to rename via API', function () {
 			// TK COLIN DD-2215
@@ -67,12 +67,12 @@ describe('stateRestore - options - stateRestore.rename', function () {
 
 	describe('Tidy up', function () {
 		dt.html('basic');
-		it('Delete all state', function () {
+		it('Remove all state', function () {
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
 				buttons: ['createState', 'savedStates']
 			});
-			table.stateRestore.states().delete(true);
+			table.stateRestore.states().remove(true);
 		});
 	});
 });

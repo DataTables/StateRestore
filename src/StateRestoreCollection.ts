@@ -57,8 +57,8 @@ export interface IDom {
 	creation: JQuery<HTMLElement>;
 	creationForm: JQuery<HTMLElement>;
 	creationTitle: JQuery<HTMLElement>;
-	deleteContents: JQuery<HTMLElement>;
-	deleteTitle: JQuery<HTMLElement>;
+	removeContents: JQuery<HTMLElement>;
+	removeTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
 	emptyError: JQuery<HTMLElement>;
@@ -76,7 +76,7 @@ export interface IDefaults {
 	ajax: boolean | string;
 	create: boolean;
 	creationModal: boolean;
-	delete: boolean;
+	remove: boolean;
 	i18n: II18n;
 	preDefined?: {
 		[keys: string]: any;
@@ -105,10 +105,10 @@ export interface IColumnDefault {
 
 export interface II18n {
 	creationModal?: II18nCreationModal;
-	deleteButton: string;
-	deleteConfirm: string;
-	deleteError: string;
-	deleteTitle: string;
+	removeButton: string;
+	removeConfirm: string;
+	removeError: string;
+	removeTitle: string;
 	duplicateError: string;
 	emptyError: string;
 	emptyStates: string;
@@ -189,7 +189,7 @@ export default class StateRestoreCollection {
 		ajax: false,
 		create: true,
 		creationModal: false,
-		delete: true,
+		remove: true,
 		i18n: {
 			creationModal: {
 				button: 'Create',
@@ -208,10 +208,10 @@ export default class StateRestoreCollection {
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
 			},
-			deleteButton: 'Delete',
-			deleteConfirm: 'Are you sure you want to delete %s?',
-			deleteError: 'Failed to delete state.',
-			deleteTitle: 'Delete State',
+			removeButton: 'Remove',
+			removeConfirm: 'Are you sure you want to remove %s?',
+			removeError: 'Failed to remove state.',
+			removeTitle: 'Remove State',
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
@@ -362,15 +362,15 @@ export default class StateRestoreCollection {
 					'</h2>'+
 				'</div>'
 			),
-			deleteContents: $(
+			removeContents: $(
 				'<div class="'+this.classes.confirmationText+'"><span></span></div>'
 			),
-			deleteTitle: $(
+			removeTitle: $(
 				'<div class="'+this.classes.creationText+'">'+
 					'<h2 class="'+this.classes.creationTitle+'">'+
 						this.s.dt.i18n(
-							'stateRestore.deleteTitle',
-							this.c.i18n.deleteTitle
+							'stateRestore.removeTitle',
+							this.c.i18n.removeTitle
 						)+
 					'</h2>'+
 				'</div>'
@@ -535,7 +535,7 @@ export default class StateRestoreCollection {
 				this.s.dt.state()
 			);
 			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
-				newState.dom.confirmation.one('dtsr-delete', () => this._deleteCallback(newState.s.identifier));
+				newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
 				newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
 				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 			});
@@ -567,23 +567,23 @@ export default class StateRestoreCollection {
 	}
 
 	/**
-	 * Deletes all of the states, showing a modal to the user for confirmation
+	 * Removes all of the states, showing a modal to the user for confirmation
 	 *
-	 * @param deleteFunction The action to be taken when the action is confirmed
+	 * @param removeFunction The action to be taken when the action is confirmed
 	 */
-	public deleteAll(deleteFunction): void {
+	public removeAll(removeFunction): void {
 		let ids = this.s.states.map(state => state.s.identifier);
 
-		$(this.dom.deleteContents.children('span')).text(
+		$(this.dom.removeContents.children('span')).text(
 			this.s.dt
-				.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+				.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
 				.replace(/%s/g, ids.slice(0, -1).join(', ') + ' and ' + ids.slice(-1))
 		);
 		this._newModal(
-			this.dom.deleteTitle,
-			this.s.dt.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteButton),
-			deleteFunction,
-			this.dom.deleteContents
+			this.dom.removeTitle,
+			this.s.dt.i18n('stateRestore.removeConfirm', this.c.i18n.removeButton),
+			removeFunction,
+			this.dom.removeContents
 		);
 	}
 
@@ -667,7 +667,7 @@ export default class StateRestoreCollection {
 			this.s.states.push(newState);
 
 			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
-				newState.dom.confirmation.one('dtsr-delete', () => this._deleteCallback(newState.s.identifier));
+				newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
 				newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
 				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 			});
@@ -711,8 +711,8 @@ export default class StateRestoreCollection {
 				if (this.c.save && state.c.save) {
 					split.push('updateState');
 				}
-				if (this.c.delete && state.c.delete) {
-					split.push('deleteState');
+				if (this.c.remove && state.c.remove) {
+					split.push('removeState');
 				}
 				if (this.c.save && state.c.save && this.c.rename && state.c.rename) {
 					split.push('renameState');
@@ -1031,12 +1031,12 @@ export default class StateRestoreCollection {
 	}
 
 	/**
-	 * This callback is called when a state is deleted.
+	 * This callback is called when a state is removed.
 	 * This removes the state from storage and also strips it's button from the container
 	 *
 	 * @param identifier The value that is used to identify a state
 	 */
-	private _deleteCallback(identifier: string): boolean {
+	private _removeCallback(identifier: string): boolean {
 		for (let i = 0; i < this.s.states.length; i++) {
 			if (this.s.states[i].s.identifier === identifier) {
 				this.s.states.splice(i, 1);
@@ -1192,7 +1192,7 @@ export default class StateRestoreCollection {
 				newState.save(loadedState);
 				this.s.states.push(newState);
 				$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
-					newState.dom.confirmation.one('dtsr-delete', () => this._deleteCallback(newState.s.identifier));
+					newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
 					newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
 					newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 				});

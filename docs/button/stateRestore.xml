@@ -7,13 +7,13 @@
 	<description>
         This is used as the primary button within a split button that represents and provides functionality for a saved state. The primary function of the button loads the state it is representing into the table. This includes information such as ordering, searching and also the state of some extensions.
         
-        There are 3 secondary buttons also within the split button - `-button updateState`, `-button deleteState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
+        There are 3 secondary buttons also within the split button - `-button updateState`, `-button removeState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
 
         This button is used within the `-init stateRestore` extension.
 	</description>
 
     <option name="config" type="object" default="{}">
-        This option allows the secondary buttons to be declared within the `config.split` property. Typically these are `-button updateState`, `-button deleteState` and `-button renameState`
+        This option allows the secondary buttons to be declared within the `config.split` property. Typically these are `-button updateState`, `-button removeState` and `-button renameState`
     </option>
     <option name="action" type="function">
         The action function for the StateRestore button loads the state that it represents into the table.

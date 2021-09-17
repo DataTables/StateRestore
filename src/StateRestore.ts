@@ -33,9 +33,9 @@ export interface IDom {
 	background: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
 	confirmationTitleRow: JQuery<HTMLElement>;
-	deleteContents: JQuery<HTMLElement>;
-	deleteError: JQuery<HTMLElement>;
-	deleteTitle: JQuery<HTMLElement>;
+	removeContents: JQuery<HTMLElement>;
+	removeError: JQuery<HTMLElement>;
+	removeTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
 	emptyError: JQuery<HTMLElement>;
@@ -106,7 +106,7 @@ export default class StateRestore {
 		ajax: false,
 		create: true,
 		creationModal: false,
-		delete: true,
+		remove: true,
 		i18n: {
 			creationModal: {
 				button: 'Create',
@@ -125,10 +125,10 @@ export default class StateRestore {
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
 			},
-			deleteButton: 'Delete',
-			deleteConfirm: 'Are you sure you want to delete %s?',
-			deleteError: 'Failed to delete state.',
-			deleteTitle: 'Delete State',
+			removeButton: 'Remove',
+			removeConfirm: 'Are you sure you want to remove %s?',
+			removeError: 'Failed to remove state.',
+			removeTitle: 'Remove State',
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
@@ -199,22 +199,22 @@ export default class StateRestore {
 			background: $('<div class="'+this.classes.background+'"/>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
-			deleteContents: $(
+			removeContents: $(
 				'<div class="'+this.classes.confirmationText+'"><span>'+
 					this.s.dt
-						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+						.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
 						.replace(/%s/g, this.s.identifier) +
 				'</span></div>'
 			),
-			deleteError: $(
+			removeError: $(
 				'<span class="'+this.classes.modalError+'">' +
-					this.s.dt.i18n('stateRestore.deleteError', this.c.i18n.deleteError) +
+					this.s.dt.i18n('stateRestore.removeError', this.c.i18n.removeError) +
 				'</span>'),
-			deleteTitle: $(
+			removeTitle: $(
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
 					this.s.dt.i18n(
-						'stateRestore.deleteTitle',
-						this.c.i18n.deleteTitle
+						'stateRestore.removeTitle',
+						this.c.i18n.removeTitle
 					)+
 				'</h2>'
 			),
@@ -256,31 +256,31 @@ export default class StateRestore {
 	}
 
 	/**
-	 * Removes a state from storage and then triggers the dtsr-delete event
+	 * Removes a state from storage and then triggers the dtsr-remove event
 	 * so that the StateRestoreCollection class can remove it's references as well.
 	 *
 	 * @param skipModal Flag to indicate if the modal should be skipped or not
 	 */
-	public delete(skipModal = false): boolean {
-		// Check if deletion of states is allowed
-		if (!this.c.delete) {
+	public remove(skipModal = false): boolean {
+		// Check if removal of states is allowed
+		if (!this.c.remove) {
 			return false;
 		}
 
-		let deleteFunction;
+		let removeFunction;
 
-		// If the delete is not happening over ajax remove it from local storage and then trigger the event
+		// If the remove is not happening over ajax remove it from local storage and then trigger the event
 		if (!this.c.ajax) {
-			deleteFunction = () => {
+			removeFunction = () => {
 				try {
 					sessionStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 
-					this.dom.confirmation.trigger('dtsr-delete');
+					this.dom.confirmation.trigger('dtsr-remove');
 				}
 				catch (e) {
-					return 'delete';
+					return 'remove';
 				}
 
 				return true;
@@ -288,23 +288,23 @@ export default class StateRestore {
 		}
 		// Otherwise when it occurs just trigger the event
 		else {
-			deleteFunction = () => this.dom.confirmation.trigger('dtsr-delete');
+			removeFunction = () => this.dom.confirmation.trigger('dtsr-remove');
 		}
 
-		// If the modal is to be skipped then delete straight away
+		// If the modal is to be skipped then remove straight away
 		if (skipModal) {
 			this.dom.confirmation.appendTo(this.dom.dtContainer);
 			$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
-			deleteFunction();
+			removeFunction();
 			this.dom.confirmation.remove();
 		}
 		// Otherwise display the modal
 		else {
 			this._newModal(
-				this.dom.deleteTitle,
-				this.s.dt.i18n('stateRestore.deleteButton', this.c.i18n.deleteButton),
-				deleteFunction,
-				this.dom.deleteContents
+				this.dom.removeTitle,
+				this.s.dt.i18n('stateRestore.removeButton', this.c.i18n.removeButton),
+				removeFunction,
+				this.dom.removeContents
 			);
 		}
 
@@ -387,10 +387,10 @@ export default class StateRestore {
 
 			this.s.identifier = newIdentifier;
 
-			this.dom.deleteContents = $(
+			this.dom.removeContents = $(
 				'<div class="'+this.classes.confirmationText+'"><span>'+
 					this.s.dt
-						.i18n('stateRestore.deleteConfirm', this.c.i18n.deleteConfirm)
+						.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
 						.replace(/%s/g, this.s.identifier) +
 				'</span></div>'
 			);
