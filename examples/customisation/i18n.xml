@@ -10,7 +10,7 @@ $(document).ready(function() {
         dom: 'Blfrtip',
         language:{
             stateRestore: {
-                removeSubmit: 'Remove',
+                removeSubmit: 'Confirm',
                 removeConfirm: 'Confirm you want to remove this state.',
                 emptyStates: 'No States',
                 renameButton: 'Change Name',
