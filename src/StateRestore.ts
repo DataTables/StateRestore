@@ -329,10 +329,6 @@ export default class StateRestore {
 		let loadedState = this.s.savedState;
 		let settings = this.s.dt.settings()[0];
 
-		if (settings.aoColumns && settings.aoColumns.length !== loadedState.columns.length) {
-			return;
-		}
-
 		// Always want the states stored here to be loaded in - regardless of when they were created
 		loadedState.time = + new Date();
 
