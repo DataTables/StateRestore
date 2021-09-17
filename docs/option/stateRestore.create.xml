@@ -21,7 +21,7 @@
 
 		It is also worth noting that if `-init stateRestore.save` is set to `false`, the value set here will be overruled. This is because creation is a form of saving, and is therefore disabled when that option is.
 
-		Take a look at [this example](/extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action.
+		Take a look at [this example](/extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action. In this example the configuration takes place in the `-button savedStates` button. This is because we want to block creation via the api, without having to show the `-button createState` button.
         ]]>
 	</description>
 
