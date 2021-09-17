@@ -58,10 +58,12 @@ describe('stateRestore - options - stateRestore.rename', function () {
 			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Remove');
 		});
 		it('... unable to rename via API', function () {
-			// TK COLIN DD-2215
-			// table.stateRestore.state('State 1').rename('unit test');
+			table.stateRestore.state('State 1').rename('unit test');
 
-			// then check the rename didn't happen
+			$('.dt-button-background').click();
+			$('.dt-button:eq(1)').click();
+
+			expect($('.dt-button:eq(2)').text()).toBe('State 1');
 		});
 	});
 

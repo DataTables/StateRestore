@@ -28,9 +28,8 @@ describe('stateRestore - options - stateRestore.toggle.colReorder', function () 
 
 			$('.dt-button:eq(0)').click();
 
-			// TK DD-2231 COLIN
-			// expect($('.dtsr-check-label').length).toBe(1);
-			// expect($('.dtsr-check-label').text()).toBe('Paging');
+			expect($('.dtsr-check-label').length).toBe(1);
+			expect($('.dtsr-check-label').text()).toBe('Column Order');
 		});
 	});
 });
