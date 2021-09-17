@@ -57,14 +57,14 @@ export interface IDom {
 	creation: JQuery<HTMLElement>;
 	creationForm: JQuery<HTMLElement>;
 	creationTitle: JQuery<HTMLElement>;
-	removeContents: JQuery<HTMLElement>;
-	removeTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
 	emptyError: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
 	pagingToggle: JQuery<HTMLElement>;
+	removeContents: JQuery<HTMLElement>;
+	removeTitle: JQuery<HTMLElement>;
 	scrollerToggle: JQuery<HTMLElement>;
 	searchBuilderToggle: JQuery<HTMLElement>;
 	searchPanesToggle: JQuery<HTMLElement>;
@@ -76,11 +76,11 @@ export interface IDefaults {
 	ajax: boolean | string;
 	create: boolean;
 	creationModal: boolean;
-	remove: boolean;
 	i18n: II18n;
 	preDefined?: {
 		[keys: string]: any;
 	};
+	remove: boolean;
 	rename: boolean;
 	save: boolean;
 	saveState: ISaveState;
@@ -105,13 +105,14 @@ export interface IColumnDefault {
 
 export interface II18n {
 	creationModal?: II18nCreationModal;
-	removeButton: string;
-	removeConfirm: string;
-	removeError: string;
-	removeTitle: string;
 	duplicateError: string;
 	emptyError: string;
 	emptyStates: string;
+	removeButton: string;
+	removeConfirm: string;
+	removeError: string;
+	removeJoiner: string;
+	removeTitle: string;
 	renameButton: string;
 	renameLabel: string;
 	renameTitle: string;
@@ -189,7 +190,6 @@ export default class StateRestoreCollection {
 		ajax: false,
 		create: true,
 		creationModal: false,
-		remove: true,
 		i18n: {
 			creationModal: {
 				button: 'Create',
@@ -208,18 +208,20 @@ export default class StateRestoreCollection {
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
 			},
-			removeButton: 'Remove',
-			removeConfirm: 'Are you sure you want to remove %s?',
-			removeError: 'Failed to remove state.',
-			removeTitle: 'Remove State',
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
+			removeButton: 'Remove',
+			removeConfirm: 'Are you sure you want to remove %s?',
+			removeError: 'Failed to remove state.',
+			removeJoiner: ' and ',
+			removeTitle: 'Remove State',
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
 		},
 		preDefined: {},
+		remove: true,
 		rename: true,
 		save: true,
 		saveState: {
@@ -362,19 +364,6 @@ export default class StateRestoreCollection {
 					'</h2>'+
 				'</div>'
 			),
-			removeContents: $(
-				'<div class="'+this.classes.confirmationText+'"><span></span></div>'
-			),
-			removeTitle: $(
-				'<div class="'+this.classes.creationText+'">'+
-					'<h2 class="'+this.classes.creationTitle+'">'+
-						this.s.dt.i18n(
-							'stateRestore.removeTitle',
-							this.c.i18n.removeTitle
-						)+
-					'</h2>'+
-				'</div>'
-			),
 			dtContainer: $(this.s.dt.table().container()),
 			duplicateError: $(
 				'<span class="'+this.classes.modalError+'">' +
@@ -423,6 +412,19 @@ export default class StateRestoreCollection {
 							this.c.i18n.creationModal.paging
 						)+
 					'</label>'+
+				'</div>'
+			),
+			removeContents: $(
+				'<div class="'+this.classes.confirmationText+'"><span></span></div>'
+			),
+			removeTitle: $(
+				'<div class="'+this.classes.creationText+'">'+
+					'<h2 class="'+this.classes.creationTitle+'">'+
+						this.s.dt.i18n(
+							'stateRestore.removeTitle',
+							this.c.i18n.removeTitle
+						)+
+					'</h2>'+
 				'</div>'
 			),
 			scrollerToggle: $(
@@ -582,7 +584,9 @@ export default class StateRestoreCollection {
 		let replacementString = ids[0];
 
 		if (ids.length > 1) {
-			replacementString = ids.slice(0, -1).join(', ') + ' and ' + ids.slice(-1);
+			replacementString = ids.slice(0, -1).join(', ') +
+				this.s.dt.i18n('stateRestore.removeJoiner', this.c.i18n.removeJoiner) +
+				ids.slice(-1);
 		}
 
 		$(this.dom.removeContents.children('span')).text(
