@@ -127,7 +127,7 @@ export default class StateRestore {
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
-			removeButton: 'Remove',
+			removeSubmit: 'Remove',
 			removeConfirm: 'Are you sure you want to remove %s?',
 			removeError: 'Failed to remove state.',
 			removeJoiner: ' and ',
@@ -303,7 +303,7 @@ export default class StateRestore {
 		else {
 			this._newModal(
 				this.dom.removeTitle,
-				this.s.dt.i18n('stateRestore.removeButton', this.c.i18n.removeButton),
+				this.s.dt.i18n('stateRestore.removeSubmit', this.c.i18n.removeSubmit),
 				removeFunction,
 				this.dom.removeContents
 			);

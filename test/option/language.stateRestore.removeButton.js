@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.stateRestore.removeButton', function () {
+describe('stateRestore - options - language.stateRestore.removeSubmit', function () {
 	let table;
 
 	dt.libs({
@@ -35,7 +35,7 @@ describe('stateRestore - options - language.stateRestore.removeButton', function
 				buttons: ['createState', 'savedStates'],
 				language: {
 					stateRestore: {
-						removeButton: 'unit test'
+						removeSubmit: 'unit test'
 					}
 				}
 			});

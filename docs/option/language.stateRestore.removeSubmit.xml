@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.removeButton</name>
+	<name>language.stateRestore.removeSubmit</name>
 	<summary>Set the text within the StateRestore remove button</summary>
 	<since>0.0.1</since>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                removeButton: 'Remove'
+                removeSubmit: 'Remove'
             }
         },
         buttons: [ 'createState', 'savedStates' ],

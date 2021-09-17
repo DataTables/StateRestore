@@ -108,7 +108,7 @@ export interface II18n {
 	duplicateError: string;
 	emptyError: string;
 	emptyStates: string;
-	removeButton: string;
+	removeSubmit: string;
 	removeConfirm: string;
 	removeError: string;
 	removeJoiner: string;
@@ -211,7 +211,7 @@ export default class StateRestoreCollection {
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
-			removeButton: 'Remove',
+			removeSubmit: 'Remove',
 			removeConfirm: 'Are you sure you want to remove %s?',
 			removeError: 'Failed to remove state.',
 			removeJoiner: ' and ',
@@ -597,7 +597,7 @@ export default class StateRestoreCollection {
 
 		this._newModal(
 			this.dom.removeTitle,
-			this.s.dt.i18n('stateRestore.removeConfirm', this.c.i18n.removeButton),
+			this.s.dt.i18n('stateRestore.removeConfirm', this.c.i18n.removeSubmit),
 			removeFunction,
 			this.dom.removeContents
 		);

@@ -23,7 +23,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                removeButton: 'Confirm you want to remove this state.'
+                removeConfirm: 'Confirm you want to remove this state.'
             }
         },
         buttons: [ 'createState', 'savedStates' ],
