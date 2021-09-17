@@ -33,12 +33,12 @@ export interface IDom {
 	background: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
 	confirmationTitleRow: JQuery<HTMLElement>;
-	removeContents: JQuery<HTMLElement>;
-	removeError: JQuery<HTMLElement>;
-	removeTitle: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
 	emptyError: JQuery<HTMLElement>;
+	removeContents: JQuery<HTMLElement>;
+	removeError: JQuery<HTMLElement>;
+	removeTitle: JQuery<HTMLElement>;
 	renameContents: JQuery<HTMLElement>;
 	renameInput: JQuery<HTMLElement>;
 	renameTitle: JQuery<HTMLElement>;
@@ -106,7 +106,6 @@ export default class StateRestore {
 		ajax: false,
 		create: true,
 		creationModal: false,
-		remove: true,
 		i18n: {
 			creationModal: {
 				button: 'Create',
@@ -125,17 +124,19 @@ export default class StateRestore {
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
 			},
-			removeButton: 'Remove',
-			removeConfirm: 'Are you sure you want to remove %s?',
-			removeError: 'Failed to remove state.',
-			removeTitle: 'Remove State',
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
+			removeButton: 'Remove',
+			removeConfirm: 'Are you sure you want to remove %s?',
+			removeError: 'Failed to remove state.',
+			removeJoiner: ' and ',
+			removeTitle: 'Remove State',
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State',
 		},
+		remove: true,
 		rename: true,
 		save: true,
 		saveState: {
@@ -199,6 +200,17 @@ export default class StateRestore {
 			background: $('<div class="'+this.classes.background+'"/>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
+			dtContainer: $(this.s.dt.table().container()),
+			duplicateError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError) +
+				'</span>'
+			),
+			emptyError: $(
+				'<span class="'+this.classes.modalError+'">' +
+					this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError) +
+				'</span>'
+			),
 			removeContents: $(
 				'<div class="'+this.classes.confirmationText+'"><span>'+
 					this.s.dt
@@ -217,17 +229,6 @@ export default class StateRestore {
 						this.c.i18n.removeTitle
 					)+
 				'</h2>'
-			),
-			dtContainer: $(this.s.dt.table().container()),
-			duplicateError: $(
-				'<span class="'+this.classes.modalError+'">' +
-					this.s.dt.i18n('stateRestore.duplicateError', this.c.i18n.duplicateError) +
-				'</span>'
-			),
-			emptyError: $(
-				'<span class="'+this.classes.modalError+'">' +
-					this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError) +
-				'</span>'
 			),
 			renameContents:$(
 				'<div class="'+this.classes.confirmationText+' '+ this.classes.renameModal +'">' +

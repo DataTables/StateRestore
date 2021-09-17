@@ -1206,6 +1206,9 @@ export default class StateRestoreCollection {
 				let loadedState = JSON.parse(sessionStorage.getItem(key));
 				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
 				newState.save(loadedState);
+				if (!this.c.save) {
+					newState.s.savedState = loadedState;
+				}
 				this.s.states.push(newState);
 				$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
 					newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
