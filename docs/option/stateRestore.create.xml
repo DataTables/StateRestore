@@ -31,7 +31,7 @@ $('#example').DataTable({
     buttons:[{
         extend: 'savedStates',
         config: {
-            creation: false
+            create: false
         }
     }]
 });
