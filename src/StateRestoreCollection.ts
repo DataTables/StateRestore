@@ -674,7 +674,7 @@ export default class StateRestoreCollection {
 			let loadedState = preDefined[state];
 			let newState = new StateRestore(
 				this.s.dt,
-				$.extend(true, {}, this.c, loadedState.c),
+				$.extend(true, {}, this.c, {saveState: loadedState.c.saveState}),
 				state,
 				loadedState
 			);
@@ -1204,11 +1204,13 @@ export default class StateRestoreCollection {
 			// eslint-disable-next-line no-useless-escape
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
 				let loadedState = JSON.parse(sessionStorage.getItem(key));
-				let newState = new StateRestore(this.s.dt, this.c, loadedState.stateRestore.state);
-				newState.save(loadedState);
-				if (!this.c.save) {
-					newState.s.savedState = loadedState;
-				}
+				let newState = new StateRestore(
+					this.s.dt,
+					$.extend(true, {}, this.c, {saveState: loadedState.c.saveState}),
+					loadedState.stateRestore.state,
+					loadedState
+				);
+				newState.s.savedState = loadedState;
 				this.s.states.push(newState);
 				$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
 					newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
