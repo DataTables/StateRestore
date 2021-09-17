@@ -86,9 +86,8 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 			});
 		});
 		it('... reload state', function () {
-			// TK COLIN DD-2276
-			// $('.dt-button:eq(1)').click();
-			// $('.dt-btn-split-wrapper .dt-button:eq(0)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
 
 			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Airi Satou');
 		});
