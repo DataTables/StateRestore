@@ -10,14 +10,9 @@
         There are 3 secondary buttons also within the split button - `-button updateState`, `-button removeState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
 
         This button is used within the `-init stateRestore` extension.
-	</description>
 
-    <option name="config" type="object" default="{}">
-        This option allows the secondary buttons to be declared within the `config.split` property. Typically these are `-button updateState`, `-button removeState` and `-button renameState`
-    </option>
-    <option name="action" type="function">
-        The action function for the StateRestore button loads the state that it represents into the table.
-    </option>
+        This button does not have any extra configuration options that are not available by default. The default text used in the button can be set by using the `-init language.buttons.stateRestore` option.
+	</description>
 
 	<example title="stateRestore button modify action"><![CDATA[
 $.fn.dataTable.ext.buttons.stateRestore.action = function (e, dt, node, config) {

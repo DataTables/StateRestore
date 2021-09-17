@@ -10,14 +10,9 @@
         No confirmation modal is shown as default when using this button.
         
         This button is used within the `-init stateRestore` extension. It won't do anything if removing states is disabled using the `-init stateRestore.remove` initialisation option.
-	</description>
 
-    <option name="action" type="function">
-        The action function for the `-button removeState` button calls the `-api stateRestore.states().remove()` function to remove the state.
-    </option>
-    <option name="text" type="function">
-        This function runs the `-api i18n()` function to decide the text value of the rename button. The value of this button can be set using the `-init i18n` initialisation options `-init language.buttons.removeAllStates` property, or you could directly change the value of this function.
-    </option>
+        This button does not have any extra configuration options that are not available by default. The text in the button can be set by using the `-init language.buttons.removeAllStates` option.
+	</description>
 
 	<example title="removeAllStates button modify text"><![CDATA[
 $.fn.dataTable.ext.buttons.removeAllStates.text = function (e, dt, node, config) {
