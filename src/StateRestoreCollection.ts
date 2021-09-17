@@ -572,13 +572,25 @@ export default class StateRestoreCollection {
 	 * @param removeFunction The action to be taken when the action is confirmed
 	 */
 	public removeAll(removeFunction): void {
+		// There are no states to remove so just return
+		if (this.s.states.length === 0) {
+			return;
+		}
+
 		let ids = this.s.states.map(state => state.s.identifier);
+
+		let replacementString = ids[0];
+
+		if (ids.length > 1) {
+			replacementString = ids.slice(0, -1).join(', ') + ' and ' + ids.slice(-1);
+		}
 
 		$(this.dom.removeContents.children('span')).text(
 			this.s.dt
 				.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
-				.replace(/%s/g, ids.slice(0, -1).join(', ') + ' and ' + ids.slice(-1))
+				.replace(/%s/g, replacementString)
 		);
+
 		this._newModal(
 			this.dom.removeTitle,
 			this.s.dt.i18n('stateRestore.removeConfirm', this.c.i18n.removeButton),
