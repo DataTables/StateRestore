@@ -30,6 +30,8 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
+
+			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 			expect($('.dt-button-collection .dt-button').length).toBe(2);
 		});
 		it('... clear buttons and draw', function (done) {
@@ -74,6 +76,8 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
+
+			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 			expect($('.dt-button-collection .dt-button').length).toBe(4);
 		});
 		it('... clear buttons and draw', function (done) {

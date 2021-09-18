@@ -30,14 +30,14 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 
 			table.scroller.toPosition(30);
 
-			setTimeout(() => {
+			dt.sleep(200).then(() => {
 				$('.dt-button:eq(0)').click();
 				$('.dt-button:eq(1)').click();
 	
+				expect($('.dataTables_info').text()).toBe('Showing 31 to 36 of 57 entries');
 				expect($('.dt-button-collection .dt-button').length).toBe(2);
 				done();
-			}, 50);
-
+			});
 		});
 		it('... clear buttons and draw', function (done) {
 			$('.dt-button:eq(1)').click();
@@ -60,7 +60,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 		});
 
 		dt.html('basic');
-		it('False - Create state', function () {
+		it('False - Create state', function (done) {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -82,10 +82,14 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 
 			table.scroller.toPosition(30);
 
-			$('.dt-button:eq(0)').click();
-			$('.dt-button:eq(1)').click();
-
-			expect($('.dt-button-collection .dt-button').length).toBe(4);
+			dt.sleep(200).then(() => {
+				$('.dt-button:eq(0)').click();
+				$('.dt-button:eq(1)').click();
+	
+				expect($('.dataTables_info').text()).toBe('Showing 31 to 36 of 57 entries');
+				expect($('.dt-button-collection .dt-button').length).toBe(4);
+				done();
+			});
 		});
 		it('... clear buttons and draw', function (done) {
 			$('.dt-button:eq(1)').click();
