@@ -31,6 +31,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
+			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
 			expect($('.dt-button-collection .dt-button').length).toBe(3);
 		});
 
@@ -55,26 +56,28 @@ describe('stateRestore - options - stateRestore.save', function () {
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
+			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Airi Satou');
 			expect($('.dt-button-collection .dt-button').length).toBe(1);
 			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Remove');
 		});
 		it('... unable to update via API', function () {
 			table.page(5).draw(false);
 			table.stateRestore.state('State 1').save();
+			
+			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Tiger Nixon');
+		});
+		it('... and confirm', function () {
 			table.draw();
-
-			// TK DD-2278 COLIN - unable to reload to confirm update didn't happen
-			// table.stateRestore.state('State 1').load();
-			// expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Airi Satou');
+			table.stateRestore.state('State 1').load();
+			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
 		});
 		it('... and unable to rename new with API', function () {
-			// TK COLIN DD-2279
-			// table.stateRestore.state('State 1').rename('unit test');
-			// then check the rename didn't happen
+			table.stateRestore.state('State 1').rename('unit test');
+			$('.dt-button:eq(1)').click();
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('State 1');
 		});
 		it('... and unable to create new states with API', function () {
 			table.stateRestore.state.add('unit test');
-			$('.dt-button:eq(1)').click();
 			expect($('.dt-btn-split-wrapper .dt-btn-split-drop').length).toBe(1);
 		});
 	});
