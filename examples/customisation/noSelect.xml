@@ -7,7 +7,16 @@
 <![CDATA[
 $(document).ready(function() {
     $('#example').DataTable({
-        dom: 'BPlfrtip',
+        "ajax": "../data/objects.txt",
+		"rowId": 'id',
+		"columns": [
+			{ "data": "name" },
+			{ "data": "position" },
+			{ "data": "office" },
+			{ "data": "salary" }
+		],
+        dom: 'Blfrtip',
+        select: true,
         buttons:[
             'createState',
             {
@@ -29,5 +38,26 @@ $(document).ready(function() {
 <info><![CDATA[
 This example shows how to use the `-init stateRestore.select` initialisation option to disable the saving of the table's current `-init select` search criteria by setting the value of the initialisation option to `false`. The default value is `true` meaning that the selections will be saved.
 ]]></info>
+
+<custom-table>
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Salary</th>
+        </tr>
+    </tfoot>
+</table>
+</custom-table>
 
 </dt-example>
