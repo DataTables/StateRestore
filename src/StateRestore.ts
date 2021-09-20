@@ -48,7 +48,6 @@ export interface IState {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	ColReorder: any;
 	c: restoreType.IDefaults;
-	childRows: number[];
 	columns: IColumn[];
 	length: number;
 	order: Array<Array<string|number>>;
@@ -127,10 +126,10 @@ export default class StateRestore {
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
-			removeSubmit: 'Remove',
 			removeConfirm: 'Are you sure you want to remove %s?',
 			removeError: 'Failed to remove state.',
 			removeJoiner: ' and ',
+			removeSubmit: 'Remove',
 			removeTitle: 'Remove State',
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',

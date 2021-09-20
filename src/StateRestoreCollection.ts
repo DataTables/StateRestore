@@ -108,10 +108,10 @@ export interface II18n {
 	duplicateError: string;
 	emptyError: string;
 	emptyStates: string;
-	removeSubmit: string;
 	removeConfirm: string;
 	removeError: string;
 	removeJoiner: string;
+	removeSubmit: string;
 	removeTitle: string;
 	renameButton: string;
 	renameLabel: string;
@@ -211,10 +211,10 @@ export default class StateRestoreCollection {
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
-			removeSubmit: 'Remove',
 			removeConfirm: 'Are you sure you want to remove %s?',
 			removeError: 'Failed to remove state.',
 			removeJoiner: ' and ',
+			removeSubmit: 'Remove',
 			removeTitle: 'Remove State',
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',

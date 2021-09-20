@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="ajax-details" order="6">
+
+<css lib="datatables staterestore buttons"><![CDATA[
+td.details-control {
+	background: url('../resources/details_open.png') no-repeat center center;
+	cursor: pointer;
+}
+tr.shown td.details-control {
+	background: url('../resources/details_close.png') no-repeat center center;
+}
+]]></css>
+<js lib="jquery datatables staterestore buttons" />
+
+<title>Child Rows</title>
+<js><![CDATA[
+
+/* Formatting function for row details - modify as you need */
+function format ( d ) {
+	// `d` is the original data object for the row
+	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+		'<tr>'+
+			'<td>Full name:</td>'+
+			'<td>'+d.name+'</td>'+
+		'</tr>'+
+		'<tr>'+
+			'<td>Extension number:</td>'+
+			'<td>'+d.extn+'</td>'+
+		'</tr>'+
+		'<tr>'+
+			'<td>Extra info:</td>'+
+			'<td>And any further details here (images etc)...</td>'+
+		'</tr>'+
+	'</table>';
+}
+
+$(document).ready(function() {
+	// Add event listener for opening and closing details
+	$('#example').on('click', 'tbody td.dt-control', function () {
+		var tr = $(this).closest('tr');
+		var row = table.row( tr );
+
+		if ( row.child.isShown() ) {
+			// This row is already open - close it
+			row.child.hide();
+		}
+		else {
+			// Open this row
+			row.child( format(row.data()) ).show();
+		}
+	} );
+
+	$('#example').on('requestChild.dt', function(e, row) {
+		row.child(format(row.data())).show();
+	})
+
+	var table = $('#example').DataTable( {
+		"ajax": "../data/objects.txt",
+		"rowId": 'id',
+		"columns": [
+			{
+				"className":      'dt-control',
+				"orderable":      false,
+				"data":           null,
+				"defaultContent": ''
+			},
+			{ "data": "name" },
+			{ "data": "position" },
+			{ "data": "office" },
+			{ "data": "salary" }
+		],
+		"order": [[1, 'asc']],
+        dom: 'Blfrtip',
+        buttons:['createState', 'savedStates']
+	} );
+
+    table.on('stateLoaded', (e, settings, data) => {
+        for(var i = 0; i < data.childRows.length; i++) {
+            var row = table.row(data.childRows[i]);
+            row.child(format(row.data())).show();
+        }
+    })
+} );
+
+]]></js>
+
+<info><![CDATA[
+
+This example shows how it is possible to integrate child rows with staterestore by adding a listener for the `-event stateLoaded`.
+
+The DataTables API has a number of methods for attaching child rows to a *parent* row in the DataTable. This can be used to show additional information about a row, useful for cases where you wish to convey more information about a row than there is space for in the host table.
+
+Here the `-api row().child()` api method is used to display each row stored in the state when the `-event stateLoaded` event is triggered.
+]]></info>
+
+</dt-example>
