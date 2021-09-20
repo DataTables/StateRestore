@@ -8,7 +8,7 @@
 		<signature>stateRestore.state()</signature>
         <parameter type="string[]" name="identifier">An array of strings that are used to identify the desired states.</parameter>
 		<description>Retrieves stored states from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables API containing the desired states so that chaining can occur.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API containing the desired states so that chaining can occur.</returns>
 	</type>
 
 	<description>
@@ -29,7 +29,7 @@ $(document).ready(function() {
         buttons:['createState', 'savedStates']
     });
 
-    table.stateRestore.states(["New State", "old State"])
+    table.stateRestore.states(["New State", "Old State"])
 });
 ]]></example>
 

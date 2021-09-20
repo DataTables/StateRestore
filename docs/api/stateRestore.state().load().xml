@@ -7,7 +7,7 @@
 	<type type="function">
 		<signature>stateRestore.state().load()</signature>
 		<description>Loads a stored state from the StateRestore extension into the table.</description>
-		<returns type="DataTablesApi">Returns an DataTables API for chaining.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
 	</type>
 
 	<description>

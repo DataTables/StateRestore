@@ -8,7 +8,7 @@
 		<signature>stateRestore.state().rename()</signature>
         <parameter type="boolean" name="newIdentifier">The new name to be given to the state.</parameter>
 		<description>Renames a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables API for chaining.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
 	</type>
 
 	<description>

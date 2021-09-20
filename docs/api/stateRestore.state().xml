@@ -8,7 +8,7 @@
 		<signature>stateRestore.state()</signature>
         <parameter type="string" name="identifier">The string that is used to identify this state.</parameter>
 		<description>Retrieves a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables API containing the desired state so that chaining can occur.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API containing the desired state so that chaining can occur.</returns>
 	</type>
 
 	<description>

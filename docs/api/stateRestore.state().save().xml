@@ -7,7 +7,7 @@
 	<type type="function">
 		<signature>stateRestore.state().save()</signature>
 		<description>Saves the current state into a stored state in the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns an DataTables API for chaining.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
 	</type>
 
 	<description>
