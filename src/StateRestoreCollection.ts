@@ -597,7 +597,7 @@ export default class StateRestoreCollection {
 
 		this._newModal(
 			this.dom.removeTitle,
-			this.s.dt.i18n('stateRestore.removeConfirm', this.c.i18n.removeSubmit),
+			this.s.dt.i18n('stateRestore.removeSubmit', this.c.i18n.removeSubmit),
 			removeFunction,
 			this.dom.removeContents
 		);

@@ -14,7 +14,9 @@
 
 	<description>
 		<![CDATA[
-            This string is displayed within the remove modal to confirm that a user wants to remove this state. The %s token will be replaced with the name of the state that is being removed.
+            This string is displayed within the remove modal to confirm that a user wants to remove this state. The %s token will be replaced with the name of the state, or states that are being removed.
+
+            When multiple states are being deleted, the states will be listed separated by a comma (`,`), except for the last two states that will be separated by the value of `-init language.stateRestore.removeJoiner`.
 		]]>
 	</description>
 
@@ -23,7 +25,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         language: {
             stateRestore: {
-                removeConfirm: 'Confirm you want to remove this state.'
+                removeConfirm: 'Confirm you want to remove %s.'
             }
         },
         buttons: [ 'createState', 'savedStates' ],

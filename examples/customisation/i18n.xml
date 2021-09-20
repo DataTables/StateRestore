@@ -11,7 +11,7 @@ $(document).ready(function() {
         language:{
             stateRestore: {
                 removeSubmit: 'Confirm',
-                removeConfirm: 'Confirm you want to remove this state.',
+                removeConfirm: 'Confirm you want to remove %s.',
                 emptyStates: 'No States',
                 renameButton: 'Change Name',
                 renameLabel: 'Rename to:'
