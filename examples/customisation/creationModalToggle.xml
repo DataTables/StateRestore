@@ -15,6 +15,8 @@ $(document).ready(function() {
         scrollY:        200,
         scrollCollapse: true,
         scroller:       true,
+        select:         true,
+        rowId:          0,
         buttons:[
             {
                 extend: 'createState',
@@ -27,7 +29,8 @@ $(document).ready(function() {
                         scroller: true,
                         search: true,
                         searchBuilder: true,
-                        searchPanes: true
+                        searchPanes: true,
+                        select: true
                     }
                 }
             },
@@ -49,6 +52,7 @@ This example includes all of the extensions that have a state saving element bui
 * SearchBuilder
 * Scroller
 * ColReorder
+* Select
 ]]></info>
 
 <custom-table>

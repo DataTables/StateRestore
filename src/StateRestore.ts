@@ -56,6 +56,7 @@ export interface IState {
 	search: ISearch;
 	searchBuilder: any;
 	searchPanes: any;
+	select: any;
 	start: number;
 	stateRestore: IStateRestore;
 	time: number;
@@ -120,6 +121,7 @@ export default class StateRestore {
 				search: 'Search:',
 				searchBuilder: 'SearchBuilder:',
 				searchPanes: 'SearchPanes:',
+				select: 'Select:',
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
 			},
@@ -150,6 +152,7 @@ export default class StateRestore {
 			search: true,
 			searchBuilder: true,
 			searchPanes: true,
+			select: true
 		},
 		toggle: {
 			colReorder: false,
@@ -163,6 +166,7 @@ export default class StateRestore {
 			search: false,
 			searchBuilder: false,
 			searchPanes: false,
+			select: false
 		}
 	};
 
@@ -490,6 +494,11 @@ export default class StateRestore {
 		// SearchPanes
 		if (!this.c.saveState.searchPanes) {
 			this.s.savedState.searchPanes = undefined;
+		}
+
+		// Select
+		if (!this.c.saveState.select) {
+			this.s.savedState.select = undefined;
 		}
 
 		// ColReorder

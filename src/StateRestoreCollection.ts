@@ -43,6 +43,7 @@ export interface IClasses {
 	searchBuilderToggle: string;
 	searchPanesToggle: string;
 	searchToggle: string;
+	selectToggle: string;
 	toggleLabel: string;
 }
 
@@ -69,6 +70,7 @@ export interface IDom {
 	searchBuilderToggle: JQuery<HTMLElement>;
 	searchPanesToggle: JQuery<HTMLElement>;
 	searchToggle: JQuery<HTMLElement>;
+	selectToggle: JQuery<HTMLElement>;
 	toggleLabel: JQuery<HTMLElement>;
 }
 
@@ -96,6 +98,7 @@ export interface ISaveState {
 	search: boolean;
 	searchBuilder: boolean;
 	searchPanes: boolean;
+	select: boolean;
 }
 
 export interface IColumnDefault {
@@ -132,6 +135,7 @@ export interface II18nCreationModal {
 	search: string;
 	searchBuilder: string;
 	searchPanes: string;
+	select: string;
 	title: string;
 	toggleLabel: string;
 }
@@ -142,6 +146,7 @@ export interface IS {
 	hasScroller: boolean;
 	hasSearchBuilder: boolean;
 	hasSearchPanes: boolean;
+	hasSelect: boolean;
 	states: StateRestore[];
 }
 
@@ -183,6 +188,7 @@ export default class StateRestoreCollection {
 		searchBuilderToggle: 'dtsr-searchBuilder-toggle',
 		searchPanesToggle: 'dtsr-searchPanes-toggle',
 		searchToggle: 'dtsr-search-toggle',
+		selectToggle: 'dtsr-select-toggle',
 		toggleLabel: 'dtsr-toggle-title'
 	};
 
@@ -205,6 +211,7 @@ export default class StateRestoreCollection {
 				search: 'Search',
 				searchBuilder: 'SearchBuilder',
 				searchPanes: 'SearchPanes',
+				select: 'Select',
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
 			},
@@ -236,6 +243,7 @@ export default class StateRestoreCollection {
 			search: true,
 			searchBuilder: true,
 			searchPanes: true,
+			select: true
 		},
 		toggle: {
 			colReorder: false,
@@ -249,6 +257,7 @@ export default class StateRestoreCollection {
 			search: false,
 			searchBuilder: false,
 			searchPanes: false,
+			select: false
 		}
 	};
 
@@ -285,6 +294,7 @@ export default class StateRestoreCollection {
 			hasScroller: (dataTable as any).Scroller !== undefined,
 			hasSearchBuilder: (dataTable as any).SearchBuilder !== undefined,
 			hasSearchPanes: (dataTable as any).SearchPanes !== undefined,
+			hasSelect: (dataTable as any).select !== undefined,
 			states: []
 		};
 
@@ -479,6 +489,20 @@ export default class StateRestoreCollection {
 						this.s.dt.i18n(
 							'stateRestore.creationModal.search',
 							this.c.i18n.creationModal.search
+						)+
+					'</label>'+
+				'</div>'
+			),
+			selectToggle: $(
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<input type="checkbox" class="'+
+						this.classes.selectToggle+' ' +
+						this.classes.checkBox +
+					'" checked>' +
+					'<label class="'+this.classes.checkLabel+'">'+
+						this.s.dt.i18n(
+							'stateRestore.creationModal.select',
+							this.c.i18n.creationModal.select
 						)+
 					'</label>'+
 				'</div>'
@@ -865,6 +889,18 @@ export default class StateRestoreCollection {
 			togglesToInsert.push(this.dom.searchPanesToggle);
 		}
 
+		// Select toggle - check toggle and saving enabled
+		if (
+			this.s.hasSelect &&
+			(
+				(!toggleDefined || options.toggle.select === undefined) && this.c.toggle.select ||
+				toggleDefined && options.toggle.select
+			) &&
+			this.c.saveState.select
+		) {
+			togglesToInsert.push(this.dom.selectToggle);
+		}
+
 		// Columns toggle - check toggle and saving enabled
 		if (
 			typeof this.c.toggle.columns === 'boolean' &&
@@ -1009,6 +1045,7 @@ export default class StateRestoreCollection {
 				search: this.dom.searchToggle.children('input').is(':checked'),
 				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
 				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
+				select: this.dom.selectToggle.children('input').is(':checked')
 			};
 
 			// Call the buttons functionality passing in the identifier and what should be saved

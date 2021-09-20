@@ -26,6 +26,7 @@
             search: true,
             searchBuilder: true,
             searchPanes: true,
+            select: true
         }
         ```
 	</default>
@@ -91,6 +92,13 @@ This option allows for the saving of the `-init searchPanes` state to be enabled
 As default the value is `true`, meaning that the `-init searchPanes` state will be saved. If this option is set to `false`, then the `-init searchPanes` state saving will be disabled.
 
 Take a look at [this example](/extensions/StateRestore/examples/customisation/noSearchPanes.html) to see this in action.
+
+### select
+This option allows for the saving of the `-init select` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init select` extensions are in use.
+
+As default the value is `true`, meaning that the `-init select` state will be saved. If this option is set to `false`, then the `-init select` state saving will be disabled.
+
+Take a look at [this example](/extensions/StateRestore/examples/customisation/noSelect.html) to see this in action.
 
         ]]>
 	</description>

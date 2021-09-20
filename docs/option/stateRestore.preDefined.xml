@@ -45,6 +45,12 @@ The corresponding value of the predefined state is structured as follows.
             * `-type string` `filter` - The sort value for this row.
             * `-type number` `total` - The total number of rows with this value that are within the DataTable.
             * `-type string` `type` - The value used to determine the type for this row.
+* `-type object` `select` - This object contains 3 properties which are required to make the selections which were present before.
+    * `-type array` `rows` - This array contains all of the row ids corresponding to the rows that are to be selected. It is the same value as is returned from `-api rows().ids()`.
+    * `-type array` `columns` - This array contains the column indexes of the columns that are to be selected.
+    * `-type array` `cells` - This array contains objects each with two properties. These properties indicate which cell should be selected.
+        * `-type string` `row` - The row id of the cell that is to be selected.
+        * `-type number` `column` - The column index of the cell that is to be selected.
         </description>
 	</type>
 
