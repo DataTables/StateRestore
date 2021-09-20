@@ -500,6 +500,9 @@ export default class StateRestore {
 		// Scroller
 		if (!this.c.saveState.scroller) {
 			this.s.savedState.scroller = undefined;
+			if((dataTable as any).Scroller !== undefined) {
+				this.s.savedState.start = 0;
+			}
 		}
 
 		// Paging
