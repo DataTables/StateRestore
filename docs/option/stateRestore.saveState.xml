@@ -15,18 +15,18 @@
 
         ```
         {
-			colReorder: true,
-			columns: {
-				search: true,
-				visible: true
-			},
-			order: true,
-			paging: true,
-			scroller: true,
-			search: true,
-			searchBuilder: true,
-			searchPanes: true,
-		}
+            colReorder: true,
+            columns: {
+                search: true,
+                visible: true
+            },
+            order: true,
+            paging: true,
+            scroller: true,
+            search: true,
+            searchBuilder: true,
+            searchPanes: true,
+        }
         ```
 	</default>
 	<description>
