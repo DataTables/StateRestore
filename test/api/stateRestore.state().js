@@ -1,4 +1,4 @@
-describe('stateRestore - api - stateRestore.state().load()', function () {
+describe('stateRestore - api - stateRestore.state()', function () {
 	let table;
 
 	dt.libs({
@@ -10,18 +10,23 @@ describe('stateRestore - api - stateRestore.state().load()', function () {
 		dt.html('basic');
 		it('Exists and is a function', function () {
 			$.fx.off = true; // disables lightbox animation
-
 			table = $('#example').DataTable();
-			expect(typeof table.stateRestore.state().load).toBe('function');
+			expect(typeof table.stateRestore.state).toBe('function');
 		});
-		it('Returns an API instance', function() {
+		it('Returns an API instance', function () {
 			table.stateRestore.state.add('unit test');
-			expect(table.stateRestore.state('unit test').load() instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.stateRestore.state('unit test') instanceof $.fn.dataTable.Api).toBe(true);
 		});
 	});
 
 	describe('Functional tests', function () {
-		// test performed in state().add() and state().save() so no need to duplicate here
+		dt.html('basic');
+		it('Create states', function () {
+			$.fx.off = true; // disables lightbox animation
+			table = $('#example').DataTable();
+			
+			expect(table.stateRestore.state('unit test')[0].s.identifier).toBe('unit test');
+		});
 	});
 
 	describe('Tidy up', function () {

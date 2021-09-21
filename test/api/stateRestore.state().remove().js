@@ -21,6 +21,10 @@ describe('stateRestore - api - stateRestore.state().remove()', function () {
 		it('Modal shown by deafult', function () {
 			expect($('.dtsr-confirmation').length).toBe(1);
 		});
+		it('Close modal', function () {
+			$('.dtsr-background').click();
+			expect($('.dtsr-confirmation').length).toBe(0);
+		});
 		it('True skips modal', function () {
 			table.stateRestore.state('unit test').remove(true);
 			expect($('.dtsr-confirmation').length).toBe(0);
