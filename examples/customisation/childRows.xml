@@ -86,7 +86,7 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-This example shows how it is possible to integrate child rows with staterestore by adding a listener for the `-event stateLoaded`.
+This example shows how it is possible to integrate child rows with StateRestore by adding a listener for the `-event stateLoaded`.
 
 The DataTables API has a number of methods for attaching child rows to a *parent* row in the DataTable. This can be used to show additional information about a row, useful for cases where you wish to convey more information about a row than there is space for in the host table.
 

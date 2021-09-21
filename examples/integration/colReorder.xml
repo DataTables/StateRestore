@@ -18,7 +18,7 @@ $(document).ready(function() {
 <title lib="stateRestore">ColReorder Integration</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore` extension behaves alongsie the `-init colReorder` extension. The column order set through ColReorder is able to be stored and restored when using StateRestore.
+This example shows how the `-init stateRestore` extension behaves alongside the `-init colReorder` extension. The column order set through ColReorder is able to be stored and restored when using StateRestore.
 ]]></info>
 
 </dt-example>

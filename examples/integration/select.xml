@@ -18,7 +18,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Select Integration</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore` extension behaves alongsie the `-init select` extension. The selections made in Select are able to be stored and restored when using StateRestore.
+This example shows how the `-init stateRestore` extension behaves alongside the `-init select` extension. The selections made in Select are able to be stored and restored when using StateRestore.
 ]]></info>
 
 </dt-example>
