@@ -46,28 +46,26 @@ describe('stateRestore - api - stateRestore.states().remove()', function () {
 			table.stateRestore.states(['unit test3']).remove(true);
 			states = table.stateRestore.states();
 
-			// TK DD-2298 COLIN
-			// expect(states.length).toBe(4);
-			// expect(states[0].s.identifier).toBe('unit test1');
-			// expect(states[1].s.identifier).toBe('unit test2');
-			// expect(states[2].s.identifier).toBe('unit test4');
-			// expect(states[2].s.identifier).toBe('unit test5');
+			expect(states.length).toBe(4);
+			expect(states[0].s.identifier).toBe('unit test1');
+			expect(states[1].s.identifier).toBe('unit test2');
+			expect(states[2].s.identifier).toBe('unit test4');
+			expect(states[3].s.identifier).toBe('unit test5');
 		});
-		// TK DD-2298 COLIN
-		// it('Two states specified', function () {
-		// 	table.stateRestore.states(['unit test1', 'unit test5']).remove(true);
-		// 	states = table.stateRestore.states();
+		it('Two states specified', function () {
+			table.stateRestore.states(['unit test1', 'unit test5']).remove(true);
+			states = table.stateRestore.states();
 
-		// 	expect(states.length).toBe(2);
-		// 	expect(states[1].s.identifier).toBe('unit test2');
-		// 	expect(states[2].s.identifier).toBe('unit test4');
-		// });
-		// it('No states specified', function () {
-		// 	table.stateRestore.states().remove(true);
-		// 	states = table.stateRestore.states();
+			expect(states.length).toBe(2);
+			expect(states[0].s.identifier).toBe('unit test2');
+			expect(states[1].s.identifier).toBe('unit test4');
+		});
+		it('No states specified', function () {
+			table.stateRestore.states().remove(true);
+			states = table.stateRestore.states();
 
-		// 	expect(states.length).toBe(0);
-		// });
+			expect(states.length).toBe(0);
+		});
 	});
 
 	describe('Tidy up', function () {
