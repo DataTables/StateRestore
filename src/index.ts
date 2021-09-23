@@ -110,7 +110,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 	});
 
-	apiRegister('stateRestore.states()', function() {
+	apiRegister('stateRestore.states()', function(ids) {
 		let ctx = this.context[0];
 		if (!ctx._stateRestore) {
 			let api = $.fn.DataTable.Api(ctx);
@@ -118,7 +118,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			_stateRegen(api, src);
 		}
 		this.length = 0;
-		this.push(...ctx._stateRestore.getStates());
+		this.push(...ctx._stateRestore.getStates(ids));
 		return this;
 	});
 
@@ -165,11 +165,13 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		let removeAllCallBack = (skipModalIn) => {
 			let success = true;
 			this.each(function(set) {
-				// Check if removal of states is allowed
-				if(set.c.remove) {
-					let tempSuccess = set.remove(skipModalIn);
-					if(tempSuccess !== true) {
-						success = tempSuccess;
+				if(set !== undefined) {
+					// Check if removal of states is allowed
+					if(set.c.remove) {
+						let tempSuccess = set.remove(skipModalIn);
+						if(tempSuccess !== true) {
+							success = tempSuccess;
+						}
 					}
 				}
 			});

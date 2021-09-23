@@ -38,17 +38,15 @@ describe('stateRestore - api - stateRestore.states()', function () {
 		it('One specified', function () {
 			states = table.stateRestore.states(['unit test1']);
 
-			// TK DD-2298 COLIN
-			// expect(states.length).toBe(1);
-			// expect(states[0].s.identifier).toBe('unit test1');
+			expect(states.length).toBe(1);
+			expect(states[0].s.identifier).toBe('unit test1');
 		});
 		it('Two specified', function () {
 			states = table.stateRestore.states(['unit test1', 'unit test']);
 
-			// TK DD-2298 COLIN
-			// 	expect(states.length).toBe(2);
-			// expect(states[0].s.identifier).toBe('unit test1');
-			// expect(states[1].s.identifier).toBe('unit test');
+			expect(states.length).toBe(2);
+			expect(states[0].s.identifier).toBe('unit test1');
+			expect(states[1].s.identifier).toBe('unit test');
 		});
 	});
 

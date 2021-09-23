@@ -667,8 +667,29 @@ export default class StateRestoreCollection {
 	 *
 	 * @returns Any states that have been identified
 	 */
-	public getStates(): StateRestore[] {
-		return this.s.states;
+	public getStates(ids: string[]): StateRestore[] {
+		if (ids === undefined) {
+			return this.s.states;
+		}
+		else {
+			let states = [];
+
+			for(let id of ids) {
+				let found = false;
+				for(let state of this.s.states) {
+					if(id === state.s.identifier) {
+						states.push(state);
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					states.push(undefined);
+				}
+			}
+
+			return states;
+		}
 	}
 
 	/**
