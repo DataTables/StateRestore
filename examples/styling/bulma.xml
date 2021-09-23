@@ -29,7 +29,7 @@ $(document).ready(function() {
     });
 
     table.buttons().container()
-        .appendTo( $('div.column.is-one-half', table.table().container()).eq(0) );
+        .appendTo( $('div.column.is-half', table.table().container()).eq(0) );
 });
 ]]>
 </js>
