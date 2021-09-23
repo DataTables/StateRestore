@@ -719,7 +719,14 @@ export default class StateRestoreCollection {
 			let loadedState = preDefined[state];
 			let newState = new StateRestore(
 				this.s.dt,
-				$.extend(true, {}, this.c, {saveState: loadedState.c.saveState}),
+				$.extend(
+					true,
+					{},
+					this.c,
+					loadedState.c !== undefined ?
+						{saveState: loadedState.c.saveState} :
+						undefined
+				),
 				state,
 				loadedState
 			);
