@@ -103,6 +103,7 @@ export default class StateRestore {
 	};
 
 	private static defaults: restoreType.IDefaults = {
+		_createInSaved: false,
 		ajax: false,
 		create: true,
 		creationModal: false,

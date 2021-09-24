@@ -226,8 +226,27 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 	};
 
+	$.fn.dataTable.ext.buttons.savedStatesCreate = {
+		buttons: [],
+		extend: 'collection',
+		init(dt, node, config) {
+			if(dt.settings()[0]._stateRestore === undefined) {
+				if(config.config === undefined) {
+					config.config = {};
+				}
+				config.config._createInSaved = true;
+				_buttonInit(dt, config);
+			}
+		},
+		name: 'SaveStateRestore',
+		text(dt) {
+			return dt.i18n('buttons.savedStates', 'Saved States');
+		}
+	};
+
 	$.fn.dataTable.ext.buttons.createState = {
 		action(e, dt, node, config) {
+			e.stopPropagation();
 			let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 			let language = dt.settings()[0].oLanguage;
 
@@ -306,6 +325,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			});
 
 			let stateButtons = [];
+
+			if (stateRestoreOpts._createInSaved) {
+				stateButtons.push('createState');
+				stateButtons.push('');
+			}
 
 			for (let state of states) {
 				let split = [];
@@ -407,6 +431,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		let states = dt.stateRestore.states();
 		let stateButtons = [];
 		let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
+
+		if (stateRestoreOpts._createInSaved) {
+			stateButtons.push('createState');
+		}
+
 		if (states === undefined || states.length === 0) {
 			stateButtons.push(
 				'<span class="'+src.classes.emptyStates+'">' +

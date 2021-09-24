@@ -75,6 +75,7 @@ export interface IDom {
 }
 
 export interface IDefaults {
+	_createInSaved: boolean;
 	ajax: boolean | string;
 	create: boolean;
 	creationModal: boolean;
@@ -193,6 +194,7 @@ export default class StateRestoreCollection {
 	};
 
 	private static defaults: IDefaults = {
+		_createInSaved: false,
 		ajax: false,
 		create: true,
 		creationModal: false,
@@ -750,6 +752,10 @@ export default class StateRestoreCollection {
 		let ajaxData = {
 			stateRestore: {}
 		};
+
+		if (this.c._createInSaved) {
+			stateButtons.push('createState');
+		}
 
 		// If there are no states display an empty message
 		if(this.s.states.length === 0) {
