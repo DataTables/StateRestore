@@ -7,9 +7,17 @@
 <![CDATA[
 $(document).ready(function() {
     $('#example').DataTable({
+        ajax: "../data/objects.txt",
+		rowId: 'id',
         dom: 'Blfrtip',
         select: true,
-        buttons:['createState', 'savedStates']
+        buttons:['createState', 'savedStates'],
+		columns: [
+			{ "data": "name" },
+			{ "data": "position" },
+			{ "data": "office" },
+			{ "data": "salary" }
+		],
     });
 });
 ]]>
@@ -20,5 +28,26 @@ $(document).ready(function() {
 <info><![CDATA[
 This example shows how the `-init stateRestore` extension behaves alongside the `-init select` extension. The selections made in Select are able to be stored and restored when using StateRestore.
 ]]></info>
+
+<custom-table>
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Salary</th>
+        </tr>
+    </tfoot>
+</table>
+</custom-table>
 
 </dt-example>
