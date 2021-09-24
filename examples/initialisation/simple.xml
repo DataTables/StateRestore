@@ -17,7 +17,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Basic StateRestore Example</title>
 
 <info><![CDATA[
-This is the `-init stateRestore`extension for DataTables.
+This is the `-init stateRestore` extension for DataTables.
 
 It allows DataTables states to be stored and restored at any point. Pressing the `Create State` button will create a new state. This can then be accessed under the `Saved States` button. Here the state can be loaded into the table, updated, removed or renamed.
 
