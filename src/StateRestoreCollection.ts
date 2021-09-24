@@ -76,7 +76,7 @@ export interface IDom {
 
 export interface IDefaults {
 	_createInSaved: boolean;
-	ajax: boolean | string;
+	ajax: boolean | string | (() => void);
 	create: boolean;
 	creationModal: boolean;
 	i18n: II18n;
@@ -749,9 +749,6 @@ export default class StateRestoreCollection {
 	 */
 	private _collectionRebuild(): void {
 		let stateButtons = [];
-		let ajaxData = {
-			stateRestore: {}
-		};
 
 		if (this.c._createInSaved) {
 			stateButtons.push('createState');
@@ -803,22 +800,7 @@ export default class StateRestoreCollection {
 					extend: 'stateRestore',
 					text: state.s.identifier
 				});
-
-				// If operation over ajax add this state to the object
-				if (typeof this.c.ajax === 'string') {
-					ajaxData.stateRestore[state.s.identifier] = state.s.savedState;
-				}
 			}
-		}
-
-		// Ajax property has to be a string, not just true
-		// Also only want to save if the table has been initialised and the states have been loaded in
-		if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
-			$.ajax({
-				data: ajaxData,
-				type: 'POST',
-				url: this.c.ajax
-			});
 		}
 
 		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);

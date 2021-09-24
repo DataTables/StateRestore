@@ -273,6 +273,12 @@ export default class StateRestore {
 		}
 
 		let removeFunction;
+		let ajaxData = {
+			action: 'remove',
+			stateRestore: {
+				[this.s.identifier]: this.s.savedState
+			}
+		};
 
 		// If the remove is not happening over ajax remove it from local storage and then trigger the event
 		if (!this.c.ajax) {
@@ -291,10 +297,25 @@ export default class StateRestore {
 				return true;
 			};
 		}
-		// Otherwise when it occurs just trigger the event
-		else {
+		// Ajax property has to be a string, not just true
+		// Also only want to save if the table has been initialised and the states have been loaded in
+		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
 			removeFunction = () => {
 				this.dom.confirmation.trigger('dtsr-remove');
+				$.ajax({
+					data: ajaxData,
+					type: 'POST',
+					url: this.c.ajax
+				});
+				return true;
+			};
+		}
+		else if(typeof this.c.ajax === 'function') {
+			removeFunction = () => {
+				this.dom.confirmation.trigger('dtsr-remove');
+				if (typeof this.c.ajax === 'function') {
+					this.c.ajax.call(this.s.dt, ajaxData);
+				}
 				return true;
 			};
 		}
@@ -378,6 +399,13 @@ export default class StateRestore {
 				}
 			}
 
+			let ajaxData = {
+				action: 'rename',
+				stateRestore: {
+					[this.s.identifier]: newIdentifier
+				}
+			};
+
 			if (!this.c.ajax) {
 				try {
 					sessionStorage.removeItem(
@@ -387,6 +415,18 @@ export default class StateRestore {
 				catch (e) {
 					return false;
 				}
+			}
+			else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
+				this.dom.confirmation.trigger('dtsr-rename');
+				$.ajax({
+					data: ajaxData,
+					type: 'POST',
+					url: this.c.ajax
+				});
+			}
+			else if(typeof this.c.ajax === 'function') {
+				this.dom.confirmation.trigger('dtsr-rename');
+				this.c.ajax.call(this.s.dt, ajaxData);
 			}
 
 			this.s.identifier = newIdentifier;
@@ -525,6 +565,13 @@ export default class StateRestore {
 
 		this.s.savedState.c = this.c;
 
+		let ajaxData = {
+			action: 'save',
+			stateRestore: {
+				[this.s.identifier]: this.s.savedState
+			}
+		};
+
 		if (!this.c.ajax) {
 			try {
 				sessionStorage.setItem(
@@ -537,8 +584,17 @@ export default class StateRestore {
 				return;
 			}
 		}
-		else {
+		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
 			this.dom.confirmation.trigger('dtsr-save');
+			$.ajax({
+				data: ajaxData,
+				type: 'POST',
+				url: this.c.ajax
+			});
+		}
+		else if(typeof this.c.ajax === 'function') {
+			this.dom.confirmation.trigger('dtsr-save');
+			this.c.ajax.call(this.s.dt, ajaxData);
 		}
 	}
 
