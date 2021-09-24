@@ -15,8 +15,6 @@ $(document).ready(function() {
                 config: {
                     preDefined: {
                         "Order Position, Search London, Hide Start date": {
-                            "start": 0,
-                            "length": 10,
                             "order": [[1,"asc"]],
                             "search": {
                                 "search": "London",
@@ -25,60 +23,12 @@ $(document).ready(function() {
                                 "caseInsensitive": true
                             },
                             "columns": [
-                                {
-                                    "visible": true,
-                                    "search": {
-                                        "search": "",
-                                        "smart": true,
-                                        "regex": false,
-                                        "caseInsensitive": true
-                                    }
-                                },
-                                {
-                                    "visible": true,
-                                    "search": {
-                                        "search": "",
-                                        "smart": true,
-                                        "regex": false,
-                                        "caseInsensitive": true
-                                    }
-                                },
-                                {
-                                    "visible": true,
-                                    "search":{
-                                        "search": "",
-                                        "smart": true,
-                                        "regex": false,
-                                        "caseInsensitive": true
-                                    }
-                                },
-                                {
-                                    "visible": true,
-                                    "search": {
-                                        "search": "",
-                                        "smart": true,
-                                        "regex": false,
-                                        "caseInsensitive": true
-                                    }
-                                },
-                                {
-                                    "visible": false,
-                                    "search": {
-                                        "search": "",
-                                        "smart": true,
-                                        "regex": false,
-                                        "caseInsensitive": true
-                                    }
-                                },
-                                {
-                                    "visible": true,
-                                    "search": {
-                                        "search": "",
-                                        "smart": true,
-                                        "regex": false,
-                                        "caseInsensitive": true
-                                    }
-                                }
+                                { "visible": true },
+                                { "visible": true },
+                                { "visible": true },
+                                { "visible": true },
+                                { "visible": false },
+                                { "visible": true }
                             ]
                         }
                     }
