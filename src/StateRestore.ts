@@ -292,7 +292,10 @@ export default class StateRestore {
 		}
 		// Otherwise when it occurs just trigger the event
 		else {
-			removeFunction = () => this.dom.confirmation.trigger('dtsr-remove');
+			removeFunction = () => {
+				this.dom.confirmation.trigger('dtsr-remove');
+				return true;
+			};
 		}
 
 		// If the modal is to be skipped then remove straight away
