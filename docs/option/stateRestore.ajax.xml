@@ -16,6 +16,20 @@
         </description>
 	</type>
 
+     <type type="function">
+        <parameter type="object" name="data">
+            The relevant data that would be passed over ajax. The object contains 2 properties.
+
+            * `action` `-type string` The type of action that is taking place to cause the ajax call. One of `rename`, `remove` or `save`.
+            
+            * `stateRestore` `-type object` This object contains a property for each state that is to be affected by the call. The value when doing a save or a remove is the state object that it should store. When renaming this is slightly different and the value is the new name that should overwrite the value for the corresponding key.
+        </parameter>
+        <description>
+            This function is called whenether a rename, remove or a save takes place. It takes one parameter `data` that contains all of the data necessary to process the action. Being able to set this option as a function allows users greater flexibility in how they want to store their states.
+        </description>
+        <returns></returns>
+	</type>
+
 	<default value="false">
         The default value for the `-init stateRestore.ajax` option is `false` meaning that as standard the creation and saving of states will be done using the local session storage.
 	</default>
