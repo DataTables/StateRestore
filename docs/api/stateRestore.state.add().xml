@@ -8,7 +8,7 @@
 		<signature>stateRestore.state.add()</signature>
         <parameter type="string" name="identifier">The string that is used to identify this state. This must be unique in order to differentiate between the different states that may be stored within StateRestore.</parameter>
 		<description>Creates a new StateRestore instance.</description>
-		<returns type="object">Returns a DataTables API instance, with the object containing the state that has been extracted from the table in the result set.</returns>
+		<returns type="DataTablesApi">Returns a DataTables API for chaining, with the object containing the state that has been extracted from the table in the result set.</returns>
 	</type>
 
 	<description>
