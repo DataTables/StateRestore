@@ -304,7 +304,6 @@ export default class StateRestoreCollection {
 			// Has staterestore been used before? Is there anything to load?
 			if (json && json.stateRestore) {
 				this._addPreDefined(json.stateRestore);
-				this._collectionRebuild();
 			}
 		});
 
@@ -525,7 +524,41 @@ export default class StateRestoreCollection {
 		// Has staterestore been used before? Is there anything to load?
 		this._addPreDefined(this.c.preDefined);
 
-		this._collectionRebuild();
+		let ajaxFunction;
+		let ajaxData = {
+			action: 'load'
+		};
+
+		if (typeof this.c.ajax === 'function') {
+			ajaxFunction = () => {
+				if(typeof this.c.ajax === 'function') {
+					this.c.ajax.call(this.s.dt, ajaxData, s => this._addPreDefined(s));
+				}
+			};
+		}
+		else if (typeof this.c.ajax === 'string') {
+			ajaxFunction = () => {
+				$.ajax({
+					data: ajaxData,
+					success: (data) => {
+						this._addPreDefined(data);
+					},
+					type: 'POST',
+					url: this.c.ajax
+				});
+			};
+		}
+
+		if (typeof ajaxFunction === 'function') {
+			if(this.s.dt.settings()[0]._bInitComplete) {
+				ajaxFunction();
+			}
+			else {
+				this.s.dt.one('preInit.dtsr', () => {
+					ajaxFunction();
+				});
+			}
+		}
 
 		this.s.dt.on('destroy.dtsr', () => {
 			this.destroy();
@@ -742,6 +775,8 @@ export default class StateRestoreCollection {
 				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 			});
 		}
+
+		this._collectionRebuild();
 	}
 
 	/**

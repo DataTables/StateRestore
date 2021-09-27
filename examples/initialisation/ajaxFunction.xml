@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="4">
+
+<css lib="datatables buttons staterestore scroller"/>
+
+<js lib="jquery datatables staterestore buttons scroller"/>
+<js lib="//cdnjs.cloudflare.com/ajax/libs/idbwrapper/1.7.2/idbstore.min.js">
+<![CDATA[
+$(document).ready(function() {
+    var states = new IDBStore({
+        dbVersion: 1,
+        storeName: 'states',
+        keyPath: 'identifier',
+        onStoreReady: function() {
+            // We need to wait for the database to be ready as the load will run straight away
+            $('#example').DataTable({
+                dom: 'Blfrtip',
+                buttons:[
+                    'createState',
+                    {
+                        extend: 'savedStates',
+                        config: {
+                            ajax: function(data, callback) {
+                                // Action to take if loading states
+                                if (data.action === 'load') {
+                                    var reloadStates = loadData =>{
+                                        // Manipulate the data into the structure expected by the callback
+                                        var cbData = {};
+                                        for (var i = 0; i < loadData.length; i++) {
+                                            // Convert back from the string created when saving
+                                            cbData[loadData[i].identifier] = JSON.parse(loadData[i].state);
+                                        }
+
+                                        // Load states into StateRestore
+                                        callback(cbData);
+                                    }
+                                    
+                                    states.getAll(reloadStates);
+                                }
+                                // Action to take if renaming states
+                                else if (data.action === 'rename') {
+                                    // Get all of the state identifiers
+                                    var ids = Object.keys(data.stateRestore);
+                                    for (var i = 0; i < ids.length; i++) {
+                                        var savesuccess = (saveData) => {
+                                            // Remove the record with the current identifier
+                                            states.remove(saveData.identifier);
+                                            // Add a new record with the updated identifier that uses the old state
+                                            states.put({identifier: data.stateRestore[saveData.identifier], state: saveData.state})
+                                        }
+
+                                        states.get(ids[i], savesuccess);
+                                    }
+                                }
+                                // Action to take if removing states
+                                else if (data.action === 'remove') {
+                                    var ids = Object.keys(data.stateRestore);
+                                    for (var i = 0; i < ids.length; i++) {
+                                        // Remove all of the states listed in the object
+                                        states.remove(ids[i]);
+                                    }
+                                }
+                                // Action to take if saving states
+                                else if (data.action === 'save') {
+                                    var ids = Object.keys(data.stateRestore);
+                                    for (var i = 0; i < ids.length; i++) {
+                                        // Add all of the states listed in the object
+                                        // Important to convert state to a string as it is too complex for IndexedDB to handle
+                                        states.put({identifier: ids[i], state: JSON.stringify(data.stateRestore[ids[i]])})
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+    })
+});
+]]>
+</js>
+
+<title lib="stateRestore">Ajax Function</title>
+
+<info><![CDATA[
+This example shows how the `-init stateRestore` extension can be operated over ajax when setting `-init stateRestore.ajax` to be a functions.
+
+When `-init stateRestore.ajax` is a function, it will be called when the following actions are taken.
+
+* load
+* save
+* rename
+* remove
+
+The function takes two arguments, the first of which is an object. The first value on the object (`action`) is one of the above actions as a string. This will allow your function to act accordingly.
+
+The second value on the object, `stateRestore` is another object. The keys of this object indicate which state the action is taking place on, the corresponding value is either the state to be saved, or in the case of `rename`, the new name for that state. There is no `stateRestore` property when loading states.
+
+The second argument taken by the function is a callback that should be called when loading in states. An object of the same structure as `-init stateRestore.preDefined` should be passed in to this function in order to load the states into Datatables.
+
+This example demonstrates how [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) could be used to store states, implemented through [idb](https://www.npmjs.com/package/idb?ref=hackernoon.com).
+]]></info>
+
+</dt-example>
