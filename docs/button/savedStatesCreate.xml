@@ -14,8 +14,8 @@ As well as the `-button createState` button, the usual collection that contains 
 		This option allows for StateRestore to be configured. All of the `stateRestore.*` options can be configured within this object.
     </option>
 
-	<example title="savedStates button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.savedStates.text = function (e, dt, node, config) {
+	<example title="savedStatesCreate button modify text"><![CDATA[
+$.fn.dataTable.ext.buttons.savedStatesCreate.text = function (e, dt, node, config) {
     return "Saved states collection";
 }
 ]]></example>
