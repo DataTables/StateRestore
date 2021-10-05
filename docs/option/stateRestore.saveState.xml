@@ -15,7 +15,6 @@
 
         ```
         {
-            colReorder: true,
             columns: {
                 search: true,
                 visible: true
@@ -25,7 +24,6 @@
             scroller: true,
             search: true,
             searchBuilder: true,
-            searchPanes: true,
             select: true
         }
         ```
@@ -41,7 +39,6 @@ As default the value is `true`, meaning that the column sorting will be saved. I
 
 Take a look at [this example](/extensions/StateRestore/examples/customisation/noOrder.html) to see this in action.
 
-This option is different to the `-init stateRestore.colReorder` option. It decides whether to save the position of the columns horizontally across the table, something that is changeable with the `-init colReorder` option. This option decides whether to save the sorting of the data within the columns (ascending/descending).
 ### paging
 This option allows for the saving of the paging to be enabled or disabled.
 
@@ -66,14 +63,6 @@ This option allows for the saving of the visibility of the columns to be enabled
 As default the value is `true`, meaning that the column visibilities will be saved. If this option is set to `false`, then column visibilites will not be saved.
 
 Take a look at [this example](/extensions/StateRestore/examples/customisation/noColumnVisibility.html) to see this in action.
-### colReorder
-This option allows for the saving of the position of the columns across the table to be enabled or disabled. It is only applicable when `-init stateRestore` is being used with `-init colReorder`.
-
-As default the value is `true`, meaning that the position of the columns across the table will be saved. If this option is set to `false`, the position of the columns across the table will not be saved.
-
-Take a look at [this example](/extensions/StateRestore/examples/customisation/noColReorder.html) to see this in action.
-
-This option is different to the `stateRestore.saveState.order` option. It decides whether to save the sorting of the data within the columns (ascending/descending). This option decides whether to save the position of the columns horizontally across the table, something that is changeable with the `-init colReorder` option.
 ### scroller
 This option allows for the saving of the `-init scroller` position to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
 
@@ -86,13 +75,6 @@ This option allows for the saving of the `-init searchBuilder` state to be enabl
 As default the value is `true`, meaning that the `-init searchBuilder` state will be saved. If this option is set to `false`, then the `-init searchBuilder` state saving will be disabled.
 
 Take a look at [this example](/extensions/StateRestore/examples/customisation/nosearchBuilder.html) to see this in action.
-### searchPanes
-This option allows for the saving of the `-init searchPanes` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init searchPanes` extensions are in use.
-
-As default the value is `true`, meaning that the `-init searchPanes` state will be saved. If this option is set to `false`, then the `-init searchPanes` state saving will be disabled.
-
-Take a look at [this example](/extensions/StateRestore/examples/customisation/noSearchPanes.html) to see this in action.
-
 ### select
 This option allows for the saving of the `-init select` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init select` extensions are in use.
 
