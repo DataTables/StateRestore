@@ -760,10 +760,12 @@ export default class StateRestoreCollection {
 					this.c,
 					loadedState.c !== undefined ?
 						{saveState: loadedState.c.saveState} :
-						undefined
+						undefined,
+					true
 				),
 				state,
-				loadedState
+				loadedState,
+				true
 			);
 
 			newState.s.savedState = loadedState;
@@ -1292,6 +1294,11 @@ export default class StateRestoreCollection {
 			// eslint-disable-next-line no-useless-escape
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
 				let loadedState = JSON.parse(sessionStorage.getItem(key));
+
+				if (loadedState.stateRestore.isPreDefined) {
+					continue;
+				}
+
 				let newState = new StateRestore(
 					this.s.dt,
 					$.extend(true, {}, this.c, {saveState: loadedState.c.saveState}),

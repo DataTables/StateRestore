@@ -26,6 +26,7 @@ export interface IClasses {
 export interface IS {
 	dt: any;
 	identifier: string;
+	isPreDefined: boolean;
 	savedState: null | IState;
 }
 
@@ -82,6 +83,7 @@ export interface IHungSearch {
 }
 
 export interface IStateRestore {
+	isPreDefined: boolean;
 	state: string;
 }
 export default class StateRestore {
@@ -176,7 +178,13 @@ export default class StateRestore {
 	public c: restoreType.IDefaults;
 	public s: IS;
 
-	public constructor(settings: any, opts: restoreType.IDefaults, identifier: string, state: IState = undefined) {
+	public constructor(
+		settings: any,
+		opts: restoreType.IDefaults,
+		identifier: string,
+		state: IState = undefined,
+		isPreDefined = false
+	) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
 			throw new Error('StateRestore requires DataTables 1.10 or newer');
@@ -197,6 +205,7 @@ export default class StateRestore {
 		this.s = {
 			dt: table,
 			identifier,
+			isPreDefined,
 			savedState: null
 		};
 
@@ -496,6 +505,7 @@ export default class StateRestore {
 		}
 
 		savedState.stateRestore = {
+			isPreDefined: this.s.isPreDefined,
 			state: this.s.identifier
 		};
 
