@@ -45,6 +45,8 @@ export interface IDom {
 }
 
 export interface IState {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	ColReorder: any;
 	c: restoreType.IDefaults;
 	columns: IColumn[];
 	length: number;
@@ -53,6 +55,7 @@ export interface IState {
 	scroller: any;
 	search: ISearch;
 	searchBuilder: any;
+	searchPanes: any;
 	select: any;
 	start: number;
 	stateRestore: IStateRestore;
@@ -107,6 +110,7 @@ export default class StateRestore {
 		i18n: {
 			creationModal: {
 				button: 'Create',
+				colReorder: 'Column Order:',
 				columns: {
 					search: 'Column Search:',
 					visible: 'Column Visibility:'
@@ -117,6 +121,7 @@ export default class StateRestore {
 				scroller: 'Scroll Position:',
 				search: 'Search:',
 				searchBuilder: 'SearchBuilder:',
+				searchPanes: 'SearchPanes:',
 				select: 'Select:',
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
@@ -137,6 +142,7 @@ export default class StateRestore {
 		rename: true,
 		save: true,
 		saveState: {
+			colReorder: true,
 			columns: {
 				search: true,
 				visible: true
@@ -146,9 +152,11 @@ export default class StateRestore {
 			scroller: true,
 			search: true,
 			searchBuilder: true,
+			searchPanes: true,
 			select: true
 		},
 		toggle: {
+			colReorder: false,
 			columns:{
 				search: false,
 				visible: false
@@ -158,6 +166,7 @@ export default class StateRestore {
 			scroller: false,
 			search: false,
 			searchBuilder: false,
+			searchPanes: false,
 			select: false
 		}
 	};
@@ -526,9 +535,19 @@ export default class StateRestore {
 			this.s.savedState.searchBuilder = undefined;
 		}
 
+		// SearchPanes
+		if (!this.c.saveState.searchPanes) {
+			this.s.savedState.searchPanes = undefined;
+		}
+
 		// Select
 		if (!this.c.saveState.select) {
 			this.s.savedState.select = undefined;
+		}
+
+		// ColReorder
+		if (!this.c.saveState.colReorder) {
+			this.s.savedState.ColReorder = undefined;
 		}
 
 		// Scroller

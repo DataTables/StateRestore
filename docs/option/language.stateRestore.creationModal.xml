@@ -16,6 +16,7 @@
         ```
         {
             button: 'Create',
+            colReorder: 'Column Order:',
             columns: {
                 search: 'Column Search:',
                 visible: 'Column Visibility:'
@@ -26,6 +27,7 @@
             scroller: 'Scroll Position:',
             search: 'Search:',
             searchBuilder: 'SearchBuilder:',
+            searchPanes: 'SearchPanes:',
             select: 'Select:',
             title: 'Create New State',
         }

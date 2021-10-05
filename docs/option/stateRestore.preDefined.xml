@@ -17,12 +17,34 @@ The corresponding value of the predefined state is structured as follows.
 * `-type array` `columns` - This is an array of objects, one for each column. It has two properties.
     * `columns.visible` - This takes the same value as the initialisation option `-init columns.visible`, `true` for show and `false` for hide.
     * `columns.search` - This again this takes the same value as the `-init columns.search` initialisation option.
+* `-type array` `ColReorder` - This array of numbers is used to indicate the order of the columns that should be loaded. This is the same value as the `-init colReorder.order` initialisation option.
 * `-type object` `scroller` - This object contains four properties.
     * `-type number` `baseRowTop` - The distance that scroller has scrolled in terms of rows. For example 10.5 would set the top of the displayed table to be 10.5 rows from the top.
     * `-type number` `topRow` - This takes the same value as `baseRowTop`.
     * `-type number` `baseScrollTop` - The distance that scroller has scrolled in terms of pixels.
     * `-type number` `scrollTop` - This takes the same value as `baseScrollTop`.
 * `-type object` `searchBuilder` - This is the same value as is returned from `-api searchBuilder.getDetails()`.
+* `-type object` `searchPanes` - This object contains the details necessary to rebuild SearchPanes as they were before.
+    * `-type array` `panes` - This array contains an object for each pane that is displayed. These objects contains details that are required to reload the data and setup of each SearchPane.
+        * `-type array` `arrayFilter` This is an array that contains an object for each option that is to be displayed within the SearchPane.
+            * `-type string` `display` - This is the string value that is displayed within the SearchPane.
+            * `-type string` `filter` - This is the string value that is used when filtering with/on the SearchPane.
+            * `-type string` `sort` - This is the string value that is used when sorting on the SearchPane.
+            * `-type string` `type` - This is the string value that is used when determining the type on the SearchPane.
+        * `-type object` `bins` - This object has a key value pair for each distinct value within this panes column. The key is the distinct value and the value is the number of times that that value appears in the column.
+        * `-type boolean` `collapsed` - Whether this pane was collapsed when the last state save occured, or not.
+        * `-type number` `id` - The pane id, corresponding to the column index that it is attached to.
+    * `-type array` `selectionList` - This array contains an object for each pane that is displayed. These objects contain details about the selections that have been made in each pane.
+        * `-type number` `index` - The pane index that the selections are attached to.
+        * `-type array` `rows` - This array contains objects that indicate which rows were selected at the last state save.
+            * `-type string` `className` - Any class name that was applied to the rows.
+            * `-type string` `display` - The display value for this row.
+            * `-type string` `filter` - The filter value for this row.
+            * `-type number` `index` - The index of this row within the pane.
+            * `-type number` `shown` - The number of rows with this value that are being shown within the DataTable.
+            * `-type string` `filter` - The sort value for this row.
+            * `-type number` `total` - The total number of rows with this value that are within the DataTable.
+            * `-type string` `type` - The value used to determine the type for this row.
 * `-type object` `select` - This object contains 3 properties which are required to make the selections which were present before.
     * `-type array` `rows` - This array contains all of the row ids corresponding to the rows that are to be selected. It is the same value as is returned from `-api rows().ids()`.
     * `-type array` `columns` - This array contains the column indexes of the columns that are to be selected.
