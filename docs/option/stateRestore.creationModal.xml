@@ -44,7 +44,6 @@ This option allows a creation modal to be displayed to the user. This allows the
             config: {
                 creationModal: true,
                 toggle: {
-                    colReorder: true,
                     columns: {
                         search: true,
                         visible: true
@@ -54,7 +53,6 @@ This option allows a creation modal to be displayed to the user. This allows the
                     scroller: true,
                     search: true,
                     searchBuilder: true,
-                    searchPanes: true,
                     select: true
                 }
             }

@@ -13,7 +13,6 @@ export interface IClasses {
 	checkBox: string;
 	checkLabel: string;
 	checkRow: string;
-	colReorderToggle: string;
 	columnsSearchToggle: string;
 	columnsVisibleToggle: string;
 	confirmation: string;
@@ -41,7 +40,6 @@ export interface IClasses {
 	rightSide: string;
 	scrollerToggle: string;
 	searchBuilderToggle: string;
-	searchPanesToggle: string;
 	searchToggle: string;
 	selectToggle: string;
 	toggleLabel: string;
@@ -49,7 +47,6 @@ export interface IClasses {
 
 export interface IDom {
 	background: JQuery<HTMLElement>;
-	colReorderToggle: JQuery<HTMLElement>;
 	columnsSearchToggle: JQuery<HTMLElement>;
 	columnsVisibleToggle: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
@@ -68,7 +65,6 @@ export interface IDom {
 	removeTitle: JQuery<HTMLElement>;
 	scrollerToggle: JQuery<HTMLElement>;
 	searchBuilderToggle: JQuery<HTMLElement>;
-	searchPanesToggle: JQuery<HTMLElement>;
 	searchToggle: JQuery<HTMLElement>;
 	selectToggle: JQuery<HTMLElement>;
 	toggleLabel: JQuery<HTMLElement>;
@@ -91,14 +87,12 @@ export interface IDefaults {
 }
 
 export interface ISaveState {
-	colReorder: boolean;
 	columns: IColumnDefault | boolean;
 	order: boolean;
 	paging: boolean;
 	scroller: boolean;
 	search: boolean;
 	searchBuilder: boolean;
-	searchPanes: boolean;
 	select: boolean;
 }
 
@@ -124,7 +118,6 @@ export interface II18n {
 
 export interface II18nCreationModal {
 	button: string;
-	colReorder: string;
 	columns: {
 		search: string;
 		visible: string;
@@ -135,7 +128,6 @@ export interface II18nCreationModal {
 	scroller: string;
 	search: string;
 	searchBuilder: string;
-	searchPanes: string;
 	select: string;
 	title: string;
 	toggleLabel: string;
@@ -143,10 +135,8 @@ export interface II18nCreationModal {
 
 export interface IS {
 	dt: any;
-	hasColReorder: boolean;
 	hasScroller: boolean;
 	hasSearchBuilder: boolean;
-	hasSearchPanes: boolean;
 	hasSelect: boolean;
 	states: StateRestore[];
 }
@@ -159,7 +149,6 @@ export default class StateRestoreCollection {
 		checkBox: 'dtsr-check-box',
 		checkLabel: 'dtsr-check-label',
 		checkRow: 'dtsr-check-row',
-		colReorderToggle: 'dtsr-colReorder-toggle',
 		columnsSearchToggle: 'dtsr-columns-search-toggle',
 		columnsVisibleToggle: 'dtsr-columns-visible-toggle',
 		confirmation: 'dtsr-confirmation',
@@ -187,7 +176,6 @@ export default class StateRestoreCollection {
 		rightSide: 'dtsr-right',
 		scrollerToggle: 'dtsr-scroller-toggle',
 		searchBuilderToggle: 'dtsr-searchBuilder-toggle',
-		searchPanesToggle: 'dtsr-searchPanes-toggle',
 		searchToggle: 'dtsr-search-toggle',
 		selectToggle: 'dtsr-select-toggle',
 		toggleLabel: 'dtsr-toggle-title'
@@ -201,7 +189,6 @@ export default class StateRestoreCollection {
 		i18n: {
 			creationModal: {
 				button: 'Create',
-				colReorder: 'Column Order',
 				columns: {
 					search: 'Column Search',
 					visible: 'Column Visibility'
@@ -212,7 +199,6 @@ export default class StateRestoreCollection {
 				scroller: 'Scroll Position',
 				search: 'Search',
 				searchBuilder: 'SearchBuilder',
-				searchPanes: 'SearchPanes',
 				select: 'Select',
 				title: 'Create New State',
 				toggleLabel: 'Includes:'
@@ -234,7 +220,6 @@ export default class StateRestoreCollection {
 		rename: true,
 		save: true,
 		saveState: {
-			colReorder: true,
 			columns: {
 				search: true,
 				visible: true
@@ -244,11 +229,9 @@ export default class StateRestoreCollection {
 			scroller: true,
 			search: true,
 			searchBuilder: true,
-			searchPanes: true,
 			select: true
 		},
 		toggle: {
-			colReorder: false,
 			columns:{
 				search: false,
 				visible: false
@@ -258,7 +241,6 @@ export default class StateRestoreCollection {
 			scroller: false,
 			search: false,
 			searchBuilder: false,
-			searchPanes: false,
 			select: false
 		}
 	};
@@ -292,10 +274,8 @@ export default class StateRestoreCollection {
 
 		this.s = {
 			dt: table,
-			hasColReorder: (dataTable as any).ColReorder !== undefined,
 			hasScroller: (dataTable as any).Scroller !== undefined,
 			hasSearchBuilder: (dataTable as any).SearchBuilder !== undefined,
-			hasSearchPanes: (dataTable as any).SearchPanes !== undefined,
 			hasSelect: (dataTable as any).select !== undefined,
 			states: []
 		};
@@ -309,20 +289,6 @@ export default class StateRestoreCollection {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
-			colReorderToggle: $(
-				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
-					'<input type="checkbox" class="'+
-						this.classes.colReorderToggle+' ' +
-						this.classes.checkBox +
-					'" checked>' +
-					'<label class="'+this.classes.checkLabel+'">'+
-						this.s.dt.i18n(
-							'stateRestore.creationModal.colReorder',
-							this.c.i18n.creationModal.colReorder
-						)+
-					'</label>'+
-				'</div>'
-			),
 			columnsSearchToggle: $(
 				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
 					'<input type="checkbox" class="'+
@@ -462,20 +428,6 @@ export default class StateRestoreCollection {
 						this.s.dt.i18n(
 							'stateRestore.creationModal.searchBuilder',
 							this.c.i18n.creationModal.searchBuilder
-						)+
-					'</label>'+
-				'</div>'
-			),
-			searchPanesToggle: $(
-				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
-					'<input type="checkbox" class="'+
-						this.classes.searchPanesToggle+' ' +
-						this.classes.checkBox +
-					'" checked>' +
-					'<label class="'+this.classes.checkLabel+'">'+
-						this.s.dt.i18n(
-							'stateRestore.creationModal.searchPanes',
-							this.c.i18n.creationModal.searchPanes
 						)+
 					'</label>'+
 				'</div>'
@@ -892,18 +844,6 @@ export default class StateRestoreCollection {
 			togglesToInsert.push(this.dom.pagingToggle);
 		}
 
-		// ColReorder toggle - check toggle and saving enabled
-		if (
-			this.s.hasColReorder &&
-			(
-				(!toggleDefined || options.toggle.colReorder === undefined) && this.c.toggle.colReorder ||
-				toggleDefined && options.toggle.colReorder
-			) &&
-			this.c.saveState.colReorder
-		) {
-			togglesToInsert.push(this.dom.colReorderToggle);
-		}
-
 		// Scroller toggle - check toggle and saving enabled
 		if (
 			this.s.hasScroller &&
@@ -926,18 +866,6 @@ export default class StateRestoreCollection {
 			this.c.saveState.searchBuilder
 		) {
 			togglesToInsert.push(this.dom.searchBuilderToggle);
-		}
-
-		// SearchPanes toggle - check toggle and saving enabled
-		if (
-			this.s.hasSearchPanes &&
-			(
-				(!toggleDefined || options.toggle.searchPanes === undefined) && this.c.toggle.searchPanes ||
-				toggleDefined && options.toggle.searchPanes
-			) &&
-			this.c.saveState.searchPanes
-		) {
-			togglesToInsert.push(this.dom.searchPanesToggle);
 		}
 
 		// Select toggle - check toggle and saving enabled
@@ -1085,7 +1013,6 @@ export default class StateRestoreCollection {
 		creationButton.on('click', () => {
 			// Get the values of the checkBoxes
 			let saveState = {
-				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
 				columns: {
 					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
 					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
@@ -1095,7 +1022,6 @@ export default class StateRestoreCollection {
 				scroller: this.dom.scrollerToggle.children('input').is(':checked'),
 				search: this.dom.searchToggle.children('input').is(':checked'),
 				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
-				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
 				select: this.dom.selectToggle.children('input').is(':checked')
 			};
 
