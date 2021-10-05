@@ -64,9 +64,8 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 			$('.dtsr-confirmation-button').click();
 
 			expect(args.length).toBe(1);
-			//DD-2323
-			expect(count).toBe(5);
-			expect(args[0].action).toBe('save');
+			expect(count).toBe(4);
+			expect(args[0].action).toBe('rename');
 		});
 		it('Rename', function () {
 			args = undefined;
@@ -78,8 +77,7 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 			$('.dtsr-confirmation-button').click();
 
 			expect(args.length).toBe(1);
-			//DD-2323
-			expect(count).toBe(6);
+			expect(count).toBe(5);
 			expect(args[0].action).toBe('remove');
 		});
 	});

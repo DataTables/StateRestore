@@ -439,7 +439,7 @@ export default class StateRestore {
 				'</span></div>'
 			);
 
-			this.save(this.s.savedState);
+			this.save(this.s.savedState, false);
 			this.dom.confirmation.trigger('dtsr-rename');
 
 			return true;
@@ -477,7 +477,7 @@ export default class StateRestore {
 	 *
 	 * @param state Optional. If provided this is the state that will be saved rather than using the current state
 	 */
-	public save(state?: IState): void {
+	public save(state?: IState, callAjax = true): void {
 		// Check if saving states is allowed
 		if (!this.c.save) {
 			return;
@@ -594,7 +594,9 @@ export default class StateRestore {
 		}
 		else if(typeof this.c.ajax === 'function') {
 			this.dom.confirmation.trigger('dtsr-save');
-			this.c.ajax.call(this.s.dt, ajaxData);
+			if(callAjax) {
+				this.c.ajax.call(this.s.dt, ajaxData);
+			}
 		}
 	}
 
