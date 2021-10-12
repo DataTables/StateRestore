@@ -44,9 +44,6 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 			$('.dt-button').click();
 			$('.dt-btn-split-wrapper button:eq(0)').click();
 
-			// DD-2322
-			table.stateRestore.states().remove(true);
-
 			expect($('thead tr:eq(0) th').length).toBe(5);
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 		});
@@ -73,9 +70,6 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
-
-			// DD-2322
-			table.stateRestore.states().remove(true);
 
 			expect($('thead tr:eq(0) th').length).toBe(6);
 			expect($('tbody tr').length).toBe(5);
@@ -106,9 +100,6 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
-
-			// DD-2322
-			table.stateRestore.states().remove(true);
 
 			expect($('thead tr:eq(0) th').length).toBe(6);
 			expect($('tbody tr').length).toBe(10);
