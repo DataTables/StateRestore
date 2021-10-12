@@ -67,7 +67,7 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 			expect(count).toBe(4);
 			expect(args[0].action).toBe('rename');
 		});
-		it('Rename', function () {
+		it('Remove', function () {
 			args = undefined;
 
 			$('.dt-button:eq(1)').click();
