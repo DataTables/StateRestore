@@ -57,10 +57,15 @@ describe('stateRestore - options - stateRestore.rename', function () {
 			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
 			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Remove');
 		});
+		it('... clear collection', function (done) {
+			dt.sleep(200).then(() => {
+				$('.dt-button-background').click();
+				done();
+			});
+		});
 		it('... unable to rename via API', function () {
 			table.stateRestore.state('State 1').rename('unit test');
 
-			$('.dt-button-background').click();
 			$('.dt-button:eq(1)').click();
 
 			expect($('.dt-button:eq(2)').text()).toBe('State 1');
