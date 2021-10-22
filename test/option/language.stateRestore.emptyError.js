@@ -23,7 +23,7 @@ describe('stateRestore - options - language.stateRestore.emptyError', function (
 		});
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 			$('input.dtsr-input').val('');
 			$('.dtsr-confirmation-button').click();
 
@@ -44,7 +44,7 @@ describe('stateRestore - options - language.stateRestore.emptyError', function (
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 			$('input.dtsr-input').val('');
 			$('.dtsr-confirmation-button').click();
 

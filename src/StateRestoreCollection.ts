@@ -819,11 +819,11 @@ export default class StateRestoreCollection {
 				if (this.c.save && state.c.save) {
 					split.push('updateState');
 				}
-				if (this.c.remove && state.c.remove) {
-					split.push('removeState');
-				}
 				if (this.c.save && state.c.save && this.c.rename && state.c.rename) {
 					split.push('renameState');
+				}
+				if (this.c.remove && state.c.remove) {
+					split.push('removeState');
 				}
 				if (split.length > 0) {
 					split.unshift('<h3>'+state.s.identifier+'</h3>');

@@ -23,7 +23,7 @@ describe('stateRestore - options - language.stateRestore.removeTitle', function 
 		});
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(2)').click();
 
 			expect($('.dtsr-confirmation-title').text()).toBe('Remove State');
 		});
@@ -42,7 +42,7 @@ describe('stateRestore - options - language.stateRestore.removeTitle', function 
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(1)').click();
+			$('.dt-btn-split-drop-button:eq(2)').click();
 
 			expect($('.dtsr-confirmation-title').text()).toBe('unit test');
 		});

@@ -195,7 +195,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			node.blur();
 		},
 		config: {
-			split: ['updateState', 'removeState', 'renameState']
+			split: ['updateState', 'renameState', 'removeState']
 		},
 		text(dt) {
 			return dt.i18n('buttons.stateRestore', 'State %d', dt.stateRestore.states()[0].length+1);
@@ -337,11 +337,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				if (stateRestoreOpts.save) {
 					split.push('updateState');
 				}
-				if (stateRestoreOpts.remove) {
-					split.push('removeState');
-				}
 				if (stateRestoreOpts.save && stateRestoreOpts.rename) {
 					split.push('renameState');
+				}
+				if (stateRestoreOpts.remove) {
+					split.push('removeState');
 				}
 				if (split.length > 0) {
 					split.unshift('<h3>'+state.s.identifier+'</h3>');
@@ -450,11 +450,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				if (stateRestoreOpts.save) {
 					split.push('updateState');
 				}
-				if (stateRestoreOpts.remove) {
-					split.push('removeState');
-				}
 				if (stateRestoreOpts.save && stateRestoreOpts.rename) {
 					split.push('renameState');
+				}
+				if (stateRestoreOpts.remove) {
+					split.push('removeState');
 				}
 				if (split.length > 0) {
 					split.unshift('<h3>'+state.s.identifier+'</h3>');
