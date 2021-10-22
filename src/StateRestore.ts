@@ -349,6 +349,78 @@ export default class StateRestore {
 		return true;
 	}
 
+	public compare(state) {
+		// Order
+		if (!this.c.saveState.order) {
+			state.order = undefined;
+		}
+
+		// Search
+		if (!this.c.saveState.search) {
+			state.search = undefined;
+		}
+
+		// Columns
+		if (this.c.saveState.columns && state.columns) {
+			for (let i=0, ien=state.columns.length ; i<ien ; i++) {
+
+				// Visibility
+				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.visible) {
+					state.columns[i].visible = undefined;
+				}
+
+				// Search
+				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.search) {
+					state.columns[i].search = undefined;
+				}
+			}
+		}
+		else if (!this.c.saveState.columns) {
+			state.columns = undefined;
+		}
+
+		// SearchBuilder
+		if (!this.c.saveState.searchBuilder) {
+			state.searchBuilder = undefined;
+		}
+
+		// SearchPanes
+		if (!this.c.saveState.searchPanes) {
+			state.searchPanes = undefined;
+		}
+
+		// Select
+		if (!this.c.saveState.select) {
+			state.select = undefined;
+		}
+
+		// ColReorder
+		if (!this.c.saveState.colReorder) {
+			state.ColReorder = undefined;
+		}
+
+		// Scroller
+		if (!this.c.saveState.scroller) {
+			state.scroller = undefined;
+			if((dataTable as any).Scroller !== undefined) {
+				state.start = 0;
+			}
+		}
+
+		// Paging
+		if (!this.c.saveState.paging) {
+			state.start = 0;
+		}
+
+		delete state.time;
+		let copyState = this.s.savedState;
+		delete copyState.time;
+		delete copyState.c;
+		delete copyState.stateRestore;
+
+		return this._deepCompare(state, copyState);
+	}
+
 	/**
 	 * Removes all of the dom elements from the document
 	 */
@@ -607,6 +679,40 @@ export default class StateRestore {
 			if(callAjax) {
 				this.c.ajax.call(this.s.dt, ajaxData);
 			}
+		}
+	}
+
+
+	private _deepCompare(state1, state2) {
+		let keys1 = Object.keys(state1).sort();
+		let keys2 = Object.keys(state2).sort();
+		for(let i = 0; i < keys1.length; i++) {
+			if(keys1[i].indexOf('_') === 0) {
+				keys1.splice(i, 1);
+				i--;
+			}
+		}
+		for(let i = 0; i < keys2.length; i++) {
+			if(keys2[i].indexOf('_') === 0) {
+				keys2.splice(i, 1);
+				i--;
+			}
+		}
+		if(keys1.length !== keys2.length) {
+			return false;
+		}
+		else {
+			for(let i = 0; i < keys1.length; i++) {
+				if(keys1[i] !== keys2[i] || typeof state1[keys1[i]] !== typeof state2[keys2[i]]) {
+					return false;
+				}
+				if(typeof state1[keys1[i]] === 'object') {
+					if(!this._deepCompare(state1[keys1[i]], state2[keys2[i]])) {
+						return false;
+					}
+				}
+			}
+			return true;
 		}
 	}
 

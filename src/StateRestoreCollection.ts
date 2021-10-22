@@ -564,6 +564,8 @@ export default class StateRestoreCollection {
 			this.destroy();
 		});
 
+		this.s.dt.on('draw.dtsr buttons-action.dtsr', () => this._findActive());
+
 		return this;
 	}
 
@@ -1134,6 +1136,25 @@ export default class StateRestoreCollection {
 
 		// Need to save the state before the focus is lost when the modal is interacted with
 		this.s.dt.state.save();
+	}
+
+	private _findActive() {
+		let currState = this.s.dt.state();
+		let buttons = $('button.dt-button');
+		for(let button of buttons) {
+			this.s.dt.button(button).active(false);
+		}
+		for(let state of this.s.states) {
+			if(state.compare(currState)) {
+				for(let button of buttons) {
+					if($(button).text() === state.s.identifier) {
+						this.s.dt.button(button).active(true);
+						break;
+					}
+				}
+				break;
+			}
+		}
 	}
 
 	/**
