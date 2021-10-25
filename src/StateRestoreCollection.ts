@@ -1142,13 +1142,13 @@ export default class StateRestoreCollection {
 		let currState = this.s.dt.state();
 		let buttons = $('button.dt-button');
 		for(let button of buttons) {
-			this.s.dt.button(button).active(false);
+			this.s.dt.button($(button).parent()[0]).active(false);
 		}
 		for(let state of this.s.states) {
 			if(state.compare(currState)) {
 				for(let button of buttons) {
 					if($(button).text() === state.s.identifier) {
-						this.s.dt.button(button).active(true);
+						this.s.dt.button($(button).parent()[0]).active(true);
 						break;
 					}
 				}

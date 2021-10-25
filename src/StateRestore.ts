@@ -711,6 +711,9 @@ export default class StateRestore {
 						return false;
 					}
 				}
+				else if(state1[keys1[i]] !== state2[keys2[i]]) {
+					return false;
+				}
 			}
 			return true;
 		}
