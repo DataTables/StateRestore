@@ -591,6 +591,8 @@ export default class StateRestoreCollection {
 				return 'duplicate';
 			}
 
+			this.s.dt.state.save();
+
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
 				$.extend(true, {}, this.c, toggles, options),
@@ -1139,15 +1141,22 @@ export default class StateRestoreCollection {
 	}
 
 	private _findActive() {
+		// Make sure that the state is up to date
+		this.s.dt.state.save();
 		let currState = this.s.dt.state();
+
+		// Make all of the buttons inactive so that only any that match will be marked as active
 		let buttons = $('button.dt-button');
-		for(let button of buttons) {
+		for (let button of buttons) {
 			this.s.dt.button($(button).parent()[0]).active(false);
 		}
-		for(let state of this.s.states) {
-			if(state.compare(currState)) {
-				for(let button of buttons) {
-					if($(button).text() === state.s.identifier) {
+
+		// Go through all of the states comparing if their state is the same to the current one
+		for (let state of this.s.states) {
+			if (state.compare(currState)) {
+				// If so, find the corresponding button and mark it as active
+				for (let button of buttons) {
+					if ($(button).text() === state.s.identifier) {
 						this.s.dt.button($(button).parent()[0]).active(true);
 						break;
 					}
