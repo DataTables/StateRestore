@@ -45,8 +45,8 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
 
 			// TK COLIN DD-2273
-			// expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
-			expect($('tbody tr td:eq(0)').text()).toBe('Airi Satou');
+			expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
+			// expect($('tbody tr td:eq(0)').text()).toBe('Airi Satou');
 		});
 
 		dt.html('basic');
@@ -126,7 +126,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper:eq(2) .dt-button:eq(0)').click();
 
-			expect($('tbody tr td:eq(0)').text()).toBe('Airi Satou');
+			expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
 		});
 	});
 
