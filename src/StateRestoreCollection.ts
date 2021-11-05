@@ -1161,7 +1161,6 @@ export default class StateRestoreCollection {
 						break;
 					}
 				}
-				break;
 			}
 		}
 	}
