@@ -1317,12 +1317,12 @@ export default class StateRestoreCollection {
 	 * Private method that checks for previously created states on initialisation
 	 */
 	private _searchForStates(): void {
-		let keys = Object.keys(sessionStorage);
+		let keys = Object.keys(localStorage);
 
 		for (let key of keys) {
 			// eslint-disable-next-line no-useless-escape
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
-				let loadedState = JSON.parse(sessionStorage.getItem(key));
+				let loadedState = JSON.parse(localStorage.getItem(key));
 
 				if (loadedState.stateRestore.isPreDefined) {
 					continue;

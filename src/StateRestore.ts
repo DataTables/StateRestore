@@ -293,7 +293,7 @@ export default class StateRestore {
 		if (!this.c.ajax) {
 			removeFunction = () => {
 				try {
-					sessionStorage.removeItem(
+					localStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 
@@ -497,7 +497,7 @@ export default class StateRestore {
 
 			if (!this.c.ajax) {
 				try {
-					sessionStorage.removeItem(
+					localStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 				}
@@ -664,7 +664,7 @@ export default class StateRestore {
 
 		if (!this.c.ajax) {
 			try {
-				sessionStorage.setItem(
+				localStorage.setItem(
 					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 					JSON.stringify(this.s.savedState)
 				);
