@@ -1146,7 +1146,13 @@ export default class StateRestoreCollection {
 		let currState = this.s.dt.state();
 
 		// Make all of the buttons inactive so that only any that match will be marked as active
-		let buttons = $('button.dt-button');
+		let buttons = $('button.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
+
+		// Some of the styling libraries use a tags instead of buttons
+		if(buttons.length === 0) {
+			buttons = $('a.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
+		}
+
 		for (let button of buttons) {
 			this.s.dt.button($(button).parent()[0]).active(false);
 		}
