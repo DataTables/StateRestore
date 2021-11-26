@@ -2,7 +2,7 @@
 <dt-api library="StateRestore">
 	<name>stateRestore.state()</name>
 	<summary>Get a state from StateRestore</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="function">
 		<signature>stateRestore.state()</signature>

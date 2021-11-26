@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>stateRestore.ajax</name>
 	<summary>Setup the loading and saving of states over ajax</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="boolean">
 		<description>

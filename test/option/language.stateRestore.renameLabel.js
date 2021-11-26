@@ -23,7 +23,7 @@ describe('stateRestore - options - language.stateRestore.renameLabel', function 
 		});
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 
 			expect($('.dtsr-confirmation-text').text()).toBe('New Name for State 1:');
 		});
@@ -42,7 +42,7 @@ describe('stateRestore - options - language.stateRestore.renameLabel', function 
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 
 			expect($('.dtsr-confirmation-text').text()).toBe('unit State 1 test');
 		});

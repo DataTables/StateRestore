@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>savedStatesCreate</name>
 	<summary>Extends `-button savedStates`, adding creating functionality to the collection normally displayed</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
 This button extends the `-button savedStates` button to include the `-button createState` button in the collection that is normally displayed when the `-button savedStates` button is pressed.

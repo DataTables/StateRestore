@@ -24,7 +24,7 @@ describe('stateRestore - options - language.buttons.renameState', function () {
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(2)').text()).toBe('Rename');
+			expect($('.dt-btn-split-drop-button:eq(1)').text()).toBe('Rename');
 		});
 
 		dt.html('basic');
@@ -42,7 +42,7 @@ describe('stateRestore - options - language.buttons.renameState', function () {
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(2)').text()).toBe('unit test');
+			expect($('.dt-btn-split-drop-button:eq(1)').text()).toBe('unit test');
 		});
 	});
 

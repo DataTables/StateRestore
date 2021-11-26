@@ -23,7 +23,7 @@ describe('stateRestore - options - language.stateRestore.duplicateError', functi
 		});
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 			$('.dtsr-confirmation-button').click();
 
 			expect($('.dtsr-modal-error').text()).toBe('A state with this name already exists.');
@@ -43,7 +43,7 @@ describe('stateRestore - options - language.stateRestore.duplicateError', functi
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-btn-split-drop-button:eq(1)').click();
 			$('.dtsr-confirmation-button').click();
 
 			expect($('.dtsr-modal-error').text()).toBe('unit test');

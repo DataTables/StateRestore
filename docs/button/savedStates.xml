@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>savedStates</name>
 	<summary>Collection used to provide interaction with the saved states</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This is a collection that contains a number of `-button stateRestore` buttons, one for each state that is being stored by `-init stateRestore`.

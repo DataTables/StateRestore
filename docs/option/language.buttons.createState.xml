@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>language.buttons.createState</name>
 	<summary>Set the text within the StateRestore creation button</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="string">
 		<description>

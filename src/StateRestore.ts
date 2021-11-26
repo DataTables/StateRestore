@@ -87,7 +87,7 @@ export interface IStateRestore {
 	state: string;
 }
 export default class StateRestore {
-	private static version = '0.0.1';
+	private static version = '1.0.0';
 
 	private static classes: IClasses = {
 		background: 'dtsr-background',
@@ -293,7 +293,7 @@ export default class StateRestore {
 		if (!this.c.ajax) {
 			removeFunction = () => {
 				try {
-					sessionStorage.removeItem(
+					localStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 
@@ -347,6 +347,86 @@ export default class StateRestore {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Compares the state held within this instance with a state that is passed in
+	 *
+	 * @param state The state that is to be compared against
+	 * @returns boolean indicating if the states match
+	 */
+	public compare(state: IState): boolean {
+		// Order
+		if (!this.c.saveState.order) {
+			state.order = undefined;
+		}
+
+		// Search
+		if (!this.c.saveState.search) {
+			state.search = undefined;
+		}
+
+		// Columns
+		if (this.c.saveState.columns && state.columns) {
+			for (let i=0, ien=state.columns.length ; i<ien ; i++) {
+
+				// Visibility
+				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.visible) {
+					state.columns[i].visible = undefined;
+				}
+
+				// Search
+				if (typeof this.c.saveState.columns !== 'boolean' && !this.c.saveState.columns.search) {
+					state.columns[i].search = undefined;
+				}
+			}
+		}
+		else if (!this.c.saveState.columns) {
+			state.columns = undefined;
+		}
+
+		// SearchBuilder
+		if (!this.c.saveState.searchBuilder) {
+			state.searchBuilder = undefined;
+		}
+
+		// SearchPanes
+		if (!this.c.saveState.searchPanes) {
+			state.searchPanes = undefined;
+		}
+
+		// Select
+		if (!this.c.saveState.select) {
+			state.select = undefined;
+		}
+
+		// ColReorder
+		if (!this.c.saveState.colReorder) {
+			state.ColReorder = undefined;
+		}
+
+		// Scroller
+		if (!this.c.saveState.scroller) {
+			state.scroller = undefined;
+			if((dataTable as any).Scroller !== undefined) {
+				state.start = 0;
+			}
+		}
+
+		// Paging
+		if (!this.c.saveState.paging) {
+			state.start = 0;
+		}
+
+		// Need to delete properties that we do not want to compare
+		delete state.time;
+		let copyState = this.s.savedState;
+		delete copyState.time;
+		delete copyState.c;
+		delete copyState.stateRestore;
+
+		// Perform a deep compare of the two state objects
+		return this._deepCompare(state, copyState);
 	}
 
 	/**
@@ -417,7 +497,7 @@ export default class StateRestore {
 
 			if (!this.c.ajax) {
 				try {
-					sessionStorage.removeItem(
+					localStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
 				}
@@ -496,8 +576,8 @@ export default class StateRestore {
 		let savedState: IState;
 
 		// If no state has been provided then create a new one from the current state
+		this.s.dt.state.save();
 		if (state === undefined) {
-			this.s.dt.state.save();
 			savedState = this.s.dt.state();
 		}
 		else {
@@ -584,7 +664,7 @@ export default class StateRestore {
 
 		if (!this.c.ajax) {
 			try {
-				sessionStorage.setItem(
+				localStorage.setItem(
 					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 					JSON.stringify(this.s.savedState)
 				);
@@ -608,6 +688,78 @@ export default class StateRestore {
 				this.c.ajax.call(this.s.dt, ajaxData);
 			}
 		}
+	}
+
+	/**
+	 * Performs a deep compare of two state objects, returning true if they match
+	 *
+	 * @param state1 The first object to compare
+	 * @param state2 The second object to compare
+	 * @returns boolean indicating if the objects match
+	 */
+	private _deepCompare(state1: any, state2: any): boolean {
+		// Put keys and states into arrays as this makes the later code easier to work
+		let states = [state1, state2];
+		let keys = [Object.keys(state1).sort(), Object.keys(state2).sort()];
+
+		// We want to remove any private properties within the states
+		for (let i = 0; i < keys[0].length; i++) {
+			if (keys[0][i].indexOf('_') === 0) {
+				keys[0].splice(i, 1);
+				i--;
+			}
+		}
+
+		for (let i = 0; i < keys[1].length; i++) {
+			if (keys[1][i].indexOf('_') === 0) {
+				keys[1].splice(i, 1);
+				i--;
+			}
+		}
+
+		// If the keys are not the same length
+		if (keys[0].length !== keys[1].length) {
+			// We first need to check that there are no undefined values lurking
+			// If there are then they are most likely present in the longer of the two arrays
+			let longer = keys[0].length > keys[1].length ? 0 : 1;
+
+			// Then go through this array and find the key that does not match
+			// And the value of the longer set is undefined
+			for (let i = 0; i < keys[longer].length; i++) {
+				if (keys[0][i] !== keys[1][i] && states[longer][keys[longer][i]] === undefined) {
+					// remove that key
+					keys[longer].splice(i,1);
+					i--;
+				}
+			}
+
+			// If the length of the keys still do not match at this point then they are different
+			if(keys[0].length !== keys[1].length) {
+				return false;
+			}
+		}
+
+		// Then each key and value has to be checked against each other
+		for(let i = 0; i < keys[0].length; i++) {
+			// If the keys dont equal, or their corresponding types are different we can return false
+			if (keys[0][i] !== keys[1][i] || typeof states[0][keys[0][i]] !== typeof states[1][keys[1][i]]) {
+				return false;
+			}
+
+			// If the type is an object then further deep comparisons are required
+			if (typeof states[0][keys[0][i]] === 'object') {
+				if (!this._deepCompare(states[0][keys[0][i]], states[1][keys[1][i]])) {
+					return false;
+				}
+			}
+			// Otherwise we can just check the value
+			else if(states[0][keys[0][i]] !== states[1][keys[1][i]]) {
+				return false;
+			}
+		}
+
+		// If we get all the way to here there are no differences so return true for this object
+		return true;
 	}
 
 	/**

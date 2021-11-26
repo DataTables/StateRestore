@@ -152,7 +152,7 @@ export interface IS {
 }
 
 export default class StateRestoreCollection {
-	private static version = '0.0.1';
+	private static version = '1.0.0';
 
 	private static classes: IClasses = {
 		background: 'dtsr-background',
@@ -564,6 +564,8 @@ export default class StateRestoreCollection {
 			this.destroy();
 		});
 
+		this.s.dt.on('draw.dtsr buttons-action.dtsr', () => this._findActive());
+
 		return this;
 	}
 
@@ -588,6 +590,8 @@ export default class StateRestoreCollection {
 			else if (currentIdentifiers.includes(id)) {
 				return 'duplicate';
 			}
+
+			this.s.dt.state.save();
 
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
@@ -819,11 +823,11 @@ export default class StateRestoreCollection {
 				if (this.c.save && state.c.save) {
 					split.push('updateState');
 				}
-				if (this.c.remove && state.c.remove) {
-					split.push('removeState');
-				}
 				if (this.c.save && state.c.save && this.c.rename && state.c.rename) {
 					split.push('renameState');
+				}
+				if (this.c.remove && state.c.remove) {
+					split.push('removeState');
 				}
 				if (split.length > 0) {
 					split.unshift('<h3>'+state.s.identifier+'</h3>');
@@ -1136,6 +1140,37 @@ export default class StateRestoreCollection {
 		this.s.dt.state.save();
 	}
 
+	private _findActive() {
+		// Make sure that the state is up to date
+		this.s.dt.state.save();
+		let currState = this.s.dt.state();
+
+		// Make all of the buttons inactive so that only any that match will be marked as active
+		let buttons = $('button.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
+
+		// Some of the styling libraries use a tags instead of buttons
+		if(buttons.length === 0) {
+			buttons = $('a.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
+		}
+
+		for (let button of buttons) {
+			this.s.dt.button($(button).parent()[0]).active(false);
+		}
+
+		// Go through all of the states comparing if their state is the same to the current one
+		for (let state of this.s.states) {
+			if (state.compare(currState)) {
+				// If so, find the corresponding button and mark it as active
+				for (let button of buttons) {
+					if ($(button).text() === state.s.identifier) {
+						this.s.dt.button($(button).parent()[0]).active(true);
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * This callback is called when a state is removed.
 	 * This removes the state from storage and also strips it's button from the container
@@ -1288,12 +1323,12 @@ export default class StateRestoreCollection {
 	 * Private method that checks for previously created states on initialisation
 	 */
 	private _searchForStates(): void {
-		let keys = Object.keys(sessionStorage);
+		let keys = Object.keys(localStorage);
 
 		for (let key of keys) {
 			// eslint-disable-next-line no-useless-escape
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
-				let loadedState = JSON.parse(sessionStorage.getItem(key));
+				let loadedState = JSON.parse(localStorage.getItem(key));
 
 				if (loadedState.stateRestore.isPreDefined) {
 					continue;

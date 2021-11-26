@@ -57,7 +57,7 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper button:eq(1)').click();
-			$('.dt-button-collection button:eq(2)').click();
+			$('.dt-button-collection button:eq(1)').click();
 
 			$('input.dtsr-input').val('unit test');
 
@@ -72,7 +72,7 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper button:eq(1)').click();
-			$('.dt-button-collection button:eq(1)').click();
+			$('.dt-button-collection button:eq(2)').click();
 
 			$('.dtsr-confirmation-button').click();
 

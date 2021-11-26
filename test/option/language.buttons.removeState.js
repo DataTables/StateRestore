@@ -24,7 +24,7 @@ describe('stateRestore - options - language.buttons.removeState', function () {
 		it('Check defaults', function () {
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(1)').text()).toBe('Remove');
+			expect($('.dt-btn-split-drop-button:eq(2)').text()).toBe('Remove');
 		});
 
 		dt.html('basic');
@@ -42,7 +42,7 @@ describe('stateRestore - options - language.buttons.removeState', function () {
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(1)').text()).toBe('unit test');
+			expect($('.dt-btn-split-drop-button:eq(2)').text()).toBe('unit test');
 		});
 	});
 

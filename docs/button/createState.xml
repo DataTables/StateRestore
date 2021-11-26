@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>createState</name>
 	<summary>Creates a new StateRestore instance, based off of the current state of the table.</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This button creates a new StateRestore instance and adds it to the `-button savedStates` collection. The state stored within this instance is based on the current state of the table.

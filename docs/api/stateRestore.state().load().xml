@@ -2,7 +2,7 @@
 <dt-api library="StateRestore">
 	<name>stateRestore.state().load()</name>
 	<summary>Load a state from StateRestore into the table</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="function">
 		<signature>stateRestore.state().load()</signature>
