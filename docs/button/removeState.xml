@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>removeState</name>
 	<summary>removes the relevant stateRestore instance.</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button removes the relevant `-init stateRestore` instance. This completely removes the state from storage, as well as removing the buttons that represent it.

@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>updateState</name>
 	<summary>Saves the state to the relevant stateRestore instance.</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button saves the current state of the table into the relevant `-init stateRestore` instance, updating the state that is stored within that instance. This means that when this state's load button is pressed, the table will return to the state it was in when this update button was pressed.

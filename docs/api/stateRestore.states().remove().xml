@@ -2,7 +2,7 @@
 <dt-api library="StateRestore">
 	<name>stateRestore.states().remove()</name>
 	<summary>Remove states from StateRestore</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="function">
 		<signature>stateRestore.states().remove()</signature>

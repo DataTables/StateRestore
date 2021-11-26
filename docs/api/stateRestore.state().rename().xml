@@ -2,7 +2,7 @@
 <dt-api library="StateRestore">
 	<name>stateRestore.state().rename()</name>
 	<summary>Rename a state from StateRestore</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="function">
 		<signature>stateRestore.state().rename()</signature>

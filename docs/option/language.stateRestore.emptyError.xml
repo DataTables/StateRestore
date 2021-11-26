@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>language.stateRestore.emptyError</name>
 	<summary>Set the error message shown when incorrectly renaming a state to an empty string</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="string">
 		<description>

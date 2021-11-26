@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>language.stateRestore</name>
 	<summary>Container for options for language</summary>
-	<since>stateRestore 0.0.1</since>
+	<since>stateRestore 1.0.0</since>
 
 	<type type="object">
 		<description>

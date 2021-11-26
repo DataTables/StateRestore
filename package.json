@@ -1,6 +1,6 @@
 {
   "name": "datatables.net-staterestore",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "StateRestore for DataTables",
   "main": "index.js",
   "directories": {

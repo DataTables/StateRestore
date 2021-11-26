@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>stateRestore.toggle</name>
 	<summary>Enable/Disable the saving for various datatables elements when saving a new state</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="object">
 		<description>

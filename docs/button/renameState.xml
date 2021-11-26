@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>renameState</name>
 	<summary>Renames the relevant stateRestore instance.</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button renames the relevant `-init stateRestore` instance. This changes the text value that is displayed within the button for this state, and also the value that would be used to refer to it when using API methods.

@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>language.stateRestore.removeConfirm</name>
 	<summary>Set the confirmation message shown within the StateRestore remove modal</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="string">
 		<description>

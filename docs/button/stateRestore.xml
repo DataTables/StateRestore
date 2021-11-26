@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>stateRestore</name>
 	<summary>A split button that represents and provides functionality for a saved state.</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This is used as the primary button within a split button that represents and provides functionality for a saved state. The primary function of the button loads the state it is representing into the table. This includes information such as ordering, searching and also the state of some extensions.

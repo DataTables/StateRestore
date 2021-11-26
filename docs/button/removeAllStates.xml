@@ -2,7 +2,7 @@
 <dt-button library="StateRestore">
 	<name>removeAllStates</name>
 	<summary>Removes all stateRestore instances.</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<description>
         This button can be displayed at the top level alongside the `-button savedStates` and `-button createState` buttons. This button removes all `-init stateRestore` instances. This completely removes the states from storage, as well as removing the buttons that represent them.

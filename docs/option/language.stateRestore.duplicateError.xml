@@ -2,7 +2,7 @@
 <dt-option library="StateRestore">
 	<name>language.stateRestore.duplicateError</name>
 	<summary>Set the error message shown when attempting to rename a state to one that already exists</summary>
-	<since>0.0.1</since>
+	<since>1.0.0</since>
 
 	<type type="string">
 		<description>
