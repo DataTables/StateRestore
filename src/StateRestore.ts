@@ -87,7 +87,7 @@ export interface IStateRestore {
 	state: string;
 }
 export default class StateRestore {
-	private static version = '0.0.1';
+	private static version = '1.0.0';
 
 	private static classes: IClasses = {
 		background: 'dtsr-background',
