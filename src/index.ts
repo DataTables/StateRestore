@@ -1,11 +1,11 @@
-/*! StateRestore 1.0.0
+/*! StateRestore 1.0.1
  * 2019-2020 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     StateRestore
  * @description StateRestore extension for DataTables
- * @version     1.0.0
+ * @version     1.0.1
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @copyright   Copyright 2019-2020 SpryMedia Ltd.
  *
