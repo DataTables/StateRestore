@@ -564,7 +564,7 @@ export default class StateRestoreCollection {
 			this.destroy();
 		});
 
-		this.s.dt.on('draw.dtsr buttons-action.dtsr', () => this._findActive());
+		this.s.dt.on('draw.dtsr buttons-action.dtsr', () => this.findActive());
 
 		return this;
 	}
@@ -683,6 +683,51 @@ export default class StateRestoreCollection {
 
 		this.s.dt.off('.dtsr');
 		$(this.s.dt.table().node()).off('.dtsr');
+	}
+
+	/**
+	 * Identifies active states and updates their button to reflect this.
+	 *
+	 * @returns An array containing objects with the details of currently active states
+	 */
+	public findActive() {
+		// Make sure that the state is up to date
+		this.s.dt.state.save();
+		let currState = this.s.dt.state();
+
+		// Make all of the buttons inactive so that only any that match will be marked as active
+		let buttons = $('button.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
+
+		// Some of the styling libraries use a tags instead of buttons
+		if(buttons.length === 0) {
+			buttons = $('a.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
+		}
+
+		for (let button of buttons) {
+			this.s.dt.button($(button).parent()[0]).active(false);
+		}
+
+		let results = [];
+
+		// Go through all of the states comparing if their state is the same to the current one
+		for (let state of this.s.states) {
+			if (state.compare(currState)) {
+				results.push({
+					data: state.s.savedState,
+					name: state.s.identifier
+				});
+				// If so, find the corresponding button and mark it as active
+				for (let button of buttons) {
+					if ($(button).text() === state.s.identifier) {
+
+						this.s.dt.button($(button).parent()[0]).active(true);
+						break;
+					}
+				}
+			}
+		}
+
+		return results;
 	}
 
 	/**
@@ -1138,37 +1183,6 @@ export default class StateRestoreCollection {
 
 		// Need to save the state before the focus is lost when the modal is interacted with
 		this.s.dt.state.save();
-	}
-
-	private _findActive() {
-		// Make sure that the state is up to date
-		this.s.dt.state.save();
-		let currState = this.s.dt.state();
-
-		// Make all of the buttons inactive so that only any that match will be marked as active
-		let buttons = $('button.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
-
-		// Some of the styling libraries use a tags instead of buttons
-		if(buttons.length === 0) {
-			buttons = $('a.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
-		}
-
-		for (let button of buttons) {
-			this.s.dt.button($(button).parent()[0]).active(false);
-		}
-
-		// Go through all of the states comparing if their state is the same to the current one
-		for (let state of this.s.states) {
-			if (state.compare(currState)) {
-				// If so, find the corresponding button and mark it as active
-				for (let button of buttons) {
-					if ($(button).text() === state.s.identifier) {
-						this.s.dt.button($(button).parent()[0]).active(true);
-						break;
-					}
-				}
-			}
-		}
 	}
 
 	/**

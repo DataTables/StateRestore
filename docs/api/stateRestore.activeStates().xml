@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.activeStates()</name>
+	<summary>Get the details of all of the currently active states</summary>
+	<since>1.0.1</since>
+
+	<type type="function">
+		<signature>stateRestore.activeStates()</signature>
+		<description>Retrieves a stored state from the StateRestore extension.</description>
+		<returns type="DataTablesApi">Returns a DataTables API containing an array of details about the states that are currently active.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+This method provides the ability to retrieve details about all of the currently active states that are managed by the `-init stateRestore` extension.
+
+The method is plural as it is possible to have multiple states that are active at the same time.
+
+A Datatables API is returned containing all of the active states as objects. Each object contains the following properties.
+
+* `name` - The name of the state.
+* `data` - The data that is used to implement the state.
+	]]>
+
+	</description>
+
+	<example title="Get the currently active states"><![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createState', 'savedStates']
+    });
+
+    table.stateRestore.activeStates();
+});
+]]></example>
+
+</dt-api>

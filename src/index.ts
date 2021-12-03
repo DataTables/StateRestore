@@ -189,6 +189,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		return this;
 	});
 
+	apiRegister('stateRestore.activeStates()', function() {
+		this.length = 0;
+		this.push(...this.context[0]._stateRestore.findActive());
+		return this;
+	});
+
 	$.fn.dataTable.ext.buttons.stateRestore = {
 		action(e, dt, node, config) {
 			config._stateRestore.load();

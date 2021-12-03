@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: '<"activeStates">Blfrtip',
+        buttons:['createState', 'savedStates']
+    });
+
+    table.on('draw', function() {
+        var active = table.stateRestore.activeStates();
+        var activeString = 'Active States: ';
+        if(active.length > 0) {
+            activeString += active[0].name;
+            for(var i = 1; i < active.length; i++) {
+                activeString += ', '+active[i].name;
+            }
+        }
+        else {
+            activeString += "No active state";
+        }
+        $('div.activeStates').text(activeString)
+    })
+
+    table.draw();
+});
+]]>
+</js>
+
+<title lib="stateRestore">Label to Display Active States</title>
+
+<info><![CDATA[
+This example shows how the `-api stateRestore.activeStates()` api method can be used to display the names of the active states in a label on the page.
+
+You can use the data returned by `-api stateRestore.activeStates()` to display the current states anywhere on the page. The method also returns the state data that is required to implement the states.
+]]></info>
+
+</dt-example>
