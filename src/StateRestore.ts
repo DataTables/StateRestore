@@ -729,9 +729,8 @@ export default class StateRestore {
 			let longer = keys[0].length > keys[1].length ? 0 : 1;
 
 			// Then go through this array and find the key that does not match
-			// And the value of the longer set is undefined
 			for (let i = 0; i < keys[longer].length; i++) {
-				if (keys[0][i] !== keys[1][i] && states[longer][keys[longer][i]] === undefined) {
+				if (keys[0][i] !== keys[1][i]) {
 					// remove that key
 					keys[longer].splice(i,1);
 					i--;
