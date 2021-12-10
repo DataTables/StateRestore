@@ -22,7 +22,28 @@ describe('stateRestore - api - stateRestore.activeStates()', function () {
 	describe('Functional tests', function () {
 		dt.html('basic');
 		it('Behaves when no states', function () {
-			table = $('#example').DataTable();
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: [
+					'createState',
+					{
+						extend: 'savedStates',
+						config: {
+							preDefined: {
+								predefined: {
+									order: [[1, 'asc']],
+									search: {
+										search: 'London',
+										smart: true,
+										regex: false,
+										caseInsensitive: true
+									}
+								}
+							}
+						}
+					}
+				]
+			});
 			states = table.stateRestore.activeStates();
 
 			expect(states.length).toBe(0);
@@ -53,6 +74,13 @@ describe('stateRestore - api - stateRestore.activeStates()', function () {
 
 			expect(states.length).toBe(2);
 			expect(states[0].name).toBe('unit test');
+			expect(states[1].name).toBe('unit test1');
+		});
+		it('Can return pre-defined states', function () {
+			table.stateRestore.state('predefined').load();
+			states = table.stateRestore.activeStates();
+
+			expect(states.length).toBe(1);
 			expect(states[1].name).toBe('unit test1');
 		});
 	});
