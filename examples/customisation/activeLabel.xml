@@ -34,7 +34,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Label to Display Active States</title>
 
 <info><![CDATA[
-This example shows how the `-api stateRestore.activeStates()` api method can be used to display the names of the active states in a label on the page.
+This example shows how the `-api stateRestore.activeStates()` API method can be used to display the names of the active states in a label on the page.
 
 You can use the data returned by `-api stateRestore.activeStates()` to display the current states anywhere on the page. The method also returns the state data that is required to implement the states.
 ]]></info>
