@@ -15,30 +15,46 @@ describe('stateRestore - api - stateRestore.activeStates()', function () {
 			expect(typeof table.stateRestore.activeStates).toBe('function');
 		});
 		it('Returns an API instance', function () {
-			// Needed because of DD-2391
-			// table.stateRestore.state.add('unit test');
 			expect(table.stateRestore.activeStates() instanceof $.fn.dataTable.Api).toBe(true);
 		});
 	});
 
 	describe('Functional tests', function () {
 		dt.html('basic');
-		// it('Behaves when no states', function () {
-		// 	table = $('#example').DataTable();
+		it('Behaves when no states', function () {
+			table = $('#example').DataTable();
+			states = table.stateRestore.activeStates();
 
-		// 	// See above
-		// });
+			expect(states.length).toBe(0);
+		});
 		it('Single state specified', function () {
 			table.stateRestore.state.add('unit test');
 			states = table.stateRestore.activeStates();
 
-			console.log(JSON.stringify(states[0]))
+			expect(states.length).toBe(1);
+			expect(states[0].name).toBe('unit test');
+		});
+		it('No state is not on intitial page', function () {
+			table.page(1).draw(false);
+			states = table.stateRestore.activeStates();
+
+			expect(states.length).toBe(0);
+		});
+		it('... but is if return to intitial page', function () {
+			table.draw();
+			states = table.stateRestore.activeStates();
 
 			expect(states.length).toBe(1);
 			expect(states[0].name).toBe('unit test');
-			//expect(states[1].s.identifier).toBe('unit test4');
 		});
+		it('Can return multiple states', function () {
+			table.stateRestore.state.add('unit test1');
+			states = table.stateRestore.activeStates();
 
+			expect(states.length).toBe(2);
+			expect(states[0].name).toBe('unit test');
+			expect(states[1].name).toBe('unit test1');
+		});
 	});
 
 	describe('Tidy up', function () {
