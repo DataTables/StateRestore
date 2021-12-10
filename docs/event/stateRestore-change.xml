@@ -16,7 +16,7 @@ This event is triggered whenever one of the following occurs to a state within S
 * A state is renamed.
 * A state is updated
 
-This has several uses, but the main one for us is to update labels that include which state is currently active. You can see this in action in [this example](//extensions/StateRestore/examples/customisation/activeLabel.html).
+This has several uses, but the main one for us is to update labels that include which state is currently active. You can see this in action in [this example](//datatables.net/extensions/StateRestore/examples/customisation/activeLabel.html).
 
 The event is triggered on the original table element.
 	</description>
