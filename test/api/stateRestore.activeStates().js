@@ -16,30 +16,30 @@ describe('stateRestore - api - stateRestore.activeStates()', function () {
 		});
 		it('Returns an API instance', function () {
 			// Needed because of DD-2391
-			table.stateRestore.state.add('unit test');
+			// table.stateRestore.state.add('unit test');
 			expect(table.stateRestore.activeStates() instanceof $.fn.dataTable.Api).toBe(true);
 		});
 	});
 
-	// describe('Functional tests', function () {
-	// 	dt.html('basic');
-	// 	// it('Behaves when no states', function () {
-	// 	// 	table = $('#example').DataTable();
+	describe('Functional tests', function () {
+		dt.html('basic');
+		// it('Behaves when no states', function () {
+		// 	table = $('#example').DataTable();
 
-	// 	// 	// See above
-	// 	// });
-	// 	it('Single state specified', function () {
-	// 		// table.stateRestore.state.add('unit test');
-	// 		states = table.stateRestore.activeStates();
+		// 	// See above
+		// });
+		it('Single state specified', function () {
+			table.stateRestore.state.add('unit test');
+			states = table.stateRestore.activeStates();
 
-	// 		console.log(JSON.stringify(states[0]))
+			console.log(JSON.stringify(states[0]))
 
-	// 		expect(states.length).toBe(1);
-	// 		expect(states[0].name).toBe('unit test');
-	// 		// expect(states[1].s.identifier).toBe('unit test4');
-	// 	});
+			expect(states.length).toBe(1);
+			expect(states[0].name).toBe('unit test');
+			//expect(states[1].s.identifier).toBe('unit test4');
+		});
 
-	// });
+	});
 
 	describe('Tidy up', function () {
 		dt.html('basic');

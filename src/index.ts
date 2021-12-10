@@ -191,7 +191,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	apiRegister('stateRestore.activeStates()', function() {
 		this.length = 0;
-		this.push(...this.context[0]._stateRestore.findActive());
+
+		if (this.context[0]._stateRestore) {
+			this.push(...this.context[0]._stateRestore.findActive());
+		}
+
 		return this;
 	});
 
