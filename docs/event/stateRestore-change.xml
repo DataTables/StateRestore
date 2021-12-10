@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-event library="StateRestore">
+	<name>stateRestore-change</name>
+	<summary>Triggered when a state within StateRestore has been added, removed or changed</summary>
+	<since>1.0.0</since>
+
+	<type type="event">
+		<description>Triggered when a StateRestore state has been added, removed or changed.</description>
+	</type>
+
+	<description>
+This event is triggered whenever one of the following occurs to a state within StateRestore.
+
+* A new state is added
+* A state is removed
+* A state is renamed.
+* A state is updated
+
+This has several uses, but the main one for us is to update labels that include which state is currently active. You can see this in action in [this example](//extensions/StateRestore/examples/customisation/activeLabel.html).
+
+The event is triggered on the original table element.
+	</description>
+
+	<example title="Update an active label when a change occurs"><![CDATA[
+
+    table.on('draw stateRestore-change', function() {
+        var active = table.stateRestore.activeStates();
+        var activeString = 'Active States: ';
+        if(active.length > 0) {
+            activeString += active[0].name;
+            for(var i = 1; i < active.length; i++) {
+                activeString += ', '+active[i].name;
+            }
+        }
+        else {
+            activeString += "No active state";
+        }
+        $('div.activeStates').text(activeString)
+    })
+
+]]></example>
+</dt-event>

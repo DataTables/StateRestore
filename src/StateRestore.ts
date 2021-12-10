@@ -298,6 +298,7 @@ export default class StateRestore {
 					);
 
 					this.dom.confirmation.trigger('dtsr-remove');
+					$(this.s.dt.table().node()).trigger('stateRestore-change');
 				}
 				catch (e) {
 					return 'remove';
@@ -316,6 +317,7 @@ export default class StateRestore {
 					type: 'POST',
 					url: this.c.ajax
 				});
+				$(this.s.dt.table().node()).trigger('stateRestore-change');
 				return true;
 			};
 		}
@@ -325,6 +327,7 @@ export default class StateRestore {
 				if (typeof this.c.ajax === 'function') {
 					this.c.ajax.call(this.s.dt, ajaxData);
 				}
+				$(this.s.dt.table().node()).trigger('stateRestore-change');
 				return true;
 			};
 		}
@@ -688,6 +691,8 @@ export default class StateRestore {
 				this.c.ajax.call(this.s.dt, ajaxData);
 			}
 		}
+
+		$(this.s.dt.table().node()).trigger('stateRestore-change');
 	}
 
 	/**

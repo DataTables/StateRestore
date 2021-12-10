@@ -607,6 +607,8 @@ export default class StateRestoreCollection {
 			this.s.states.push(newState);
 			this._collectionRebuild();
 
+			$(this.s.dt.table().node()).trigger('stateRestore-change');
+
 			return true;
 		};
 

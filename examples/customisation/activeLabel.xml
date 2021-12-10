@@ -11,7 +11,7 @@ $(document).ready(function() {
         buttons:['createState', 'savedStates']
     });
 
-    table.on('draw', function() {
+    table.on('draw stateRestore-change', function() {
         var active = table.stateRestore.activeStates();
         var activeString = 'Active States: ';
         if(active.length > 0) {
