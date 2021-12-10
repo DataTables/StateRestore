@@ -190,10 +190,17 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	});
 
 	apiRegister('stateRestore.activeStates()', function() {
+		let ctx = this.context[0];
 		this.length = 0;
 
-		if (this.context[0]._stateRestore) {
-			this.push(...this.context[0]._stateRestore.findActive());
+		if (!ctx._stateRestore) {
+			let api = $.fn.DataTable.Api(ctx);
+			let src = new $.fn.dataTable.StateRestoreCollection(api, {});
+			_stateRegen(api, src);
+		}
+
+		if (ctx._stateRestore) {
+			this.push(...ctx._stateRestore.findActive());
 		}
 
 		return this;
