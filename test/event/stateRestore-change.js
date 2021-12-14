@@ -44,8 +44,6 @@ describe('stateRestore - event - stateRestore-change', function () {
 		it('Create', function () {
 			table.stateRestore.state.add('unit test1');
 
-			// DD-2398
-			count = 1;
 			expect(count).toBe(1);
 		});
 		it('Rename', function () {
