@@ -459,6 +459,20 @@ export default class StateRestore {
 
 		// Call the internal datatables function to implement the state on the table
 		$.fn.dataTable.ext.oApi._fnImplementState(settings, loadedState, () => {
+			let correctPaging = (e, preSettings) => {
+				setTimeout(() => {
+					let currpage = preSettings._iDisplayStart / preSettings._iDisplayLength;
+					let intendedPage = loadedState.start / loadedState.length;
+
+					// If the paging is incorrect then we have to set it again so that it is correct
+					// This happens when a searchpanes filter is removed
+					// This has to happen in a timeout because searchpanes only deselects after a timeout
+					if(currpage >= 0 && intendedPage >= 0 && currpage !== intendedPage) {
+						this.s.dt.page(intendedPage).draw(false);
+					}
+				}, 50);
+			};
+			this.s.dt.one('preDraw', correctPaging);
 			this.s.dt.draw(false);
 		});
 
