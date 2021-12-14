@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore searchpanes select"/>
+
+<js lib="jquery datatables staterestore buttons searchpanes select">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'PBlfrtip',
+        buttons:[
+            'createState',
+            {
+                extend: 'savedStates',
+                config: {
+                    preDefined: {
+                        "London SP": {
+                            searchPanes: {
+                                selectionList: [
+                                    {
+                                        column: 2,
+                                        rows: ['London']
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }        
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Predefined SearchPanes State</title>
+
+<info><![CDATA[
+This example shows how the `-init stateRestore` extension behaves alongside the `-init searchPanes` extension. The selections made in SearchPanes are able to be stored and restored when using StateRestore.
+
+This example also features a predefined state that includes a searchpanes filter. The `selectionList` property within the searchPanes state is an array that takes the same structure as the `-init searchPanes.preDefined`.
+]]></info>
+
+</dt-example>
