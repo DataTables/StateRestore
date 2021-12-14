@@ -26,6 +26,7 @@
             scroller: 'Scroll Position:',
             search: 'Search:',
             searchBuilder: 'SearchBuilder:',
+            searchPanes: 'SearchPanes:',
             select: 'Select:',
             title: 'Create New State',
         }

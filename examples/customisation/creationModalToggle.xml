@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="2">
 
-<css lib="datatables buttons staterestore searchbuilder datetime select scroller"/>
+<css lib="datatables buttons staterestore searchbuilder searchpanes datetime select scroller"/>
 
-<js lib="jquery datatables staterestore buttons searchbuilder datetime select scroller">
+<js lib="jquery datatables staterestore buttons searchbuilder searchpanes datetime select scroller">
 <![CDATA[
 $(document).ready(function() {
     $('#example').DataTable({
-        dom: 'QBlfrtip',
+        dom: 'PQBlfrtip',
         ajax:           "../data/2500.txt",
         deferRender:    true,
         keys: true,
@@ -27,6 +27,7 @@ $(document).ready(function() {
                         scroller: true,
                         search: true,
                         searchBuilder: true,
+                        searchPanes: true,
                         select: true
                     }
                 }
@@ -46,6 +47,7 @@ This example shows how the `-init stateRestore.toggle` option can be used to dec
 This example includes all of the extensions that have a state saving element built into them. These are...
 
 * SearchBuilder
+* SearchPanes
 * Scroller
 * Select
 ]]></info>

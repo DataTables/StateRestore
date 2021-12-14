@@ -54,6 +54,7 @@ $(document).ready(function() {
 <related type="option">language.stateRestore.creationModal.scroller</related>
 <related type="option">language.stateRestore.creationModal.search</related>
 <related type="option">language.stateRestore.creationModal.searchBuilder</related>
+<related type="option">language.stateRestore.creationModal.searchPanes</related>
 <related type="option">language.stateRestore.creationModal.select</related>
 <related type="option">language.stateRestore.creationModal.title</related>
 

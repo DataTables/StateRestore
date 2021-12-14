@@ -24,6 +24,7 @@
             scroller: false,
             search: false,
             searchBuilder: false,
+            searchPanes: false,
             select: false
         }
         ```
@@ -79,6 +80,10 @@ This option allows for the saving of the `-init searchBuilder` state to be enabl
 
 As default the value is `true`, meaning that the user can decide whether the `-init searchBuilder` state will be saved. If this option is set to `false`, then the `-init searchBuilder` state saving will not be given as an option to the user on creation.
 
+### searchPanes
+This option allows for the saving of the `-init searchPanes` state to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init searchPanes` extensions are in use.
+
+As default the value is `true`, meaning that the user can decide whether the `-init searchPanes` state will be saved. If this option is set to `false`, then the `-init searchPanes` state saving will not be given as an option to the user on creation.
 
 ### select
 This option allows for the saving of the `-init select` state to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init select` extensions are in use.
