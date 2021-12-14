@@ -882,6 +882,9 @@ export default class StateRestoreCollection {
 
 				stateButtons.push({
 					_stateRestore: state,
+					attr: {
+						title: state.s.identifier
+					},
 					config: {
 						split
 					},

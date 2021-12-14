@@ -366,6 +366,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 				stateButtons.push({
 					_stateRestore: state,
+					attr: {
+						title: state.s.identifier
+					},
 					config: {
 						split
 					},
@@ -479,6 +482,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 				stateButtons.push({
 					_stateRestore: state,
+					attr: {
+						title: state.s.identifier
+					},
 					config: {
 						split
 					},
