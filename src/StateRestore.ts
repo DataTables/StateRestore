@@ -770,13 +770,22 @@ export default class StateRestore {
 
 			// Then go through this array and find the key that does not match
 			for (let i = 0; i < keys[longer].length; i++) {
-				if (
-					keys[0][i] !== keys[1][i] &&
-					(!(longer === 1 && this.s.isPreDefined) || states[longer][keys[longer][i]] === undefined)
-				) {
-					// remove that key
-					keys[longer].splice(i,1);
-					i--;
+				if (keys[0][i] !== keys[1][i]) {
+					if(this.s.isPreDefined) {
+						if(longer === 1 && states[0][keys[0][i]] === undefined) {
+							return false;
+						}
+						else {
+							// remove that key
+							keys[longer].splice(i,1);
+							i--;
+						}
+					}
+					else if(states[longer][keys[longer][i]] === undefined) {
+						// remove that key
+						keys[longer].splice(i,1);
+						i--;
+					}
 				}
 			}
 
