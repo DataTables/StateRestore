@@ -38,7 +38,7 @@ $(document).ready(function() {
 <info><![CDATA[
 This example shows how the `-init stateRestore` extension behaves alongside the `-init searchPanes` extension. The selections made in SearchPanes are able to be stored and restored when using StateRestore.
 
-This example also features a predefined state that includes a searchpanes filter. The `selectionList` property within the searchPanes state is an array that takes the same structure as the `-init searchPanes.preDefined`.
+This example also features a predefined state that includes a searchpanes filter. The `selectionList` property within the searchPanes state is an array that takes the same structure as the `-init searchPanes.preSelect`.
 ]]></info>
 
 </dt-example>
