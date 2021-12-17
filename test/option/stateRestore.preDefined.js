@@ -49,7 +49,7 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 		});
 
 		dt.html('basic');
-		it('Page length', function () {
+		it('Page length', function (done) {
 			$.fx.off = true; // disables lightbox animation
 			table = $('#example').DataTable({
 				dom: 'Blfrtip',
@@ -71,9 +71,12 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-			expect($('thead tr:eq(0) th').length).toBe(6);
-			expect($('tbody tr').length).toBe(5);
-			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
+			setTimeout(() => {
+				expect($('thead tr:eq(0) th').length).toBe(6);
+				expect($('tbody tr').length).toBe(5);
+				expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
+				done();
+			}, 100)
 		});
 
 		dt.html('basic');
