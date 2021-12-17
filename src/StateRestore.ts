@@ -721,9 +721,31 @@ export default class StateRestore {
 		let states = [state1, state2];
 		let keys = [Object.keys(state1).sort(), Object.keys(state2).sort()];
 
+		// If scroller is included then we need to remove the start value
+		//  as it can be different but yield the same results
+		if (keys[0].includes('scroller')) {
+			let startIdx = keys[0].indexOf('start');
+			if (startIdx) {
+				keys[0].splice(startIdx, 1);
+			}
+		}
+
+		if (keys[1].includes('scroller')) {
+			let startIdx = keys[1].indexOf('start');
+			if (startIdx) {
+				keys[1].splice(startIdx, 1);
+			}
+		}
+
 		// We want to remove any private properties within the states
 		for (let i = 0; i < keys[0].length; i++) {
 			if (keys[0][i].indexOf('_') === 0) {
+				keys[0].splice(i, 1);
+				i--;
+			}
+			// If scroller is included then we need to remove the following values
+			//  as they can be different but yield the same results
+			if (keys[0][i] === 'baseRowTop' || keys[0][i] === 'baseScrollTop' || keys[0][i] === 'scrollTop') {
 				keys[0].splice(i, 1);
 				i--;
 			}
@@ -731,6 +753,10 @@ export default class StateRestore {
 
 		for (let i = 0; i < keys[1].length; i++) {
 			if (keys[1][i].indexOf('_') === 0) {
+				keys[1].splice(i, 1);
+				i--;
+			}
+			if (keys[1][i] === 'baseRowTop' || keys[1][i] === 'baseScrollTop' || keys[1][i] === 'scrollTop') {
 				keys[1].splice(i, 1);
 				i--;
 			}
@@ -744,7 +770,10 @@ export default class StateRestore {
 
 			// Then go through this array and find the key that does not match
 			for (let i = 0; i < keys[longer].length; i++) {
-				if (keys[0][i] !== keys[1][i]) {
+				if (
+					keys[0][i] !== keys[1][i] &&
+					(!(longer === 1 && this.s.isPreDefined) || states[longer][keys[longer][i]] === undefined)
+				) {
 					// remove that key
 					keys[longer].splice(i,1);
 					i--;
@@ -767,6 +796,11 @@ export default class StateRestore {
 			// If the type is an object then further deep comparisons are required
 			if (typeof states[0][keys[0][i]] === 'object') {
 				if (!this._deepCompare(states[0][keys[0][i]], states[1][keys[1][i]])) {
+					return false;
+				}
+			}
+			else if(typeof states[0][keys[0][i]] === 'number' && typeof states[1][keys[1][i]] === 'number') {
+				if(Math.round(states[0][keys[0][i]]) !== Math.round(states[1][keys[1][i]])) {
 					return false;
 				}
 			}
