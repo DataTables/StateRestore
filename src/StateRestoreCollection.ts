@@ -49,6 +49,7 @@ export interface IClasses {
 
 export interface IDom {
 	background: JQuery<HTMLElement>;
+	closeButton: JQuery<HTMLElement>;
 	colReorderToggle: JQuery<HTMLElement>;
 	columnsSearchToggle: JQuery<HTMLElement>;
 	columnsVisibleToggle: JQuery<HTMLElement>;
@@ -80,6 +81,7 @@ export interface IDefaults {
 	create: boolean;
 	creationModal: boolean;
 	i18n: II18n;
+	modalCloseButton: boolean;
 	preDefined?: {
 		[keys: string]: any;
 	};
@@ -230,6 +232,7 @@ export default class StateRestoreCollection {
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
 		},
+		modalCloseButton: true,
 		preDefined: {},
 		remove: true,
 		rename: true,
@@ -315,6 +318,7 @@ export default class StateRestoreCollection {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
+			closeButton: $('<div class="dtsr-popover-close">x</div>'),
 			colReorderToggle: $(
 				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
 					'<input type="checkbox" class="'+
@@ -1146,6 +1150,11 @@ export default class StateRestoreCollection {
 				background.click();
 			}
 		};
+
+		if (this.c.modalCloseButton) {
+			this.dom.creation.append(this.dom.closeButton);
+			this.dom.closeButton.on('click', () => background.click());
+		}
 
 		creationButton.on('click', () => {
 			// Get the values of the checkBoxes

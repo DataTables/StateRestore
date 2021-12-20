@@ -32,6 +32,7 @@ export interface IS {
 
 export interface IDom {
 	background: JQuery<HTMLElement>;
+	closeButton: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
 	confirmationTitleRow: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
@@ -140,6 +141,7 @@ export default class StateRestore {
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State',
 		},
+		modalCloseButton: true,
 		remove: true,
 		rename: true,
 		save: true,
@@ -216,6 +218,7 @@ export default class StateRestore {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
+			closeButton: $('<div class="dtsr-popover-close">x</div>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
 			dtContainer: $(this.s.dt.table().container()),
@@ -884,6 +887,11 @@ export default class StateRestore {
 				background.click();
 			}
 		};
+
+		if (this.c.modalCloseButton) {
+			this.dom.confirmation.append(this.dom.closeButton);
+			this.dom.closeButton.on('click', () => background.click());
+		}
 
 		// When the button is clicked, call the appropriate action,
 		// remove the background and modal from the screen and unbind the keyup event.
