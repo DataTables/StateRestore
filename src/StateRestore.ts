@@ -10,6 +10,7 @@ export function setJQuery(jq) {
 
 export interface IClasses {
 	background: string;
+	closeButton: string;
 	confirmation: string;
 	confirmationButton: string;
 	confirmationButtons: string;
@@ -92,6 +93,7 @@ export default class StateRestore {
 
 	private static classes: IClasses = {
 		background: 'dtsr-background',
+		closeButton: 'dtsr-popover-close',
 		confirmation: 'dtsr-confirmation',
 		confirmationButton: 'dtsr-confirmation-button',
 		confirmationButtons: 'dtsr-confirmation-buttons',
@@ -218,7 +220,7 @@ export default class StateRestore {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
-			closeButton: $('<div class="dtsr-popover-close">x</div>'),
+			closeButton: $('<div class="'+this.classes.closeButton+'">x</div>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
 			dtContainer: $(this.s.dt.table().container()),

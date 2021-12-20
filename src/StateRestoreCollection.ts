@@ -13,6 +13,7 @@ export interface IClasses {
 	checkBox: string;
 	checkLabel: string;
 	checkRow: string;
+	closeButton: string;
 	colReorderToggle: string;
 	columnsSearchToggle: string;
 	columnsVisibleToggle: string;
@@ -162,6 +163,7 @@ export default class StateRestoreCollection {
 		checkBox: 'dtsr-check-box',
 		checkLabel: 'dtsr-check-label',
 		checkRow: 'dtsr-check-row',
+		closeButton: 'dtsr-popover-close',
 		colReorderToggle: 'dtsr-colReorder-toggle',
 		columnsSearchToggle: 'dtsr-columns-search-toggle',
 		columnsVisibleToggle: 'dtsr-columns-visible-toggle',
@@ -318,7 +320,7 @@ export default class StateRestoreCollection {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
-			closeButton: $('<div class="dtsr-popover-close">x</div>'),
+			closeButton: $('<div class="'+this.classes.closeButton+'">x</div>'),
 			colReorderToggle: $(
 				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
 					'<input type="checkbox" class="'+
