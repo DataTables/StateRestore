@@ -87,6 +87,7 @@ export interface IDefaults {
 	rename: boolean;
 	save: boolean;
 	saveState: ISaveState;
+	splitSecondaries: any[];
 	toggle: ISaveState;
 }
 
@@ -247,6 +248,11 @@ export default class StateRestoreCollection {
 			searchPanes: true,
 			select: true
 		},
+		splitSecondaries: [
+			'updateState',
+			'renameState',
+			'removeState'
+		],
 		toggle: {
 			colReorder: false,
 			columns:{
@@ -863,19 +869,23 @@ export default class StateRestoreCollection {
 
 			// Construct the split property of each button
 			for (let state of this.s.states) {
-				let split = [];
-
-				if (this.c.save && state.c.save) {
-					split.push('updateState');
+				if (this.c.splitSecondaries.includes('updateState') && (!this.c.save || !state.c.save)) {
+					this.c.splitSecondaries.splice(this.c.splitSecondaries.indexOf('updateState'), 1);
 				}
-				if (this.c.save && state.c.save && this.c.rename && state.c.rename) {
-					split.push('renameState');
+				if (
+					this.c.splitSecondaries.includes('renameState') &&
+					(!this.c.save || !state.c.save || !this.c.rename || !state.c.rename)
+				) {
+					this.c.splitSecondaries.splice(this.c.splitSecondaries.indexOf('renameState'), 1);
 				}
-				if (this.c.remove && state.c.remove) {
-					split.push('removeState');
+				if (this.c.splitSecondaries.includes('removeState') && (!this.c.remove || !state.c.remove)) {
+					this.c.splitSecondaries.splice(this.c.splitSecondaries.indexOf('removeState'), 1);
 				}
-				if (split.length > 0) {
-					split.unshift('<h3>'+state.s.identifier+'</h3>');
+				if (
+					this.c.splitSecondaries.length > 0 &&
+					!this.c.splitSecondaries.includes('<h3>'+state.s.identifier+'</h3>')
+				) {
+					this.c.splitSecondaries.unshift('<h3>'+state.s.identifier+'</h3>');
 				}
 
 				stateButtons.push({
@@ -884,7 +894,7 @@ export default class StateRestoreCollection {
 						title: state.s.identifier
 					},
 					config: {
-						split
+						split: this.c.splitSecondaries
 					},
 					extend: 'stateRestore',
 					text: state.s.identifier

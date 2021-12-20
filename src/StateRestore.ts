@@ -157,6 +157,11 @@ export default class StateRestore {
 			searchPanes: true,
 			select: true
 		},
+		splitSecondaries: [
+			'updateState',
+			'renameState',
+			'removeState'
+		],
 		toggle: {
 			colReorder: false,
 			columns:{

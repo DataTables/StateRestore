@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore">
+<![CDATA[
+    .red-border {
+        border: 2px solid red !important;
+    }
+]]>
+</css>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:[
+            {
+                extend: 'savedStates',
+                config: {
+                    splitSecondaries: [
+                        'updateState',
+                        'removeState',
+                        '<h3>Custom HTML!</h3>',
+                        'pdf',
+                        {
+                            extend: 'renameState',
+                            className: 'red-border'
+                        }
+                    ]
+                }
+            },
+            'createState'
+        ]
+    });
+});
+]]>
+</js>
+
+<title lib="stateRestore">Custom Split Buttons</title>
+
+<info><![CDATA[
+This example shows how the secondary buttons within the StateRestore split buttons can be set and customised. The `-init stateRestore.splitSecondaries` initialisation option that takes the same values as the `-init buttons.buttons.split` initialisation option.
+
+This allows custom buttons to be added to the split buttons and also customisations to be made to the currently existing buttons.
+]]></info>
+
+</dt-example>
