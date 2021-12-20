@@ -349,32 +349,33 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			}
 
 			for (let state of states) {
-				if (stateRestoreOpts.splitSecondaries.includes('updateState') && (!stateRestoreOpts.save)) {
-					stateRestoreOpts.splitSecondaries.splice(
-						stateRestoreOpts.splitSecondaries.indexOf('updateState'),
+				let split = Object.assign([], stateRestoreOpts.splitSecondaries);
+				if (split.includes('updateState') && (!stateRestoreOpts.save)) {
+					split.splice(
+						split.indexOf('updateState'),
 						1
 					);
 				}
 				if (
-					stateRestoreOpts.splitSecondaries.includes('renameState') &&
+					split.includes('renameState') &&
 					(!stateRestoreOpts.save || !stateRestoreOpts.rename)
 				) {
-					stateRestoreOpts.splitSecondaries.splice(
-						stateRestoreOpts.splitSecondaries.indexOf('renameState'),
+					split.splice(
+						split.indexOf('renameState'),
 						1
 					);
 				}
-				if (stateRestoreOpts.splitSecondaries.includes('removeState') && (!stateRestoreOpts.remove)) {
-					stateRestoreOpts.splitSecondaries.splice(
-						stateRestoreOpts.splitSecondaries.indexOf('removeState'),
+				if (split.includes('removeState') && (!stateRestoreOpts.remove)) {
+					split.splice(
+						split.indexOf('removeState'),
 						1
 					);
 				}
 				if (
-					stateRestoreOpts.splitSecondaries.length > 0 &&
-					!stateRestoreOpts.splitSecondaries.includes('<h3>'+state.s.identifier+'</h3>')
+					split.length > 0 &&
+					!split.includes('<h3>'+state.s.identifier+'</h3>')
 				) {
-					stateRestoreOpts.splitSecondaries.unshift('<h3>'+state.s.identifier+'</h3>');
+					split.unshift('<h3>'+state.s.identifier+'</h3>');
 				}
 
 				stateButtons.push({
@@ -383,7 +384,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						title: state.s.identifier
 					},
 					config: {
-						split: stateRestoreOpts.splitSecondaries
+						split
 					},
 					extend: 'stateRestore',
 					text: state.s.identifier
@@ -478,32 +479,33 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		}
 		else {
 			for(let state of states) {
-				if (stateRestoreOpts.splitSecondaries.includes('updateState') && (!stateRestoreOpts.save)) {
-					stateRestoreOpts.splitSecondaries.splice(
-						stateRestoreOpts.splitSecondaries.indexOf('updateState'),
+				let split = Object.assign([], stateRestoreOpts.splitSecondaries);
+				if (split.includes('updateState') && (!stateRestoreOpts.save)) {
+					split.splice(
+						split.indexOf('updateState'),
 						1
 					);
 				}
 				if (
-					stateRestoreOpts.splitSecondaries.includes('renameState') &&
+					split.includes('renameState') &&
 					(!stateRestoreOpts.save || !stateRestoreOpts.rename)
 				) {
-					stateRestoreOpts.splitSecondaries.splice(
-						stateRestoreOpts.splitSecondaries.indexOf('renameState'),
+					split.splice(
+						split.indexOf('renameState'),
 						1
 					);
 				}
-				if (stateRestoreOpts.splitSecondaries.includes('removeState') && (!stateRestoreOpts.remove)) {
-					stateRestoreOpts.splitSecondaries.splice(
-						stateRestoreOpts.splitSecondaries.indexOf('removeState'),
+				if (split.includes('removeState') && (!stateRestoreOpts.remove)) {
+					split.splice(
+						split.indexOf('removeState'),
 						1
 					);
 				}
 				if (
-					stateRestoreOpts.splitSecondaries.length > 0 &&
-					!stateRestoreOpts.splitSecondaries.includes('<h3>'+state.s.identifier+'</h3>')
+					split.length > 0 &&
+					!split.includes('<h3>'+state.s.identifier+'</h3>')
 				) {
-					stateRestoreOpts.splitSecondaries.unshift('<h3>'+state.s.identifier+'</h3>');
+					split.unshift('<h3>'+state.s.identifier+'</h3>');
 				}
 
 				stateButtons.push({
@@ -512,7 +514,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						title: state.s.identifier
 					},
 					config: {
-						split: stateRestoreOpts.splitSecondaries
+						split
 					},
 					extend: 'stateRestore',
 					text: state.s.identifier
