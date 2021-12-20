@@ -350,7 +350,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 			for (let state of states) {
 				let split = Object.assign([], stateRestoreOpts.splitSecondaries);
-				if (split.includes('updateState') && (!stateRestoreOpts.save)) {
+				if (split.includes('updateState') && !stateRestoreOpts.save) {
 					split.splice(
 						split.indexOf('updateState'),
 						1
@@ -365,7 +365,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						1
 					);
 				}
-				if (split.includes('removeState') && (!stateRestoreOpts.remove)) {
+				if (split.includes('removeState') && !stateRestoreOpts.remove) {
 					split.splice(
 						split.indexOf('removeState'),
 						1
@@ -480,7 +480,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		else {
 			for(let state of states) {
 				let split = Object.assign([], stateRestoreOpts.splitSecondaries);
-				if (split.includes('updateState') && (!stateRestoreOpts.save)) {
+				if (split.includes('updateState') && !stateRestoreOpts.save) {
 					split.splice(
 						split.indexOf('updateState'),
 						1
@@ -495,7 +495,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						1
 					);
 				}
-				if (split.includes('removeState') && (!stateRestoreOpts.remove)) {
+				if (split.includes('removeState') && !stateRestoreOpts.remove) {
 					split.splice(
 						split.indexOf('removeState'),
 						1
