@@ -794,16 +794,10 @@ export default class StateRestoreCollection {
 	 * @param preDefined Object containing the predefined states that are to be reintroduced
 	 */
 	private _addPreDefined(preDefined) {
-		let states = Object.keys(preDefined).sort((a, b) => {
-			let aId = +this._getId(a);
-			let bId = +this._getId(b);
-
-			return aId > bId ?
-				1 :
-				aId < bId ?
-					-1 :
-					0;
-		});
+		// There is a potential issue here if sorting where the string parts of the name are the same,
+		// only the number differs and there are many states - but this wouldn't be usfeul naming so
+		// more of a priority to sort alphabetically
+		let states = Object.keys(preDefined).sort((a, b) => a > b ? 1 : a < b ? -1 : 0);
 
 		for (let state of states) {
 			for(let i = 0; i < this.s.states.length; i++) {
@@ -861,10 +855,12 @@ export default class StateRestoreCollection {
 			);
 		}
 		else {
-			// Sort the states so that they appear alphabetically
+			// There is a potential issue here if sorting where the string parts of the name are the same,
+			// only the number differs and there are many states - but this wouldn't be usfeul naming so
+			// more of a priority to sort alphabetically
 			this.s.states = this.s.states.sort((a, b) => {
-				let aId = +this._getId(a.s.identifier);
-				let bId = +this._getId(b.s.identifier);
+				let aId = a.s.identifier;
+				let bId = b.s.identifier;
 
 				return aId > bId ?
 					1 :
@@ -1227,48 +1223,6 @@ export default class StateRestoreCollection {
 		this._collectionRebuild();
 
 		return true;
-	}
-
-	private _getId(identifier) {
-		let replaceRegex;
-		let language = this.s.dt.settings()[0].oLanguage;
-
-		// Create a replacement regex based on the i18n values
-		let defaultString = language.buttons !== undefined && language.buttons.stateRestore !== undefined ?
-			language.buttons.stateRestore :
-			'State ';
-		if (defaultString.indexOf('%d') === defaultString.length - 3) {
-			replaceRegex = new RegExp(defaultString.replace(/%d/g, ''));
-		}
-		else {
-			let splitString = defaultString.split('%d');
-			replaceRegex = [];
-			for(let split of splitString) {
-				replaceRegex.push(new RegExp(split));
-			}
-		}
-
-		let id;
-
-		if (Array.isArray(replaceRegex)) {
-			id = identifier;
-			for (let reg of replaceRegex) {
-				id = id.replace(reg, '');
-			}
-		}
-		else {
-			id = identifier.replace(replaceRegex, '');
-		}
-
-		// If the id after replacement is not a number, or the length is the same as before,
-		//  it has been customised so return 0
-		if (isNaN(+id) || id.length === identifier) {
-			return 0;
-		}
-		// Otherwise return the number that has been assigned previously
-		else {
-			return +id;
-		}
 	}
 
 	/**
