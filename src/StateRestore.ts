@@ -298,6 +298,10 @@ export default class StateRestore {
 				[this.s.identifier]: this.s.savedState
 			}
 		};
+		let successCallback = () => {
+			this.dom.confirmation.trigger('dtsr-remove');
+			$(this.s.dt.table().node()).trigger('stateRestore-change');
+		};
 
 		// If the remove is not happening over ajax remove it from local storage and then trigger the event
 		if (!this.c.ajax) {
@@ -306,9 +310,7 @@ export default class StateRestore {
 					localStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
-
-					this.dom.confirmation.trigger('dtsr-remove');
-					$(this.s.dt.table().node()).trigger('stateRestore-change');
+					successCallback();
 				}
 				catch (e) {
 					return 'remove';
@@ -321,23 +323,20 @@ export default class StateRestore {
 		// Also only want to save if the table has been initialised and the states have been loaded in
 		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
 			removeFunction = () => {
-				this.dom.confirmation.trigger('dtsr-remove');
 				$.ajax({
 					data: ajaxData,
+					success: successCallback,
 					type: 'POST',
 					url: this.c.ajax
 				});
-				$(this.s.dt.table().node()).trigger('stateRestore-change');
 				return true;
 			};
 		}
 		else if(typeof this.c.ajax === 'function') {
 			removeFunction = () => {
-				this.dom.confirmation.trigger('dtsr-remove');
 				if (typeof this.c.ajax === 'function') {
-					this.c.ajax.call(this.s.dt, ajaxData);
+					this.c.ajax.call(this.s.dt, ajaxData, successCallback);
 				}
-				$(this.s.dt.table().node()).trigger('stateRestore-change');
 				return true;
 			};
 		}
@@ -521,42 +520,41 @@ export default class StateRestore {
 					[this.s.identifier]: newIdentifier
 				}
 			};
+			let successCallback = () => {
+				this.s.identifier = newIdentifier;
+				this.save(this.s.savedState, false);
+				this.dom.removeContents = $(
+					'<div class="'+this.classes.confirmationText+'"><span>'+
+						this.s.dt
+							.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
+							.replace(/%s/g, this.s.identifier) +
+					'</span></div>'
+				);
+				this.dom.confirmation.trigger('dtsr-rename');
+			};
 
 			if (!this.c.ajax) {
 				try {
 					localStorage.removeItem(
 						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
 					);
+					successCallback();
 				}
 				catch (e) {
 					return false;
 				}
 			}
 			else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
-				this.dom.confirmation.trigger('dtsr-rename');
 				$.ajax({
 					data: ajaxData,
+					success: successCallback,
 					type: 'POST',
 					url: this.c.ajax
 				});
 			}
 			else if(typeof this.c.ajax === 'function') {
-				this.dom.confirmation.trigger('dtsr-rename');
-				this.c.ajax.call(this.s.dt, ajaxData);
+				this.c.ajax.call(this.s.dt, ajaxData, successCallback);
 			}
-
-			this.s.identifier = newIdentifier;
-
-			this.dom.removeContents = $(
-				'<div class="'+this.classes.confirmationText+'"><span>'+
-					this.s.dt
-						.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
-						.replace(/%s/g, this.s.identifier) +
-				'</span></div>'
-			);
-
-			this.save(this.s.savedState, false);
-			this.dom.confirmation.trigger('dtsr-rename');
 
 			return true;
 		};
@@ -688,6 +686,10 @@ export default class StateRestore {
 				[this.s.identifier]: this.s.savedState
 			}
 		};
+		let successCallback = () => {
+			this.dom.confirmation.trigger('dtsr-save');
+			$(this.s.dt.table().node()).trigger('stateRestore-change');
+		};
 
 		if (!this.c.ajax) {
 			try {
@@ -695,28 +697,23 @@ export default class StateRestore {
 					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
 					JSON.stringify(this.s.savedState)
 				);
-				this.dom.confirmation.trigger('dtsr-save');
+				successCallback();
 			}
 			catch (e) {
 				return;
 			}
 		}
-		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
-			this.dom.confirmation.trigger('dtsr-save');
+		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete && callAjax) {
 			$.ajax({
 				data: ajaxData,
+				success: successCallback,
 				type: 'POST',
 				url: this.c.ajax
 			});
 		}
-		else if(typeof this.c.ajax === 'function') {
-			this.dom.confirmation.trigger('dtsr-save');
-			if(callAjax) {
-				this.c.ajax.call(this.s.dt, ajaxData);
-			}
+		else if(typeof this.c.ajax === 'function' && callAjax) {
+			this.c.ajax.call(this.s.dt, ajaxData, successCallback);
 		}
-
-		$(this.s.dt.table().node()).trigger('stateRestore-change');
 	}
 
 	/**

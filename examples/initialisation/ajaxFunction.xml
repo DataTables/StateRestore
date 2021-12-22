@@ -51,6 +51,7 @@ $(document).ready(function() {
 
                                         states.get(ids[i], savesuccess);
                                     }
+                                    callback();
                                 }
                                 // Action to take if removing states
                                 else if (data.action === 'remove') {
@@ -59,6 +60,7 @@ $(document).ready(function() {
                                         // Remove all of the states listed in the object
                                         states.remove(ids[i]);
                                     }
+                                    callback();
                                 }
                                 // Action to take if saving states
                                 else if (data.action === 'save') {
@@ -68,6 +70,7 @@ $(document).ready(function() {
                                         // Important to convert state to a string as it is too complex for IndexedDB to handle
                                         states.put({identifier: ids[i], state: JSON.stringify(data.stateRestore[ids[i]])})
                                     }
+                                    callback();
                                 }
                             }
                         }

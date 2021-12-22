@@ -20,12 +20,16 @@
 		<parameter type="object" name="data">
 			The relevant data that would be passed over ajax. The object contains 2 properties.
 
-			* `action` `-type string` The type of action that is taking place to cause the ajax call. One of `rename`, `remove` or `save`.
+			* `action` `-type string` The type of action that is taking place to cause the ajax call. One of `load`, `rename`, `remove` or `save`.
 			
 			* `stateRestore` `-type object` This object contains a property for each state that is to be affected by the call. The value when doing a save or a remove is the state object that it should store. When renaming this is slightly different and the value is the new name that should overwrite the value for the corresponding key.
 		</parameter>
 		<parameter type="function" name="callback">
-			This function should be called when loading states via the ajax function. It takes a single argument that should have the same structure as `-init stateRestore.preDefined`.
+			This callback can perform two different purposes depending on the action that is being performed.
+
+			In the first instance when predefined states are being loaded via the ajax function. In this case the `data.action` property will be set to `load`. It takes a single argument that should have the same structure as `-init stateRestore.preDefined`.
+
+			For all other possible actions this callback _must_ be run whenever the action has succesfully been performed. In this case it takes no extra parameters.
 		</parameter>
 		<description>
 			This function is called whenether a load, rename, remove or a save takes place. It takes two parameters. The first is `data` that contains all of the data necessary to process the action. The second is a call back function that should be called when loading states via the ajax function. Being able to set this option as a function allows users greater flexibility in how they want to store their states.
