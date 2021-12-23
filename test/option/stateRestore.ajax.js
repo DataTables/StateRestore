@@ -23,6 +23,9 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 							ajax: function () {
 								args = arguments;
 								count++;
+								if(args[0].action !== "load") {
+									args[1].call();
+								}
 							}
 						}
 					}

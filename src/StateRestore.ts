@@ -192,7 +192,8 @@ export default class StateRestore {
 		opts: restoreType.IDefaults,
 		identifier: string,
 		state: IState = undefined,
-		isPreDefined = false
+		isPreDefined = false,
+		successCallback = () => null
 	) {
 		// Check that the required version of DataTables is included
 		if (! dataTable || ! dataTable.versionCheck || ! dataTable.versionCheck('1.10.0')) {
@@ -276,7 +277,7 @@ export default class StateRestore {
 		};
 
 		// When a StateRestore instance is created the current state of the table should also be saved.
-		this.save(state);
+		this.save(state, successCallback);
 	}
 
 	/**
@@ -522,7 +523,7 @@ export default class StateRestore {
 			};
 			let successCallback = () => {
 				this.s.identifier = newIdentifier;
-				this.save(this.s.savedState, false);
+				this.save(this.s.savedState, () => null, false);
 				this.dom.removeContents = $(
 					'<div class="'+this.classes.confirmationText+'"><span>'+
 						this.s.dt
@@ -591,9 +592,12 @@ export default class StateRestore {
 	 *
 	 * @param state Optional. If provided this is the state that will be saved rather than using the current state
 	 */
-	public save(state?: IState, callAjax = true): void {
+	public save(state: IState, passedSuccessCallback, callAjax = true): void {
 		// Check if saving states is allowed
 		if (!this.c.save) {
+			if(passedSuccessCallback) {
+				passedSuccessCallback.call(this);
+			}
 			return;
 		}
 
@@ -686,7 +690,11 @@ export default class StateRestore {
 				[this.s.identifier]: this.s.savedState
 			}
 		};
+
 		let successCallback = () => {
+			if(passedSuccessCallback) {
+				passedSuccessCallback.call(this);
+			}
 			this.dom.confirmation.trigger('dtsr-save');
 			$(this.s.dt.table().node()).trigger('stateRestore-change');
 		};

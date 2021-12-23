@@ -605,19 +605,25 @@ export default class StateRestoreCollection {
 
 			this.s.dt.state.save();
 
+			let that = this;
+			let successCallback = function() {
+				that.s.states.push(this);
+				that._collectionRebuild();
+			};
+
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
 				$.extend(true, {}, this.c, toggles, options),
 				id,
-				this.s.dt.state()
+				this.s.dt.state(),
+				false,
+				successCallback
 			);
 			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
 				newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
 				newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
 				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 			});
-			this.s.states.push(newState);
-			this._collectionRebuild();
 
 			return true;
 		};
@@ -806,6 +812,12 @@ export default class StateRestoreCollection {
 				}
 			}
 
+			let that = this;
+			let successCallback = function() {
+				that.s.states.push(this);
+				that._collectionRebuild();
+			};
+
 			let loadedState = preDefined[state];
 			let newState = new StateRestore(
 				this.s.dt,
@@ -820,11 +832,11 @@ export default class StateRestoreCollection {
 				),
 				state,
 				loadedState,
-				true
+				true,
+				successCallback
 			);
 
 			newState.s.savedState = loadedState;
-			this.s.states.push(newState);
 
 			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
 				newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
@@ -832,8 +844,6 @@ export default class StateRestoreCollection {
 				newState.dom.confirmation.one('dtsr-save', () => this._collectionRebuild());
 			});
 		}
-
-		this._collectionRebuild();
 	}
 
 	/**
@@ -1327,14 +1337,22 @@ export default class StateRestoreCollection {
 					continue;
 				}
 
+				let that = this;
+				let successCallback = function() {
+					this.s.savedState = loadedState;
+					that.s.states.push(this);
+					that._collectionRebuild();
+				};
+
+
 				let newState = new StateRestore(
 					this.s.dt,
 					$.extend(true, {}, this.c, {saveState: loadedState.c.saveState}),
 					loadedState.stateRestore.state,
-					loadedState
+					loadedState,
+					false,
+					successCallback
 				);
-				newState.s.savedState = loadedState;
-				this.s.states.push(newState);
 				$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
 					newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
 					newState.dom.confirmation.one('dtsr-rename', () => this._collectionRebuild());
@@ -1342,7 +1360,5 @@ export default class StateRestoreCollection {
 				});
 			}
 		}
-
-		this._collectionRebuild();
 	}
 }
