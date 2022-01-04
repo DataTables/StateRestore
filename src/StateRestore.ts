@@ -606,7 +606,10 @@ export default class StateRestore {
 
 		// If no state has been provided then create a new one from the current state
 		this.s.dt.state.save();
-		if (state === undefined) {
+		if(typeof state !== 'object') {
+			return;
+		}
+		else if (state === undefined) {
 			savedState = this.s.dt.state();
 		}
 		else {
@@ -716,13 +719,25 @@ export default class StateRestore {
 			);
 			successCallback();
 		}
-		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete && callAjax) {
-			$.ajax({
-				data: ajaxData,
-				success: successCallback,
-				type: 'POST',
-				url: this.c.ajax
-			});
+		else if (typeof this.c.ajax === 'string' && callAjax) {
+			if(this.s.dt.settings()[0]._bInitComplete) {
+				$.ajax({
+					data: ajaxData,
+					success: successCallback,
+					type: 'POST',
+					url: this.c.ajax
+				});
+			}
+			else {
+				this.s.dt.one('init', () => {
+					$.ajax({
+						data: ajaxData,
+						success: successCallback,
+						type: 'POST',
+						url: this.c.ajax
+					});
+				});
+			}
 		}
 		else if(typeof this.c.ajax === 'function' && callAjax) {
 			this.c.ajax.call(this.s.dt, ajaxData, successCallback);

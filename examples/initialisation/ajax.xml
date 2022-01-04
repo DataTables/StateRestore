@@ -15,7 +15,6 @@ $(document).ready(function() {
         deferRender:    true,
         scrollY:        200,
         scrollCollapse: true,
-        scroller:       true,
         buttons:[
             'createState',
             {

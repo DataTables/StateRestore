@@ -2,7 +2,6 @@
 
 session_start();
 
-echo json_encode($_POST);
 if(isset($_POST) && isset($_POST['stateRestore']) && isset($_POST['action'])) {
     $keys = array_keys($_POST['stateRestore']);
     if($_POST['action'] === 'rename') {
