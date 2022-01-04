@@ -606,11 +606,12 @@ export default class StateRestore {
 
 		// If no state has been provided then create a new one from the current state
 		this.s.dt.state.save();
-		if(typeof state !== 'object') {
-			return;
-		}
-		else if (state === undefined) {
+
+		if (state === undefined) {
 			savedState = this.s.dt.state();
+		}
+		else if(typeof state !== 'object') {
+			return;
 		}
 		else {
 			savedState = state;
