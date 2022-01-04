@@ -684,6 +684,16 @@ export default class StateRestore {
 
 		this.s.savedState.c = this.c;
 
+		// Need to remove the parent reference before we save the state
+		// Its not needed to rebuild, but it does cause a circular reference when converting to JSON
+		if (this.s.savedState.c.splitSecondaries.length) {
+			for (let secondary of this.s.savedState.c.splitSecondaries) {
+				if (secondary.parent) {
+					secondary.parent = undefined;
+				}
+			}
+		}
+
 		let ajaxData = {
 			action: 'save',
 			stateRestore: {
@@ -700,16 +710,11 @@ export default class StateRestore {
 		};
 
 		if (!this.c.ajax) {
-			try {
-				localStorage.setItem(
-					'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
-					JSON.stringify(this.s.savedState)
-				);
-				successCallback();
-			}
-			catch (e) {
-				return;
-			}
+			localStorage.setItem(
+				'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
+				JSON.stringify(this.s.savedState)
+			);
+			successCallback();
 		}
 		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete && callAjax) {
 			$.ajax({

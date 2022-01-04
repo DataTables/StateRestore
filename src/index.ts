@@ -102,9 +102,11 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		if (ctx._stateRestore.addState) {
 			let states = ctx._stateRestore.s.states;
 			let ids = [];
+
 			for (let intState of states) {
 				ids.push(intState.s.identifier);
 			}
+
 			ctx._stateRestore.addState(identifier, ids, options);
 			return this;
 		}
@@ -390,6 +392,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 					text: state.s.identifier
 				});
 			}
+
 			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 			node.blur();
 		},

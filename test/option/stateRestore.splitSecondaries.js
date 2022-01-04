@@ -59,9 +59,7 @@ describe('stateRestore - options - stateRestore.splitSecondaries', function () {
 
 			$('.dt-btn-split-wrapper button:eq(0)').click();
 
-			// DD-2411
-			// expect($('.dt-button-collection button').length).toBe(4);
-			expect($('.dt-button-collection button').length).toBe(2);
+			expect($('.dt-button-collection button').length).toBe(4);
 		});
 	});
 
