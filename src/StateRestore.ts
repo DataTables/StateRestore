@@ -618,8 +618,16 @@ export default class StateRestore {
 			savedState = state;
 		}
 
-		savedState.stateRestore.isPreDefined = this.s.isPreDefined;
-		savedState.stateRestore.state= this.s.identifier;
+		if (savedState.stateRestore) {
+			savedState.stateRestore.isPreDefined = this.s.isPreDefined;
+			savedState.stateRestore.state= this.s.identifier;
+		}
+		else {
+			savedState.stateRestore = {
+				isPreDefined: this.s.isPreDefined,
+				state: this.s.identifier
+			};
+		}
 
 		this.s.savedState = savedState;
 
