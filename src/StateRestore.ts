@@ -698,6 +698,15 @@ export default class StateRestore {
 			}
 		}
 
+		// If the state is predefined there is no need to save it over ajax or to local storage
+		if (this.s.isPreDefined) {
+			if (passedSuccessCallback) {
+				passedSuccessCallback.call(this);
+			}
+
+			return;
+		}
+
 		let ajaxData = {
 			action: 'save',
 			stateRestore: {
