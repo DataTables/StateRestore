@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="4">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        dom: 'Blfrtip',
+        buttons:['createState', 'savedStates'],
+        language:{
+            buttons:{
+                savedStates: {
+                    0: 'Saved States',
+                    _: 'Saved States (%d)'
+                }
+            }
+        }
+    });
+
+    table.button(1).text(table.i18n('buttons.savedStates', 'Saved States', table.stateRestore.states().length))
+
+    table.on('stateRestore-change', function() {
+        table.button(1).text(table.i18n('buttons.savedStates', 'Saved States', table.stateRestore.states().length))
+    })
+});
+]]>
+</js>
+
+<title lib="stateRestore">Custom Button Text</title>
+
+<info><![CDATA[
+This example shows how the button text for the `-button savedStates` can be customised to include the number of states that are saved within StateRestore.
+
+The default for StateRestore is to just show the `Saved States` text, the example below shows how the `-init language.buttons.savedStates` language option has to be customised to include the count in the button's text. A listener is then set for the `-event stateRestore-change` event, which updates the relevant buttons text.
+
+It is also possible to include the number of states in the text for the `-button savedStatesCreate` button.
+]]></info>
+
+</dt-example>

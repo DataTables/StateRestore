@@ -241,7 +241,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		},
 		name: 'SaveStateRestore',
 		text(dt) {
-			return dt.i18n('buttons.savedStates', 'Saved States');
+			return dt.i18n('buttons.savedStates', 'Saved States', 0);
 		}
 	};
 
@@ -259,7 +259,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		},
 		name: 'SaveStateRestore',
 		text(dt) {
-			return dt.i18n('buttons.savedStates', 'Saved States');
+			return dt.i18n('buttons.savedStates', 'Saved States', 0);
 		}
 	};
 
