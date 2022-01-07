@@ -611,11 +611,18 @@ export default class StateRestoreCollection {
 				that._collectionRebuild();
 			};
 
+			let currState = this.s.dt.state();
+			currState.stateRestore = {
+				isPredefined: false,
+				state: id,
+				tableId: this.s.dt.table().node().id
+			};
+
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
 				$.extend(true, {}, this.c, toggles, options),
 				id,
-				this.s.dt.state(),
+				currState,
 				false,
 				successCallback
 			);
@@ -1333,7 +1340,13 @@ export default class StateRestoreCollection {
 			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
 				let loadedState = JSON.parse(localStorage.getItem(key));
 
-				if (loadedState.stateRestore.isPreDefined) {
+				if (
+					loadedState.stateRestore.isPreDefined ||
+					(
+						loadedState.stateRestore.tableId &&
+						loadedState.stateRestore.tableId !== this.s.dt.table().node().id
+					)
+				) {
 					continue;
 				}
 

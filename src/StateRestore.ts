@@ -87,6 +87,7 @@ export interface IHungSearch {
 export interface IStateRestore {
 	isPreDefined: boolean;
 	state: string;
+	tableId?: string;
 }
 export default class StateRestore {
 	private static version = '1.0.1';
@@ -617,10 +618,8 @@ export default class StateRestore {
 			savedState = state;
 		}
 
-		savedState.stateRestore = {
-			isPreDefined: this.s.isPreDefined,
-			state: this.s.identifier
-		};
+		savedState.stateRestore.isPreDefined = this.s.isPreDefined;
+		savedState.stateRestore.state= this.s.identifier;
 
 		this.s.savedState = savedState;
 
