@@ -18,12 +18,6 @@ $(document).ready(function() {
             }
         }
     });
-
-    table.button(1).text(table.i18n('buttons.savedStates', 'Saved States', table.stateRestore.states().length))
-
-    table.on('stateRestore-change', function() {
-        table.button(1).text(table.i18n('buttons.savedStates', 'Saved States', table.stateRestore.states().length))
-    })
 });
 ]]>
 </js>
@@ -33,7 +27,7 @@ $(document).ready(function() {
 <info><![CDATA[
 This example shows how the button text for the `-button savedStates` can be customised to include the number of states that are saved within StateRestore.
 
-The default for StateRestore is to just show the `Saved States` text, the example below shows how the `-init language.buttons.savedStates` language option has to be customised to include the count in the button's text. A listener is then set for the `-event stateRestore-change` event, which updates the relevant buttons text.
+The default for StateRestore is to just show the `Saved States` text, the example below shows how the `-init language.buttons.savedStates` language option has to be customised to include the count in the button's text.
 
 It is also possible to include the number of states in the text for the `-button savedStatesCreate` button.
 ]]></info>

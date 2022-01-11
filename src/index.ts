@@ -235,6 +235,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		buttons: [],
 		extend: 'collection',
 		init(dt, node, config) {
+			dt.on('stateRestore-change', function() {
+				dt.button(node).text(dt.i18n('buttons.savedStates', 'Saved States', dt.stateRestore.states().length));
+			});
 			if(dt.settings()[0]._stateRestore === undefined) {
 				_buttonInit(dt, config);
 			}
@@ -249,6 +252,9 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		buttons: [],
 		extend: 'collection',
 		init(dt, node, config) {
+			dt.on('stateRestore-change', function() {
+				dt.button(node).text(dt.i18n('buttons.savedStates', 'Saved States', dt.stateRestore.states().length));
+			});
 			if(dt.settings()[0]._stateRestore === undefined) {
 				if(config.config === undefined) {
 					config.config = {};
