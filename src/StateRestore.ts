@@ -29,6 +29,7 @@ export interface IS {
 	identifier: string;
 	isPreDefined: boolean;
 	savedState: null | IState;
+	tableId: string;
 }
 
 export interface IDom {
@@ -217,7 +218,8 @@ export default class StateRestore {
 			dt: table,
 			identifier,
 			isPreDefined,
-			savedState: null
+			savedState: null,
+			tableId: state && state.stateRestore ? state.stateRestore.tableId : undefined
 		};
 
 		this.dom = {
@@ -310,7 +312,8 @@ export default class StateRestore {
 			removeFunction = () => {
 				try {
 					localStorage.removeItem(
-						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname+
+						(this.s.tableId ? '_' + this.s.tableId : '')
 					);
 					successCallback();
 				}
@@ -538,7 +541,8 @@ export default class StateRestore {
 			if (!this.c.ajax) {
 				try {
 					localStorage.removeItem(
-						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname
+						'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname+
+						(this.s.tableId ? '_' + this.s.tableId : '')
 					);
 					successCallback();
 				}
@@ -621,11 +625,13 @@ export default class StateRestore {
 		if (savedState.stateRestore) {
 			savedState.stateRestore.isPreDefined = this.s.isPreDefined;
 			savedState.stateRestore.state= this.s.identifier;
+			savedState.stateRestore.tableId = this.s.tableId;
 		}
 		else {
 			savedState.stateRestore = {
 				isPreDefined: this.s.isPreDefined,
-				state: this.s.identifier
+				state: this.s.identifier,
+				tableId: this.s.tableId
 			};
 		}
 
@@ -731,7 +737,8 @@ export default class StateRestore {
 
 		if (!this.c.ajax) {
 			localStorage.setItem(
-				'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname,
+				'DataTables_stateRestore_'+this.s.identifier+'_'+location.pathname+
+				(this.s.tableId ? '_' + this.s.tableId : ''),
 				JSON.stringify(this.s.savedState)
 			);
 			successCallback();

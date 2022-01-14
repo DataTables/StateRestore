@@ -1337,7 +1337,15 @@ export default class StateRestoreCollection {
 
 		for (let key of keys) {
 			// eslint-disable-next-line no-useless-escape
-			if (key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '\/')+'$'))) {
+			if (
+				key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '/')+'$')) ||
+				key.match(
+					new RegExp(
+						'^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '/')+
+						'_'+this.s.dt.table().node().id+'$'
+					)
+				)
+			) {
 				let loadedState = JSON.parse(localStorage.getItem(key));
 
 				if (
