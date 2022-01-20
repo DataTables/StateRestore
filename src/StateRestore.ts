@@ -36,6 +36,7 @@ export interface IDom {
 	background: JQuery<HTMLElement>;
 	closeButton: JQuery<HTMLElement>;
 	confirmation: JQuery<HTMLElement>;
+	confirmationButton: JQuery<HTMLElement>;
 	confirmationTitleRow: JQuery<HTMLElement>;
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
@@ -226,6 +227,7 @@ export default class StateRestore {
 			background: $('<div class="'+this.classes.background+'"/>'),
 			closeButton: $('<div class="'+this.classes.closeButton+'">x</div>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
+			confirmationButton: $('<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
 			dtContainer: $(this.s.dt.table().container()),
 			duplicateError: $(
@@ -305,6 +307,10 @@ export default class StateRestore {
 		let successCallback = () => {
 			this.dom.confirmation.trigger('dtsr-remove');
 			$(this.s.dt.table().node()).trigger('stateRestore-change');
+			this.dom.background.click();
+			this.dom.confirmation.remove();
+			$(document).unbind('keyup', e => this._keyupFunction(e));
+			this.dom.confirmationButton.off('click');
 		};
 
 		// If the remove is not happening over ajax remove it from local storage and then trigger the event
@@ -318,6 +324,8 @@ export default class StateRestore {
 					successCallback();
 				}
 				catch (e) {
+					this.dom.confirmation.children('.'+this.classes.modalError).remove();
+					this.dom.confirmation.append(this.dom.removeError);
 					return 'remove';
 				}
 
@@ -509,9 +517,13 @@ export default class StateRestore {
 				let tempIdentifier = $('input.'+this.classes.input.replace(/ /g, '.')).val();
 
 				if (tempIdentifier.length === 0) {
+					this.dom.confirmation.children('.'+this.classes.modalError).remove();
+					this.dom.confirmation.append(this.dom.emptyError);
 					return 'empty';
 				}
 				else if(currentIdentifiers.includes(tempIdentifier)) {
+					this.dom.confirmation.children('.'+this.classes.modalError).remove();
+					this.dom.confirmation.append(this.dom.duplicateError);
 					return 'duplicate';
 				}
 				else {
@@ -536,6 +548,10 @@ export default class StateRestore {
 					'</span></div>'
 				);
 				this.dom.confirmation.trigger('dtsr-rename');
+				this.dom.background.click();
+				this.dom.confirmation.remove();
+				$(document).unbind('keyup', e => this._keyupFunction(e));
+				this.dom.confirmationButton.off('click');
 			};
 
 			if (!this.c.ajax) {
@@ -547,6 +563,8 @@ export default class StateRestore {
 					successCallback();
 				}
 				catch (e) {
+					this.dom.confirmation.children('.'+this.classes.modalError).remove();
+					this.dom.confirmation.append(this.dom.removeError);
 					return false;
 				}
 			}
@@ -882,6 +900,17 @@ export default class StateRestore {
 		return true;
 	}
 
+	private _keyupFunction(e) {
+		// If enter same action as pressing the button
+		if (e.key === 'Enter') {
+			this.dom.confirmationButton.click();
+		}
+		// If escape close modal
+		else if (e.key === 'Escape') {
+			$('div.'+this.classes.background.replace(/ /g, '.')).click();
+		}
+	}
+
 	/**
 	 * Creates a new confirmation modal for the user to approve an action
 	 *
@@ -898,18 +927,14 @@ export default class StateRestore {
 	): void {
 		this.dom.background.appendTo(this.dom.dtContainer);
 		this.dom.confirmationTitleRow.empty().append(title);
-		let confirmationButton = $(
-			'<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'+
-				buttonText+
-			'</button>'
-		);
+		this.dom.confirmationButton.html(buttonText);
 		this.dom.confirmation
 			.empty()
 			.append(this.dom.confirmationTitleRow)
 			.append(modalContents)
 			.append(
 				$('<div class="'+this.classes.confirmationButtons+'"></div>')
-					.append(confirmationButton)
+					.append(this.dom.confirmationButton)
 			)
 			.appendTo(this.dom.dtContainer);
 
@@ -923,21 +948,10 @@ export default class StateRestore {
 		}
 		// Otherwise focus on the confirmation button
 		else {
-			confirmationButton.focus();
+			this.dom.confirmationButton.focus();
 		}
 
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
-
-		let keyupFunction = function(e) {
-			// If enter same action as pressing the button
-			if (e.key === 'Enter') {
-				confirmationButton.click();
-			}
-			// If escape close modal
-			else if (e.key === 'Escape') {
-				background.click();
-			}
-		};
 
 		if (this.c.modalCloseButton) {
 			this.dom.confirmation.append(this.dom.closeButton);
@@ -946,19 +960,7 @@ export default class StateRestore {
 
 		// When the button is clicked, call the appropriate action,
 		// remove the background and modal from the screen and unbind the keyup event.
-		confirmationButton.on('click', () => {
-			let success = buttonAction();
-			if (success === true) {
-				this.dom.background.remove();
-				this.dom.confirmation.remove();
-				$(document).unbind('keyup', keyupFunction);
-				confirmationButton.off('click');
-			}
-			else {
-				this.dom.confirmation.children('.'+this.classes.modalError).remove();
-				this.dom.confirmation.append(this.dom[success+'Error']);
-			}
-		});
+		this.dom.confirmationButton.on('click', () => buttonAction());
 
 		this.dom.confirmation.on('click', (e) => {
 			e.stopPropagation();
@@ -968,10 +970,10 @@ export default class StateRestore {
 		background.one('click', () => {
 			this.dom.background.remove();
 			this.dom.confirmation.remove();
-			$(document).unbind('keyup', keyupFunction);
+			$(document).unbind('keyup', e => this._keyupFunction(e));
 		});
 
-		$(document).on('keyup', keyupFunction);
+		$(document).on('keyup', e => this._keyupFunction(e));
 	}
 
 	/**
