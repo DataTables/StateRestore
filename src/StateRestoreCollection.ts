@@ -677,7 +677,7 @@ export default class StateRestoreCollection {
 				ids.slice(-1);
 		}
 
-		$(this.dom.removeContents.children('span')).text(
+		$(this.dom.removeContents.children('span')).html(
 			this.s.dt
 				.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
 				.replace(/%s/g, replacementString)
