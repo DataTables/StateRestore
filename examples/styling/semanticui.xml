@@ -3,7 +3,7 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons">
+<js lib="jquery semanticui datatables staterestore buttons">
 <![CDATA[
 $(document).ready(function() {
     let table = $('#example').DataTable({
@@ -34,10 +34,10 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="stateRestore">Semantic UI</title>
+<title lib="stateRestore">Fomantic-UI (formally Semantic-UI) styling</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore` extension integrates with the [Semantic UI](http://semantic-ui.com) styling library. The DataTables / Semantic UI integration provides seamless integration for DataTables to be used in a Semantic UI page.
+This example shows how the `-init stateRestore` extension integrates with [Fomantic-UI](https://fomantic-ui.com) (a maintained fork of [Semantic-UI](https://semantic-ui.com/)). The DataTables / Fomantic-UI integration provides seamless integration for DataTables to be used in a Fomantic-UI page.
 ]]></info>
 
 </dt-example>
