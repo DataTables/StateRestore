@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="200">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable();
+
+    $('#list').on('click', function() {
+		var states = '';
+		$('#example').DataTable().stateRestore.states().each(function(v,i){
+			states += '\n' + v.s.identifier;
+		})
+		alert('The current states are:' + states);
+    })
+
+    $('#save').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).save();
+    })
+
+    $('#load').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).load();
+    })
+
+    $('#remove').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).remove();
+    })
+
+    $('#removeAll').on('click', function() {
+        table.stateRestore.states().remove();
+    })
+
+    $('#removeSkip').on('click', function() {
+        table.stateRestore.state($('#state-selector').val()).remove(true);
+    })
+
+    $('#removeAllSkip').on('click', function() {
+        table.stateRestore.states().remove(true);
+    })
+
+    $('#add').on('click', function() {
+        table.stateRestore.state.add($('#state-selector').val());
+    })
+});
+]]>
+</js>
+
+<title lib="stateRestore">No Buttons</title>
+
+<info><![CDATA[
+This example demonstrates how the API methods within StateRestore can be used without the standard buttons being present.
+
+Use the input element to the right to input an identifier. The other buttons will then implement the relevant API methods.
+
+<input id="state-selector"></input>
+<button id="list">List</button>
+<button id="save">Update Existing State</button>
+<button id="add">Add New State</button>
+<button id="load">Load</button>
+<button id="remove">Remove</button>
+<button id="removeSkip">Remove and skip modal</button>
+<button id="removeAll">Remove All</button>
+<button id="removeAllSkip">Remove All skipping modal</button>
+]]></info>
+
+</dt-example>
