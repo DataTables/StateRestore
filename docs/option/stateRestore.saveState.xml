@@ -19,6 +19,7 @@
                 search: true,
                 visible: true
             },
+            len: true,
             order: true,
             paging: true,
             scroller: true,
@@ -46,6 +47,14 @@ This option allows for the saving of the paging to be enabled or disabled.
 As default the value is `true`, meaning that the paging will be saved. If this option is set to `false`, then the paging saving will be disabled.
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/noPaging.html) to see this in action.
+
+### len
+This option allows for the saving of the page length to be enabled or disabled.
+
+As default the value is `true`, meaning that the page length will be saved. If this option is set to `false`, then the page length saving will be disabled.
+
+Take a look at [this example](/extensions/staterestore/examples/customisation/noLength.html) to see this in action.
+
 ### search
 This option allows for the saving of the search to be enabled or disabled.
 

@@ -22,6 +22,7 @@ $(document).ready(function() {
                 config: {
                     creationModal: true,
                     toggle: {
+                        len: true,
                         order: true,
                         paging: true,
                         scroller: true,

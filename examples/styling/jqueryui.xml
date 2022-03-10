@@ -17,6 +17,7 @@ $(document).ready(function() {
                             search: true,
                             visible: true
                         },
+                        len: true,
                         order: true,
                         paging: true,
                         search: true,
