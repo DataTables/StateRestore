@@ -166,17 +166,25 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 	apiRegister('stateRestore.states().remove()', function(skipModal) {
 		let removeAllCallBack = (skipModalIn) => {
 			let success = true;
-			this.each(function(set) {
+			let that = this.toArray();
+
+			for (let i = 0; i < that.length; i) {
+				let set = that[i];
 				if(set !== undefined) {
 					// Check if removal of states is allowed
 					if(set.c.remove) {
 						let tempSuccess = set.remove(skipModalIn);
 						if(tempSuccess !== true) {
 							success = tempSuccess;
+							i++;
+						}
+						else {
+							that.splice(i, 1);
 						}
 					}
 				}
-			});
+			}
+
 			return success;
 		};
 
