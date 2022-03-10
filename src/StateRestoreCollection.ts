@@ -618,9 +618,23 @@ export default class StateRestoreCollection {
 				tableId: this.s.dt.table().node().id
 			};
 
+			if (toggles.saveState) {
+				let opts = this.c.saveState;
+
+				// We don't want to extend, but instead AND all properties of the saveState option
+				for (let key of Object.keys(toggles.saveState)) {
+					if (!toggles.saveState[key]) {
+						opts[key] = false;
+					}
+				}
+
+				this.c.saveState = opts;
+			}
+
+
 			let newState = new StateRestore(
 				this.s.dt.settings()[0],
-				$.extend(true, {}, this.c, toggles, options),
+				$.extend(true, {}, this.c, options),
 				id,
 				currState,
 				false,
