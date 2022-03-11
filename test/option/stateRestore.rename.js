@@ -29,49 +29,47 @@ describe('stateRestore - options - stateRestore.rename', function () {
 			$('.dt-button:eq(1)').click();
 			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-			// DD-2483
-			// expect($('.dt-button-collection .dt-button').length).toBe(3);
+			expect($('.dt-button-collection .dt-button').length).toBe(3);
 		});
 
-		// DD-2483
-		// dt.html('basic');
-		// it('Rename - false', function () {
-		// 	$.fx.off = true; // disables lightbox animation
+		dt.html('basic');
+		it('Rename - false', function () {
+			$.fx.off = true; // disables lightbox animation
 
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Blfrtip',
-		// 		buttons: [
-		// 			'createState',
-		// 			{
-		// 				extend: 'savedStates',
-		// 				config: {
-		// 					rename: false
-		// 				}
-		// 			}
-		// 		]
-		// 	});
+			table = $('#example').DataTable({
+				dom: 'Blfrtip',
+				buttons: [
+					'createState',
+					{
+						extend: 'savedStates',
+						config: {
+							rename: false
+						}
+					}
+				]
+			});
 
-		// 	$('.dt-button:eq(0)').click();
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button:eq(0)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
 
-		// 	expect($('.dt-button-collection .dt-button').length).toBe(2);
-		// 	expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
-		// 	expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Remove');
-		// });
-		// it('... clear collection', function (done) {
-		// 	dt.sleep(200).then(() => {
-		// 		$('.dt-button-background').click();
-		// 		done();
-		// 	});
-		// });
-		// it('... unable to rename via API', function () {
-		// 	table.stateRestore.state('State 1').rename('unit test');
+			expect($('.dt-button-collection .dt-button').length).toBe(2);
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
+			expect($('.dt-button-collection .dt-button:eq(1)').text()).toBe('Remove');
+		});
+		it('... clear collection', function (done) {
+			dt.sleep(200).then(() => {
+				$('.dt-button-background').click();
+				done();
+			});
+		});
+		it('... unable to rename via API', function () {
+			table.stateRestore.state('State 1').rename('unit test');
 
-		// 	$('.dt-button:eq(1)').click();
+			$('.dt-button:eq(1)').click();
 
-		// 	expect($('.dt-button:eq(2)').text()).toBe('State 1');
-		// });
+			expect($('.dt-button:eq(2)').text()).toBe('State 1');
+		});
 	});
 
 	describe('Tidy up', function () {

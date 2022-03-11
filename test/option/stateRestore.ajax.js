@@ -44,45 +44,44 @@ describe('stateRestore - options - stateRestore.ajax', function () {
 			expect(count).toBe(2);
 			expect(args[0].action).toBe('save');
 		});
-		// DD-2483
-		// it('Update', function () {
-		// 	args = undefined;
+		it('Update', function () {
+			args = undefined;
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper button:eq(1)').click();
-		// 	$('.dt-button-collection button:eq(0)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper button:eq(1)').click();
+			$('.dt-button-collection button:eq(0)').click();
 
-		// 	expect(args.length).toBe(2);
-		// 	expect(count).toBe(3);
-		// 	expect(args[0].action).toBe('save');
-		// });  
-		// it('Rename', function () {
-		// 	args = undefined;
+			expect(args.length).toBe(2);
+			expect(count).toBe(3);
+			expect(args[0].action).toBe('save');
+		});  
+		it('Rename', function () {
+			args = undefined;
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper button:eq(1)').click();
-		// 	$('.dt-button-collection button:eq(1)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper button:eq(1)').click();
+			$('.dt-button-collection button:eq(1)').click();
 
-		// 	$('input.dtsr-input').val('unit test');
+			$('input.dtsr-input').val('unit test');
 
-		// 	$('.dtsr-confirmation-button').click();
+			$('.dtsr-confirmation-button').click();
 
-		// 	expect(args.length).toBe(2);
-		// 	expect(count).toBe(4);
-		// 	expect(args[0].action).toBe('rename');
-		// });
-		// it('Remove', function () {
-		// 	args = undefined;
+			expect(args.length).toBe(2);
+			expect(count).toBe(4);
+			expect(args[0].action).toBe('rename');
+		});
+		it('Remove', function () {
+			args = undefined;
 
-		// 	$('.dt-button:eq(1)').click();
-		// 	$('.dt-btn-split-wrapper button:eq(1)').click();
-		// 	$('.dt-button-collection button:eq(2)').click();
+			$('.dt-button:eq(1)').click();
+			$('.dt-btn-split-wrapper button:eq(1)').click();
+			$('.dt-button-collection button:eq(2)').click();
 
-		// 	$('.dtsr-confirmation-button').click();
+			$('.dtsr-confirmation-button').click();
 
-		// 	expect(args.length).toBe(2);
-		// 	expect(count).toBe(5);
-		// 	expect(args[0].action).toBe('remove');
-		// });
+			expect(args.length).toBe(2);
+			expect(count).toBe(5);
+			expect(args[0].action).toBe('remove');
+		});
 	});
 });
