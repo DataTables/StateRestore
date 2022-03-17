@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1" framework="bootstrap4">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    var table = $('#example').DataTable({
+        buttons:[
+            {
+                extend: 'createState',
+                config: {
+                    creationModal: true,
+                    toggle: {
+                        columns:{
+                            search: true,
+                            visible: true
+                        },
+                        length: true,
+                        order: true,
+                        paging: true,
+                        search: true,
+                    }
+                }
+            },
+            'savedStates'
+        ],
+        lengthChange: false
+    });
+
+    table.buttons().container()
+        .appendTo( '#example_wrapper .col-md-6:eq(0)' );
+});
+]]>
+</js>
+
+<title lib="stateRestore">Bootstrap 4</title>
+
+<info><![CDATA[
+This example shows how the `-init stateRestore` extension integrates with the [Bootstrap 4](https://getbootstrap.com/docs/4.6/) styling library. The DataTables / Bootstrap 4 integration provides seamless integration for DataTables to be used in a Bootstrap 4 page.
+]]></info>
+
+</dt-example>

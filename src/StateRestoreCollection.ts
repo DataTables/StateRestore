@@ -99,7 +99,7 @@ export interface IDefaults {
 export interface ISaveState {
 	colReorder: boolean;
 	columns: IColumnDefault | boolean;
-	len: boolean;
+	length: boolean;
 	order: boolean;
 	paging: boolean;
 	scroller: boolean;
@@ -136,7 +136,7 @@ export interface II18nCreationModal {
 		search: string;
 		visible: string;
 	};
-	len: string;
+	length: string;
 	name: string;
 	order: string;
 	paging: string;
@@ -216,7 +216,7 @@ export default class StateRestoreCollection {
 					search: 'Column Search',
 					visible: 'Column Visibility'
 				},
-				len: 'Page Length',
+				length: 'Page Length',
 				name: 'Name:',
 				order: 'Sorting',
 				paging: 'Paging',
@@ -251,7 +251,7 @@ export default class StateRestoreCollection {
 				search: true,
 				visible: true
 			},
-			len: true,
+			length: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -271,7 +271,7 @@ export default class StateRestoreCollection {
 				search: false,
 				visible: false
 			},
-			len: false,
+			length: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -414,8 +414,8 @@ export default class StateRestoreCollection {
 					'" checked>' +
 					'<label class="'+this.classes.checkLabel+'">'+
 						this.s.dt.i18n(
-							'stateRestore.creationModal.len',
-							this.c.i18n.creationModal.len
+							'stateRestore.creationModal.length',
+							this.c.i18n.creationModal.length
 						)+
 					'</label>'+
 				'</div>'
@@ -1015,11 +1015,11 @@ export default class StateRestoreCollection {
 		// Page Length toggle - check toggle and saving enabled
 		if (
 			(
-				(!toggleDefined || options.toggle.len === undefined) && this.c.toggle.len ||
-				toggleDefined && options.toggle.len
+				(!toggleDefined || options.toggle.length === undefined) && this.c.toggle.length ||
+				toggleDefined && options.toggle.length
 			) &&
-			this.c.saveState.len &&
-			(tableConfig.len === undefined || tableConfig.len)
+			this.c.saveState.length &&
+			(tableConfig.length === undefined || tableConfig.length)
 		) {
 			togglesToInsert.push(this.dom.lengthToggle);
 		}
@@ -1227,7 +1227,7 @@ export default class StateRestoreCollection {
 					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
 					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
 				},
-				len: this.dom.lengthToggle.children('input').is(':checked'),
+				length: this.dom.lengthToggle.children('input').is(':checked'),
 				order: this.dom.orderToggle.children('input').is(':checked'),
 				paging: this.dom.pagingToggle.children('input').is(':checked'),
 				scroller: this.dom.scrollerToggle.children('input').is(':checked'),

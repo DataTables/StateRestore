@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="1" framework="semanticui">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="jquery semanticui datatables staterestore buttons">
+<![CDATA[
+$(document).ready(function() {
+    let table = $('#example').DataTable({
+        buttons:[
+            {
+                extend: 'createState',
+                config: {
+                    creationModal: true,
+                    toggle: {
+                        columns:{
+                            search: true,
+                            visible: true
+                        },
+                        length: true,
+                        order: true,
+                        paging: true,
+                        search: true,
+                    }
+                }
+            },
+            'savedStates'
+        ],
+        lengthChange: false
+    });
+
+    table.buttons().container()
+        .appendTo( $('div.eight.column:eq(0)', table.table().container()) );
+});
+]]>
+</js>
+
+<title lib="stateRestore">Fomantic-UI (formally Semantic-UI) styling</title>
+
+<info><![CDATA[
+This example shows how the `-init stateRestore` extension integrates with [Fomantic-UI](https://fomantic-ui.com) (a maintained fork of [Semantic-UI](https://semantic-ui.com/)). The DataTables / Fomantic-UI integration provides seamless integration for DataTables to be used in a Fomantic-UI page.
+]]></info>
+
+</dt-example>

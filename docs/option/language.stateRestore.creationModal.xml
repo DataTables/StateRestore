@@ -20,7 +20,7 @@
                 search: 'Column Search:',
                 visible: 'Column Visibility:'
             },
-            len: 'Page Length:'
+            length: 'Page Length:'
             name: 'Name:',
             order: 'Sorting:',
             paging: 'Paging:',

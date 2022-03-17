@@ -48,7 +48,7 @@ $(document).ready(function() {
 <related type="option">language.stateRestore.creationModal.button</related>
 <related type="option">language.stateRestore.creationModal.columns.search</related>
 <related type="option">language.stateRestore.creationModal.columns.visible</related>
-<related type="option">language.stateRestore.creationModal.len</related>
+<related type="option">language.stateRestore.creationModal.length</related>
 <related type="option">language.stateRestore.creationModal.name</related>
 <related type="option">language.stateRestore.creationModal.order</related>
 <related type="option">language.stateRestore.creationModal.paging</related>

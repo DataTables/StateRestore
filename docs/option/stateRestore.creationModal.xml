@@ -48,7 +48,7 @@ This option allows a creation modal to be displayed to the user. This allows the
                         search: true,
                         visible: true
                     },
-                    len: true,
+                    length: true,
                     order: true,
                     paging: true,
                     scroller: true,

@@ -54,7 +54,7 @@ export interface IState {
 	ColReorder: any;
 	c: restoreType.IDefaults;
 	columns: IColumn[];
-	len: number;
+	length: number;
 	order: Array<Array<string|number>>;
 	paging: any;
 	scroller: any;
@@ -123,7 +123,7 @@ export default class StateRestore {
 					search: 'Column Search:',
 					visible: 'Column Visibility:'
 				},
-				len: 'Page Length:',
+				length: 'Page Length:',
 				name: 'Name:',
 				order: 'Sorting:',
 				paging: 'Paging:',
@@ -157,7 +157,7 @@ export default class StateRestore {
 				search: true,
 				visible: true
 			},
-			len: true,
+			length: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -177,7 +177,7 @@ export default class StateRestore {
 				search: false,
 				visible: false
 			},
-			len: false,
+			length: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -447,8 +447,8 @@ export default class StateRestore {
 		}
 
 		// Page Length
-		if (!this.c.saveState.len) {
-			state.len = undefined;
+		if (!this.c.saveState.length) {
+			state.length = undefined;
 		}
 
 		// Need to delete properties that we do not want to compare
@@ -492,7 +492,7 @@ export default class StateRestore {
 			let correctPaging = (e, preSettings) => {
 				setTimeout(() => {
 					let currpage = preSettings._iDisplayStart / preSettings._iDisplayLength;
-					let intendedPage = loadedState.start / loadedState.len;
+					let intendedPage = loadedState.start / loadedState.length;
 
 					// If the paging is incorrect then we have to set it again so that it is correct
 					// This happens when a searchpanes filter is removed
@@ -726,8 +726,8 @@ export default class StateRestore {
 		}
 
 		// Page Length
-		if (!this.c.saveState.len) {
-			this.s.savedState.len = undefined;
+		if (!this.c.saveState.length) {
+			this.s.savedState.length = undefined;
 		}
 
 		this.s.savedState.c = this.c;

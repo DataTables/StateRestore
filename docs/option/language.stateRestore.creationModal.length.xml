@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
-	<name>language.stateRestore.creationModal.len</name>
+	<name>language.stateRestore.creationModal.length</name>
 	<summary>Set the text for the label of the page length checkbox within the creation modal</summary>
 	<since>1.1.1</since>
 
@@ -26,7 +26,7 @@ $(document).ready(function() {
         language: {
             stateRestore: {
                 creationModal:{
-                    len: 'Length:'
+                    length: 'Length:'
                 }
             }
         },
@@ -36,7 +36,7 @@ $(document).ready(function() {
                 config:{
                     creationModal: true,
                     toggle: {
-                        len: true
+                        length: true
                     }
                 }
             }

@@ -1,4 +1,4 @@
-describe('stateRestore - options - language.stateRestore.creationModal.len', function () {
+describe('stateRestore - options - language.stateRestore.creationModal.length', function () {
 	let table;
 
 	dt.libs({
@@ -18,7 +18,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.len', fun
 						config: {
 							creationModal: true,
 							toggle: {
-								len: true
+								length: true
 							}
 						}
 					}
@@ -41,7 +41,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.len', fun
 						config: {
 							creationModal: true,
 							toggle: {
-								len: true
+								length: true
 							}
 						}
 					}
@@ -49,7 +49,7 @@ describe('stateRestore - options - language.stateRestore.creationModal.len', fun
 				language: {
 					stateRestore: {
 						creationModal: {
-							len: 'unit test'
+							length: 'unit test'
 						}
 					}
 				}
