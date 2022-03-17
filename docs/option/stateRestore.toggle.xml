@@ -50,6 +50,11 @@ This option allows for the saving of the paging to be enabled or disabled by the
 
 As default the value is `true`, meaning that the user can decide whether the paging will be saved. If this option is set to `false`, then the paging saving will not be given as an option to the user on creation.
 
+### length
+This option allows for the saving of the page length to be enabled or disabled by the user.
+
+As default the value is `true`, meaning that the user can decide whether the page length will be saved. If this option is set to `false`, then the page length saving will not be given as an option to the user on creation.
+
 
 ### search
 This option allows for the saving of the search to be enabled or disabled by the user.

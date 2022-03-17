@@ -33,6 +33,7 @@ export interface IClasses {
 	emptyStates: string;
 	formRow: string;
 	leftSide: string;
+	lengthToggle: string;
 	modalError: string;
 	modalFoot: string;
 	nameInput: string;
@@ -63,6 +64,7 @@ export interface IDom {
 	dtContainer: JQuery<HTMLElement>;
 	duplicateError: JQuery<HTMLElement>;
 	emptyError: JQuery<HTMLElement>;
+	lengthToggle: JQuery<HTMLElement>;
 	nameInputRow: JQuery<HTMLElement>;
 	orderToggle: JQuery<HTMLElement>;
 	pagingToggle: JQuery<HTMLElement>;
@@ -97,6 +99,7 @@ export interface IDefaults {
 export interface ISaveState {
 	colReorder: boolean;
 	columns: IColumnDefault | boolean;
+	length: boolean;
 	order: boolean;
 	paging: boolean;
 	scroller: boolean;
@@ -133,6 +136,7 @@ export interface II18nCreationModal {
 		search: string;
 		visible: string;
 	};
+	length: string;
 	name: string;
 	order: string;
 	paging: string;
@@ -183,6 +187,7 @@ export default class StateRestoreCollection {
 		emptyStates: 'dtsr-emptyStates',
 		formRow: 'dtsr-form-row',
 		leftSide: 'dtsr-left',
+		lengthToggle: 'dtsr-length-toggle',
 		modalError: 'dtsr-modal-error',
 		modalFoot: 'dtsr-modal-foot',
 		nameInput: 'dtsr-name-input',
@@ -211,6 +216,7 @@ export default class StateRestoreCollection {
 					search: 'Column Search',
 					visible: 'Column Visibility'
 				},
+				length: 'Page Length',
 				name: 'Name:',
 				order: 'Sorting',
 				paging: 'Paging',
@@ -245,6 +251,7 @@ export default class StateRestoreCollection {
 				search: true,
 				visible: true
 			},
+			length: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -264,6 +271,7 @@ export default class StateRestoreCollection {
 				search: false,
 				visible: false
 			},
+			length: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -397,6 +405,20 @@ export default class StateRestoreCollection {
 				'<span class="'+this.classes.modalError+'">' +
 					this.s.dt.i18n('stateRestore.emptyError', this.c.i18n.emptyError) +
 				'</span>'
+			),
+			lengthToggle: $(
+				'<div class="'+this.classes.formRow+' '+this.classes.checkRow+'">' +
+					'<input type="checkbox" class="'+
+						this.classes.lengthToggle+' ' +
+						this.classes.checkBox +
+					'" checked>' +
+					'<label class="'+this.classes.checkLabel+'">'+
+						this.s.dt.i18n(
+							'stateRestore.creationModal.length',
+							this.c.i18n.creationModal.length
+						)+
+					'</label>'+
+				'</div>'
 			),
 			nameInputRow: $(
 				'<div class="'+this.classes.formRow+'">' +
@@ -990,6 +1012,18 @@ export default class StateRestoreCollection {
 			togglesToInsert.push(this.dom.pagingToggle);
 		}
 
+		// Page Length toggle - check toggle and saving enabled
+		if (
+			(
+				(!toggleDefined || options.toggle.length === undefined) && this.c.toggle.length ||
+				toggleDefined && options.toggle.length
+			) &&
+			this.c.saveState.length &&
+			(tableConfig.length === undefined || tableConfig.length)
+		) {
+			togglesToInsert.push(this.dom.lengthToggle);
+		}
+
 		// ColReorder toggle - check toggle and saving enabled
 		if (
 			this.s.hasColReorder &&
@@ -1193,6 +1227,7 @@ export default class StateRestoreCollection {
 					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
 					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
 				},
+				length: this.dom.lengthToggle.children('input').is(':checked'),
 				order: this.dom.orderToggle.children('input').is(':checked'),
 				paging: this.dom.pagingToggle.children('input').is(':checked'),
 				scroller: this.dom.scrollerToggle.children('input').is(':checked'),

@@ -123,6 +123,7 @@ export default class StateRestore {
 					search: 'Column Search:',
 					visible: 'Column Visibility:'
 				},
+				length: 'Page Length:',
 				name: 'Name:',
 				order: 'Sorting:',
 				paging: 'Paging:',
@@ -156,6 +157,7 @@ export default class StateRestore {
 				search: true,
 				visible: true
 			},
+			length: true,
 			order: true,
 			paging: true,
 			scroller: true,
@@ -175,6 +177,7 @@ export default class StateRestore {
 				search: false,
 				visible: false
 			},
+			length: false,
 			order: false,
 			paging: false,
 			scroller: false,
@@ -441,6 +444,11 @@ export default class StateRestore {
 		// Paging
 		if (!this.c.saveState.paging) {
 			state.start = 0;
+		}
+
+		// Page Length
+		if (!this.c.saveState.length) {
+			state.length = undefined;
 		}
 
 		// Need to delete properties that we do not want to compare
@@ -715,6 +723,11 @@ export default class StateRestore {
 		// Paging
 		if (!this.c.saveState.paging) {
 			this.s.savedState.start = 0;
+		}
+
+		// Page Length
+		if (!this.c.saveState.length) {
+			this.s.savedState.length = undefined;
 		}
 
 		this.s.savedState.c = this.c;
