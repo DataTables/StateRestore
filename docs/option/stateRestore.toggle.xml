@@ -39,31 +39,6 @@ In order to display the creation modal, `-init stateRestore.creationModal` must 
 
 The list of boolean values is as follows, it is the format as `-init stateRestore.saveState`.
 
-### order
-This option allows for the saving of the column sorting to be enabled or disabled by the user.
-
-As default the value is `true`, meaning that the user can decide whether the column sorting will be saved. If this option is set to `false`, then column sorting saving will not be given as an option to the user on creation.
-
-
-### paging
-This option allows for the saving of the paging to be enabled or disabled by the user.
-
-As default the value is `true`, meaning that the user can decide whether the paging will be saved. If this option is set to `false`, then the paging saving will not be given as an option to the user on creation.
-
-### length
-This option allows for the saving of the page length to be enabled or disabled by the user.
-
-As default the value is `true`, meaning that the user can decide whether the page length will be saved. If this option is set to `false`, then the page length saving will not be given as an option to the user on creation.
-
-Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
-
-
-### search
-This option allows for the saving of the search to be enabled or disabled by the user.
-
-As default the value is `true`, meaning that the user can decide whether the search will be saved. If this option is set to `false`, then the search saving will not be given as an option to the user on creation.
-
-
 ### columns.search
 This option allows for the saving of the search applied to individual columns to be enabled or disabled by the user.
 
@@ -75,12 +50,33 @@ This option allows for the saving of the visibility of the columns to be enabled
 
 As default the value is `true`, meaning that the user can decide whether the column visibilities will be saved. If this option is set to `false`, then column visibilites will not not be given as an option to the user on creation.
 
+### length
+This option allows for the saving of the page length to be enabled or disabled by the user.
+
+As default the value is `true`, meaning that the user can decide whether the page length will be saved. If this option is set to `false`, then the page length saving will not be given as an option to the user on creation.
+
+Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
+
+### order
+This option allows for the saving of the column sorting to be enabled or disabled by the user.
+
+As default the value is `true`, meaning that the user can decide whether the column sorting will be saved. If this option is set to `false`, then column sorting saving will not be given as an option to the user on creation.
+
+
+### paging
+This option allows for the saving of the paging to be enabled or disabled by the user.
+
+As default the value is `true`, meaning that the user can decide whether the paging will be saved. If this option is set to `false`, then the paging saving will not be given as an option to the user on creation.
 
 ### scroller
 This option allows for the saving of the `-init scroller` position to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
 
 As default the value is `true`, meaning that the user can decide whether the `-init scroller` position will be saved. If this option is set to `false`, then the `-init scroller` position saving will not be given as an option to the user on creation.
 
+### search
+This option allows for the saving of the search to be enabled or disabled by the user.
+
+As default the value is `true`, meaning that the user can decide whether the search will be saved. If this option is set to `false`, then the search saving will not be given as an option to the user on creation.
 
 ### searchBuilder
 This option allows for the saving of the `-init searchBuilder` state to be enabled or disabled by the user. This option is only applicable when both the `-init stateRestore` and `-init searchBuilder` extensions are in use.
