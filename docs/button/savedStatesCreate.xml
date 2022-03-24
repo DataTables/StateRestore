@@ -2,12 +2,14 @@
 <dt-button library="StateRestore">
 	<name>savedStatesCreate</name>
 	<summary>Extends `-button savedStates`, adding creating functionality to the collection normally displayed</summary>
-	<since>1.0.0</since>
+	<deprecated since="1.1.1"/>
 
 	<description>
 This button extends the `-button savedStates` button to include the `-button createState` button in the collection that is normally displayed when the `-button savedStates` button is pressed.
 
 As well as the `-button createState` button, the usual collection that contains a number of `-button stateRestore` buttons, one for each state that is being stored by `-init stateRestore`, is shown.
+
+This button is deprecated as of version 1.1.1 and will be removed in a future release. It is now favoured to use the buttons `-init buttons.buttons` initialisation option to add the other buttons to the start of the collection.
 	</description>
 
    <option name="config" type="object" default="{}">

@@ -893,7 +893,10 @@ export default class StateRestoreCollection {
 	 * Rebuilds all of the buttons in the collection of states to make sure that states and text is up to date
 	 */
 	private _collectionRebuild(): void {
-		let stateButtons = [];
+		let button = this.s.dt.button('SaveStateRestore:name');
+		let stateButtons = button[0] !== undefined && button[0].inst.c.buttons[0].buttons !== undefined ?
+			button[0].inst.c.buttons[0].buttons :
+			[];
 
 		if (this.c._createInSaved) {
 			stateButtons.push('createState');
@@ -958,7 +961,7 @@ export default class StateRestoreCollection {
 			}
 		}
 
-		this.s.dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+		button.collectionRebuild(stateButtons);
 	}
 
 	/**

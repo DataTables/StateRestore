@@ -357,7 +357,10 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 						0;
 			});
 
-			let stateButtons = [];
+			let button = dt.button('SaveStateRestore:name');
+			let stateButtons = button[0] !== undefined && button[0].inst.c.buttons[0].buttons !== undefined ?
+				button[0].inst.c.buttons[0].buttons :
+				[];
 
 			if (stateRestoreOpts._createInSaved) {
 				stateButtons.push('createState');
@@ -480,7 +483,10 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 
 	function _stateRegen(dt, src) {
 		let states = dt.stateRestore.states();
-		let stateButtons = [];
+		let button = dt.button('SaveStateRestore:name');
+		let stateButtons = button[0] !== undefined && button[0].inst.c.buttons[0].buttons !== undefined ?
+			button[0].inst.c.buttons[0].buttons :
+			[];
 		let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 
 		if (stateRestoreOpts._createInSaved) {
