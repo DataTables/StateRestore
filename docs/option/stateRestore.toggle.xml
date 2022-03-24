@@ -55,6 +55,8 @@ This option allows for the saving of the page length to be enabled or disabled b
 
 As default the value is `true`, meaning that the user can decide whether the page length will be saved. If this option is set to `false`, then the page length saving will not be given as an option to the user on creation.
 
+Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
+
 
 ### search
 This option allows for the saving of the search to be enabled or disabled by the user.

@@ -55,6 +55,8 @@ As default the value is `true`, meaning that the page length will be saved. If t
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/noLength.html) to see this in action.
 
+Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
+
 ### search
 This option allows for the saving of the search to be enabled or disabled.
 
