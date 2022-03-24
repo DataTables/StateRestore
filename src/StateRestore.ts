@@ -852,36 +852,18 @@ export default class StateRestore {
 			}
 		}
 
-		// If the keys are not the same length
-		if (keys[0].length !== keys[1].length) {
-			// We first need to check that there are no undefined values lurking
-			// If there are then they are most likely present in the longer of the two arrays
-			let longer = keys[0].length > keys[1].length ? 0 : 1;
-
-			// Then go through this array and find the key that does not match
-			for (let i = 0; i < keys[longer].length; i++) {
-				if (keys[0][i] !== keys[1][i]) {
-					if(this.s.isPreDefined) {
-						if(longer === 1 && states[0][keys[0][i]] === undefined) {
-							return false;
-						}
-						else {
-							// remove that key
-							keys[longer].splice(i,1);
-							i--;
-						}
-					}
-					else if(states[longer][keys[longer][i]] === undefined) {
-						// remove that key
-						keys[longer].splice(i,1);
-						i--;
-					}
-				}
+		// We are only going to compare the keys that are common between both states
+		for (let i = 0; i < keys[0].length; i++) {
+			if(!keys[1].includes(keys[0][i])) {
+				keys[0].splice(i,1);
+				i--;
 			}
+		}
 
-			// If the length of the keys still do not match at this point then they are different
-			if(keys[0].length !== keys[1].length) {
-				return false;
+		for (let i = 0; i < keys[1].length; i++) {
+			if(!keys[0].includes(keys[1][i])) {
+				keys[1].splice(i,1);
+				i--;
 			}
 		}
 
