@@ -34,6 +34,29 @@
 		<![CDATA[
 This option determines what StateRestore will save. The option is an object containing boolean values, one for each element that could be saved. These are as follows.
 
+### columns.search
+This option allows for the saving of the search applied to individual columns to be enabled or disabled.
+
+As default the value is `true`, meaning that the column searches will be saved. If this option is set to `false`, then column searches will not be saved.
+
+Take a look at [this example](/extensions/staterestore/examples/customisation/noColumnSearch.html) to see this in action.
+
+### columns.visible
+This option allows for the saving of the visibility of the columns to be enabled or disabled.
+
+As default the value is `true`, meaning that the column visibilities will be saved. If this option is set to `false`, then column visibilites will not be saved.
+
+Take a look at [this example](/extensions/staterestore/examples/customisation/noColumnVisibility.html) to see this in action.
+
+### length
+This option allows for the saving of the page length to be enabled or disabled.
+
+As default the value is `true`, meaning that the page length will be saved. If this option is set to `false`, then the page length saving will be disabled.
+
+Take a look at [this example](/extensions/staterestore/examples/customisation/noLength.html) to see this in action.
+
+Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
+
 ### order
 This option allows for the saving of the tables column sorting to be enabled or disabled.
 
@@ -48,14 +71,10 @@ As default the value is `true`, meaning that the paging will be saved. If this o
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/noPaging.html) to see this in action.
 
-### length
-This option allows for the saving of the page length to be enabled or disabled.
+### scroller
+This option allows for the saving of the `-init scroller` position to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
 
-As default the value is `true`, meaning that the page length will be saved. If this option is set to `false`, then the page length saving will be disabled.
-
-Take a look at [this example](/extensions/staterestore/examples/customisation/noLength.html) to see this in action.
-
-Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
+As default the value is `true`, meaning that the `-init scroller` position will be saved. If this option is set to `false`, then the `-init scroller` position saving will be disabled.
 
 ### search
 This option allows for the saving of the search to be enabled or disabled.
@@ -63,36 +82,23 @@ This option allows for the saving of the search to be enabled or disabled.
 As default the value is `true`, meaning that the search will be saved. If this option is set to `false`, then the search saving will be disabled.
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/noSearch.html) to see this in action.
-### columns.search
-This option allows for the saving of the search applied to individual columns to be enabled or disabled.
-
-As default the value is `true`, meaning that the column searches will be saved. If this option is set to `false`, then column searches will not be saved.
-
-Take a look at [this example](/extensions/staterestore/examples/customisation/noColumnSearch.html) to see this in action.
-### columns.visible
-This option allows for the saving of the visibility of the columns to be enabled or disabled.
-
-As default the value is `true`, meaning that the column visibilities will be saved. If this option is set to `false`, then column visibilites will not be saved.
-
-Take a look at [this example](/extensions/staterestore/examples/customisation/noColumnVisibility.html) to see this in action.
-### scroller
-This option allows for the saving of the `-init scroller` position to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init scroller` extensions are in use.
-
-As default the value is `true`, meaning that the `-init scroller` position will be saved. If this option is set to `false`, then the `-init scroller` position saving will be disabled.
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/noScroller.html) to see this in action.
+
 ### searchBuilder
 This option allows for the saving of the `-init searchBuilder` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init searchBuilder` extensions are in use.
 
 As default the value is `true`, meaning that the `-init searchBuilder` state will be saved. If this option is set to `false`, then the `-init searchBuilder` state saving will be disabled.
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/nosearchBuilder.html) to see this in action.
+
 ### searchPanes
 This option allows for the saving of the `-init searchPanes` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init searchPanes` extensions are in use.
 
 As default the value is `true`, meaning that the `-init searchPanes` state will be saved. If this option is set to `false`, then the `-init searchPanes` state saving will be disabled.
 
 Take a look at [this example](/extensions/staterestore/examples/customisation/noSearchPanes.html) to see this in action.
+
 ### select
 This option allows for the saving of the `-init select` state to be enabled or disabled. This option is only applicable when both the `-init stateRestore` and `-init select` extensions are in use.
 
