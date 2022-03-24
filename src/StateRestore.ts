@@ -852,6 +852,13 @@ export default class StateRestore {
 			}
 		}
 
+		if (
+			keys[0].length === 0 && keys[1].length > 0 ||
+			keys[1].length === 0 && keys[0].length > 0
+		) {
+			return false;
+		}
+
 		// We are only going to compare the keys that are common between both states
 		for (let i = 0; i < keys[0].length; i++) {
 			if(!keys[1].includes(keys[0][i])) {
