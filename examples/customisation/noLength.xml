@@ -27,7 +27,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Don't save page length</title>
 
 <info><![CDATA[
-This example shows how to use the `-init stateRestore.length` initialisation option to disable the saving of the table's current page length by setting the value to `false`. The default value is `true` meaning that the page length will be saved.
+This example shows how to use the `stateRestore.saveState.length` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current page length by setting the value to `false`. The default value is `true` meaning that the page length will be saved.
 ]]></info>
 
 </dt-example>

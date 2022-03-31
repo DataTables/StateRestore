@@ -27,7 +27,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Don't save ordering</title>
 
 <info><![CDATA[
-This example shows how to use the `-init stateRestore.order` initialisation option to disable the saving of column ordering that is applied to the table by setting the value to `false`. The default value is `true` meaning that the column orders will be saved.
+This example shows how to use the `stateRestore.saveState.order` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of column ordering that is applied to the table by setting the value to `false`. The default value is `true` meaning that the column orders will be saved.
 ]]></info>
 
 </dt-example>

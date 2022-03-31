@@ -36,7 +36,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Don't save Selections</title>
 
 <info><![CDATA[
-This example shows how to use the `-init stateRestore.select` initialisation option to disable the saving of the table's current `-init select` search criteria by setting the value of the initialisation option to `false`. The default value is `true` meaning that the selections will be saved.
+This example shows how to use the `stateRestore.saveState.select` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current `-init select` search criteria by setting the value of the initialisation option to `false`. The default value is `true` meaning that the selections will be saved.
 ]]></info>
 
 <custom-table>

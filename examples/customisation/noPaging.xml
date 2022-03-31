@@ -27,7 +27,7 @@ $(document).ready(function() {
 <title lib="stateRestore">Don't save paging</title>
 
 <info><![CDATA[
-This example shows how to use the `-init stateRestore.paging` initialisation option to disable the saving of the table's current page by setting the value to `false`. The default value is `true` meaning that the page will be saved.
+This example shows how to use the `stateRestore.saveState.paging` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current page by setting the value to `false`. The default value is `true` meaning that the page will be saved.
 ]]></info>
 
 </dt-example>
