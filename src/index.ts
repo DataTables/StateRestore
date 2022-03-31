@@ -362,6 +362,14 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				button[0].inst.c.buttons[0].buttons :
 				[];
 
+			// remove any states from the previous rebuild - if they are still there they will be added later
+			for (let i = 0; i < stateButtons.length; i++) {
+				if (stateButtons[i].extend === 'stateRestore') {
+					stateButtons.splice(i,1);
+					i--;
+				}
+			}
+
 			if (stateRestoreOpts._createInSaved) {
 				stateButtons.push('createState');
 				stateButtons.push('');
@@ -488,6 +496,14 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			button[0].inst.c.buttons[0].buttons :
 			[];
 		let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
+
+		// remove any states from the previous rebuild - if they are still there they will be added later
+		for (let i = 0; i < stateButtons.length; i++) {
+			if (stateButtons[i].extend === 'stateRestore') {
+				stateButtons.splice(i,1);
+				i--;
+			}
+		}
 
 		if (stateRestoreOpts._createInSaved) {
 			stateButtons.push('createState');

@@ -898,19 +898,35 @@ export default class StateRestoreCollection {
 			button[0].inst.c.buttons[0].buttons :
 			[];
 
+		// remove any states from the previous rebuild - if they are still there they will be added later
+		for (let i = 0; i < stateButtons.length; i++) {
+			if (stateButtons[i].extend === 'stateRestore') {
+				stateButtons.splice(i,1);
+				i--;
+			}
+		}
+
 		if (this.c._createInSaved) {
 			stateButtons.push('createState');
 		}
 
+		let emptyText = '<span class="'+this.classes.emptyStates+'">' +
+				this.s.dt.i18n('stateRestore.emptyStates', this.c.i18n.emptyStates) +
+			'</span>';
+
 		// If there are no states display an empty message
-		if(this.s.states.length === 0) {
-			stateButtons.push(
-				'<span class="'+this.classes.emptyStates+'">' +
-					this.s.dt.i18n('stateRestore.emptyStates', this.c.i18n.emptyStates) +
-				'</span>'
-			);
+		if (this.s.states.length === 0) {
+			// Don't want the empty text included more than twice
+			if (!stateButtons.includes(emptyText)) {
+				stateButtons.push(emptyText);
+			}
 		}
 		else {
+			// There are states to add so there shouldn't be any empty text left!
+			while (stateButtons.includes(emptyText)) {
+				stateButtons.splice(stateButtons.indexOf(emptyText), 1);
+			}
+
 			// There is a potential issue here if sorting where the string parts of the name are the same,
 			// only the number differs and there are many states - but this wouldn't be usfeul naming so
 			// more of a priority to sort alphabetically
