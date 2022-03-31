@@ -418,6 +418,20 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				});
 			}
 
+			// Need to disable the removeAllStates button if there are no states and it is present
+			let buttons = dt.buttons();
+
+			for (let butt = 0; butt < buttons.length; butt++) {
+				if (states.length === 0) {
+					if ($(buttons[butt].node).hasClass('dtsr-removeAllStates')) {
+						dt.button(butt).disable();
+					}
+					else {
+						dt.button(butt).enable();
+					}
+				}
+			}
+
 			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 			node.blur();
 		},
@@ -445,6 +459,12 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		action(e, dt, node) {
 			dt.stateRestore.states().remove(true);
 			node.blur();
+		},
+		className: 'dt-button dtsr-removeAllStates',
+		init(dt, node) {
+			if (dt.stateRestore.states().length === 0) {
+				$(node).addClass('disabled');
+			}
 		},
 		text(dt) {
 			return dt.i18n('buttons.removeAllStates', 'Remove All States');
@@ -558,6 +578,20 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 					extend: 'stateRestore',
 					text: state.s.identifier
 				});
+			}
+		}
+
+		// Need to disable the removeAllStates button if there are no states and it is present
+		let buttons = dt.buttons();
+
+		for (let butt = 0; butt < buttons.length; butt++) {
+			if (states.length === 0) {
+				if ($(buttons[butt].node).hasClass('dtsr-removeAllStates')) {
+					dt.button(butt).disable();
+				}
+				else {
+					dt.button(butt).enable();
+				}
 			}
 		}
 
