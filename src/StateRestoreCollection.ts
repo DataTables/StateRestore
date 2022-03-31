@@ -977,21 +977,21 @@ export default class StateRestoreCollection {
 			}
 		}
 
+		button.collectionRebuild(stateButtons);
+
 		// Need to disable the removeAllStates button if there are no states and it is present
 		let buttons = this.s.dt.buttons();
 
-		for (let butt = 0; butt < buttons.length; butt++) {
-			if (this.s.states.length === 0) {
-				if ($(buttons[butt].node).hasClass('this.s.dtsr-removeAllStates')) {
-					this.s.dt.button(butt).disable();
+		for (let butt of buttons) {
+			if ($(butt.node).hasClass('dtsr-removeAllStates')) {
+				if (this.s.states.length === 0) {
+					this.s.dt.button(butt.node).disable();
 				}
 				else {
-					this.s.dt.button(butt).enable();
+					this.s.dt.button(butt.node).enable();
 				}
 			}
 		}
-
-		button.collectionRebuild(stateButtons);
 	}
 
 	/**

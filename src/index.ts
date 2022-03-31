@@ -418,22 +418,22 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 				});
 			}
 
+			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+			node.blur();
+
 			// Need to disable the removeAllStates button if there are no states and it is present
 			let buttons = dt.buttons();
 
-			for (let butt = 0; butt < buttons.length; butt++) {
-				if (states.length === 0) {
-					if ($(buttons[butt].node).hasClass('dtsr-removeAllStates')) {
-						dt.button(butt).disable();
+			for (let butt of buttons) {
+				if ($(butt.node).hasClass('dtsr-removeAllStates')) {
+					if (states.length === 0) {
+						dt.button(butt.node).disable();
 					}
 					else {
-						dt.button(butt).enable();
+						dt.button(butt.node).enable();
 					}
 				}
 			}
-
-			dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
-			node.blur();
 		},
 		init(dt, node, config) {
 			if(dt.settings()[0]._stateRestore === undefined && dt.button('SaveStateRestore:name').length > 1) {
@@ -581,21 +581,21 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			}
 		}
 
+		dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
+
 		// Need to disable the removeAllStates button if there are no states and it is present
 		let buttons = dt.buttons();
 
-		for (let butt = 0; butt < buttons.length; butt++) {
-			if (states.length === 0) {
-				if ($(buttons[butt].node).hasClass('dtsr-removeAllStates')) {
-					dt.button(butt).disable();
+		for (let butt of buttons) {
+			if ($(butt.node).hasClass('dtsr-removeAllStates')) {
+				if (states.length === 0) {
+					dt.button(butt.node).disable();
 				}
 				else {
-					dt.button(butt).enable();
+					dt.button(butt.node).enable();
 				}
 			}
 		}
-
-		dt.button('SaveStateRestore:name').collectionRebuild(stateButtons);
 	}
 
 	// Attach a listener to the document which listens for DataTables initialisation
