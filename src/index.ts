@@ -168,20 +168,21 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			let success = true;
 			let that = this.toArray();
 
-			for (let i = 0; i < that.length; i) {
-				let set = that[i];
-				if(set !== undefined) {
-					// Check if removal of states is allowed
-					if(set.c.remove) {
-						let tempSuccess = set.remove(skipModalIn);
-						if(tempSuccess !== true) {
-							success = tempSuccess;
-							i++;
-						}
-						else {
-							that.splice(i, 1);
-						}
+			while (that.length > 0) {
+				let set = that[0];
+
+				if (set !== undefined && set.c.remove) {
+					let tempSuccess = set.remove(skipModalIn);
+
+					if (tempSuccess !== true) {
+						success = tempSuccess;
 					}
+					else {
+						that.splice(0, 1);
+					}
+				}
+				else {
+					break;
 				}
 			}
 
