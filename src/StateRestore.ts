@@ -56,6 +56,7 @@ export interface IState {
 	columns: IColumn[];
 	length: number;
 	order: Array<Array<string|number>>;
+	page: number;
 	paging: any;
 	scroller: any;
 	search: ISearch;
@@ -411,6 +412,11 @@ export default class StateRestore {
 		}
 		else if (!this.c.saveState.columns) {
 			state.columns = undefined;
+		}
+
+		// Paging
+		if (!this.c.saveState.paging) {
+			state.page = undefined;
 		}
 
 		// SearchBuilder
@@ -832,12 +838,19 @@ export default class StateRestore {
 			if (keys[0][i].indexOf('_') === 0) {
 				keys[0].splice(i, 1);
 				i--;
+				continue;
 			}
 			// If scroller is included then we need to remove the following values
 			//  as they can be different but yield the same results
-			if (keys[0][i] === 'baseRowTop' || keys[0][i] === 'baseScrollTop' || keys[0][i] === 'scrollTop') {
+			if (
+				keys[0][i] === 'baseRowTop' ||
+				keys[0][i] === 'baseScrollTop' ||
+				keys[0][i] === 'scrollTop' ||
+				(!this.c.saveState.paging && keys[0][i] === 'page')
+			) {
 				keys[0].splice(i, 1);
 				i--;
+				continue;
 			}
 		}
 
@@ -845,10 +858,17 @@ export default class StateRestore {
 			if (keys[1][i].indexOf('_') === 0) {
 				keys[1].splice(i, 1);
 				i--;
+				continue;
 			}
-			if (keys[1][i] === 'baseRowTop' || keys[1][i] === 'baseScrollTop' || keys[1][i] === 'scrollTop') {
+			if (
+				keys[1][i] === 'baseRowTop' ||
+				keys[1][i] === 'baseScrollTop' ||
+				keys[1][i] === 'scrollTop' ||
+				(!this.c.saveState.paging && keys[0][i] === 'page')
+			) {
 				keys[1].splice(i, 1);
 				i--;
+				continue;
 			}
 		}
 
