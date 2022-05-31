@@ -189,7 +189,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 			return success;
 		};
 
-		if (this.context[0]._stateRestore.c.remove) {
+		if (this.context[0]._stateRestore && this.context[0]._stateRestore.c.remove) {
 			if (skipModal) {
 				removeAllCallBack(skipModal);
 			}
@@ -463,7 +463,7 @@ import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from 
 		},
 		className: 'dt-button dtsr-removeAllStates',
 		init(dt, node) {
-			if (dt.stateRestore.states().length === 0) {
+			if (! dt.settings()[0]._stateRestore || dt.stateRestore.states().length === 0) {
 				$(node).addClass('disabled');
 			}
 		},
