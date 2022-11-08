@@ -66,7 +66,7 @@ else
 	fi
 fi
 
-js_compress $OUT_DIR/js/dataTables.stateRestore.js
+js_wrap $OUT_DIR/js/dataTables.stateRestore.js "jquery datatables.net"
 
 # Copy and build examples
 rsync -r examples $OUT_DIR
