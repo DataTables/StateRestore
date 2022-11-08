@@ -6,7 +6,8 @@
  * @summary     StateRestore
  * @description StateRestore extension for DataTables
  * @version     1.2.0
- * @author      SpryMedia Ltd (www.sprymedia.co.uk)
+ * @author      SpryMedia Ltd
+ * @contact     datatables.net
  * @copyright   Copyright 2019-2022 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
