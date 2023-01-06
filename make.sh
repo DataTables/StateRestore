@@ -40,7 +40,7 @@ node_modules/typescript/bin/tsc
 HEADER="$(head -n 3 src/index.ts)"
 
 rsync -r src/*.js $OUT_DIR/js
-js_frameworks stateRestore $OUT_DIR/js
+js_frameworks stateRestore $OUT_DIR/js "jquery datatables.net-FW datatables.net-staterestore"
 
 OUT=$OUT_DIR ./node_modules/rollup/dist/bin/rollup \
     --banner "$HEADER" \
