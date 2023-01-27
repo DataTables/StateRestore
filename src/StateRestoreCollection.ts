@@ -894,9 +894,25 @@ export default class StateRestoreCollection {
 	 */
 	private _collectionRebuild(): void {
 		let button = this.s.dt.button('SaveStateRestore:name');
-		let stateButtons = button[0] !== undefined && button[0].inst.c.buttons[0].buttons !== undefined ?
-			button[0].inst.c.buttons[0].buttons :
-			[];
+		let stateButtons = [];
+	
+		// Need to get the original configuration object, so we can rebuild it
+		// It might be nested, so need to traverse down the tree
+		if (button[0]) {
+			let idxs = button.index().split('-');
+	
+			stateButtons = button[0].inst.c.buttons;
+	
+			for (let i=0 ; i<idxs.length ; i++) {
+				if (stateButtons[idxs[i]].buttons) {
+					stateButtons = stateButtons[idxs[i]].buttons;
+				}
+				else {
+					stateButtons = [];
+					break;
+				}
+			}
+		}
 
 		// remove any states from the previous rebuild - if they are still there they will be added later
 		for (let i = 0; i < stateButtons.length; i++) {
