@@ -93,7 +93,7 @@ export interface IStateRestore {
 	tableId?: string;
 }
 export default class StateRestore {
-	private static version = '1.2.0';
+	private static version = '1.2.1';
 
 	private static classes: IClasses = {
 		background: 'dtsr-background',
