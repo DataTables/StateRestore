@@ -1,14 +1,14 @@
-/*! StateRestore 1.2.1
- * 2019-2022 SpryMedia Ltd - datatables.net/license
+/*! StateRestore 1.2.2
+ * © SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     StateRestore
  * @description StateRestore extension for DataTables
- * @version     1.2.1
+ * @version     1.2.2
  * @author      SpryMedia Ltd
  * @contact     datatables.net
- * @copyright   Copyright 2019-2022 SpryMedia Ltd.
+ * @copyright   Copyright SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  * MIT license - http://datatables.net/license/mit
