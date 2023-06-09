@@ -5,16 +5,27 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
+
+$('#example').DataTable({
+	dom: 'Bfrtip',
+	buttons: ['pageLength', 'createState', 'savedStates']
 });
+
 ]]>
 </js>
 
-<title lib="stateRestore">Basic StateRestore Example</title>
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	dom: 'Bfrtip',
+	buttons: ['pageLength', 'createState', 'savedStates']
+});
+
+]]>
+</js-vanilla>
+
+<title lib="StateRestore">Basic StateRestore Example</title>
 
 <info><![CDATA[
 This is the `-init stateRestore` extension for DataTables.
