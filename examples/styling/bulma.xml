@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="1" framework="bulma">
 
-<css lib="datatables buttons staterestore"/>
+<css lib="datatables buttons staterestore font-awesome"/>
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[

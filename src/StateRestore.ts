@@ -229,7 +229,7 @@ export default class StateRestore {
 
 		this.dom = {
 			background: $('<div class="'+this.classes.background+'"/>'),
-			closeButton: $('<div class="'+this.classes.closeButton+'">x</div>'),
+			closeButton: $('<div class="'+this.classes.closeButton+'">&times;</div>'),
 			confirmation: $('<div class="'+this.classes.confirmation+'"/>'),
 			confirmationButton: $('<button class="'+this.classes.confirmationButton+' '+this.classes.dtButton+'">'),
 			confirmationTitleRow: $('<div class="'+this.classes.confirmationTitleRow+'"></div>'),
