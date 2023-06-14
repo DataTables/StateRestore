@@ -20,7 +20,7 @@ describe('stateRestore - options - language.stateRestore.removeJoiner', function
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(4);
+			expect($('.dt-button-split .dt-button').length).toBe(4);
 		});
 		it('Check defaults', function () {
 			table.stateRestore.states().remove();

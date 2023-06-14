@@ -42,7 +42,7 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 				]
 			});
 			$('.dt-button').click();
-			$('.dt-btn-split-wrapper button:eq(0)').click();
+			$('.dt-button-split button:eq(0)').click();
 
 			expect($('thead tr:eq(0) th').length).toBe(5);
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
@@ -69,7 +69,7 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 			});
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').click();
 
 			setTimeout(() => {
 				expect($('thead tr:eq(0) th').length).toBe(6);
@@ -102,7 +102,7 @@ describe('stateRestore - options - stateRestore.preDefined', function () {
 			});
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').click();
 
 			expect($('thead tr:eq(0) th').length).toBe(6);
 			expect($('tbody tr').length).toBe(10);

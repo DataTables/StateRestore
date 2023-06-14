@@ -41,8 +41,8 @@ describe('stateRestore - options - stateRestore.splitSecondaries', function () {
 			});
 
 			$('.dt-button').click();
-			$('.dt-btn-split-wrapper button:eq(0)').click();
-			$('.dt-btn-split-drop-arrow').click();
+			$('.dt-button-split button:eq(0)').click();
+			$('.dt-button-collection .dt-button-down-arrow').click();
 
 			expect(i).toBe(0);
 			expect($('.dt-button-split-left button').length).toBe(4);
@@ -57,7 +57,7 @@ describe('stateRestore - options - stateRestore.splitSecondaries', function () {
 			$('.dataTables_info').click();
 			$('.dt-button').click();
 
-			$('.dt-btn-split-wrapper button:eq(0)').click();
+			$('.dt-button-split button:eq(0)').click();
 
 			expect($('.dt-button-collection button').length).toBe(4);
 		});

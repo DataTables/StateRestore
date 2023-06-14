@@ -57,7 +57,7 @@ describe('stateRestore - options - stateRestore.saveState.searchBuilder', functi
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
+			$('.dt-button-split .dt-button:eq(0)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('Ashton Cox');
 		});
@@ -99,7 +99,7 @@ describe('stateRestore - options - stateRestore.saveState.searchBuilder', functi
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(2)').click();
+			$('.dt-button-split .dt-button:eq(2)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('Airi Satou');
 		});

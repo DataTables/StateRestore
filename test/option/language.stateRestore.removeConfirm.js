@@ -19,11 +19,11 @@ describe('stateRestore - options - language.stateRestore.removeConfirm', functio
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-split .dt-button').length).toBe(2);
 		});
 		it('Check defaults', function () {
-			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-button-split .dt-button:eq(1)').click();
+			$('.dt-button-collection .dt-button:eq(2)').click();
 
 			expect($('.dtsr-confirmation-text').text()).toBe('Are you sure you want to remove State 1?');
 		});
@@ -41,8 +41,8 @@ describe('stateRestore - options - language.stateRestore.removeConfirm', functio
 			});
 
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
-			$('.dt-btn-split-drop-button:eq(2)').click();
+			$('.dt-button-split .dt-button:eq(1)').click();
+			$('.dt-button-collection .dt-button:eq(2)').click();
 
 			expect($('.dtsr-confirmation-text').text()).toBe('unit State 1 test');
 		});

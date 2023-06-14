@@ -41,7 +41,7 @@ describe('stateRestore - options - stateRestore.saveState.order', function () {
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
+			$('.dt-button-split .dt-button:eq(0)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('Prescott Bartlett');
 		});
@@ -80,7 +80,7 @@ describe('stateRestore - options - stateRestore.saveState.order', function () {
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').click();
+			$('.dt-button-split:eq(1) .dt-button:eq(0)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('Airi Satou');
 		});

@@ -28,7 +28,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-split .dt-button').length).toBe(2);
 		});
 
 		dt.html('basic');
@@ -51,7 +51,7 @@ describe('stateRestore - options - stateRestore.create', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-split .dt-button').length).toBe(2);
 		});
 	});
 

@@ -33,7 +33,7 @@ describe('stateRestore - options - stateRestore.creationModal', function () {
 			$('.dtsr-background').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(0);
+			expect($('.dt-button-split .dt-button').length).toBe(0);
 		});
 
 		dt.html('basic');
@@ -61,7 +61,7 @@ describe('stateRestore - options - stateRestore.creationModal', function () {
 			$('.dtsr-background').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-split .dt-button').length).toBe(2);
 		});
 	});
 

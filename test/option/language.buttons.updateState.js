@@ -19,12 +19,12 @@ describe('stateRestore - options - language.buttons.updateState', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-split .dt-button').length).toBe(2);
 		});
 		it('Check defaults', function () {
-			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-button-split .dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(0)').text()).toBe('Update');
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
 		});
 
 		dt.html('basic');
@@ -40,9 +40,9 @@ describe('stateRestore - options - language.buttons.updateState', function () {
 			});
 
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(1)').click();
+			$('.dt-button-split .dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-drop-button:eq(0)').text()).toBe('unit test');
+			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('unit test');
 		});
 	});
 

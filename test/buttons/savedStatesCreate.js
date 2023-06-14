@@ -39,7 +39,7 @@ describe('stateRestore - buttons - savedStatesCreate', function () {
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Airi Satou');
 		});
 		it('Load the state', function () {
-			$('.dt-btn-split-wrapper button:eq(0)').click();
+			$('.dt-button-split button:eq(0)').click();
 
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
 		});

@@ -19,10 +19,10 @@ describe('stateRestore - options - language.buttons.stateRestore', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper .dt-button').length).toBe(2);
+			expect($('.dt-button-split .dt-button').length).toBe(2);
 		});
 		it('Check defaults', function () {
-			expect($('.dt-btn-split-wrapper .dt-button:eq(0)').text()).toBe('State 1');
+			expect($('.dt-button-split .dt-button:eq(0)').text()).toBe('State 1');
 		});
 
 		dt.html('basic');
@@ -40,8 +40,8 @@ describe('stateRestore - options - language.buttons.stateRestore', function () {
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
-			expect($('.dt-btn-split-wrapper:eq(0) .dt-button:eq(0)').text()).toBe('State 1');
-			expect($('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').text()).toBe('unit 1 test');
+			expect($('.dt-button-split:eq(0) .dt-button:eq(0)').text()).toBe('State 1');
+			expect($('.dt-button-split:eq(1) .dt-button:eq(0)').text()).toBe('unit 1 test');
 		});
 	});
 

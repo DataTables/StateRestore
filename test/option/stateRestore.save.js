@@ -29,7 +29,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').click();
 
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
 			expect($('.dt-button-collection .dt-button').length).toBe(3);
@@ -54,7 +54,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').click();
 
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Airi Satou');
 			expect($('.dt-button-collection .dt-button').length).toBe(1);
@@ -78,7 +78,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 		});
 		it('... and unable to create new states with API', function () {
 			table.stateRestore.state.add('unit test');
-			expect($('.dt-btn-split-wrapper .dt-btn-split-drop').length).toBe(1);
+			expect($('.dt-button-split .dt-button-split-drop').length).toBe(1);
 		});
 	});
 

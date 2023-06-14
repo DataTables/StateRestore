@@ -51,7 +51,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 		});
 		it('... reload state', function (done) {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
+			$('.dt-button-split .dt-button:eq(0)').click();
 
 			dt.sleep(200).then(() => {
 				expect($('.dataTables_info').text()).toBe('Showing 31 to 36 of 57 entries');
@@ -103,7 +103,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 		it('... reload state', function (done) {
 			$('.dt-button:eq(1)').click();
 
-			$('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').click();
+			$('.dt-button-split:eq(1) .dt-button:eq(0)').click();
 			dt.sleep(200).then(() => {
 				expect($('.dataTables_info').text()).toBe('Showing 1 to 6 of 57 entries');
 				done();

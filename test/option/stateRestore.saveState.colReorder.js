@@ -42,7 +42,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-button:eq(0)').click();
+			$('.dt-button-split .dt-button:eq(0)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
 		});
@@ -82,7 +82,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper:eq(1) .dt-button:eq(0)').click();
+			$('.dt-button-split:eq(1) .dt-button:eq(0)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('$75,650');
 		});
@@ -122,7 +122,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 		});
 		it('... reload state', function () {
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper:eq(2) .dt-button:eq(0)').click();
+			$('.dt-button-split:eq(2) .dt-button:eq(0)').click();
 
 			expect($('tbody tr td:eq(0)').text()).toBe('Accountant');
 		});

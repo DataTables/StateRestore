@@ -27,7 +27,7 @@ describe('stateRestore - options - stateRestore.rename', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').click();
 
 			expect($('.dt-button-collection .dt-button').length).toBe(3);
 		});
@@ -51,7 +51,7 @@ describe('stateRestore - options - stateRestore.rename', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-btn-split-wrapper .dt-btn-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').click();
 
 			expect($('.dt-button-collection .dt-button').length).toBe(2);
 			expect($('.dt-button-collection .dt-button:eq(0)').text()).toBe('Update');
