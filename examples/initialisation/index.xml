@@ -3,6 +3,7 @@
 
 <title lib="StateRestore">StateRestore</title>
 
+<js lib="jquery" />
 <info><![CDATA[
 This is the section for showing the key configuration options that are available with StateRestore.
 ]]></info>

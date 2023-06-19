@@ -3,6 +3,7 @@
 
 <title lib="StateRestore">StateRestore styling integrations</title>
 
+<js lib="jquery" />
 <info><![CDATA[
 
 This is the section for showing how StateRestore appears for each of the 7 styling frameworks supported by DataTables.
