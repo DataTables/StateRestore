@@ -4,9 +4,5 @@ css/*.js
 examples/testing
 .sass-cache
 
-types/stateRestore.*.d.ts
-types/StateRestore.d.ts
-types/StateRestoreCollection.d.ts
-types/index.d.ts
 testing
 package-lock.json
