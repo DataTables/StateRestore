@@ -40,7 +40,7 @@ declare module 'datatables.net' {
 		stateRestore: ApiStateRestore<T>;
 	}
 
-	interface ApiStatic {
+	interface DataTablesStatic {
 		/**
 		 * StateRestore class
 		 */
