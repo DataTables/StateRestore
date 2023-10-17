@@ -48,7 +48,7 @@ declare module 'datatables.net' {
 			/**
 			 * Create a new StateRestore instance for the target DataTable
 			 */
-			new (dt: Api<any>, settings: string[] | ConfigStateRestore | ConfigStateRestore[]);
+			new (dt: Api<any>, settings: string[] | ConfigStateRestore | ConfigStateRestore[]): void;
 
 			/**
 			 * StateRestore version
