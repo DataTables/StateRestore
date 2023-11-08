@@ -493,8 +493,7 @@ export default class StateRestore {
 		// Click on a background if there is one to shut the collection
 		$('div.dt-button-background').click();
 
-		// Call the internal datatables function to implement the state on the table
-		$.fn.dataTable.ext.oApi._fnImplementState(settings, loadedState, () => {
+		let loaded = () => {
 			let correctPaging = (e, preSettings) => {
 				setTimeout(() => {
 					let currpage = preSettings._iDisplayStart / preSettings._iDisplayLength;
@@ -510,7 +509,17 @@ export default class StateRestore {
 			};
 			this.s.dt.one('preDraw', correctPaging);
 			this.s.dt.draw(false);
-		});
+		};
+
+		// Call the internal datatables function to implement the state on the table
+		if (DataTable.versionCheck('2')) {
+			this.s.dt.state(loadedState);
+			loaded();
+		}
+		else {
+			// Legacy
+			DataTable.ext.oApi._fnImplementState(settings, loadedState, loaded);
+		}
 
 		return loadedState;
 	}
@@ -996,22 +1005,5 @@ export default class StateRestore {
 		});
 
 		$(document).on('keyup', e => this._keyupFunction(e));
-	}
-
-	/**
-	 * Convert from camelCase notation to the internal Hungarian.
-	 * We could use the Hungarian convert function here, but this is cleaner
-	 *
-	 * @param {object} obj Object to convert
-	 * @returns {object} Inverted object
-	 * @memberof DataTable#oApi
-	 */
-	private _searchToHung(obj: ISearch): IHungSearch {
-		return {
-			bCaseInsensitive: obj.caseInsensitive,
-			bRegex:           obj.regex,
-			bSmart:           obj.smart,
-			sSearch:          obj.search
-		};
 	}
 }
