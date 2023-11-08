@@ -472,7 +472,9 @@ export default class StateRestore {
 	 * Removes all of the dom elements from the document
 	 */
 	public destroy(): void {
-		Object.values(this.dom).forEach((node)=> node.off().remove());
+		$.each(this.dom, (name, el) => {
+			el.off().remove();
+		});
 	}
 
 	/**

@@ -735,9 +735,8 @@ export default class StateRestoreCollection {
 			state.destroy();
 		}
 
-		Object.values(this.dom).forEach((node)=> {
-			node.off();
-			node.remove();
+		$.each(this.dom, (name, el) => {
+			el.off().remove();
 		});
 
 		this.s.states = [];
@@ -959,7 +958,7 @@ export default class StateRestoreCollection {
 
 			// Construct the split property of each button
 			for (let state of this.s.states) {
-				let split = Object.assign([], this.c.splitSecondaries);
+				let split = this.c.splitSecondaries.slice();
 				if (split.includes('updateState') && (!this.c.save || !state.c.save)) {
 					split.splice(split.indexOf('updateState'), 1);
 				}

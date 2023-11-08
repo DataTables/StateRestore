@@ -340,7 +340,7 @@ DataTable.ext.buttons.createState = {
 		}
 
 		for (let state of states) {
-			let split = Object.assign([], stateRestoreOpts.splitSecondaries);
+			let split = stateRestoreOpts.splitSecondaries.slice();
 			if (split.includes('updateState') && !stateRestoreOpts.save) {
 				split.splice(
 					split.indexOf('updateState'),
@@ -519,7 +519,7 @@ function _stateRegen(dt, src) {
 	}
 	else {
 		for(let state of states) {
-			let split = Object.assign([], stateRestoreOpts.splitSecondaries);
+			let split = stateRestoreOpts.splitSecondaries.slice();
 			if (split.includes('updateState') && !stateRestoreOpts.save) {
 				split.splice(
 					split.indexOf('updateState'),
