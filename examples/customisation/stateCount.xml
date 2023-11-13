@@ -5,22 +5,47 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates'],
-        language:{
-            buttons:{
-                savedStates: {
-                    0: 'Saved States',
-                    _: 'Saved States (%d)'
-                }
-            }
-        }
-    });
+
+$('#example').DataTable({
+	language: {
+		buttons: {
+			savedStates: {
+				0: 'Saved States',
+				_: 'Saved States (%d)'
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	language: {
+		buttons: {
+			savedStates: {
+				0: 'Saved States',
+				_: 'Saved States (%d)'
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Custom Button Text</title>
 

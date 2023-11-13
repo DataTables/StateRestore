@@ -5,42 +5,88 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
 
-    $('#save').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).save();
-    })
-
-    $('#load').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).load();
-    })
-
-    $('#remove').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).remove();
-    })
-
-    $('#removeAll').on('click', function() {
-        table.stateRestore.states().remove();
-    })
-
-    $('#removeSkip').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).remove(true);
-    })
-
-    $('#removeAllSkip').on('click', function() {
-        table.stateRestore.states().remove(true);
-    })
-
-    $('#add').on('click', function() {
-        table.stateRestore.state.add($('#state-selector').val());
-    })
+var table = $('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+$('#save').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).save();
+});
+
+$('#load').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).load();
+});
+
+$('#remove').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).remove();
+});
+
+$('#removeAll').on('click', function () {
+	table.stateRestore.states().remove();
+});
+
+$('#removeSkip').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).remove(true);
+});
+
+$('#removeAllSkip').on('click', function () {
+	table.stateRestore.states().remove(true);
+});
+
+$('#add').on('click', function () {
+	table.stateRestore.state.add($('#state-selector').val());
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+let table = new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
+});
+let stateSelector = document.querySelector('#state-selector');
+
+document.querySelector('#save').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).save();
+});
+
+document.querySelector('#load').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).load();
+});
+
+document.querySelector('#remove').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).remove();
+});
+
+document.querySelector('#removeAll').addEventListener('click', function () {
+	table.stateRestore.states().remove();
+});
+
+document.querySelector('#removeSkip').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).remove(true);
+});
+
+document.querySelector('#removeAllSkip').addEventListener('click', function () {
+	table.stateRestore.states().remove(true);
+});
+
+document.querySelector('#add').addEventListener('click', function () {
+	table.stateRestore.state.add(stateSelector.value);
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Basic StateRestore Example - API</title>
 

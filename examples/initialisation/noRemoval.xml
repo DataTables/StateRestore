@@ -5,27 +5,54 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    remove: false
-                }
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						remove: false
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						remove: false
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">No state remove</title>
 
 <info><![CDATA[
+
 This example shows how to use the `-init stateRestore.remove` initialisation option to disable the removal of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that removal is allowed.
+
 ]]></info>
 
 </dt-example>

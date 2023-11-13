@@ -3,59 +3,108 @@
 
 <css lib="datatables buttons staterestore">
 tfoot input {
-		width: 100%;
-		padding: 3px;
-		box-sizing: border-box;
-	}
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+}
 </css>
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    // Setup - add a text input to each footer cell
-    $('#example tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-    } );
-    $('#example').DataTable({
-        dom: 'BPlfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    saveState: {
-                        columns:{
-                            search: false
-                        }
-                    }
-                }
-            }
-        ],
-        initComplete: function () {
-            // Apply the search
-            this.api().columns().every( function () {
-                var that = this;
- 
-                $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                    if ( that.search() !== this.value ) {
-                        that
-                            .search( this.value )
-                            .draw();
-                    }
-                } );
-            } );
-        }
 
-    });
+$('#example').DataTable({
+	initComplete: function () {
+		this.api()
+			.columns()
+			.every(function () {
+				var column = this;
+				var title = column.footer().textContent;
+
+				// Create input element and add event listener
+				$('<input type="text" placeholder="Search ' + title + '" />')
+					.appendTo($(column.footer()).empty())
+					.on('keyup change clear', function () {
+						if (column.search() !== this.value) {
+							column.search(this.value).draw();
+						}
+					});
+			});
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								search: false
+							}
+						}
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	initComplete: function () {
+		this.api()
+			.columns()
+			.every(function () {
+				let column = this;
+				let title = column.footer().textContent;
+
+				// Create input element
+				let input = document.createElement('input');
+				input.placeholder = title;
+				column.footer().replaceChildren(input);
+
+				// Event listener for user input
+				input.addEventListener('keyup', () => {
+					if (column.search() !== this.value) {
+						column.search(input.value).draw();
+					}
+				});
+			});
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								search: false
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Don't save column searches</title>
 
 <info><![CDATA[
+
 This example shows how to use the `stateRestore.saveState.columns.visible` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current column visibility by setting the initialisation option to `false`. The default value is `true` meaning that the visibility of the columns will be saved.
+
 ]]></info>
 
 </dt-example>

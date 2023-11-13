@@ -5,31 +5,59 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: '<"activeStates">Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
 
-    table.on('draw stateRestore-change', function() {
-        var active = table.stateRestore.activeStates();
-        var activeString = 'Active States: ';
-        if(active.length > 0) {
-            activeString += active[0].name;
-            for(var i = 1; i < active.length; i++) {
-                activeString += ', '+active[i].name;
-            }
-        }
-        else {
-            activeString += "No active state";
-        }
-        $('div.activeStates').text(activeString)
-    })
-
-    table.draw();
+var activeStates = $('<div>');
+var table = $('#example').DataTable({
+	layout: {
+		top1Start: activeStates,
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.on('draw stateRestore-change', function () {
+	let active = table.stateRestore.activeStates();
+    let activeString = active.length > 0
+        ? 'Active States: ' + active.map(a => a.name).join(', ')
+        : 'No active state';
+
+	activeStates.text(activeString);
+});
+
+// Set initial text
+table.draw();
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+let activeStates = document.createElement('div');
+let table = new DataTable('#example', {
+	layout: {
+		top1Start: activeStates,
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
+});
+
+table.on('draw stateRestore-change', function () {
+	let active = table.stateRestore.activeStates();
+    let activeString = active.length > 0
+        ? 'Active States: ' + active.map(a => a.name).join(', ')
+        : 'No active state';
+
+	activeStates.textContent = activeString;
+});
+
+// Set initial text
+table.draw();
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Label to Display Active States</title>
 

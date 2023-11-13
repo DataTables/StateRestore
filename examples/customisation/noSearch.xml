@@ -5,29 +5,62 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    saveState: {
-                        search: false
-                    }
-                }
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								search: false
+							}
+						}
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								search: false
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Don't save search</title>
 
 <info><![CDATA[
+
 This example shows how to use the `stateRestore.saveState.search` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current search value by setting the value of the initialisation option to `false`. The default value is `true` meaning that the search value will be saved.
+
 ]]></info>
 
 </dt-example>

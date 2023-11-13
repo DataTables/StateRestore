@@ -5,32 +5,64 @@
 
 <js lib="jquery datatables staterestore buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'BPlfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    saveState: {
-                        columns:{
-                            visible: false
-                        }
-                    }
-                }
-            },
-            'colvis'
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								visible: false
+							}
+						}
+					}
+				},
+				'colvis'
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								visible: false
+							}
+						}
+					}
+				},
+				'colvis'
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Don't save column visibility</title>
 
 <info><![CDATA[
+
 This example shows how to use the `stateRestore.saveState.columns.visible` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current column visibility by setting the initialisation option to `false`. The default value is `true` meaning that the visibility of the columns will be saved.
+
 ]]></info>
 
 </dt-example>

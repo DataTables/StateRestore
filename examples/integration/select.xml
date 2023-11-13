@@ -5,28 +5,56 @@
 
 <js lib="jquery datatables staterestore buttons select">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        ajax: "../data/objects.txt",
-		rowId: 'id',
-        dom: 'Blfrtip',
-        select: true,
-        buttons:['createState', 'savedStates'],
-		columns: [
-			{ "data": "name" },
-			{ "data": "position" },
-			{ "data": "office" },
-			{ "data": "salary" }
-		],
-    });
+
+$('#example').DataTable({
+	ajax: '../data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'salary' }
+	],
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	},
+	rowId: 'id',
+	select: true
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	ajax: '../data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'salary' }
+	],
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	},
+	rowId: 'id',
+	select: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Select Integration</title>
 
 <info><![CDATA[
+
 This example shows how the `-init stateRestore` extension behaves alongside the `-init select` extension. The selections made in Select are able to be stored and restored when using StateRestore.
+
 ]]></info>
 
 <custom-table>

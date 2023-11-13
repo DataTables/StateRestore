@@ -5,27 +5,54 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    rename: false
-                }
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						rename: false
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						rename: false
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">No state renaming</title>
 
 <info><![CDATA[
+
 This example shows how to use the `-init stateRestore.rename` initialisation option to disable the renaming of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that renaming is allowed.
+
 ]]></info>
 
 </dt-example>

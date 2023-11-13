@@ -5,19 +5,40 @@
 
 <js lib="jquery datatables staterestore buttons searchbuilder datetime">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'QBlfrtip',
-        buttons:['createState', 'savedStates']
-    });
+
+$('#example').DataTable({
+    layout: {
+        top1Start: 'searchBuilder',
+        topStart: {
+            buttons:['createState', 'savedStates']
+        }
+    }
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+    layout: {
+        top1Start: 'searchBuilder',
+        topStart: {
+            buttons:['createState', 'savedStates']
+        }
+    }
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">SearchBuilder Integration</title>
 
 <info><![CDATA[
+
 This example shows how the `-init stateRestore` extension behaves alongside the `-init searchBuilder` extension. The search criteria constructed in SearchBuilder are able to be stored and restored when using StateRestore.
+
 ]]></info>
 
 </dt-example>

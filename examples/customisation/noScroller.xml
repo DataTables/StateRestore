@@ -5,34 +5,66 @@
 
 <js lib="jquery datatables staterestore buttons scroller">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        ajax:           "../data/2500.txt",
-        deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true,
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    saveState: {
-                        scroller: false
-                    }
-                },
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	ajax: '../data/2500.txt',
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							scroller: false
+						}
+					}
+				}
+			]
+		}
+	},
+	scrollY: 200,
+	scrollCollapse: true,
+	scroller: true
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	ajax: '../data/2500.txt',
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							scroller: false
+						}
+					}
+				}
+			]
+		}
+	},
+	scrollY: 200,
+	scrollCollapse: true,
+	scroller: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Don't save scroller</title>
 
 <info><![CDATA[
+
 This example shows how to use the `stateRestore.saveState.scroller` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current scroll position by setting the initialisation option to `false`. The default value is `true` meaning that the scroll position will be saved when using `-init scroller`.
+
 ]]></info>
 
 <custom-table>

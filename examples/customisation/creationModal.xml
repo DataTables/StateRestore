@@ -5,27 +5,54 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    creationModal: true
-                }
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						creationModal: true
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						creationModal: true
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Creation Modal</title>
 
 <info><![CDATA[
+
 This example shows how to use the `-init stateRestore.creationModal` initialisation option to display a modal when creating a new state. This allows users to choose a name initially rather than having to rename. By using the toggle options, what is saved and restored by StateRestore can also be changed.
+
 ]]></info>
 
 </dt-example>

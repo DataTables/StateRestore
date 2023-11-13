@@ -5,20 +5,41 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons: [{
-            extend:'savedStates',
-            buttons: [
-                'createState',
-                'removeAllStates'
-            ]
-        }]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					buttons: ['createState', 'removeAllStates']
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					buttons: ['createState', 'removeAllStates']
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Alternative UI</title>
 
@@ -29,6 +50,7 @@ This example shows how StateRestore can be initialised using a single button.
 Here the `-button savedStates` `-init buttons.buttons` option is used to add the `-button createState` and the `-button removeAllStates` buttons to the collection. This reduces the amount of buttons that are initially displayed to the used and compartmentalises StateRestore nicely.
 
 You can add any buttons that you wish to display to this property, it works in the same way as it would for any other buttons collection.
+
 ]]></info>
 
 </dt-example>

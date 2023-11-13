@@ -3,37 +3,69 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="jquery semanticui datatables staterestore buttons">
+<js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    let table = $('#example').DataTable({
-        buttons:[
-            {
-                extend: 'createState',
-                config: {
-                    creationModal: true,
-                    toggle: {
-                        columns:{
-                            search: true,
-                            visible: true
-                        },
-                        length: true,
-                        order: true,
-                        paging: true,
-                        search: true,
-                    }
-                }
-            },
-            'savedStates'
-        ],
-        lengthChange: false
-    });
 
-    table.buttons().container()
-        .appendTo( $('div.eight.column:eq(0)', table.table().container()) );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								search: true,
+								visible: true
+							},
+							length: true,
+							order: true,
+							paging: true,
+							search: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								search: true,
+								visible: true
+							},
+							length: true,
+							order: true,
+							paging: true,
+							search: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Fomantic-UI (formally Semantic-UI) styling</title>
 

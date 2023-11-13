@@ -5,40 +5,83 @@
 
 <js lib="jquery datatables staterestore buttons scroller">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    preDefined: {
-                        "Order Position, Search London, Hide Start date": {
-                            "order": [[1,"asc"]],
-                            "search": {
-                                "search": "London",
-                                "smart": true,
-                                "regex": false,
-                                "caseInsensitive": true
-                            },
-                            "columns": [
-                                { "visible": true },
-                                { "visible": true },
-                                { "visible": true },
-                                { "visible": true },
-                                { "visible": false },
-                                { "visible": true }
-                            ]
+
+$('#example').DataTable({
+    layout: {
+        topStart: {
+            buttons: [
+                'createState',
+                {
+                    extend: 'savedStates',
+                    config: {
+                        preDefined: {
+                            'Order Position, Search London, Hide Start date': {
+                                order: [[1, 'asc']],
+                                search: {
+                                    search: 'London',
+                                    smart: true,
+                                    regex: false,
+                                    caseInsensitive: true
+                                },
+                                columns: [
+                                    { visible: true },
+                                    { visible: true },
+                                    { visible: true },
+                                    { visible: true },
+                                    { visible: false },
+                                    { visible: true }
+                                ]
+                            }
                         }
                     }
                 }
-            }
-        ]
-    });
+            ]
+        }
+    }
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+    layout: {
+        topStart: {
+            buttons: [
+                'createState',
+                {
+                    extend: 'savedStates',
+                    config: {
+                        preDefined: {
+                            'Order Position, Search London, Hide Start date': {
+                                order: [[1, 'asc']],
+                                search: {
+                                    search: 'London',
+                                    smart: true,
+                                    regex: false,
+                                    caseInsensitive: true
+                                },
+                                columns: [
+                                    { visible: true },
+                                    { visible: true },
+                                    { visible: true },
+                                    { visible: true },
+                                    { visible: false },
+                                    { visible: true }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Predefined States</title>
 

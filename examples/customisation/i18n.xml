@@ -5,37 +5,72 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        language:{
-            stateRestore: {
-                removeSubmit: 'Confirm',
-                removeConfirm: 'Confirm you want to remove %s.',
-                emptyStates: 'No States',
-                renameButton: 'Change Name',
-                renameLabel: 'Rename to:'
-            },
-            buttons: {
-                createState: 'New State',
-                savedStates: 'Stored States',
-                updateState: 'Store',
-                stateRestore: 'New State %d',
-                removeState: 'Remove',
-                renameState: 'Change Name',
 
-            }
-        },
-        buttons:['createState', 'savedStates']
-    });
+$('#example').DataTable({
+	language: {
+		stateRestore: {
+			removeSubmit: 'Confirm',
+			removeConfirm: 'Confirm you want to remove %s.',
+			emptyStates: 'No States',
+			renameButton: 'Change Name',
+			renameLabel: 'Rename to:'
+		},
+		buttons: {
+			createState: 'New State',
+			savedStates: 'Stored States',
+			updateState: 'Store',
+			stateRestore: 'New State %d',
+			removeState: 'Remove',
+			renameState: 'Change Name'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	language: {
+		stateRestore: {
+			removeSubmit: 'Confirm',
+			removeConfirm: 'Confirm you want to remove %s.',
+			emptyStates: 'No States',
+			renameButton: 'Change Name',
+			renameLabel: 'Rename to:'
+		},
+		buttons: {
+			createState: 'New State',
+			savedStates: 'Stored States',
+			updateState: 'Store',
+			stateRestore: 'New State %d',
+			removeState: 'Remove',
+			renameState: 'Change Name'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">StateRestore Language Options</title>
 
 <info><![CDATA[
+
 This example shows a selection of the language options that are available for `-init stateRestore` and how to configure them.
+
 ]]></info>
 
 </dt-example>

@@ -5,47 +5,96 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable();
 
-    $('#list').on('click', function() {
-		var states = '';
-		$('#example').DataTable().stateRestore.states().each(function(v,i){
-			states += '\n' + v.s.identifier;
-		})
-		alert('The current states are:' + states);
-    })
+var table = $('#example').DataTable();
 
-    $('#save').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).save();
-    })
+$('#list').on('click', function () {
+	var states = '';
 
-    $('#load').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).load();
-    })
+	table.stateRestore.states().each(function (v, i) {
+		states += '\n' + v.s.identifier;
+	});
 
-    $('#remove').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).remove();
-    })
-
-    $('#removeAll').on('click', function() {
-        table.stateRestore.states().remove();
-    })
-
-    $('#removeSkip').on('click', function() {
-        table.stateRestore.state($('#state-selector').val()).remove(true);
-    })
-
-    $('#removeAllSkip').on('click', function() {
-        table.stateRestore.states().remove(true);
-    })
-
-    $('#add').on('click', function() {
-        table.stateRestore.state.add($('#state-selector').val());
-    })
+	alert('The current states are:' + states);
 });
+
+$('#save').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).save();
+});
+
+$('#load').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).load();
+});
+
+$('#remove').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).remove();
+});
+
+$('#removeAll').on('click', function () {
+	table.stateRestore.states().remove();
+});
+
+$('#removeSkip').on('click', function () {
+	table.stateRestore.state($('#state-selector').val()).remove(true);
+});
+
+$('#removeAllSkip').on('click', function () {
+	table.stateRestore.states().remove(true);
+});
+
+$('#add').on('click', function () {
+	table.stateRestore.state.add($('#state-selector').val());
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+let table = new DataTable('#example');
+let stateSelector = document.querySelector('#state-selector');
+
+document.querySelector('#list').addEventListener('click', function () {
+	var states = '';
+
+	table.stateRestore.states().each(function (v, i) {
+		states += '\n' + v.s.identifier;
+	});
+
+	alert('The current states are:' + states);
+});
+
+document.querySelector('#save').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).save();
+});
+
+document.querySelector('#load').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).load();
+});
+
+document.querySelector('#remove').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).remove();
+});
+
+document.querySelector('#removeAll').addEventListener('click', function () {
+	table.stateRestore.states().remove();
+});
+
+document.querySelector('#removeSkip').addEventListener('click', function () {
+	table.stateRestore.state(stateSelector.value).remove(true);
+});
+
+document.querySelector('#removeAllSkip').addEventListener('click', function () {
+	table.stateRestore.states().remove(true);
+});
+
+document.querySelector('#add').addEventListener('click', function () {
+	table.stateRestore.state.add(stateSelector.value);
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">No Buttons</title>
 

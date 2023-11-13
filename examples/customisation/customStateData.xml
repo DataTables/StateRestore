@@ -9,53 +9,106 @@ table.inputs td {
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
- 
-$(document).ready(function () {
-	var minEl = $('#min');
-	var maxEl = $('#max');
 
-	// Custom range filtering function
-	$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-		var min = parseInt(minEl.val(), 10);
-		var max = parseInt(maxEl.val(), 10);
-		var age = parseFloat(data[3]) || 0; // use data for the age column
+var minEl = $('#min');
+var maxEl = $('#max');
 
-		if (
-			(isNaN(min) && isNaN(max)) ||
-			(isNaN(min) && age <= max) ||
-			(min <= age && isNaN(max)) ||
-			(min <= age && age <= max)
-		) {
-			return true;
+var table = $('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
 		}
+	},
+	stateSaveParams: function (s, data) {
+		data.min = minEl.val();
+		data.max = maxEl.val();
+	},
+	stateLoadParams: function (s, data) {
+		minEl.val(data.min);
+		maxEl.val(data.max);
+	}
+});
 
-		return false;
-	});
+// Custom range filtering function
+table.search.fixed('range', function (searchStr, data, index) {
+	var min = parseInt(minEl.val(), 10);
+	var max = parseInt(maxEl.val(), 10);
+	var age = parseFloat(data[3]) || 0; // use data for the age column
 
-	var table = $('#example').DataTable({
-		dom: 'Bfrtip',
-		buttons: ['createState', 'savedStates'],
-		stateSaveParams: function (s, data) {
-			data.min = minEl.val();
-			data.max = maxEl.val();
-		},
-		stateLoadParams: function (s, data) {
-			minEl.val(data.min);
-			maxEl.val(data.max);
-		},
-	});
+	if (
+		(isNaN(min) && isNaN(max)) ||
+		(isNaN(min) && age <= max) ||
+		(min <= age && isNaN(max)) ||
+		(min <= age && age <= max)
+	) {
+		return true;
+	}
 
-	// Changes to the inputs will trigger a redraw to update the table
-	minEl.on('input', function () {
-		table.draw();
-	});
-    maxEl.on('input', function () {
-		table.draw();
-	});
+	return false;
+});
+
+// Changes to the inputs will trigger a redraw to update the table
+minEl.on('input', function () {
+	table.draw();
+});
+maxEl.on('input', function () {
+	table.draw();
 });
 
 ]]>
 </js>
+
+
+<js-vanilla>
+<![CDATA[
+
+const minEl = document.querySelector('#min');
+const maxEl = document.querySelector('#max');
+
+const table = new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	},
+	stateSaveParams: function (s, data) {
+		data.min = minEl.val();
+		data.max = maxEl.val();
+	},
+	stateLoadParams: function (s, data) {
+		minEl.val(data.min);
+		maxEl.val(data.max);
+	}
+});
+
+// Custom range filtering function
+table.search.fixed('range', function (searchStr, data, index) {
+	var min = parseInt(minEl.value, 10);
+	var max = parseInt(maxEl.value, 10);
+	var age = parseFloat(data[3]) || 0; // use data for the age column
+
+	if (
+		(isNaN(min) && isNaN(max)) ||
+		(isNaN(min) && age <= max) ||
+		(min <= age && isNaN(max)) ||
+		(min <= age && age <= max)
+	) {
+		return true;
+	}
+
+	return false;
+});
+
+// Changes to the inputs will trigger a redraw to update the table
+minEl.addEventListener('input', function () {
+	table.draw();
+});
+maxEl.addEventListener('input', function () {
+	table.draw();
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Custom State Data</title>
 

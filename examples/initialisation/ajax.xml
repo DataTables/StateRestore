@@ -5,29 +5,61 @@
 
 <js lib="jquery datatables staterestore buttons scroller">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        ajax: {
-          url: "../data/stateRestoreLoad.php",
-          dataSrc: 'data'
-        },
-        deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    ajax: '../data/stateRestoreSave.php'
-                }
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	ajax: {
+		url: '../data/stateRestoreLoad.php',
+		dataSrc: 'data'
+	},
+	deferRender: true,
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						ajax: '../data/stateRestoreSave.php'
+					}
+				}
+			]
+		}
+	},
+	scrollY: 200,
+	scrollCollapse: true
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	ajax: {
+		url: '../data/stateRestoreLoad.php',
+		dataSrc: 'data'
+	},
+	deferRender: true,
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						ajax: '../data/stateRestoreSave.php'
+					}
+				}
+			]
+		}
+	},
+	scrollY: 200,
+	scrollCollapse: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Ajax Loading and Saving</title>
 

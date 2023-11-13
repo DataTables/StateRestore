@@ -7,8 +7,11 @@
 <![CDATA[
 
 $('#example').DataTable({
-	dom: 'Bfrtip',
-	buttons: ['createState', 'savedStates', 'pageLength']
+	layout: {
+		startTop: {
+			buttons: ['createState', 'savedStates', 'pageLength']
+		}
+	}
 });
 
 ]]>
@@ -18,8 +21,11 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
-	dom: 'Bfrtip',
-	buttons: ['createState', 'savedStates', 'pageLength']
+	layout: {
+		startTop: {
+			buttons: ['createState', 'savedStates', 'pageLength']
+		}
+	}
 });
 
 ]]>

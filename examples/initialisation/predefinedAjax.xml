@@ -5,22 +5,45 @@
 
 <js lib="jquery datatables staterestore buttons scroller">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        ajax: {
-          url: "../data/2500States.txt",
-          dataSrc: 'data'
-        },
-        deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true,
-        buttons:['savedStates']
-    });
+
+$('#example').DataTable({
+	ajax: {
+		url: '../data/2500States.txt',
+		dataSrc: 'data'
+	},
+	layout: {
+		topStart: {
+			buttons: ['savedStates']
+		}
+	},
+	scrollCollapse: true,
+	scrollY: 200,
+	scroller: true
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	ajax: {
+		url: '../data/2500States.txt',
+		dataSrc: 'data'
+	},
+	layout: {
+		topStart: {
+			buttons: ['savedStates']
+		}
+	},
+	scrollCollapse: true,
+	scrollY: 200,
+	scroller: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Predefined States from Ajax</title>
 

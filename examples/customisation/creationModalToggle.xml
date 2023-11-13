@@ -5,40 +5,85 @@
 
 <js lib="jquery datatables staterestore buttons searchbuilder searchpanes datetime select scroller">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'PQBlfrtip',
-        ajax:           "../data/2500.txt",
-        deferRender:    true,
-        keys: true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true,
-        select:         true,
-        rowId:          0,
-        buttons:[
-            {
-                extend: 'createState',
-                config: {
-                    creationModal: true,
-                    toggle: {
-                        length: true,
-                        order: true,
-                        paging: true,
-                        scroller: true,
-                        search: true,
-                        searchBuilder: true,
-                        searchPanes: true,
-                        select: true
-                    }
-                }
-            },
-            'savedStates'
-        ]
-    });
+
+$('#example').DataTable({
+	ajax: '../data/2500.txt',
+	keys: true,
+	layout: {
+		top2Start: 'searchPanes',
+		top1Start: 'searchBuilder',
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							length: true,
+							order: true,
+							paging: true,
+							scroller: true,
+							search: true,
+							searchBuilder: true,
+							searchPanes: true,
+							select: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	},
+	rowId: 0,
+	scrollY: 200,
+	scrollCollapse: true,
+	scroller: true,
+	select: true
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+$('#example').DataTable({
+	ajax: '../data/2500.txt',
+	keys: true,
+	layout: {
+		top2Start: 'searchpanes',
+		top1Start: 'searchbuilder',
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							length: true,
+							order: true,
+							paging: true,
+							scroller: true,
+							search: true,
+							searchBuilder: true,
+							searchPanes: true,
+							select: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	},
+	rowId: 0,
+	scrollY: 200,
+	scrollCollapse: true,
+	scroller: true,
+	select: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Creation Modal with Toggle</title>
 

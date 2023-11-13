@@ -5,24 +5,52 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[{
-            extend: 'savedStates',
-            config: {
-                create: false
-            }
-        }]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						create: false
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						create: false
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">No state creation</title>
 
 <info><![CDATA[
+
 This example shows how to use the `-init stateRestore.creation` initialisation option to disable the creation of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that creation is allowed.
+
 ]]></info>
 
 </dt-example>

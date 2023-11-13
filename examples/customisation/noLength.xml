@@ -5,29 +5,62 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'createState',
-            {
-                extend: 'savedStates',
-                config: {
-                    saveState: {
-                        length: false
-                    }
-                }
-            }
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								length: false
+							}
+						}
+					}
+				}
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								length: false
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Don't save page length</title>
 
 <info><![CDATA[
+
 This example shows how to use the `stateRestore.saveState.length` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current page length by setting the value to `false`. The default value is `true` meaning that the page length will be saved.
+
 ]]></info>
 
 </dt-example>

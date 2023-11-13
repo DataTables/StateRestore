@@ -5,58 +5,105 @@
 
 <js lib="jquery datatables staterestore buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function(index) {
-    var table;
-    // Setup - add a text input to each footer cell
-    $('#example tfoot th').each( function (index) {
-        var title = $(this).text();
-        var input = $('<input type="text" placeholder="Search '+title+'" />');
-        $(this).empty().append(input);
-        $('#example').on('stateLoaded.dt', () => {
-            $(input).val(table.column(index).search());
-        })
-    } );
-    table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            'colvis',
-            {
-                extend: 'createState',
-                config: {
-                    creationModal: true,
-                    toggle: {
-                        columns:{
-                            search: true,
-                            visible: true
-                        }
-                    }
-                }
-            },
-            'savedStates'
-        ],
-        initComplete: function () {
-            // Apply the search
-            this.api().columns().every( function () {
-                var that = this;
- 
-                $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                    if ( that.search() !== this.value ) {
-                        that
-                            .search( this.value )
-                            .draw();
-                    }
-                } );
-            } );
-        }
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'colvis',
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								search: true,
+								visible: true
+							}
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	},
+	initComplete: function () {
+		this.api()
+			.columns()
+			.every(function () {
+				var column = this;
+				var title = column.footer().textContent;
+
+				// Create input element and add event listener
+				$('<input type="text" placeholder="Search ' + title + '" />')
+					.appendTo($(column.footer()).empty())
+					.on('keyup change clear', function () {
+						if (column.search() !== this.value) {
+							column.search(this.value).draw();
+						}
+					});
+			});
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'colvis',
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								search: true,
+								visible: true
+							}
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	},
+	initComplete: function () {
+		this.api()
+			.columns()
+			.every(function () {
+				let column = this;
+				let title = column.footer().textContent;
+
+				// Create input element
+				let input = document.createElement('input');
+				input.placeholder = title;
+				column.footer().replaceChildren(input);
+
+				// Event listener for user input
+				input.addEventListener('keyup', () => {
+					if (column.search() !== this.value) {
+						column.search(input.value).draw();
+					}
+				});
+			});
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Creation Modal with Toggle for Columns</title>
 
 <info><![CDATA[
+
 This example shows how the `-init stateRestore.toggle` option can be used to decide what elements of datatables should save their state when creating a new state. This example shows all of the options that are available with the `-init stateRestore.toggle` option for columns specifically.
+
 ]]></info>
 
 </dt-example>

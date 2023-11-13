@@ -11,37 +11,77 @@
 
 <js lib="jquery datatables staterestore pdfmake vfsfonts buttons buttons-html5 buttons-print">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:[
-            {
-                extend: 'savedStates',
-                config: {
-                    splitSecondaries: [
-                        'updateState',
-                        'removeState',
-                        '<h3>Custom HTML!</h3>',
-                        'pdf',
-                        {
-                            extend: 'renameState',
-                            className: 'red-border'
-                        },
-                        {
-                            text: 'Custom Button',
-                            action: function ( e, dt, node, config ) {
-                                alert( 'Button activated' );
-                            }
-                        }
-                    ]
-                }
-            },
-            'createState'
-        ]
-    });
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						splitSecondaries: [
+							'updateState',
+							'removeState',
+							'<h3>Custom HTML!</h3>',
+							'pdf',
+							{
+								extend: 'renameState',
+								className: 'red-border'
+							},
+							{
+								text: 'Custom Button',
+								action: function (e, dt, node, config) {
+									alert('Button activated');
+								}
+							}
+						]
+					}
+				},
+				'createState'
+			]
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						splitSecondaries: [
+							'updateState',
+							'removeState',
+							'<h3>Custom HTML!</h3>',
+							'pdf',
+							{
+								extend: 'renameState',
+								className: 'red-border'
+							},
+							{
+								text: 'Custom Button',
+								action: function (e, dt, node, config) {
+									alert('Button activated');
+								}
+							}
+						]
+					}
+				},
+				'createState'
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Custom Split Buttons</title>
 

@@ -5,24 +5,48 @@
 
 <js lib="jquery datatables staterestore buttons scroller">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        ajax:           "../data/2500.txt",
-        deferRender:    true,
-        scrollY:        200,
-        scrollCollapse: true,
-        scroller:       true,
-        buttons:['createState', 'savedStates']
-    });
+
+$('#example').DataTable({
+	ajax: '../data/2500.txt',
+	deferRender: true,
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	},
+	scrollY: 200,
+	scrollCollapse: true,
+	scroller: true
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	ajax: '../data/2500.txt',
+	deferRender: true,
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	},
+	scrollY: 200,
+	scrollCollapse: true,
+	scroller: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Scroller Integration</title>
 
 <info><![CDATA[
+
 This example shows how the `-init stateRestore` extension behaves alongside the `-init scroller` extension. The scroll position of Scroller is able to be stored and restored when using StateRestore.
+
 ]]></info>
 
 <custom-table>

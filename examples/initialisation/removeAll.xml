@@ -5,19 +5,38 @@
 
 <js lib="jquery datatables staterestore buttons">
 <![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates', 'removeAllStates']
-    });
+
+$('#example').DataTable({
+	layout: {
+		startTop: {
+			buttons: ['createState', 'savedStates', 'removeAllStates']
+		}
+	}
 });
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		startTop: {
+			buttons: ['createState', 'savedStates', 'removeAllStates']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="stateRestore">Remove All Button</title>
 
 <info><![CDATA[
+
 This example shows how the `-button removeAllStates` button can be used with StateRestore. This button removes all of the states that are being stored by StateRestore.
+
 ]]></info>
 
 </dt-example>
