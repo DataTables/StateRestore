@@ -265,8 +265,8 @@ DataTable.ext.buttons.createState = {
 		else {
 			let splitString = defaultString.split('%d');
 			replaceRegex = [];
-			for(let split of splitString) {
-				replaceRegex.push(new RegExp(split));
+			for(let parts of splitString) {
+				replaceRegex.push(new RegExp(parts));
 			}
 		}
 
@@ -477,6 +477,7 @@ function _stateRegen(dt, src) {
 	let states = dt.stateRestore.states();
 	let button = dt.button('SaveStateRestore:name');
 	let stateButtons = [];
+	let i;
 
 	// Need to get the original configuration object, so we can rebuild it
 	// It might be nested, so need to traverse down the tree
@@ -485,7 +486,7 @@ function _stateRegen(dt, src) {
 
 		stateButtons = button[0].inst.c.buttons;
 
-		for (let i=0 ; i<idxs.length ; i++) {
+		for (i=0 ; i<idxs.length ; i++) {
 			if (stateButtons[idxs[i]].buttons) {
 				stateButtons = stateButtons[idxs[i]].buttons;
 			}
@@ -499,7 +500,7 @@ function _stateRegen(dt, src) {
 	let stateRestoreOpts = dt.settings()[0]._stateRestore.c;
 
 	// remove any states from the previous rebuild - if they are still there they will be added later
-	for (let i = 0; i < stateButtons.length; i++) {
+	for (i = 0; i < stateButtons.length; i++) {
 		if (stateButtons[i].extend === 'stateRestore') {
 			stateButtons.splice(i,1);
 			i--;

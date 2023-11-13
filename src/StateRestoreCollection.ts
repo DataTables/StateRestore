@@ -754,6 +754,7 @@ export default class StateRestoreCollection {
 		// Make sure that the state is up to date
 		this.s.dt.state.save();
 		let currState = this.s.dt.state();
+		let button;
 
 		// Make all of the buttons inactive so that only any that match will be marked as active
 		let buttons = $('button.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
@@ -763,7 +764,7 @@ export default class StateRestoreCollection {
 			buttons = $('a.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
 		}
 
-		for (let button of buttons) {
+		for (button of buttons) {
 			this.s.dt.button($(button).parent()[0]).active(false);
 		}
 
@@ -777,7 +778,7 @@ export default class StateRestoreCollection {
 					name: state.s.identifier
 				});
 				// If so, find the corresponding button and mark it as active
-				for (let button of buttons) {
+				for (button of buttons) {
 					if ($(button).text() === state.s.identifier) {
 
 						this.s.dt.button($(button).parent()[0]).active(true);
@@ -894,6 +895,7 @@ export default class StateRestoreCollection {
 	private _collectionRebuild(): void {
 		let button = this.s.dt.button('SaveStateRestore:name');
 		let stateButtons = [];
+		let i;
 	
 		// Need to get the original configuration object, so we can rebuild it
 		// It might be nested, so need to traverse down the tree
@@ -902,7 +904,7 @@ export default class StateRestoreCollection {
 	
 			stateButtons = button[0].inst.c.buttons;
 	
-			for (let i=0 ; i<idxs.length ; i++) {
+			for (i=0 ; i<idxs.length ; i++) {
 				if (stateButtons[idxs[i]].buttons) {
 					stateButtons = stateButtons[idxs[i]].buttons;
 				}
@@ -914,7 +916,7 @@ export default class StateRestoreCollection {
 		}
 
 		// remove any states from the previous rebuild - if they are still there they will be added later
-		for (let i = 0; i < stateButtons.length; i++) {
+		for (i = 0; i < stateButtons.length; i++) {
 			if (stateButtons[i].extend === 'stateRestore') {
 				stateButtons.splice(i,1);
 				i--;
@@ -1021,6 +1023,7 @@ export default class StateRestoreCollection {
 		this.dom.nameInputRow.children('input').val(identifier);
 		this.dom.creationForm.append(this.dom.nameInputRow);
 		let tableConfig = this.s.dt.settings()[0].oInit;
+		let toggle;
 		let togglesToInsert = [];
 		let toggleDefined = options !== undefined && options.toggle !== undefined;
 
@@ -1216,7 +1219,7 @@ export default class StateRestoreCollection {
 		});
 
 		// Append all of the toggles that are to be inserted
-		for (let toggle of togglesToInsert) {
+		for (toggle of togglesToInsert) {
 			this.dom.creationForm.append(toggle);
 		}
 
@@ -1234,7 +1237,7 @@ export default class StateRestoreCollection {
 		$(this.s.dt.table().node()).trigger('dtsr-modal-inserted');
 
 		// Allow the label to be clicked to toggle the checkbox
-		for (let toggle of togglesToInsert) {
+		for (toggle of togglesToInsert) {
 			$(toggle.children('label:last-child')).on('click', function() {
 				toggle.children('input').prop('checked', !toggle.children('input').prop('checked'));
 			});
