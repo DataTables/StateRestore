@@ -19,16 +19,17 @@
 	</description>
 
 	<example title="Change remove confirmation modal title"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                removeTitle: 'Remove'
-            }
-        },
-        buttons: [ 'createState', 'savedStates' ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			removeTitle: 'Remove'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 ]]></example>
 

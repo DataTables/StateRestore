@@ -7,12 +7,12 @@
 <![CDATA[
 
 $('#example').DataTable({
-    layout: {
-        top1Start: 'searchBuilder',
-        topStart: {
-            buttons:['createState', 'savedStates']
-        }
-    }
+	layout: {
+		top1Start: 'searchBuilder',
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 
 ]]>
@@ -22,12 +22,12 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
-    layout: {
-        top1Start: 'searchBuilder',
-        topStart: {
-            buttons:['createState', 'savedStates']
-        }
-    }
+	layout: {
+		top1Start: 'searchBuilder',
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 
 ]]>

@@ -34,26 +34,29 @@ This array contains the buttons which are to be added within the split dropdown 
 	</description>
 
 <example title="Customise the buttons held within the StateRestore state split dropdowns."><![CDATA[
-$('#example').DataTable({
-	dom: 'Blfrtip',
-	buttons:[
-		{
-			extend: 'savedStates',
-			config: {
-				splitSecondaries: [
-					'updateState',
-					'removeState',
-					'<h3>Custom HTML!</h3>',
-					'pdf',
-					{
-						extend: 'renameState',
-						className: 'red-border'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						splitSecondaries: [
+							'updateState',
+							'removeState',
+							'<h3>Custom HTML!</h3>',
+							'pdf',
+							{
+								extend: 'renameState',
+								className: 'red-border'
+							}
+						]
 					}
-				]
-			}
-		},
-		'createState'
-	]
+				},
+				'createState'
+			]
+		}
+	}
 });
 ]]></example>
 

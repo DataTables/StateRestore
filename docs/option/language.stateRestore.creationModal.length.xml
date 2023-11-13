@@ -21,29 +21,30 @@
 	</description>
 
 	<example title="Change text of the page length checkbox label"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                creationModal:{
-                    length: 'Length:'
-                }
-            }
-        },
-        buttons: [
-            {
-                extend: 'createState',
-                config:{
-                    creationModal: true,
-                    toggle: {
-                        length: true
-                    }
-                }
-            }
-            'savedStates'
-        ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			creationModal: {
+				length: 'Length:'
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							length: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
 });
 ]]></example>
 

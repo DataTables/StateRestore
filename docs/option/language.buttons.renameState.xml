@@ -21,16 +21,17 @@
 	</description>
 
 	<example title="Change text within rename button"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            buttons: {
-				renameState: 'Change Name'
-            }
-        },
-        buttons: [ 'createState', 'savedStates' ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		buttons: {
+			renameState: 'Change Name'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 ]]></example>
 

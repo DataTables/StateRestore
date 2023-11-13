@@ -97,39 +97,46 @@ As default the value is `true`, meaning that the user can decide whether the `-i
 	</description>
 
 <example title="Enable paging saving customisation"><![CDATA[
- $('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        {
-            extend: 'createState',
-            config: {
-                toggle:{
-                    paging: true
-                }
-            }
-        },
-        'savedStates',
-        'colvis'
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						toggle: {
+							paging: true
+						}
+					}
+				},
+				'savedStates',
+				'colvis'
+			]
+		}
+	}
 });
 ]]></example>
+
 <example title="Enable column visibility saving customisation"><![CDATA[
- $('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        {
-            extend: 'createState',
-            config: {
-                toggle:{
-                    columns:{
-                        visible: true
-                    }
-                }
-            }
-        },
-        'savedStates',
-        'colvis'
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						toggle: {
+							columns: {
+								visible: true
+							}
+						}
+					}
+				},
+				'savedStates',
+				'colvis'
+			]
+		}
+	}
 });
 ]]></example>
 

@@ -21,26 +21,27 @@
 	</description>
 
 	<example title="Change text of the name input label"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                creationModal:{
-                    name: 'State Name:'
-                }
-            }
-        },
-        buttons: [
-            {
-                extend: 'createState',
-                config:{
-                    creationModal: true
-                }
-            }
-            'savedStates'
-        ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			creationModal: {
+				name: 'State Name:'
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
 });
 ]]></example>
 

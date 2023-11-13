@@ -22,19 +22,21 @@
 	</description>
 
 	<example title="Alter language options: "><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Plfrtip',
-        language: {
-            stateRestore: {
-                removeSubmit: 'Remove',
-                removeConfirm: 'Confirm state removal.',
-                emptyStates: 'No states',
-                renameButton: 'Change Name',
-                renameLabel: 'New value:'
-            }
-        }
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			removeSubmit: 'Remove',
+			removeConfirm: 'Confirm state removal.',
+			emptyStates: 'No states',
+			renameButton: 'Change Name',
+			renameLabel: 'New value:'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 ]]></example>
 

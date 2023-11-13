@@ -19,16 +19,17 @@
 	</description>
 
 	<example title="Change text within rename confirmation button"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                renameButton: 'Change Name'
-            }
-        },
-        buttons: [ 'createState', 'savedStates' ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			renameButton: 'Change Name'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 ]]></example>
 

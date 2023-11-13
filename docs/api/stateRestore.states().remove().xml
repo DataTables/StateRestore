@@ -25,14 +25,15 @@ If the `-init stateRestore.remove` initialisation option is set to `false` then 
 	</description>
 
 	<example title="Remove states called 'New State' and 'Old State'"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.states(["New State", "Old State"]).remove()
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.states(['New State', 'Old State']).remove();
 ]]></example>
 
 <related type="api">stateRestore.states()</related>

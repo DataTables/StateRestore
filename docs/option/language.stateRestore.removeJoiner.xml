@@ -19,16 +19,17 @@
 	</description>
 
 	<example title="Change joiner text within remove confirmation modal to french"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                removeJoiner: ' et '
-            }
-        },
-        buttons: [ 'createState', 'savedStates' ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			removeJoiner: ' et '
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 ]]></example>
 

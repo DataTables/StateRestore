@@ -11,7 +11,6 @@ $('#example').DataTable({
 		url: '../data/stateRestoreLoad.php',
 		dataSrc: 'data'
 	},
-	deferRender: true,
 	layout: {
 		topStart: {
 			buttons: [
@@ -40,7 +39,6 @@ new DataTable('#example', {
 		url: '../data/stateRestoreLoad.php',
 		dataSrc: 'data'
 	},
-	deferRender: true,
 	layout: {
 		topStart: {
 			buttons: [
@@ -64,13 +62,15 @@ new DataTable('#example', {
 <title lib="stateRestore">Ajax Loading and Saving</title>
 
 <info><![CDATA[
+
 This example shows how the `-init stateRestore` extension can be operated over ajax.
 
 To do this the `-init stateRestore.ajax` option has to be set to a url that will be used when attempting to save the states. States are then loaded again via the tables own ajax url. If there is a `stateRestore` property in the json that is initially passed then the states present there will be loaded into the table.
 
 It is worth noting that we only provide the client side implementation. You will have to write your own server side implementation to save states for longer than the current session.
 
-The scroller extension is also being used here. This is because it is a common use of loading over ajax.
+The Scroller extension is also being used here. This is because it is a common use of loading over ajax.
+
 ]]></info>
 
 <custom-table>

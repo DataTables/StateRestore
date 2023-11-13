@@ -17,8 +17,8 @@
 	</description>
 
 	<example title="renameState button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.renameState.text = function (e, dt, node, config) {
-    return "Rename State";
-}
+DataTable.ext.buttons.renameState.text = function (e, dt, node, config) {
+	return 'Rename State';
+};
 ]]></example>
 </dt-button>

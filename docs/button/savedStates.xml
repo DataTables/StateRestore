@@ -13,8 +13,8 @@
     </option>
 
 	<example title="savedStates button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.savedStates.text = function (e, dt, node, config) {
-    return "Saved states collection";
-}
+DataTable.ext.buttons.savedStates.text = function (e, dt, node, config) {
+	return 'Saved states collection';
+};
 ]]></example>
 </dt-button>

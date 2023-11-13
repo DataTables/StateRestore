@@ -25,14 +25,15 @@ A Datatables API is returned containing all of the active states as objects. Eac
 	</description>
 
 	<example title="Get the currently active states"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.activeStates();
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.activeStates();
 ]]></example>
 
 </dt-api>

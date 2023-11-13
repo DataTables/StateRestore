@@ -23,14 +23,15 @@ A Datatables API is returned containing the states that are desired. This method
 	</description>
 
 	<example title="Get states called 'New State' and 'Old State'"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.states(["New State", "Old State"])
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.states(['New State', 'Old State']);
 ]]></example>
 
 <related type="api">stateRestore.state()</related>

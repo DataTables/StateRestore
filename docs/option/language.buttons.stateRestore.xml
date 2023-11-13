@@ -23,16 +23,17 @@
 	</description>
 
 	<example title="Change text within the savedStates button"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            buttons: {
-				stateRestore: 'State Number %d'
-            }
-        },
-        buttons: [ 'createState', 'savedStates' ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		buttons: {
+			stateRestore: 'State Number %d'
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
 ]]></example>
 

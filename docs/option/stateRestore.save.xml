@@ -26,16 +26,19 @@
 	</description>
 
 <example title="Disable saving of new states"><![CDATA[
-$('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        {
-            extend: 'savedStates',
-            config: {
-                save: false
-            }
-        }
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						save: false
+					}
+				}
+			]
+		}
+	}
 });
 ]]></example>
 

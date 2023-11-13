@@ -110,39 +110,45 @@ Take a look at [this example](/extensions/staterestore/examples/customisation/no
 	</description>
 
 <example title="Disable paging saving"><![CDATA[
- $('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        'createState',
-        {
-            extend: 'savedStates',
-            config: {
-                saveState: {
-                    paging: false
-                }
-            }
-        },
-        'colvis'
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							paging: false
+						}
+					}
+				},
+				'colvis'
+			]
+		}
+	}
 });
 ]]></example>
 <example title="Disable column visibility saving"><![CDATA[
- $('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        'createState',
-        {
-            extend: 'savedStates',
-            config: {
-                saveState: {
-                    columns: {
-                        visible: false
-                    }
-                }
-            }
-        },
-        'colvis'
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								visible: false
+							}
+						}
+					}
+				},
+				'colvis'
+			]
+		}
+	}
 });
 ]]></example>
 

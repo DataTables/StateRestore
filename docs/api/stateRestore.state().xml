@@ -23,14 +23,15 @@ A Datatables API is returned containing the state that is desired. This method w
 	</description>
 
 	<example title="Get a state called 'New State'"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.state("New State")
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.state('New State');
 ]]></example>
 
 <related type="api">stateRestore.states()</related>

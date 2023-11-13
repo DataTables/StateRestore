@@ -21,29 +21,30 @@
 	</description>
 
 	<example title="Change text of the select checkbox label"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                creationModal:{
-                    select: 'Search Filter:'
-                }
-            }
-        },
-        buttons: [
-            {
-                extend: 'createState',
-                config:{
-                    creationModal: true,
-                    toggle: {
-                        select: true
-                    }
-                }
-            }
-            'savedStates'
-        ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			creationModal: {
+				select: 'Search Filter:'
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							select: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
 });
 ]]></example>
 

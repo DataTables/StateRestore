@@ -23,14 +23,15 @@ The object that is returned within the DataTables API result set, represents the
 	</description>
 
 	<example title="Add a new state called 'New State'"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.state.add("New State")
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.state.add('New State');
 ]]></example>
 
 </dt-api>

@@ -19,29 +19,30 @@
 	</description>
 
 	<example title="Change rename modal title"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                creationModal: {
-                    toggleLabel: 'Toggles'
-                }
-            }
-        },
-        buttons: [
-            {
-                extend: 'createState',
-                config:{
-                    creationModal: true,
-                    toggle: {
-                        search: true
-                    }
-                }
-            }
-            'savedStates'
-        ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			creationModal: {
+				toggleLabel: 'Toggles'
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							search: true
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
 });
 ]]></example>
 

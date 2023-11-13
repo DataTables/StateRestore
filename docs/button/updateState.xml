@@ -15,8 +15,8 @@
 	</description>
 
 	<example title="updateState button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.updateState.text = function (e, dt, node, config) {
-    return "Save state";
-}
+DataTable.ext.buttons.updateState.text = function (e, dt, node, config) {
+	return 'Save state';
+};
 ]]></example>
 </dt-button>

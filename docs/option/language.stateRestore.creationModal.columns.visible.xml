@@ -21,33 +21,34 @@
 	</description>
 
 	<example title="Change text of the columns search checkbox label"><![CDATA[
-$(document).ready(function() {
-    $('#example').DataTable( {
-        language: {
-            stateRestore: {
-                creationModal: {
-                    columns: {
-                        visible: 'Visible Columns:'
-                    }
-                }
-            }
-        },
-        buttons: [
-            {
-                extend: 'createState',
-                config:{
-                    creationModal: true,
-                    toggle: {
-                        columns: {
-                            visible: true
-                        }
-                    }
-                }
-            }
-            'savedStates'
-        ],
-        dom: 'Bfrtip'
-    });
+new DataTable('#myTable', {
+	language: {
+		stateRestore: {
+			creationModal: {
+				columns: {
+					visible: 'Visible Columns:'
+				}
+			}
+		}
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								visible: true
+							}
+						}
+					}
+				},
+				'savedStates'
+			]
+		}
+	}
 });
 ]]></example>
 

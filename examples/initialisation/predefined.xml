@@ -7,37 +7,37 @@
 <![CDATA[
 
 $('#example').DataTable({
-    layout: {
-        topStart: {
-            buttons: [
-                'createState',
-                {
-                    extend: 'savedStates',
-                    config: {
-                        preDefined: {
-                            'Order Position, Search London, Hide Start date': {
-                                order: [[1, 'asc']],
-                                search: {
-                                    search: 'London',
-                                    smart: true,
-                                    regex: false,
-                                    caseInsensitive: true
-                                },
-                                columns: [
-                                    { visible: true },
-                                    { visible: true },
-                                    { visible: true },
-                                    { visible: true },
-                                    { visible: false },
-                                    { visible: true }
-                                ]
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    }
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						preDefined: {
+							'Order Position, Search London, Hide Start date': {
+								order: [[1, 'asc']],
+								search: {
+									search: 'London',
+									smart: true,
+									regex: false,
+									caseInsensitive: true
+								},
+								columns: [
+									{ visible: true },
+									{ visible: true },
+									{ visible: true },
+									{ visible: true },
+									{ visible: false },
+									{ visible: true }
+								]
+							}
+						}
+					}
+				}
+			]
+		}
+	}
 });
 
 ]]>
@@ -47,37 +47,37 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
-    layout: {
-        topStart: {
-            buttons: [
-                'createState',
-                {
-                    extend: 'savedStates',
-                    config: {
-                        preDefined: {
-                            'Order Position, Search London, Hide Start date': {
-                                order: [[1, 'asc']],
-                                search: {
-                                    search: 'London',
-                                    smart: true,
-                                    regex: false,
-                                    caseInsensitive: true
-                                },
-                                columns: [
-                                    { visible: true },
-                                    { visible: true },
-                                    { visible: true },
-                                    { visible: true },
-                                    { visible: false },
-                                    { visible: true }
-                                ]
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    }
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						preDefined: {
+							'Order Position, Search London, Hide Start date': {
+								order: [[1, 'asc']],
+								search: {
+									search: 'London',
+									smart: true,
+									regex: false,
+									caseInsensitive: true
+								},
+								columns: [
+									{ visible: true },
+									{ visible: true },
+									{ visible: true },
+									{ visible: true },
+									{ visible: false },
+									{ visible: true }
+								]
+							}
+						}
+					}
+				}
+			]
+		}
+	}
 });
 
 ]]>

@@ -25,25 +25,27 @@ If the `-init stateRestore.remove` initialisation option is set to `false` then 
 	</description>
 
 	<example title="Remove a state called 'New State'"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.state("New State").remove()
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.state('New State').remove();
 ]]></example>
 
 	<example title="Remove a state called 'New State', skipping the confirmation modal"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.state("New State").remove(true)
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.state('New State').remove(true);
 ]]></example>
 
 <related type="api">stateRestore.state()</related>

@@ -60,21 +60,24 @@
 	</description>
 
 <example title="Set ajax url for StateRestore to send requests to"><![CDATA[
-$('#example').DataTable({
-	dom: 'Blfrtip',
+new DataTable('#myTable', {
 	ajax: {
-		url: "../data/2500States.txt",
+		url: '../data/2500States.txt',
 		dataSrc: 'data'
 	},
-	buttons:[
-		'createState',
-		{
-			extend: 'savedStates',
-			config: {
-				ajax: '../stateControllers/stateRestore.php'
-			}
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						ajax: '../stateControllers/stateRestore.php'
+					}
+				}
+			]
 		}
-	]
+	}
 });
 ]]></example>
 

@@ -22,21 +22,21 @@ The event is triggered on the original table element.
 	</description>
 
 	<example title="Update an active label when a change occurs"><![CDATA[
+table.on('draw stateRestore-change', function () {
+	var active = table.stateRestore.activeStates();
+	var activeString = 'Active States: ';
 
-    table.on('draw stateRestore-change', function() {
-        var active = table.stateRestore.activeStates();
-        var activeString = 'Active States: ';
-        if(active.length > 0) {
-            activeString += active[0].name;
-            for(var i = 1; i < active.length; i++) {
-                activeString += ', '+active[i].name;
-            }
-        }
-        else {
-            activeString += "No active state";
-        }
-        $('div.activeStates').text(activeString)
-    })
+	if (active.length > 0) {
+		activeString += active[0].name;
+		for (var i = 1; i < active.length; i++) {
+			activeString += ', ' + active[i].name;
+		}
+	}
+	else {
+		activeString += 'No active state';
+	}
 
+	$('div.activeStates').text(activeString);
+});
 ]]></example>
 </dt-event>

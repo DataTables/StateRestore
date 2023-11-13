@@ -26,17 +26,20 @@
 	</description>
 
 <example title="Disable renaming of new states"><![CDATA[
-$('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        'createState',
-        {
-            extend: 'savedStates',
-            config: {
-                rename: false
-            }
-        }
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						rename: false
+					}
+				}
+			]
+		}
+	}
 });
 ]]></example>
 

@@ -15,8 +15,8 @@
 	</description>
 
 	<example title="removeAllStates button modify text"><![CDATA[
-$.fn.dataTable.ext.buttons.removeAllStates.text = function (e, dt, node, config) {
-    return "Remove Everything";
-}
+DataTable.ext.buttons.removeAllStates.text = function (e, dt, node, config) {
+	return 'Remove Everything';
+};
 ]]></example>
 </dt-button>

@@ -18,9 +18,10 @@ var table = $('#example').DataTable({
 
 table.on('draw stateRestore-change', function () {
 	let active = table.stateRestore.activeStates();
-    let activeString = active.length > 0
-        ? 'Active States: ' + active.map(a => a.name).join(', ')
-        : 'No active state';
+	let activeString =
+		active.length > 0
+			? 'Active States: ' + active.map((a) => a.name).join(', ')
+			: 'No active state';
 
 	activeStates.text(activeString);
 });
@@ -46,9 +47,10 @@ let table = new DataTable('#example', {
 
 table.on('draw stateRestore-change', function () {
 	let active = table.stateRestore.activeStates();
-    let activeString = active.length > 0
-        ? 'Active States: ' + active.map(a => a.name).join(', ')
-        : 'No active state';
+	let activeString =
+		active.length > 0
+			? 'Active States: ' + active.map((a) => a.name).join(', ')
+			: 'No active state';
 
 	activeStates.textContent = activeString;
 });

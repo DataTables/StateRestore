@@ -20,48 +20,54 @@ This option allows a creation modal to be displayed to the user. This allows the
 	</description>
 
 <example title="Enable creation modal"><![CDATA[
- $('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        'createState',
-        {
-            extend: 'savedStates',
-            config: {
-                creationModal: true
-            }
-        },
-        'colvis'
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						creationModal: true
+					}
+				},
+				'colvis'
+			]
+		}
+	}
 });
 ]]></example>
 
 <example title="Enable creation modal with toggling options"><![CDATA[
- $('#example').DataTable({
-    dom: 'Blfrtip',
-    buttons:[
-        {
-            extend: 'createState',
-            config: {
-                creationModal: true,
-                toggle: {
-                    columns: {
-                        search: true,
-                        visible: true
-                    },
-                    length: true,
-                    order: true,
-                    paging: true,
-                    scroller: true,
-                    search: true,
-                    searchBuilder: true,
-                    searchPanes: true,
-                    select: true
-                }
-            }
-        },
-        'savedStates',
-        'colvis'
-    ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								search: true,
+								visible: true
+							},
+							length: true,
+							order: true,
+							paging: true,
+							scroller: true,
+							search: true,
+							searchBuilder: true,
+							searchPanes: true,
+							select: true
+						}
+					}
+				},
+				'savedStates',
+				'colvis'
+			]
+		}
+	}
 });
 ]]></example>
 

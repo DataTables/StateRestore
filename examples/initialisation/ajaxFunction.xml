@@ -32,14 +32,11 @@ function initDataTable() {
 									var reloadStates = (loadData) => {
 										// Manipulate the data into the structure expected by the callback
 										var cbData = {};
-										for (
-											var i = 0;
-											i < loadData.length;
-											i++
-										) {
+										for (var i = 0; i < loadData.length; i++) {
 											// Convert back from the string created when saving
-											cbData[loadData[i].identifier] =
-												JSON.parse(loadData[i].state);
+											cbData[loadData[i].identifier] = JSON.parse(
+												loadData[i].state
+											);
 										}
 
 										// Load states into StateRestore
@@ -58,10 +55,7 @@ function initDataTable() {
 											states.remove(saveData.identifier);
 											// Add a new record with the updated identifier that uses the old state
 											states.put({
-												identifier:
-													data.stateRestore[
-														saveData.identifier
-													],
+												identifier: data.stateRestore[saveData.identifier],
 												state: saveData.state
 											});
 										};
@@ -87,9 +81,7 @@ function initDataTable() {
 										// Important to convert state to a string as it is too complex for IndexedDB to handle
 										states.put({
 											identifier: ids[i],
-											state: JSON.stringify(
-												data.stateRestore[ids[i]]
-											)
+											state: JSON.stringify(data.stateRestore[ids[i]])
 										});
 									}
 									callback();
@@ -120,7 +112,7 @@ var states = new IDBStore({
 
 function initDataTable() {
 	// We need to wait for the database to be ready as the load will run straight away
-    new DataTable('#example', {
+	new DataTable('#example', {
 		layout: {
 			topStart: {
 				buttons: [
@@ -134,14 +126,11 @@ function initDataTable() {
 									var reloadStates = (loadData) => {
 										// Manipulate the data into the structure expected by the callback
 										var cbData = {};
-										for (
-											var i = 0;
-											i < loadData.length;
-											i++
-										) {
+										for (var i = 0; i < loadData.length; i++) {
 											// Convert back from the string created when saving
-											cbData[loadData[i].identifier] =
-												JSON.parse(loadData[i].state);
+											cbData[loadData[i].identifier] = JSON.parse(
+												loadData[i].state
+											);
 										}
 
 										// Load states into StateRestore
@@ -160,10 +149,7 @@ function initDataTable() {
 											states.remove(saveData.identifier);
 											// Add a new record with the updated identifier that uses the old state
 											states.put({
-												identifier:
-													data.stateRestore[
-														saveData.identifier
-													],
+												identifier: data.stateRestore[saveData.identifier],
 												state: saveData.state
 											});
 										};
@@ -189,9 +175,7 @@ function initDataTable() {
 										// Important to convert state to a string as it is too complex for IndexedDB to handle
 										states.put({
 											identifier: ids[i],
-											state: JSON.stringify(
-												data.stateRestore[ids[i]]
-											)
+											state: JSON.stringify(data.stateRestore[ids[i]])
 										});
 									}
 									callback();

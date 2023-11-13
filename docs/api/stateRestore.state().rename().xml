@@ -25,14 +25,15 @@ If the `-init stateRestore.rename` initialisation option is set to `false` then 
 	</description>
 
 	<example title="Rename a state called 'New State'"><![CDATA[
-$(document).ready(function() {
-    var table = $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
-
-    table.stateRestore.state("New State").rename('New Name')
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates']
+		}
+	}
 });
+
+table.stateRestore.state('New State').rename('New Name');
 ]]></example>
 
 <related type="api">stateRestore.state()</related>
