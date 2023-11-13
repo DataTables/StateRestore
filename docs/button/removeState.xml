@@ -13,7 +13,7 @@
 
         This button is used within the `-init stateRestore` extension. It won't do anything if removing states is disabled using the `-init stateRestore.remove` initialisation option.
 
-        This button does not have any extra configuration options that are not available by default. The text in the button can be set by using the `-init language.buttons.removeState` option.
+        This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The text in the button can be set by using the `-init language.buttons.removeState` option.
 	</description>
 
 	<example title="renameState button modify text"><![CDATA[

@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-type library="StateRestore">
+	<name>stateRestoreConfig</name>
+	<summary>Configuration options for StateRestore button</summary>
+
+	<description>
+<![CDATA[
+
+A number of the StateRestore buttons share options that can be used to configure how they behave and interact with the table. For example, a button can be configured to load data via Ajax. The options available to the buttons are defined here.
+
+
+### Options
+
+* `ajax` - Setup the loading and saving of states over ajax
+* `create` - Enable/Disable the creation of new states
+* `creationModal` - Display a modal on creation that allows the state to be customised
+* `preDefined` - Set predefined states in DataTables initialisation
+* `remove` - Enable/Disable the removal of states
+* `rename` - Enable/Disable the renaming of states
+* `save` - Enable/Disable the updating of states
+* `saveState` - Enable/Disable saving for various DataTables elements
+* `splitSecondaries` - Set the split buttons that will be displayed within StateRestore split dropdowns
+* `toggle` - Enable/Disable the saving for various DataTables elements when saving a new state.
+
+
+
+## ajax
+
+This option allows StateRestore to load and save states over ajax. If the value provided for this option is a string, StateRestore will use it as the destination url for requests via ajax.
+
+Setting the value to a function allows users to customise the behaviour when loading states into StateRestore, renaming, removing or saving states. There are no restrictions on the behaviour of the function - you can do whatever you please when this is called.
+
+As default the value is `false`, meaning that the states will be saved in the local session storage. Setting the value of this option to `true` has no effect.
+
+[This example](/extensions/staterestore/examples/initialisation/ajax.html) shows the `ajax` option in action.
+
+By default this option is disabled (`false`).
+
+
+### Value (string)
+
+This option should be set to a string when StateRestore is to attempt to use ajax to load and save states. This string should be a url to tell StateRestore where it should make requests.
+
+
+### Value (function)
+
+This function is called whenever:
+			
+* States are loaded into StateRestore
+* A state is renamed
+* A state is removed
+* A state is saved
+
+It takes two parameters:
+
+The first is `data` that contains all of the data necessary to process the action. The second is a call back function that should be called when loading states via the ajax function. Being able to set this option as a function allows users greater flexibility in how they want to store their states.
+
+1) The relevant data that would be passed over ajax. The object contains 2 properties.
+
+* `action` `-type string` The type of action that is taking place to cause the ajax call. One of `load`, `rename`, `remove` or `save`.
+* `stateRestore` `-type object` This object contains a property for each state that is to be affected by the call. The value when doing a save or a remove is the state object that it should store. When renaming this is slightly different and the value is the new name that should overwrite the value for the corresponding key. This property is not present when states are being loaded.
+
+2) A callback that can perform two different purposes depending on the action that is being performed.
+
+In the first instance when predefined states are being loaded into StateRestore via the ajax function. In this case the `data.action` property will be set to `load`. It takes a single argument that should have the same structure as [`preDefined`](#preDefined).
+
+For all other possible actions this callback _must_ be run whenever the action has successfully been performed. In this case it takes no extra parameters.
+
+No return value is expected.
+
+### Example
+
+This example sets the Ajax url for StateRestore to send requests to:
+
+```js
+new DataTable('#myTable', {
+	ajax: {
+		url: '../data/2500States.txt',
+		dataSrc: 'data'
+	},
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						ajax: '/api/stateControllers/stateRestore'
+					}
+				}
+			]
+		}
+	}
+});
+````
+
+
+
+## create
+
+This option allows for the creation of states to be enabled or disabled.
+
+As default the value is `true`, meaning that states can be created. If this option is set to `false`, then creation will be disabled.
+
+It is also worth noting that if [`save`](#save) is set to `false`, the value set here will be overruled. This is because creation is a form of saving, and is therefore disabled when that option is.
+
+Take a look at [this example](/extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action. In this example the configuration takes place in the `-button savedStates` button. This is because we want to block creation via the api, without having to show the `-button createState` button.
+
+
+### Value (boolean)
+
+This property should be set to a boolean value. `true` if creation is to be enabled (default), `false` if not.
+
+
+### Example
+
+This example shows the ability to create new states being disabled:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						create: false
+					}
+				}
+			]
+		}
+	}
+});
+```
+
+
+## creationModal
+
+This option allows a creation modal to be displayed to the user. This allows them to set custom state names on initialisation and also customise what elements of DataTables are saved in the new state. This is done by configuring the [`toggle`](#toggle) option.
+
+
+### Value (boolean)
+
+This property should be set to a boolean value. When this option is set to `true`, a modal is displayed to the user on creation that allows them to customise the state that will be saved. If the value is set to `false` (the default) then no creation modal is displayed. In this case a name is automatically generated and all of the elements of DataTables that support state saving will be saved within the new state.
+
+
+### Examples
+
+This example enables the creation modal display:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						creationModal: true
+					}
+				},
+				'colvis'
+			]
+		}
+	}
+});
+```
+
+This example enables the creation modal with toggling options:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						creationModal: true,
+						toggle: {
+							columns: {
+								search: true,
+								visible: true
+							},
+							length: true,
+							order: true,
+							paging: true,
+							scroller: true,
+							search: true,
+							searchBuilder: true,
+							searchPanes: true,
+							select: true
+						}
+					}
+				},
+				'savedStates',
+				'colvis'
+			]
+		}
+	}
+});
+```
+
+
+## preDefined
+
+This option allows StateRestore to load predefined states that are set in the DataTables initialisation. This object contains key-value pairs where the key is the identifier, and the value is the state that is to be reloaded. This can be retrieved from the DataTable at any time using the `-api state()` method.
+
+As default the value is an empty object, meaning that there will be no predefined states loaded into StateRestore.
+
+Take a look at [this example](/extensions/StateRestore/examples/initialisation/preDefined.html) to see this in action.
+
+
+### Value (object)
+
+The default value for the [`preDefined`](#preDefined) option is `{}` meaning that as standard there are no predefined states.
+
+When defined, the object keys are the identifiers of the state, and the value is the state that is to be reloaded. This value can be retrieved from the DataTable at any time using the `-api state()` method.
+
+The corresponding value of the predefined state is structured as follows.
+
+* `-type number` `start` - The first row that should be displayed.
+* `-type number` `length` - The number of rows that should be displayed per page.
+* `-type array` `order` - The ordering that should be applied to the table. This value is the same as that used in the `-init order` initialisation option.
+* `-type object` `search` - This is an object that contains details about the search. This value is the same as that used in the `-init search` initialisation option.
+* `-type array` `columns` - This is an array of objects, one for each column. It has two properties.
+    * `columns.visible` - This takes the same value as the initialisation option `-init columns.visible`, `true` for show and `false` for hide.
+    * `columns.search` - This again this takes the same value as the `-init columns.search` initialisation option.
+* `-type object` `scroller` - This object contains four properties.
+    * `-type number` `baseRowTop` - The distance that scroller has scrolled in terms of rows. For example 10.5 would set the top of the displayed table to be 10.5 rows from the top.
+    * `-type number` `topRow` - This takes the same value as `baseRowTop`.
+    * `-type number` `baseScrollTop` - The distance that scroller has scrolled in terms of pixels.
+    * `-type number` `scrollTop` - This takes the same value as `baseScrollTop`.
+* `-type object` `searchBuilder` - This is the same value as is returned from `-api searchBuilder.getDetails()`.
+* `-type object` `searchPanes` - This object contains the details necessary to rebuild SearchPanes as they were before. Not all of the following data is required to simply make selections within SearchPanes. To do this only the `selectionList` property is required.
+    * `-type array` `panes` - This array contains an object for each pane that is displayed. These objects contains details that are required to reload the data and setup of each SearchPane.
+        * `-type array` `arrayFilter` This is an array that contains an object for each option that is to be displayed within the SearchPane.
+            * `-type string` `display` - This is the string value that is displayed within the SearchPane.
+            * `-type string` `filter` - This is the string value that is used when filtering with/on the SearchPane.
+            * `-type string` `sort` - This is the string value that is used when sorting on the SearchPane.
+            * `-type string` `type` - This is the string value that is used when determining the type on the SearchPane.
+        * `-type object` `bins` - This object has a key value pair for each distinct value within this panes column. The key is the distinct value and the value is the number of times that that value appears in the column.
+        * `-type boolean` `collapsed` - Whether this pane was collapsed when the last state save occurred, or not.
+        * `-type number` `id` - The pane id, corresponding to the column index that it is attached to.
+    * `-type array` `selectionList` - This array contains an object for each pane that is displayed. These objects contain details about the selections that have been made in each pane.
+        * `-type number` `column` - The pane index that the selections are attached to.
+        * `-type array` `rows` - This array contains the filter values that are to be selected.
+* `-type object` `select` - This object contains 3 properties which are required to make the selections which were present before.
+    * `-type array` `rows` - This array contains all of the row ids corresponding to the rows that are to be selected. It is the same value as is returned from `-api rows().ids()`.
+    * `-type array` `columns` - This array contains the column indexes of the columns that are to be selected.
+    * `-type array` `cells` - This array contains objects each with two properties. These properties indicate which cell should be selected.
+        * `-type string` `row` - The row id of the cell that is to be selected.
+        * `-type number` `column` - The column index of the cell that is to be selected.
+
+
+### Example
+
+This example sets a predefined state for StateRestore which will be shown to the end user when they first load the page:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						preDefined: {
+							'Order 3': {
+								start: 0,
+								length: 10,
+								order: [[1, 'asc']],
+								search: {
+									search: '',
+									smart: true,
+									regex: false,
+									caseInsensitive: true
+								},
+								columns: [
+									{
+										visible: true,
+										search: {
+											search: '',
+											smart: true,
+											regex: false,
+											caseInsensitive: true
+										}
+									},
+									{
+										visible: true,
+										search: {
+											search: '',
+											smart: true,
+											regex: false,
+											caseInsensitive: true
+										}
+									},
+									{
+										visible: true,
+										search: {
+											search: '',
+											smart: true,
+											regex: false,
+											caseInsensitive: true
+										}
+									},
+									{
+										visible: true,
+										search: {
+											search: '',
+											smart: true,
+											regex: false,
+											caseInsensitive: true
+										}
+									},
+									{
+										visible: true,
+										search: {
+											search: '',
+											smart: true,
+											regex: false,
+											caseInsensitive: true
+										}
+									},
+									{
+										visible: true,
+										search: {
+											search: '',
+											smart: true,
+											regex: false,
+											caseInsensitive: true
+										}
+									}
+								]
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+});
+```
+
+
+
+## remove
+
+This option allows for the removal of states to be enabled or disabled.
+
+Take a look at [this example](/extensions/StateRestore/examples/initialisation/noRemoval.html) to see this in action.
+
+
+### Value (boolean)
+
+The default value for the this option is `true` meaning that as standard removing states will be enabled. Set to `false` to disable.
+
+
+### Example
+
+Disable removal of new states:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						remove: false
+					}
+				}
+			]
+		}
+	}
+});
+```
+
+
+
+## rename
+
+This option allows for the renaming of states to be enabled or disabled.
+
+It is also worth noting that if [`save`](#save) is set to `false`, the value set here will be overruled. This is because renaming is a form of saving, and is therefore disabled when that option is.
+
+Take a look at [this example](/extensions/StateRestore/examples/initialisation/noRenaming.html) to see this in action.
+
+
+### Value (boolean)
+
+The default value for this option is `true` meaning that as standard renaming states will be enabled. Set to `false` to disable.
+
+
+### Example
+
+Disable the renaming of new states:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						rename: false
+					}
+				}
+			]
+		}
+	}
+});
+```
+
+
+
+## save
+
+This option allows for the saving of states to be enabled or disabled.
+
+As default the value is `true`, meaning that states can be saved. If this option is set to `false`, then the updating of states will be disabled as well as creation of new states at that is also a save operation.
+
+It is important to note that this does not only affect updating states, but also creating and renaming of states. These can be controlled independently using [`create`](#create) and [`rename`](#rename), but if this option is set to `false` it will override both of them. This is because creating and renaming are both, in their own way, a form of saving.
+
+Take a look at [this example](/extensions/StateRestore/examples/initialisation/noSaving.html) to see this in action.
+
+
+### Value (boolean)
+
+The default value for this option is `true` meaning that as standard saving states will be enabled. Set to `false` to disable.
+
+
+### Example
+
+Disable saving of new states:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						save: false
+					}
+				}
+			]
+		}
+	}
+});
+```
+
+
+
+## saveState
+
+This option determines what StateRestore will save. The option is an object containing boolean values, one for each element that could be saved. These are as follows (note that all are default `true`):
+
+* `columns` - Container object:
+  * `columns.search` - This option allows for the saving of the search applied to individual columns to be enabled or disabled.
+  * `columns.visible` - This option allows for the saving of the visibility of the columns to be enabled or disabled.
+* `length` - This option allows for the saving of the page length to be enabled or disabled. Note: When using this option and saving states with paging, StateRestore will display the first row that was displayed at when the state was saved at the start of the table. This could for example result in a table with page length of 50, but starting on record 31. Without knowing the page length it is not possible for DataTables to calculate any other start position.
+* `order` - This option allows for the saving of the tables column sorting to be enabled or disabled.
+* `paging` - This option allows for the saving of the paging to be enabled or disabled.
+* `scroller` - This option allows for the saving of the `-init scroller` position to be enabled or disabled. This option is only applicable when both the StateRestore and Scroller extensions are in use.
+* `search` - This option allows for the saving of the search to be enabled or disabled.
+* `searchBuilder` - This option allows for the saving of the `-init searchBuilder` state to be enabled or disabled. This option is only applicable when both the StateRestore and SearchBuilder extensions are in use.
+* `searchPanes` - This option allows for the saving of the `-init searchPanes` state to be enabled or disabled. This option is only applicable when both the StateRestore and SearchPanes extensions are in use.
+* `select` - This option allows for the saving of the `-init select` state to be enabled or disabled. This option is only applicable when both the StateRestore and Select extensions are in use.
+
+
+### Value (object)
+
+This initialisation option is an object that includes a variety of boolean values that enable or disable the saving of different elements of the DataTable's state.
+
+
+### Examples
+
+Disable paging saving:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							paging: false
+						}
+					}
+				},
+				'colvis'
+			]
+		}
+	}
+});
+```
+
+Disable column visibility saving:
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'createState',
+				{
+					extend: 'savedStates',
+					config: {
+						saveState: {
+							columns: {
+								visible: false
+							}
+						}
+					}
+				},
+				'colvis'
+			]
+		}
+	}
+});
+```
+
+
+
+## splitSecondaries
+
+This option allows for the buttons provided by each StateRestore state to be customised, or added to.
+
+As default the value is the array of default buttons shown below. These buttons provide all of the standard functionality for StateRestore. While all of the default buttons are present, if [`save`](#save), [`rename`](#rename) or [`remove`](#remove) are set to false, the corresponding buttons will still be removed.
+
+This option is configured in the same format as `-init buttons.buttons`, please refer to the documentation there for full details.
+
+
+### Value (string[])
+
+The default value for this option is:
+
+```js
+splitSecondaries: [
+	'updateState',
+	'renameState',
+	'removeState'
+]
+```
+
+These are the default buttons that provide functionality to StateRestore states.
+
+
+### Example
+
+Customise the buttons held within the StateRestore state split dropdowns.
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'savedStates',
+					config: {
+						splitSecondaries: [
+							'updateState',
+							'removeState',
+							'<h3>Custom HTML!</h3>',
+							'pdf',
+							{
+								extend: 'renameState',
+								className: 'red-border'
+							}
+						]
+					}
+				},
+				'createState'
+			]
+		}
+	}
+});
+```
+
+
+
+## toggle
+
+This option allows the user to specify which elements should be saved when creating a new state. The option is an object containing boolean values, one for each element that could be saved. When set to `true`, a checkBox will appear in the creation modal for the corresponding element, allowing the user to decide whether it should be saved or not.
+
+For the extensions that support state saving, if the extension is not present then the toggling option will not be displayed regardless of the corresponding value here.
+
+In order to display the creation modal, [`creationModal`](#creationModal) must be set to `true`.
+
+
+### Value (object)
+
+The default value for this option is an object in the same format as the `saveState` option. This will allow the user to configure what to save for each DataTables element that supports state saving. The default value is:
+
+```js
+{
+	columns: {
+		search: false,
+		visible: false
+	},
+	order: false,
+	paging: false,
+	scroller: false,
+	search: false,
+	searchBuilder: false,
+	searchPanes: false,
+	select: false
+}
+```
+
+### Example
+
+Enable paging saving customisation
+
+```js
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'createState',
+					config: {
+						toggle: {
+							paging: true
+						}
+					}
+				},
+				'savedStates',
+				'colvis'
+			]
+		}
+	}
+});
+```
+
+]]>
+	</description>
+</dt-type>
