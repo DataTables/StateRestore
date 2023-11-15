@@ -12,11 +12,11 @@
 
 	<description>
 	<![CDATA[
-This method provides the ability to retrieve details about all of the currently active states that are managed by the `-init stateRestore` extension.
+This method provides the ability to retrieve details about all of the currently active states that are managed by the StateRestore extension.
 
 The method is plural as it is possible to have multiple states that are active at the same time.
 
-A Datatables API is returned containing all of the active states as objects. Each object contains the following properties.
+A DataTables API instance is returned containing all of the active states as objects. Each object contains the following properties.
 
 * `name` - The name of the state.
 * `data` - The data that is used to implement the state.

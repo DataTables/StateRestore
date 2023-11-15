@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
 	<name>removeState</name>
-	<summary>removes the relevant stateRestore instance.</summary>
+	<summary>Removes a state from storage.</summary>
 	<since>1.0.0</since>
 
 	<description>
-        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button removes the relevant `-init stateRestore` instance. This completely removes the state from storage, as well as removing the buttons that represent it.
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button removes the relevant state. This completely removes the state from storage, as well as removing the buttons that represent it.
 
         A confirmation modal is shown when the button is pressed to confirm that this is what the user wants to do.
         
         There are 2 other secondary buttons also within the split button - `-button renameState` and `-button updateState`. Their documentation provides further details relevant to their functionality.
 
-        This button is used within the `-init stateRestore` extension. It won't do anything if removing states is disabled using the `-init stateRestore.remove` initialisation option.
+        This button is used within the StateRestore extension. It won't do anything if removing states is disabled using the `remove` option of the `-type stateRestoreConfig` configuration object of the parent button.
 
         This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The text in the button can be set by using the `-init language.buttons.removeState` option.
 	</description>

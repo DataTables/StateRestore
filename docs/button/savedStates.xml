@@ -5,11 +5,11 @@
 	<since>1.0.0</since>
 
 	<description>
-        This is a collection that contains a number of `-button stateRestore` buttons, one for each state that is being stored by `-init stateRestore`.
+        This is a collection that contains a number of `-button stateRestore` buttons, one for each state that is being stored by StateRestore.
 	</description>
 
-   <option name="config" type="object" default="{}">
-        This option allows for StateRestore to be configured. All of the `stateRestore.*` options can be configured within this object.
+   <option name="config" type="stateRestoreConfig" default="{}">
+        This option allows for StateRestore to be configured.
     </option>
 
 	<example title="savedStates button modify text"><![CDATA[

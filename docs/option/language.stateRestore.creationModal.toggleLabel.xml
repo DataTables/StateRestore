@@ -14,7 +14,7 @@
 
 	<description>
 		<![CDATA[
-            This string is displayed as a label within the creation modal next to the toggle check boxes. These check boxes allow the user to set what is saved by that state. They are configured using `-init stateRestore.toggle`.
+            This string is displayed as a label within the creation modal next to the toggle check boxes. These check boxes allow the user to set what is saved by that state. They are configured using the `toggle` option of `-type stateRestoreConfig`.
 		]]>
 	</description>
 

@@ -12,13 +12,13 @@
 
 	<description>
 	<![CDATA[
-This method provides the ability to save a state that is managed by the `-init stateRestore` extension.
+This method provides the ability to save a state that is managed by the StateRestore extension.
 
 `-api stateRestore.state().save()` takes no arguments. It saves the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A Datatables API is returned so that further chaining can occur.
+A DataTables API instance is returned so that further chaining can occur.
 
-If the `-init stateRestore.save` initialisation option is set to `false` then this API method will not do anything.
+If the `save` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
 
 	</description>

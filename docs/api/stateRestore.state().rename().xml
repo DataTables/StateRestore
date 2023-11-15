@@ -13,13 +13,13 @@
 
 	<description>
 	<![CDATA[
-This method provides the ability to rename a state that is managed by the `-init stateRestore` extension.
+This method provides the ability to rename a state that is managed by the StateRestore extension.
 
 `-api stateRestore.state().rename()` takes one argument, `newIdentifier` that is the new identifier for the selected state. It renames the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A Datatables API is returned so that further chaining can occur.
+A DataTables API instance is returned so that further chaining can occur.
 
-If the `-init stateRestore.rename` initialisation option is set to `false` then this API method will not do anything.
+If the `rename` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
 
 	</description>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
 	<name>updateState</name>
-	<summary>Saves the state to the relevant stateRestore instance.</summary>
+	<summary>Updates a selected state with the current table state.</summary>
 	<since>1.0.0</since>
 
 	<description>
-        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button saves the current state of the table into the relevant `-init stateRestore` instance, updating the state that is stored within that instance. This means that when this state's load button is pressed, the table will return to the state it was in when this update button was pressed.
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button updates the state associated with a button. This means that when this state's load button is pressed, the table will return to the state it was in when this update button was pressed.
         
         There are 2 other secondary buttons also within the split button - `-button removeState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
 
-        This button is used within the `-init stateRestore` extension. It won't do anything if saving is disabled using the `-init stateRestore.save` initialisation option.
+        This button is used within the StateRestore extension. It won't do anything if saving is disabled using the `save` option of the `-type stateRestoreConfig` configuration object of the parent button.
 
         This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The text in the button can be set by using the `-init language.buttons.updateState` option.
 	</description>

@@ -12,11 +12,11 @@
 
 	<description>
 	<![CDATA[
-This method provides the ability to load a state that is managed by the `-init stateRestore` extension into the table.
+This method provides the ability to load a state that is managed by the StateRestore extension into the table.
 
 `-api stateRestore.state().load()` takes no arguments. It loads the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A Datatables API is returned so that further chaining can occur.
+A DataTables API instance is returned so that further chaining can occur.
 	]]>
 
 	</description>

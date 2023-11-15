@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
 	<name>renameState</name>
-	<summary>Renames the relevant stateRestore instance.</summary>
+	<summary>Renames a state.</summary>
 	<since>1.0.0</since>
 
 	<description>
-        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button renames the relevant `-init stateRestore` instance. This changes the text value that is displayed within the button for this state, and also the value that would be used to refer to it when using API methods.
+        This is used as one of the secondary buttons within the `-button stateRestore` split button that represents and provides functionality for a saved state. This button renames the relevant state. This changes the text value that is displayed within the button for this state, and also the value that would be used to refer to it when using API methods.
         
         There are 2 other secondary buttons also within the split button - `-button removeState` and `-button updateState`. Their documentation provides further details relevant to their functionality.
 
-        This button is used within the `-init stateRestore` extension. It won't do anything if renaming is disabled using the `-init stateRestore.renameSate` initialisation option.
+        This button is used within the StateRestore extension. It won't do anything if renaming is disabled using the `renameSate` option of the `-type stateRestoreConfig` configuration object of the parent button.
 
         This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The text in the button can be set by using the `-init language.buttons.renameState` option.
 	</description>

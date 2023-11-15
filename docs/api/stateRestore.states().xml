@@ -13,11 +13,11 @@
 
 	<description>
 	<![CDATA[
-This method provides the ability to retrieve states that are managed by the `-init stateRestore` extension.
+This method provides the ability to retrieve states that are managed by the StateRestore extension.
 
 `-api stateRestore.states()` takes one argument, `identifier`. This is an array of strings that are used to identify the states throughout StateRestore.
 
-A Datatables API is returned containing the states that are desired. This method will mainly be used for chaining. 
+A DataTables API instance is returned containing the states that are desired. This method will mainly be used for chaining. 
 	]]>
 
 	</description>

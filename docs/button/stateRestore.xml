@@ -9,7 +9,7 @@
         
         There are 3 secondary buttons also within the split button - `-button updateState`, `-button removeState` and `-button renameState`. Their documentation provides further details relevant to their functionality.
 
-        This button is used within the `-init stateRestore` extension.
+        This button is used within the StateRestore extension.
 
         This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The default text used in the button can be set by using the `-init language.buttons.stateRestore` option.
 	</description>

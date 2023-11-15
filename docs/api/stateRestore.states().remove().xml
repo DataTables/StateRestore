@@ -13,13 +13,13 @@
 
 	<description>
 	<![CDATA[
-This method provides the ability to remove multiple states that are managed by the `-init stateRestore` extension.
+This method provides the ability to remove multiple states that are managed by the StateRestore extension.
 
 `-api stateRestore.states().remove()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed for each state. The default value for `skipModal` is `false` meaning that the modal will be shown. It removes the states retrieved by the previous call to `-api stateRestore.states()`.
 
-A Datatables API is returned so that further chaining can occur.
+A DataTables API instance is returned so that further chaining can occur.
 
-If the `-init stateRestore.remove` initialisation option is set to `false` then this API method will not do anything.
+If the `remove` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
 
 	</description>

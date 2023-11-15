@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
 	<name>removeAllStates</name>
-	<summary>Removes all stateRestore instances.</summary>
+	<summary>Removes all stored states.</summary>
 	<since>1.0.0</since>
 
 	<description>
-        This button can be displayed at the top level alongside the `-button savedStates` and `-button createState` buttons. This button removes all `-init stateRestore` instances. This completely removes the states from storage, as well as removing the buttons that represent them.
+        This button can be displayed at the top level alongside the `-button savedStates` and `-button createState` buttons. This button removes all saved states. This completely removes the states from storage, as well as removing the buttons that represent them.
 
         No confirmation modal is shown as default when using this button.
         
-        This button is used within the `-init stateRestore` extension. It won't do anything if removing states is disabled using the `-init stateRestore.remove` initialisation option.
+        This button is used within the StateRestore extension. It won't do anything if removing states is disabled using the `remove` option of the `-type stateRestoreConfig` configuration object of the parent button.
 
         This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The text in the button can be set by using the `-init language.buttons.removeAllStates` option.
 	</description>

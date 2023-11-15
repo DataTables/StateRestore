@@ -4,17 +4,13 @@
 	<summary>Set the text for the label of the name input within the creation modal</summary>
 	<since>1.0.0</since>
 
-	<type type="string">
-		<description>
-            The string that will be displayed within the label next to the input for the new states name that is shown in the creation modal when enabled within `-init stateRestore.creationModal`.
-		</description>
-    </type>
+	<type type="string"></type>
 
 	<default value="Name:"/>
 
 	<description>
 		<![CDATA[
-            This string is displayed in the label next to the input that allows a custom name to be set in the creation modal that is shown when creating a new state using `-init stateRestore`.
+            This string is displayed in the label next to the input that allows a custom name to be set in the creation modal that is shown when creating a new state using StateRestore with the `creationModal` option of `-type stateRestoreConfig`.
 
             The value set here is passed through the `-api i18n()` function.
 		]]>
