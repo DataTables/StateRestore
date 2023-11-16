@@ -103,7 +103,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `stateRestore.saveState.columns.visible` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current column visibility by setting the initialisation option to `false`. The default value is `true` meaning that the visibility of the columns will be saved.
+This example shows how to use the `saveState.columns.visible` configuration option (see `-type stateRestoreConfig#saveState`) to disable the saving of the table's current column visibility by setting the initialisation option to `false`. The default value is `true` meaning that the visibility of the columns will be saved.
 
 ]]></info>
 

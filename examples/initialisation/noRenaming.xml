@@ -51,7 +51,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `-init stateRestore.rename` initialisation option to disable the renaming of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that renaming is allowed.
+This example shows how to use the `rename` option of the `-type stateRestoreConfig` configuration object to disable the renaming of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that renaming is allowed.
 
 ]]></info>
 

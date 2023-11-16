@@ -51,7 +51,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `-init stateRestore.creationModal` initialisation option to display a modal when creating a new state. This allows users to choose a name initially rather than having to rename. By using the toggle options, what is saved and restored by StateRestore can also be changed.
+This example shows how to use the `creationModal` configuration option (`-type stateRestoreConfig`) to display a modal when creating a new state. This allows users to choose a name initially rather than having to rename. By using the toggle options, what is saved and restored by StateRestore can also be changed.
 
 ]]></info>
 

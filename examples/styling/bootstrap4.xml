@@ -70,7 +70,7 @@ new DataTable('#example', {
 <title lib="stateRestore">Bootstrap 4</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore` extension integrates with the [Bootstrap 4](https://getbootstrap.com/docs/4.6/) styling library. The DataTables / Bootstrap 4 integration provides seamless integration for DataTables to be used in a Bootstrap 4 page.
+This example shows how the StateRestore extension integrates with the [Bootstrap 4](https://getbootstrap.com/docs/4.6/) styling library. The DataTables / Bootstrap 4 integration provides seamless integration for DataTables to be used in a Bootstrap 4 page.
 ]]></info>
 
 </dt-example>

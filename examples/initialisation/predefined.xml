@@ -86,9 +86,9 @@ new DataTable('#example', {
 <title lib="stateRestore">Predefined States</title>
 
 <info><![CDATA[
-This example shows how predefined states can be supplied using the `-init stateRestore` extension. The state present under the `Saved States` button contains a predefined state that will apply an order to the second column, search for London and hide the 'Start date' column.
+This example shows how predefined states can be supplied using the StateRestore extension. The state present under the `Saved States` button contains a predefined state that will apply an order to the second column, search for London and hide the 'Start date' column.
 
-Renaming, updating and removing this state could all be disabled using the `-init stateRestore.rename`, `-init stateRestore.save` and `-init stateRestore.remove` options. Because it is built into the DataTable's initialisation, the state will always be present on a new page load, even if it has been removed previously.
+Renaming, updating and removing this state could all be disabled using the `rename`, `save` and `remove` options of the `-type stateRestoreConfig` configuration object. Because it is built into the DataTable's initialisation, the state will always be present on a new page load, even if it has been removed previously.
 ]]></info>
 
 </dt-example>

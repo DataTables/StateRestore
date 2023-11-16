@@ -37,7 +37,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how the `-init stateRestore` extension behaves alongside the `-init searchBuilder` extension. The search criteria constructed in SearchBuilder are able to be stored and restored when using StateRestore.
+This example shows how the StateRestore extension behaves alongside the SearchBuilder extension. The search criteria constructed in SearchBuilder are able to be stored and restored when using StateRestore.
 
 ]]></info>
 

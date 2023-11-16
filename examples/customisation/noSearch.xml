@@ -59,7 +59,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `stateRestore.saveState.search` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current search value by setting the value of the initialisation option to `false`. The default value is `true` meaning that the search value will be saved.
+This example shows how to use the `saveState.search` configuration option (see `-type stateRestoreConfig#saveState`) to disable the saving of the table's current search value by setting the value of the initialisation option to `false`. The default value is `true` meaning that the search value will be saved.
 
 ]]></info>
 

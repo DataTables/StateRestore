@@ -51,7 +51,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `-init stateRestore.remove` initialisation option to disable the removal of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that removal is allowed.
+This example shows how to use the `remove` option of the `-type stateRestoreConfig` configuration object to disable the removal of states using stateRestore by setting the option to `false`. The default for this option is `true` meaning that removal is allowed.
 
 ]]></info>
 

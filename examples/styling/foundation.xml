@@ -70,7 +70,7 @@ new DataTable('#example', {
 <title lib="stateRestore">Foundation</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore` extension integrates with the [Foundation](https://get.foundation/) styling library. The DataTables / Foundation integration provides seamless integration for DataTables to be used in a Foundation page.
+This example shows how the StateRestore extension integrates with the [Foundation](https://get.foundation/) styling library. The DataTables / Foundation integration provides seamless integration for DataTables to be used in a Foundation page.
 ]]></info>
 
 </dt-example>

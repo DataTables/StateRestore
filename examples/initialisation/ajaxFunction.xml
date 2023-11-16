@@ -195,9 +195,9 @@ function initDataTable() {
 <title lib="stateRestore">Ajax Function</title>
 
 <info><![CDATA[
-This example shows how the `-init stateRestore` extension can be operated over ajax when setting `-init stateRestore.ajax` to be a functions.
+This example shows how the StateRestore extension can be operated over ajax when setting the `ajax` option of the `-type stateRestoreConfig` configuration object to be a function.
 
-When `-init stateRestore.ajax` is a function, it will be called when the following actions are taken.
+When `ajax` is a function, it will be called when the following actions are taken.
 
 * loading states into StateRestore
 * save
@@ -208,7 +208,7 @@ The function takes two arguments, the first of which is an object. The first val
 
 The second value on the object, `stateRestore` is another object. The keys of this object indicate which state the action is taking place on, the corresponding value is either the state to be saved, or in the case of `rename`, the new name for that state. There is no `stateRestore` property when loading states.
 
-The second argument taken by the function is a callback that should be called when loading in states to StateRestore. An object of the same structure as `-init stateRestore.preDefined` should be passed in to this function in order to load the states into Datatables.
+The second argument taken by the function is a callback that should be called when loading in states to StateRestore. An object of the same structure as the `preDefined` option of the `-type stateRestoreConfig` configuration object should be passed in to this function in order to load the states into DataTables.
 
 This example demonstrates how [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) could be used to store states, implemented through [idb](https://www.npmjs.com/package/idb?ref=hackernoon.com).
 ]]></info>

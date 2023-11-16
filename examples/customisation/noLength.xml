@@ -59,7 +59,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `stateRestore.saveState.length` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current page length by setting the value to `false`. The default value is `true` meaning that the page length will be saved.
+This example shows how to use the `saveState.length` configuration option (see `-type stateRestoreConfig#saveState`) to disable the saving of the table's current page length by setting the value to `false`. The default value is `true` meaning that the page length will be saved.
 
 ]]></info>
 

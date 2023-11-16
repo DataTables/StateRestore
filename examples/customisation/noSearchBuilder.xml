@@ -57,7 +57,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `stateRestore.saveState.searchBuilder` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current `-init searchBuilder` search queries by setting the value of the initialisation option to `false`. The default value is `true` meaning that the searchBuilder search queries will be saved.
+This example shows how to use the `saveState.searchBuilder` configuration option (see `-type stateRestoreConfig#saveState`) to disable the saving of the table's current `-init searchBuilder` search queries by setting the value of the initialisation option to `false`. The default value is `true` meaning that the searchBuilder search queries will be saved.
 
 ]]></info>
 

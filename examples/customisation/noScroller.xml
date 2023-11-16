@@ -63,7 +63,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how to use the `stateRestore.saveState.scroller` initialisation option (documented at `-init stateRestore.saveState`) to disable the saving of the table's current scroll position by setting the initialisation option to `false`. The default value is `true` meaning that the scroll position will be saved when using `-init scroller`.
+This example shows how to use the `saveState.scroller` configuration option (see `-type stateRestoreConfig#saveState`) to disable the saving of the table's current scroll position by setting the initialisation option to `false`. The default value is `true` meaning that the scroll position will be saved when using `-init scroller`.
 
 ]]></info>
 

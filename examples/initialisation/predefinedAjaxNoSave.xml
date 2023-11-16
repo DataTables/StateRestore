@@ -66,9 +66,9 @@ new DataTable('#example', {
 <title lib="stateRestore">Predefined States - No Save, Remove, Rename or Create</title>
 
 <info><![CDATA[
-This example shows how predefined states can be supplied using the `-init stateRestore` extension. The state present under the `Saved States` button contains a predefined state that will scroll the table and apply an order to the third column.
+This example shows how predefined states can be supplied using the StateRestore extension. The state present under the `Saved States` button contains a predefined state that will scroll the table and apply an order to the third column.
 
-Renaming, updating and removing this state are all disabled using the `-init stateRestore.rename`, `-init stateRestore.save` and `-init stateRestore.remove` options. This means that there is no reason for the state to be a split button. It is instead just a normal button that provides solely a load function. Because it is built into the ajax data that is sent initially, the state will always be present on a new page load.
+Renaming, updating and removing this state are all disabled using the `rename`, `save` and `remove` options of the `-type stateRestoreConfig` configuration object. This means that there is no reason for the state to be a split button. It is instead just a normal button that provides solely a load function. Because it is built into the ajax data that is sent initially, the state will always be present on a new page load.
 ]]></info>
 
 <custom-table>

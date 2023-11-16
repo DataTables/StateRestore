@@ -43,7 +43,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how the `-init stateRestore` extension behaves alongside the `-init scroller` extension. The scroll position of Scroller is able to be stored and restored when using StateRestore.
+This example shows how the StateRestore extension behaves alongside the `-init scroller` extension. The scroll position of Scroller is able to be stored and restored when using StateRestore.
 
 ]]></info>
 

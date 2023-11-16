@@ -69,7 +69,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows a selection of the language options that are available for `-init stateRestore` and how to configure them.
+This example shows a selection of the language options that are available for StateRestore and how to configure them.
 
 ]]></info>
 
