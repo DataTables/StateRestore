@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="2">
 
-<css lib="datatables buttons staterestore"/>
+<css lib="datatables buttons staterestore">
+	tfoot input {
+		width: 100%;
+	}
+</css>
 
 <js lib="jquery datatables staterestore buttons buttons-colvis">
 <![CDATA[
