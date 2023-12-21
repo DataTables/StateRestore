@@ -99,7 +99,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Don't save column searches</title>
+<title lib="StateRestore">Don't save column searches</title>
 
 <info><![CDATA[
 

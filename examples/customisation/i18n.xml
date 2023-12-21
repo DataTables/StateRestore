@@ -65,7 +65,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">StateRestore Language Options</title>
+<title lib="StateRestore">StateRestore Language Options</title>
 
 <info><![CDATA[
 

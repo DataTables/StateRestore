@@ -47,7 +47,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Creation Modal</title>
+<title lib="StateRestore">Creation Modal</title>
 
 <info><![CDATA[
 

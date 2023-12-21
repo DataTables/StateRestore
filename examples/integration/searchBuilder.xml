@@ -33,7 +33,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">SearchBuilder Integration</title>
+<title lib="StateRestore">SearchBuilder Integration</title>
 
 <info><![CDATA[
 

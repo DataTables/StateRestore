@@ -59,7 +59,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Ajax Loading and Saving</title>
+<title lib="StateRestore">Ajax Loading and Saving</title>
 
 <info><![CDATA[
 

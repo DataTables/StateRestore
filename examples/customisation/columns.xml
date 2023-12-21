@@ -98,7 +98,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Creation Modal with Toggle for Columns</title>
+<title lib="StateRestore">Creation Modal with Toggle for Columns</title>
 
 <info><![CDATA[
 

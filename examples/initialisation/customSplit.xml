@@ -83,7 +83,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Custom Split Buttons</title>
+<title lib="StateRestore">Custom Split Buttons</title>
 
 <info><![CDATA[
 This example shows how the secondary buttons within the StateRestore split buttons can be set and customised. The `splitSecondaries` option of the `-type stateRestoreConfig` configuration object takes the same values as the `-init buttons.buttons.split` initialisation option.

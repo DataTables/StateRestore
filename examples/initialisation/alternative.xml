@@ -41,7 +41,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Alternative UI</title>
+<title lib="StateRestore">Alternative UI</title>
 
 <info><![CDATA[
 

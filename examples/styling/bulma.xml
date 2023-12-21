@@ -67,7 +67,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Bulma</title>
+<title lib="StateRestore">Bulma</title>
 
 <info><![CDATA[
 This example shows how the StateRestore extension integrates with the [Foundation](https://get.foundation/) styling library. The DataTables / Foundation integration provides seamless integration for DataTables to be used in a Foundation page.

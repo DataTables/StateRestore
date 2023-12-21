@@ -53,7 +53,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Don't save SearchBuilder</title>
+<title lib="StateRestore">Don't save SearchBuilder</title>
 
 <info><![CDATA[
 

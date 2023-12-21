@@ -110,7 +110,7 @@ maxEl.addEventListener('input', function () {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Custom State Data</title>
+<title lib="StateRestore">Custom State Data</title>
 
 <info><![CDATA[
 

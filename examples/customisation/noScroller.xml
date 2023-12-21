@@ -59,7 +59,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Don't save scroller</title>
+<title lib="StateRestore">Don't save scroller</title>
 
 <info><![CDATA[
 

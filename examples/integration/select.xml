@@ -49,7 +49,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Select Integration</title>
+<title lib="StateRestore">Select Integration</title>
 
 <info><![CDATA[
 

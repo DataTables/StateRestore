@@ -67,7 +67,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Bootstrap 5</title>
+<title lib="StateRestore">Bootstrap 5</title>
 
 <info><![CDATA[
 This example shows how the StateRestore extension integrates with the [Bootstrap 5](https://getbootstrap.com/docs/5.0/) styling library. The DataTables / Bootstrap 5 integration provides seamless integration for DataTables to be used in a Bootstrap 5 page.

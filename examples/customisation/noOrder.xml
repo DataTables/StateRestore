@@ -55,7 +55,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Don't save ordering</title>
+<title lib="StateRestore">Don't save ordering</title>
 
 <info><![CDATA[
 

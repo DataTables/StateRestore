@@ -85,7 +85,7 @@ $('#example').DataTable({
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Creation Modal with Toggle</title>
+<title lib="StateRestore">Creation Modal with Toggle</title>
 
 <info><![CDATA[
 This example shows how the `toggle` option of StateRestore (`-type stateRestoreConfig`) can be used to decide what elements of DataTables should save their state when creating a new state. This example shows all of the options that are available with the `toggle` option, apart from the column specific options. They are in a [separate example](/extensions/StateRestore/examples/customisation/columns.html). 

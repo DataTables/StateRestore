@@ -96,7 +96,7 @@ document.querySelector('#add').addEventListener('click', function () {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">No Buttons</title>
+<title lib="StateRestore">No Buttons</title>
 
 <info><![CDATA[
 This example demonstrates how the API methods within StateRestore can be used without the standard buttons being present.

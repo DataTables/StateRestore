@@ -67,7 +67,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Fomantic-UI (formally Semantic-UI) styling</title>
+<title lib="StateRestore">Fomantic-UI (formally Semantic-UI) styling</title>
 
 <info><![CDATA[
 This example shows how the StateRestore extension integrates with [Fomantic-UI](https://fomantic-ui.com) (a maintained fork of [Semantic-UI](https://semantic-ui.com/)). The DataTables / Fomantic-UI integration provides seamless integration for DataTables to be used in a Fomantic-UI page.

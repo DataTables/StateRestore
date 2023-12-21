@@ -8,7 +8,7 @@
 
 $('#example').DataTable({
 	layout: {
-		startTop: {
+		topStart: {
 			buttons: ['createState', 'savedStates', 'pageLength']
 		}
 	}
@@ -22,7 +22,7 @@ $('#example').DataTable({
 
 new DataTable('#example', {
 	layout: {
-		startTop: {
+		topStart: {
 			buttons: ['createState', 'savedStates', 'pageLength']
 		}
 	}

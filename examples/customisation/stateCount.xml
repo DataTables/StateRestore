@@ -47,7 +47,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Custom Button Text</title>
+<title lib="StateRestore">Custom Button Text</title>
 
 <info><![CDATA[
 This example shows how the button text for the `-button savedStates` can be customised to include the number of states that are saved within StateRestore.

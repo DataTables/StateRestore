@@ -39,7 +39,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Scroller Integration</title>
+<title lib="StateRestore">Scroller Integration</title>
 
 <info><![CDATA[
 

@@ -47,7 +47,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">No state remove</title>
+<title lib="StateRestore">No state remove</title>
 
 <info><![CDATA[
 

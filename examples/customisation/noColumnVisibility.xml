@@ -57,7 +57,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Don't save column visibility</title>
+<title lib="StateRestore">Don't save column visibility</title>
 
 <info><![CDATA[
 

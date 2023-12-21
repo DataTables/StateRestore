@@ -192,7 +192,7 @@ function initDataTable() {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Ajax Function</title>
+<title lib="StateRestore">Ajax Function</title>
 
 <info><![CDATA[
 This example shows how the StateRestore extension can be operated over ajax when setting the `ajax` option of the `-type stateRestoreConfig` configuration object to be a function.

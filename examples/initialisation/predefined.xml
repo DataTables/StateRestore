@@ -83,7 +83,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Predefined States</title>
+<title lib="StateRestore">Predefined States</title>
 
 <info><![CDATA[
 This example shows how predefined states can be supplied using the StateRestore extension. The state present under the `Saved States` button contains a predefined state that will apply an order to the second column, search for London and hide the 'Start date' column.

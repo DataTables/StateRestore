@@ -67,7 +67,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">JQuery UI</title>
+<title lib="StateRestore">JQuery UI</title>
 
 <info><![CDATA[
 This example shows how the StateRestore extension integrates with the [JQuery UI](https://jqueryui.com/) styling library. The DataTables / JQuery UI integration provides seamless integration for DataTables to be used in a JQuery UI page.

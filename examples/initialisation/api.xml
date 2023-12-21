@@ -88,7 +88,7 @@ document.querySelector('#add').addEventListener('click', function () {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Basic StateRestore Example - API</title>
+<title lib="StateRestore">Basic StateRestore Example - API</title>
 
 <info><![CDATA[
 This example demonstrates all of the API methods that are available within StateRestore and how they can be used outside of the usual buttons interactions.

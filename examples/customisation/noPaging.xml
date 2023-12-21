@@ -55,7 +55,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Don't save paging</title>
+<title lib="StateRestore">Don't save paging</title>
 
 <info><![CDATA[
 

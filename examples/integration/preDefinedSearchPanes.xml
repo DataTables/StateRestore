@@ -71,7 +71,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="stateRestore">Predefined SearchPanes State</title>
+<title lib="StateRestore">Predefined SearchPanes State</title>
 
 <info><![CDATA[
 
