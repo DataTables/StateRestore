@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="6">
+
+<css lib="datatables buttons staterestore colreorder buttons"/>
+
+<js lib="jquery datatables staterestore buttons colreorder buttons buttons-colvis">
+<![CDATA[
+
+$('#example').DataTable({
+	colReorder: true,
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates', 'colvis']
+		}
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	colReorder: true,
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates', 'colvis']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="StateRestore">ColReorder Integration</title>
+
+<info><![CDATA[
+
+This example shows how the StateRestore extension behaves alongside the ColReorder extension, which adds the ability for the end user to change the column order through click and drag.
+
+]]></info>
+
+</dt-example>
