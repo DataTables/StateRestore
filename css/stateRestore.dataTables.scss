@@ -1,27 +1,31 @@
 @import './common.scss';
 
-div.dt-button-collection {
-    h3 {
-        font-size: 1.1em;
+div.dtsr-confirmation,
+div.dtsr-creation {
+    h2 {
+        font-size: 24px;
     }
-}
 
-div.dtsr-creation-form {
-    div.dtsr-form-row {
-        input.dtsr-name-input {
-            width: 57% !important;
-            padding: 5px 4px;
-            border: 1px solid #aaa;
-            border-radius: 3px;
-        }
+    input[type="text"] {
+        padding: 3px;
+    }
 
-        input.dtsr-check-box {
-            margin-left: calc(25% + 30px) !important;
-        }
+    div.dtsr-creation-text {
+        margin-bottom: 2em;
+    }
 
+	button {
+        display: inline-block;
+        margin: 1em;
+        padding: 0.5em 1em;
+        border-radius: 0.5em;
+        border: 1px solid rgba(0, 0, 0, 0.175);
+        background-color: #f6f6f6;
+        text-align: left;
+        cursor: pointer;
 
-        label.dtsr-toggle-title {
-            margin-right: calc(-25% - 30px) !important;
+        &:hover {
+            background-color: #ebebeb;
         }
     }
 }

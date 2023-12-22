@@ -18,26 +18,6 @@ span.dtsr-confirmation-message {
     font-size: 1rem;
 }
 
-div.dt-btn-split-wrapper {
-    background-color: white !important;
-    button.button {
-        width: calc(100% - 36px) !important;
-        margin: 0px !important;
-        display: inline-block !important;
-        border-top-left-radius: .28571429rem !important;
-        border-bottom-left-radius: .28571429rem !important;
-        border-top-right-radius: 0px !important;
-    }
-    button.dt-btn-split-drop {
-        border-top-right-radius: .28571429rem !important;
-        border-bottom-right-radius: .28571429rem !important;
-        border-top-left-radius: 0px !important;
-        border-bottom-left-radius: 0px !important;
-        width: 36px !important;
-    }
-}
-
-
 span.dtsr-emptyStates {
     font-size: 1rem;
     padding: 5px !important;
@@ -94,27 +74,6 @@ div.dtsr-form-row, div.dtsr-confirmation-text {
     }
 }
 
-div.dtsr-confirmation-text, div.dtsr-creation-form {
-    margin-top: 1.5em;
-    width: 100%;
-
-    label.dtsr-name-label {
-        width: 33.3%;
-        display: inline-block;
-        text-align: left !important;
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-
-    input.dtsr-name-input {
-        width: 66.6%;
-        display: inline-block;
-    }
-
-    input.dtsr-check-box {
-        margin-left: 33.3%;
-        margin-right: 14px;
-        display: inline-block;
-        position: relative;
-    }
+div.dtsr-creation {
+    padding: 1em;
 }

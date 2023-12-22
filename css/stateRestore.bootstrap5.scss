@@ -4,51 +4,6 @@ span.dtsr-check-label {
     padding-left: 3px;
 }
 
-div.dt-button-collection {
-    h3 {
-        margin-top: 8px;
-    }
-    div.dropdown-menu {
-        padding-top: 0px;
-        padding-bottom: 4px;
-
-        div.dt-btn-split-wrapper {
-            margin-top: 4px;
-            padding-left: 3px;
-            padding-right: 3px;
-            button.btn {
-                width: calc(100% - 30px);
-            }
-        
-            button.dt-btn-split-drop {
-                width: 30px;
-            }
-        }
-
-        button.dt-btn-split-drop-button {
-            margin-left: -2px;
-            margin-right: -2px;
-        }
-    }
-}
-
-div.dt-button-split-left {
-    div.dropdown-menu {
-        padding-left: 4px;
-        padding-right: 4px;
-        button.dt-btn-split-drop-button {
-            color: rgb(255, 255, 255);
-            border-radius: 4px;
-            background-color: rgb(107, 117, 125);
-            margin-top: 4px;
-
-            &:hover {
-                background-color: rgb(90, 98, 104);
-            }
-        }
-    }
-}
-
 input.dtsr-input {
     margin-left: 3px;
     display: inline-block;
@@ -72,15 +27,6 @@ div.dtsr-creation-form {
         input.dtsr-name-input {
             width: 66.6%;
             display: inline-block;
-        }
-
-        input.dtsr-check-box {
-            margin-left: 33.3%;
-            margin-right: 14px;
-            display: inline-block;
-            position: relative;
-            float: none;
-            line-height: normal;
         }
     }
 }

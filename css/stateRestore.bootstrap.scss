@@ -4,48 +4,6 @@ span.dtsr-check-label {
     padding-left: 3px;
 }
 
-div.dt-button-collection {
-    h3 {
-        margin-top: 8px;
-    }
-    ul.dropdown-menu {
-        padding-top: 0px;
-   
-        div.dt-btn-split-wrapper {
-            width: 96% !important;
-            margin-left: 4px !important;
-            margin-top: 4px;
-        
-            button.btn {
-                width: calc(100% - 32px);
-            }
-            
-            button.dt-btn-split-drop {
-                width: 32px;
-            }
-        }
-    }
-}
-
-div.dt-button-split-left {
-    div.dropdown-menu {
-        padding-left: 4px;
-        padding-right: 4px;
-        padding-top: 0px;
-    
-        button.dt-btn-split-drop-button {
-            background-color: white;
-            border: 1px solid rgb(204, 204, 204);
-            border-radius: 4px;
-            margin-top: 4px;
-    
-            &:hover {
-                background-color: #f5f5f5;
-            }
-        }
-    }
-}
-
 input.dtsr-input {
     display: inline-block;
     width: auto;

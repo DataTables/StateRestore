@@ -1,41 +1,5 @@
 @import './common.scss';
 
-div.dt-button-collection {
-    h3 {
-        margin-top: 8px;
-        font-size: 1.5rem;
-    }
-    div.dropdown-menu {
-        padding-top: 0px;
-        padding-bottom: 4px;
-        padding-left: 4px;
-        padding-right: 4px;
-
-        div.dt-btn-split-wrapper {
-            margin-top: 4px;
-        }
-    }
-}
-
-div.dt-button-split-left {
-    div.dropdown-menu {
-        padding-right: 4px;
-        padding-left: 4px;
-        padding-bottom: 4px;
-        button.dt-btn-split-drop-button {
-            color: rgb(255, 255, 255);
-            border-radius: 4px;
-            background-color: rgb(107, 117, 125);
-            margin-top: 4px;
-
-            &:hover {
-                background-color: rgb(90, 98, 104);
-            }
-        }
-    }
-}
-
-
 input.dtsr-input {
     display: inline-block;
     width: auto;
@@ -56,13 +20,6 @@ div.dtsr-creation-form {
             width: 66.6%;
             display: inline-block;
         }
-
-        input.dtsr-check-box {
-            margin-left: 33.3%;
-            margin-right: 14px;
-            display: inline-block;
-            position: relative;
-        }
     }
 }
 
@@ -80,12 +37,5 @@ div.dtsr-confirmation-text {
     input.dtsr-name-input {
         width: 66.6%;
         display: inline-block;
-    }
-
-    input.dtsr-check-box {
-        margin-left: 33.3%;
-        margin-right: 14px;
-        display: inline-block;
-        position: relative;
     }
 }
