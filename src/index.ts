@@ -362,12 +362,6 @@ DataTable.ext.buttons.createState = {
 					1
 				);
 			}
-			if (
-				split.length > 0 &&
-				!split.includes('<h3>'+state.s.identifier+'</h3>')
-			) {
-				split.unshift('<h3>'+state.s.identifier+'</h3>');
-			}
 
 			stateButtons.push({
 				_stateRestore: state,
@@ -378,7 +372,8 @@ DataTable.ext.buttons.createState = {
 					split
 				},
 				extend: 'stateRestore',
-				text: state.s.identifier
+				text: state.s.identifier,
+				popoverTitle: state.s.identifier
 			});
 		}
 
@@ -542,12 +537,6 @@ function _stateRegen(dt, src) {
 					1
 				);
 			}
-			if (
-				split.length > 0 &&
-				!split.includes('<h3>'+state.s.identifier+'</h3>')
-			) {
-				split.unshift('<h3>'+state.s.identifier+'</h3>');
-			}
 
 			stateButtons.push({
 				_stateRestore: state,
@@ -558,7 +547,8 @@ function _stateRegen(dt, src) {
 					split
 				},
 				extend: 'stateRestore',
-				text: state.s.identifier
+				text: state.s.identifier,
+				popoverTitle: state.s.identifier
 			});
 		}
 	}
