@@ -34,7 +34,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 				$('.dt-button:eq(0)').click();
 				$('.dt-button:eq(1)').click();
 	
-				expect($('.dataTables_info').text()).toBe('Showing 31 to 36 of 57 entries');
+				expect($('.dt-info').text()).toBe('Showing 31 to 36 of 57 entries');
 				expect($('.dt-button-collection .dt-button').length).toBe(2);
 				done();
 			});
@@ -54,7 +54,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 			$('.dt-button-split .dt-button:eq(0)').click();
 
 			dt.sleep(200).then(() => {
-				expect($('.dataTables_info').text()).toBe('Showing 31 to 36 of 57 entries');
+				expect($('.dt-info').text()).toBe('Showing 31 to 36 of 57 entries');
 				done();
 			});
 		});
@@ -86,7 +86,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 				$('.dt-button:eq(0)').click();
 				$('.dt-button:eq(1)').click();
 	
-				expect($('.dataTables_info').text()).toBe('Showing 31 to 36 of 57 entries');
+				expect($('.dt-info').text()).toBe('Showing 31 to 36 of 57 entries');
 				expect($('.dt-button-collection .dt-button').length).toBe(4);
 				done();
 			});
@@ -105,7 +105,7 @@ describe('stateRestore - options - stateRestore.saveState.scroller', function ()
 
 			$('.dt-button-split:eq(1) .dt-button:eq(0)').click();
 			dt.sleep(200).then(() => {
-				expect($('.dataTables_info').text()).toBe('Showing 1 to 6 of 57 entries');
+				expect($('.dt-info').text()).toBe('Showing 1 to 6 of 57 entries');
 				done();
 			});
 		});

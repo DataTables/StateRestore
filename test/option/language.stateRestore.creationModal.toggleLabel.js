@@ -27,7 +27,8 @@ describe('stateRestore - options - language.stateRestore.creationModal.toggleLab
 
 			$('.dt-button:eq(0)').click();
 
-			expect($('.dtsr-toggle-title').text()).toBe('Includes:');
+			expect($('.dtsr-name-label').eq(0).text()).toBe('Name:');
+			expect($('.dtsr-name-label').eq(1).text()).toBe('Include:');
 		});
 
 		dt.html('basic');
@@ -57,7 +58,8 @@ describe('stateRestore - options - language.stateRestore.creationModal.toggleLab
 
 			$('.dt-button:eq(0)').click();
 
-			expect($('.dtsr-toggle-title').text()).toBe('unit test');
+			expect($('.dtsr-name-label').eq(0).text()).toBe('Name:');
+			expect($('.dtsr-name-label').eq(1).text()).toBe('unit test');
 		});
 	});
 });
