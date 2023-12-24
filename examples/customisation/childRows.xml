@@ -129,7 +129,7 @@ table.on('requestChild', function (e, row) {
 });
 
 // Add event listener for opening and closing details
-table.on('click', 'tbody td.dt-control', function () {
+table.on('click', 'tbody td.dt-control', function (e) {
 	let tr = e.target.closest('tr');
 	let row = table.row(tr);
 
@@ -147,11 +147,11 @@ table.on('click', 'tbody td.dt-control', function () {
 
 <info><![CDATA[
 
-This example shows how it is possible to integrate child rows with StateRestore by adding a listener for the `-event stateLoaded`.
+This example shows how it is possible to integrate child rows with StateRestore by adding a listener for the `-event requestChild`.
 
-The DataTables API has a number of methods for attaching child rows to a *parent* row in the DataTable. This can be used to show additional information about a row, useful for cases where you wish to convey more information about a row than there is space for in the host table.
+The DataTables API has a number of methods for attaching child rows to a row in the DataTable. This can be used to show additional information about a row, useful for cases where you wish to convey more information about a row than there is space for in the host table.
 
-Here the `-api row().child()` api method is used to display each row stored in the state when the `-event stateLoaded` event is triggered.
+Here the `-api row().child()` api method is used to display each row stored in the state when the `-event requestChild` event is triggered.
 ]]></info>
 
 </dt-example>
