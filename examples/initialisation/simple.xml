@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="1">
 
-<css lib="datatables buttons staterestore colreorder"/>
+<css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons colreorder">
+<js lib="jquery datatables staterestore buttons">
 <![CDATA[
 
-			window.table = $('#example').DataTable({
-				dom: 'Blfrtip',
-				colReorder: true,
-				buttons: [
-					'createState',
-					{
-						extend: 'savedStates',
-						config: {
-							saveState: {
-								colReorder: true
-							}
-						}
-					}
-				]
-			});
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['createState', 'savedStates', 'pageLength']
+		}
+	}
+});
 
 ]]>
 </js>
