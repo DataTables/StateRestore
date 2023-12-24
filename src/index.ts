@@ -336,7 +336,6 @@ DataTable.ext.buttons.createState = {
 
 		if (stateRestoreOpts._createInSaved) {
 			stateButtons.push('createState');
-			stateButtons.push('');
 		}
 
 		for (let state of states) {
