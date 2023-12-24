@@ -8,7 +8,7 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 	describe('Functional tests', function () {
 		dt.html('basic');
-		it('True - Create state', function () {
+		it('True - Create state', async function (done) {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -28,11 +28,15 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 			$('div.dtsp-searchPane table tbody tr:eq(14) td:eq(0)').click();
 
+			await dt.sleep(250);
+
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
 			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 			expect($('.dt-button-collection .dt-button').length).toBe(2);
+
+			done();
 		});
 		it('... clear buttons and draw', function (done) {
 			$('.dt-button:eq(1)').click();
@@ -54,7 +58,7 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 		});
 
 		dt.html('basic');
-		it('False - Create state', function () {
+		it('False - Create state', async function (done) {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -74,11 +78,15 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 			$('div.dtsp-searchPane table tbody tr:eq(14) td:eq(0)').click();
 
+			await dt.sleep(250);
+
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
 
 			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 			expect($('.dt-button-collection .dt-button').length).toBe(4);
+
+			done();
 		});
 		it('... clear buttons and draw', function (done) {
 			$('.dt-button:eq(1)').click();
