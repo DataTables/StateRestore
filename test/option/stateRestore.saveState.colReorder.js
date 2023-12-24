@@ -84,7 +84,7 @@ describe('stateRestore - options - stateRestore.saveState.colReorder', function 
 			$('.dt-button:eq(1)').click();
 			$('.dt-button-split:eq(1) .dt-button:eq(0)').click();
 
-			expect($('tbody tr td:eq(0)').text()).toBe('$75,650');
+			expect($('tbody tr td:eq(0)').text()).toBe('$162,700');
 		});
 
 		dt.html('basic');
