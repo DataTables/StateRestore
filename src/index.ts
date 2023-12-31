@@ -185,6 +185,7 @@ DataTable.ext.buttons.stateRestore = {
 		config._stateRestore.load();
 		node.blur();
 	},
+	className: 'dtsr-state',
 	config: {
 		split: ['updateState', 'renameState', 'removeState']
 	},

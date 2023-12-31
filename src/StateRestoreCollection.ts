@@ -736,19 +736,17 @@ export default class StateRestoreCollection {
 	public findActive() {
 		// Make sure that the state is up to date
 		this.s.dt.state.save();
+
 		let currState = this.s.dt.state();
 		let button;
 
 		// Make all of the buttons inactive so that only any that match will be marked as active
-		let buttons = $('button.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
-
-		// Some of the styling libraries use a tags instead of buttons
-		if(buttons.length === 0) {
-			buttons = $('a.'+$.fn.DataTable.Buttons.defaults.dom.button.className.replace(/ /g, '.'));
-		}
+		let buttons = this.s.dt.buttons().nodes();
 
 		for (button of buttons) {
-			this.s.dt.button($(button).parent()[0]).active(false);
+			if ($(button).hasClass('dtsr-state') || $(button).children().hasClass('dtsr-state')) {
+				this.s.dt.button(button).active(false);
+			}
 		}
 
 		let results = [];
@@ -760,11 +758,13 @@ export default class StateRestoreCollection {
 					data: state.s.savedState,
 					name: state.s.identifier
 				});
+
 				// If so, find the corresponding button and mark it as active
 				for (button of buttons) {
-					if ($(button).text() === state.s.identifier) {
+					let btn = this.s.dt.button(button);
 
-						this.s.dt.button($(button).parent()[0]).active(true);
+					if (btn.text() === state.s.identifier) {
+						btn.active(true);
 						break;
 					}
 				}
