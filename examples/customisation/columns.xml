@@ -10,7 +10,7 @@
 <js lib="jquery datatables staterestore buttons buttons-colvis">
 <![CDATA[
 
-$('#example').DataTable({
+var table = $('#example').DataTable({
 	layout: {
 		topStart: {
 			buttons: [
@@ -50,13 +50,21 @@ $('#example').DataTable({
 	}
 });
 
+// Column filtering inputs are not written to by DataTables (since it does not
+// create them), so on state load, we need to do that.
+table.on('stateLoaded', function (e, s, data) {
+	data.columns.forEach(function (col, i) {
+		$('input', table.column(i).footer()).val(col.search.search);
+	});
+});
+
 ]]>
 </js>
 
 <js-vanilla>
 <![CDATA[
 
-new DataTable('#example', {
+let table = new DataTable('#example', {
 	layout: {
 		topStart: {
 			buttons: [
@@ -97,6 +105,18 @@ new DataTable('#example', {
 				});
 			});
 	}
+});
+
+// Column filtering inputs are not written to by DataTables (since it does not
+// create them), so on state load, we need to do that.
+table.on('stateLoaded', function (e, s, data) {
+	data.columns.forEach(function (col, i) {
+		let input = table.column(i).footer().querySelector('input');
+
+		if (input) {
+			input.value = col.search.search;
+		}
+	});
 });
 
 ]]>
