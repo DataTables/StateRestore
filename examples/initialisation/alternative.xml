@@ -12,7 +12,11 @@ $('#example').DataTable({
 			buttons: [
 				{
 					extend: 'savedStates',
-					buttons: ['createState', 'removeAllStates']
+					buttons: [
+						'createState',
+						'removeAllStates',
+						{extend: 'spacer', style: 'bar'}
+					]
 				}
 			]
 		}
@@ -31,7 +35,11 @@ new DataTable('#example', {
 			buttons: [
 				{
 					extend: 'savedStates',
-					buttons: ['createState', 'removeAllStates']
+					buttons: [
+						'createState',
+						'removeAllStates',
+						{extend: 'spacer', style: 'bar'}
+					]
 				}
 			]
 		}
