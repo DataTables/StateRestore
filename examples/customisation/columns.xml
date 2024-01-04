@@ -54,7 +54,9 @@ var table = $('#example').DataTable({
 // create them), so on state load, we need to do that.
 table.on('stateLoaded', function (e, s, data) {
 	data.columns.forEach(function (col, i) {
-		$('input', table.column(i).footer()).val(col.search.search);
+		if (col.search) {
+			$('input', table.column(i).footer()).val(col.search.search);
+		}
 	});
 });
 
@@ -113,7 +115,7 @@ table.on('stateLoaded', function (e, s, data) {
 	data.columns.forEach(function (col, i) {
 		let input = table.column(i).footer().querySelector('input');
 
-		if (input) {
+		if (input && col.search) {
 			input.value = col.search.search;
 		}
 	});

@@ -51,8 +51,8 @@ $('#example').DataTable({
 	ajax: '../data/2500.txt',
 	keys: true,
 	layout: {
-		top2Start: 'searchpanes',
-		top1Start: 'searchbuilder',
+		top2Start: 'searchPanes',
+		top1Start: 'searchBuilder',
 		topStart: {
 			buttons: [
 				{

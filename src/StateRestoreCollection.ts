@@ -628,7 +628,14 @@ export default class StateRestoreCollection {
 
 				// We don't want to extend, but instead AND all properties of the saveState option
 				for (let key of Object.keys(toggles.saveState)) {
-					if (!toggles.saveState[key]) {
+					if (typeof toggles.saveState[key] === 'object') {
+						for (let nestedKey of Object.keys(toggles.saveState[key])) {
+							if (!toggles.saveState[key][nestedKey]) {
+								opts[key][nestedKey] = false;
+							}
+						}
+					}
+					else if (!toggles.saveState[key]) {
 						opts[key] = false;
 					}
 				}
@@ -1259,19 +1266,19 @@ export default class StateRestoreCollection {
 		creationButton.on('click', () => {
 			// Get the values of the checkBoxes
 			let saveState = {
-				colReorder: this.dom.colReorderToggle.children('input').is(':checked'),
+				colReorder: this.dom.colReorderToggle.find('input').is(':checked'),
 				columns: {
-					search: this.dom.columnsSearchToggle.children('input').is(':checked'),
-					visible: this.dom.columnsVisibleToggle.children('input').is(':checked')
+					search: this.dom.columnsSearchToggle.find('input').is(':checked'),
+					visible: this.dom.columnsVisibleToggle.find('input').is(':checked')
 				},
-				length: this.dom.lengthToggle.children('input').is(':checked'),
-				order: this.dom.orderToggle.children('input').is(':checked'),
-				paging: this.dom.pagingToggle.children('input').is(':checked'),
-				scroller: this.dom.scrollerToggle.children('input').is(':checked'),
-				search: this.dom.searchToggle.children('input').is(':checked'),
-				searchBuilder: this.dom.searchBuilderToggle.children('input').is(':checked'),
-				searchPanes: this.dom.searchPanesToggle.children('input').is(':checked'),
-				select: this.dom.selectToggle.children('input').is(':checked')
+				length: this.dom.lengthToggle.find('input').is(':checked'),
+				order: this.dom.orderToggle.find('input').is(':checked'),
+				paging: this.dom.pagingToggle.find('input').is(':checked'),
+				scroller: this.dom.scrollerToggle.find('input').is(':checked'),
+				search: this.dom.searchToggle.find('input').is(':checked'),
+				searchBuilder: this.dom.searchBuilderToggle.find('input').is(':checked'),
+				searchPanes: this.dom.searchPanesToggle.find('input').is(':checked'),
+				select: this.dom.selectToggle.find('input').is(':checked')
 			};
 
 			// Call the buttons functionality passing in the identifier and what should be saved
