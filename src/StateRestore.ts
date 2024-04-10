@@ -248,7 +248,7 @@ export default class StateRestore {
 				'<div class="'+this.classes.confirmationText+'"><span>'+
 					this.s.dt
 						.i18n('stateRestore.removeConfirm', this.c.i18n.removeConfirm)
-						.replace(/%s/g, this.s.identifier) +
+						.replace(/%s/g, StateRestore.entityEncode(this.s.identifier)) +
 				'</span></div>'
 			),
 			removeError: $(
@@ -268,7 +268,7 @@ export default class StateRestore {
 					'<label class="'+this.classes.confirmationMessage+'">'+
 						this.s.dt
 							.i18n('stateRestore.renameLabel', this.c.i18n.renameLabel)
-							.replace(/%s/g, this.s.identifier)+
+							.replace(/%s/g, StateRestore.entityEncode(this.s.identifier))+
 					'</label>' +
 				'</div>'
 			),
@@ -814,6 +814,23 @@ export default class StateRestore {
 		else if(typeof this.c.ajax === 'function' && callAjax) {
 			this.c.ajax.call(this.s.dt, ajaxData, successCallback);
 		}
+	}
+
+	/**
+	 * Encode HTML entities
+	 * 
+	 * @param d String to encode
+	 * @returns Encoded string
+	 * @todo When DT1 support is dropped, switch to using `DataTable.util.escapeHtml`
+	 */
+	static entityEncode(d: string): string {
+		return typeof d === 'string' ?
+			d
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;') :
+			d;
 	}
 
 	/**

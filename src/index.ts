@@ -372,8 +372,8 @@ DataTable.ext.buttons.createState = {
 					split
 				},
 				extend: 'stateRestore',
-				text: state.s.identifier,
-				popoverTitle: state.s.identifier
+				text: StateRestore.entityEncode(state.s.identifier),
+				popoverTitle: StateRestore.entityEncode(state.s.identifier)
 			});
 		}
 
@@ -547,8 +547,8 @@ function _stateRegen(dt, src) {
 					split
 				},
 				extend: 'stateRestore',
-				text: state.s.identifier,
-				popoverTitle: state.s.identifier
+				text: StateRestore.entityEncode(state.s.identifier),
+				popoverTitle: StateRestore.entityEncode(state.s.identifier)
 			});
 		}
 	}

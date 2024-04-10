@@ -973,8 +973,8 @@ export default class StateRestoreCollection {
 						split
 					},
 					extend: 'stateRestore',
-					text: state.s.identifier,
-					popoverTitle: state.s.identifier
+					text: StateRestore.entityEncode(state.s.identifier),
+					popoverTitle: StateRestore.entityEncode(state.s.identifier)
 				});
 			}
 		}
@@ -1431,10 +1431,10 @@ export default class StateRestoreCollection {
 		for (let key of keys) {
 			// eslint-disable-next-line no-useless-escape
 			if (
-				key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '/')+'$')) ||
+				key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname+'$')) ||
 				key.match(
 					new RegExp(
-						'^DataTables_stateRestore_.*_'+location.pathname.replace(/\//g, '/')+
+						'^DataTables_stateRestore_.*_'+location.pathname+
 						'_'+this.s.dt.table().node().id+'$'
 					)
 				)
