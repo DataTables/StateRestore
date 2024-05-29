@@ -841,6 +841,13 @@ export default class StateRestore {
 	 * @returns boolean indicating if the objects match
 	 */
 	private _deepCompare(state1: any, state2: any): boolean {
+		if (state1 === null && state2 === null) {
+			return true;
+		}
+		else if (state1 === null || state2 === null) {
+			return false;
+		}
+
 		// Put keys and states into arrays as this makes the later code easier to work
 		let states = [state1, state2];
 		let keys = [Object.keys(state1).sort(), Object.keys(state2).sort()];
