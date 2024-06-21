@@ -104,7 +104,7 @@ As default the value is `true`, meaning that states can be created. If this opti
 
 It is also worth noting that if [`save`](#save) is set to `false`, the value set here will be overruled. This is because creation is a form of saving, and is therefore disabled when that option is.
 
-Take a look at [this example](/extensions/StateRestore/examples/initialisation/noCreation.html) to see this in action. In this example the configuration takes place in the `-button savedStates` button. This is because we want to block creation via the api, without having to show the `-button createState` button.
+Take a look at [this example](/extensions/staterestore/examples/initialisation/noCreation.html) to see this in action. In this example the configuration takes place in the `-button savedStates` button. This is because we want to block creation via the api, without having to show the `-button createState` button.
 
 
 ### Value (boolean)
@@ -209,7 +209,7 @@ This option allows StateRestore to load predefined states that are set in the Da
 
 As default the value is an empty object, meaning that there will be no predefined states loaded into StateRestore.
 
-Take a look at [this example](/extensions/StateRestore/examples/initialisation/preDefined.html) to see this in action.
+Take a look at [this example](/extensions/staterestore/examples/initialisation/preDefined.html) to see this in action.
 
 
 ### Value (object)
@@ -350,7 +350,7 @@ new DataTable('#myTable', {
 
 This option allows for the removal of states to be enabled or disabled.
 
-Take a look at [this example](/extensions/StateRestore/examples/initialisation/noRemoval.html) to see this in action.
+Take a look at [this example](/extensions/staterestore/examples/initialisation/noRemoval.html) to see this in action.
 
 
 ### Value (boolean)
@@ -388,7 +388,7 @@ This option allows for the renaming of states to be enabled or disabled.
 
 It is also worth noting that if [`save`](#save) is set to `false`, the value set here will be overruled. This is because renaming is a form of saving, and is therefore disabled when that option is.
 
-Take a look at [this example](/extensions/StateRestore/examples/initialisation/noRenaming.html) to see this in action.
+Take a look at [this example](/extensions/staterestore/examples/initialisation/noRenaming.html) to see this in action.
 
 
 ### Value (boolean)
@@ -428,7 +428,7 @@ As default the value is `true`, meaning that states can be saved. If this option
 
 It is important to note that this does not only affect updating states, but also creating and renaming of states. These can be controlled independently using [`create`](#create) and [`rename`](#rename), but if this option is set to `false` it will override both of them. This is because creating and renaming are both, in their own way, a form of saving.
 
-Take a look at [this example](/extensions/StateRestore/examples/initialisation/noSaving.html) to see this in action.
+Take a look at [this example](/extensions/staterestore/examples/initialisation/noSaving.html) to see this in action.
 
 
 ### Value (boolean)
