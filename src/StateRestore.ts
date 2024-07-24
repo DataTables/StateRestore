@@ -941,6 +941,13 @@ export default class StateRestore {
 
 			// If the type is an object then further deep comparisons are required
 			if (typeof states[0][keys[0][i]] === 'object') {
+				// Arrays must be the same length to be matched
+				if (Array.isArray(states[0][keys[0][i]]) && Array.isArray(states[1][keys[1][i]])) {
+					if (states[0][keys[0][i]].length !== states[1][keys[0][i]].length) {
+						return false;
+					}
+				}
+
 				if (!this._deepCompare(states[0][keys[0][i]], states[1][keys[1][i]])) {
 					return false;
 				}
