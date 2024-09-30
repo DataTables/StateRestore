@@ -557,6 +557,7 @@ export default class StateRestoreCollection {
 			ajaxFunction = () => {
 				$.ajax({
 					data: ajaxData,
+					dataType: 'json',
 					success: (data) => {
 						this._addPreDefined(data);
 					},
@@ -1205,6 +1206,7 @@ export default class StateRestoreCollection {
 
 		// Append all of the toggles that are to be inserted
 		let checkboxesEl = this.dom.checkboxInputRow
+			.css('display', togglesToInsert.length ? 'block' : 'none')
 			.appendTo(this.dom.creationForm)
 			.find('div.dtsr-input')
 			.empty();
