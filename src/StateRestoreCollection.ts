@@ -561,6 +561,7 @@ export default class StateRestoreCollection {
 			ajaxFunction = () => {
 				$.ajax({
 					data: ajaxData,
+					dataType: 'json',
 					success: (data) => {
 						this._addPreDefined(data);
 					},

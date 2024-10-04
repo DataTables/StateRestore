@@ -15,9 +15,7 @@ $('#example').DataTable({
 					extend: 'savedStates',
 					config: {
 						saveState: {
-							columns: {
-								paging: false
-							}
+							paging: false
 						}
 					}
 				}
@@ -41,9 +39,7 @@ new DataTable('#example', {
 					extend: 'savedStates',
 					config: {
 						saveState: {
-							columns: {
-								paging: false
-							}
+							paging: false
 						}
 					}
 				}
