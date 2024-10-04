@@ -94,6 +94,8 @@ export interface IDefaults {
 	saveState: ISaveState;
 	splitSecondaries: any[];
 	toggle: ISaveState;
+	createButton: (config: any, state: any) => void;
+	createState: (config: any, state: any) => void;
 }
 
 export interface ISaveState {
@@ -279,7 +281,9 @@ export default class StateRestoreCollection {
 			searchBuilder: false,
 			searchPanes: false,
 			select: false
-		}
+		},
+		createButton: null,
+		createState: null
 	};
 
 	public classes: IClasses;
@@ -852,24 +856,33 @@ export default class StateRestoreCollection {
 			};
 
 			let loadedState = preDefined[state];
+			let stateConfig = $.extend(
+				true,
+				{},
+				this.c,
+				loadedState.c !== undefined ?
+					{
+						saveState: loadedState.c.saveState,
+						remove: loadedState.c.remove,
+						rename: loadedState.c.rename,
+						save: loadedState.c.save
+					} :
+					undefined,
+				true
+			);
+
+			if (this.c.createState) {
+				this.c.createState(stateConfig, loadedState);
+			}
+
 			let newState = new StateRestore(
 				this.s.dt,
-				$.extend(
-					true,
-					{},
-					this.c,
-					loadedState.c !== undefined ?
-						{saveState: loadedState.c.saveState} :
-						undefined,
-					true
-				),
+				stateConfig,
 				state,
 				loadedState,
 				true,
 				successCallback
 			);
-
-			newState.s.savedState = loadedState;
 
 			$(this.s.dt.table().node()).on('dtsr-modal-inserted', () => {
 				newState.dom.confirmation.one('dtsr-remove', () => this._removeCallback(newState.s.identifier));
@@ -964,7 +977,7 @@ export default class StateRestoreCollection {
 					split.splice(split.indexOf('removeState'), 1);
 				}
 
-				stateButtons.push({
+				let buttonConfig = {
 					_stateRestore: state,
 					attr: {
 						title: state.s.identifier
@@ -975,7 +988,13 @@ export default class StateRestoreCollection {
 					extend: 'stateRestore',
 					text: StateRestore.entityEncode(state.s.identifier),
 					popoverTitle: StateRestore.entityEncode(state.s.identifier)
-				});
+				};
+
+				if (this.c.createButton) {
+					this.c.createButton(buttonConfig, state.s.savedState);
+				}
+
+				stateButtons.push(buttonConfig);
 			}
 		}
 
@@ -1205,6 +1224,7 @@ export default class StateRestoreCollection {
 
 		// Append all of the toggles that are to be inserted
 		let checkboxesEl = this.dom.checkboxInputRow
+			.css('display', togglesToInsert.length ? 'block' : 'none')
 			.appendTo(this.dom.creationForm)
 			.find('div.dtsr-input')
 			.empty();

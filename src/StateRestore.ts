@@ -139,13 +139,13 @@ export default class StateRestore {
 			duplicateError: 'A state with this name already exists.',
 			emptyError: 'Name cannot be empty.',
 			emptyStates: 'No saved states',
-			removeConfirm: 'Are you sure you want to remove %s?',
+			removeConfirm: 'Are you sure you want to remove "%s"?',
 			removeError: 'Failed to remove state.',
 			removeJoiner: ' and ',
 			removeSubmit: 'Remove',
 			removeTitle: 'Remove State',
 			renameButton: 'Rename',
-			renameLabel: 'New Name for %s:',
+			renameLabel: 'New Name for "%s":',
 			renameTitle: 'Rename State',
 		},
 		modalCloseButton: true,
@@ -186,7 +186,9 @@ export default class StateRestore {
 			searchBuilder: false,
 			searchPanes: false,
 			select: false
-		}
+		},
+		createButton: null,
+		createState: null
 	};
 
 	public classes: IClasses;
@@ -223,7 +225,7 @@ export default class StateRestore {
 			dt: table,
 			identifier,
 			isPreDefined,
-			savedState: null,
+			savedState: state,
 			tableId: state && state.stateRestore ? state.stateRestore.tableId : undefined
 		};
 
@@ -757,15 +759,6 @@ export default class StateRestore {
 					secondary.parent = undefined;
 				}
 			}
-		}
-
-		// If the state is predefined there is no need to save it over ajax or to local storage
-		if (this.s.isPreDefined) {
-			if (passedSuccessCallback) {
-				passedSuccessCallback.call(this);
-			}
-
-			return;
 		}
 
 		let ajaxData = {
