@@ -29,7 +29,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-button-split .dt-button-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').eq(0).click();
 
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Gloria Little');
 			expect($('.dt-button-collection .dt-button').length).toBe(3);
@@ -54,7 +54,7 @@ describe('stateRestore - options - stateRestore.save', function () {
 
 			$('.dt-button:eq(0)').click();
 			$('.dt-button:eq(1)').click();
-			$('.dt-button-split .dt-button-split-drop').click();
+			$('.dt-button-split .dt-button-split-drop').eq(0).click();
 
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Airi Satou');
 			expect($('.dt-button-collection .dt-button').length).toBe(1);
