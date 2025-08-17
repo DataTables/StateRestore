@@ -92,7 +92,7 @@ new DataTable('#myTable', {
 		}
 	}
 });
-````
+```
 
 
 
