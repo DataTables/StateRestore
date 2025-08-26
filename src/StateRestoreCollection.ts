@@ -1450,14 +1450,12 @@ export default class StateRestoreCollection {
 		let keys = Object.keys(localStorage);
 
 		for (let key of keys) {
-			// eslint-disable-next-line no-useless-escape
+			// Check if the key belongs to this page / table
 			if (
-				key.match(new RegExp('^DataTables_stateRestore_.*_'+location.pathname+'$')) ||
-				key.match(
-					new RegExp(
-						'^DataTables_stateRestore_.*_'+location.pathname+
-						'_'+this.s.dt.table().node().id+'$'
-					)
+				key.startsWith('DataTables_stateRestore_') &&
+				(
+					key.endsWith(location.pathname) || 
+					key.endsWith(location.pathname + '_'+this.s.dt.table().node().id)
 				)
 			) {
 				let loadedState = JSON.parse(localStorage.getItem(key));
