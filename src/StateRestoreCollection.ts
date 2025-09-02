@@ -856,7 +856,7 @@ export default class StateRestoreCollection {
 				that._collectionRebuild();
 			};
 
-			let loadedState = preDefined[state];
+			let loadedState = this._fixTypes(preDefined[state]);
 			let stateConfig = $.extend(
 				true,
 				{},
@@ -1335,6 +1335,33 @@ export default class StateRestoreCollection {
 
 		// Need to save the state before the focus is lost when the modal is interacted with
 		this.s.dt.state.save();
+	}
+
+	/**
+	 * Make sure the data for a state contains the expected data types
+	 *
+	 * @param state State
+	 */
+	private _fixTypes(state) {
+		let fix = function (d, prop) {
+			let val = d[prop];
+
+			if (val !== undefined) {
+				d[prop] = typeof val === 'number' ? val : parseInt(val);
+			}
+		};
+
+		fix(state, 'start');
+		fix(state, 'length');
+		fix(state, 'time');
+
+		if (state.order) {
+			for (let i=0 ; i<state.order.length ; i++) {
+				fix(state.order[i], 0);
+			}
+		}
+
+		return state;
 	}
 
 	/**
