@@ -1379,6 +1379,7 @@ export default class StateRestoreCollection {
 			fixBool(state.search, 'regex');
 			fixBool(state.search, 'smart');
 			fixBool(state.search, 'visible');
+			fixBool(state.search, 'return');
 		}
 
 		if (state.columns) {
