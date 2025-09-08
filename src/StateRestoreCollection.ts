@@ -1343,7 +1343,8 @@ export default class StateRestoreCollection {
 	 * @param state State
 	 */
 	private _fixTypes(state) {
-		let fix = function (d, prop) {
+		let i;
+		let fixNum = function (d, prop) {
 			let val = d[prop];
 
 			if (val !== undefined) {
@@ -1351,13 +1352,47 @@ export default class StateRestoreCollection {
 			}
 		};
 
-		fix(state, 'start');
-		fix(state, 'length');
-		fix(state, 'time');
+		let fixBool = function (d, prop) {
+			let val = d[prop];
+
+			if (val !== undefined) {
+				d[prop] = typeof val !== 'string'
+					? val
+					: val === 'true'
+						? true
+						: false;
+			}
+		};
+
+		fixNum(state, 'start');
+		fixNum(state, 'length');
+		fixNum(state, 'time');
 
 		if (state.order) {
-			for (let i=0 ; i<state.order.length ; i++) {
-				fix(state.order[i], 0);
+			for (i=0 ; i<state.order.length ; i++) {
+				fixNum(state.order[i], 0);
+			}
+		}
+
+		if (state.search) {
+			fixBool(state.search, 'caseInsensitive');
+			fixBool(state.search, 'regex');
+			fixBool(state.search, 'smart');
+			fixBool(state.search, 'visible');
+		}
+
+		if (state.columns) {
+			for (i=0 ; i<state.columns.length ; i++) {
+				fixBool(state.columns[i], 'caseInsensitive');
+				fixBool(state.columns[i], 'regex');
+				fixBool(state.columns[i], 'smart');
+				fixBool(state.columns[i], 'visible');
+			}
+		}
+
+		if (state.colReorder) {
+			for (i=0 ; i<state.colReorder.length ; i++) {
+				fixNum(state.colReorder, i);
 			}
 		}
 
