@@ -287,8 +287,9 @@ export default class StateRestore {
 			)
 		};
 
-		// When a StateRestore instance is created the current state of the table should also be saved.
-		this.save(state, successCallback);
+		// When a StateRestore instance is created the current state of the
+		// table should also be saved.
+		this.save(state, successCallback, !isPreDefined);
 	}
 
 	/**
@@ -806,6 +807,9 @@ export default class StateRestore {
 		}
 		else if(typeof this.c.ajax === 'function' && callAjax) {
 			this.c.ajax.call(this.s.dt, ajaxData, successCallback);
+		}
+		else if (! callAjax) {
+			successCallback();
 		}
 	}
 
