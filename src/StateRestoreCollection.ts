@@ -1471,6 +1471,11 @@ export default class StateRestoreCollection {
 
 		let background = $('div.'+this.classes.background.replace(/ /g, '.'));
 
+		if (this.c.modalCloseButton) {
+			this.dom.confirmation.append(this.dom.closeButton);
+			this.dom.closeButton.on('click', () => background.click());
+		}
+
 		let keyupFunction = function(e) {
 			// If enter same action as pressing the button
 			if (e.key === 'Enter') {
