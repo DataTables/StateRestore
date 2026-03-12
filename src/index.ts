@@ -22,8 +22,8 @@
 
 /// <reference path = '../node_modules/@types/jquery/index.d.ts'
 
-import StateRestore, {setJQuery as stateRestoreJQuery} from './StateRestore';
-import StateRestoreCollection, {setJQuery as stateRestoreCollectionJQuery} from './StateRestoreCollection';
+import StateRestore, { setJQuery as stateRestoreJQuery } from './StateRestore';
+import StateRestoreCollection, { setJQuery as stateRestoreCollectionJQuery } from './StateRestoreCollection';
 
 stateRestoreJQuery($);
 stateRestoreCollectionJQuery($);
@@ -416,11 +416,12 @@ DataTable.ext.buttons.removeState = {
 };
 
 DataTable.ext.buttons.removeAllStates = {
-	action(e, dt, node) {
-		dt.stateRestore.states().remove(true);
+	action(e, dt, node, config) {
+		dt.stateRestore.states().remove(!config.confirmModal);
 		node.blur();
 	},
 	className: 'dt-button dtsr-removeAllStates',
+	confirmModal: true,
 	init(dt, node) {
 		if (! dt.settings()[0]._stateRestore || dt.stateRestore.states().length === 0) {
 			$(node).addClass('disabled');

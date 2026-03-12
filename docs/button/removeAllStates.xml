@@ -7,12 +7,16 @@
 	<description>
         This button can be displayed at the top level alongside the `-button savedStates` and `-button createState` buttons. This button removes all saved states. This completely removes the states from storage, as well as removing the buttons that represent them.
 
-        No confirmation modal is shown as default when using this button.
+        A confirmation modal is shown as default when using this button, although this can be disabled using the `confirmModal` option.
         
         This button is used within the StateRestore extension. It won't do anything if removing states is disabled using the `remove` option of the `-type stateRestoreConfig` configuration object of the parent button.
-
-        This button does not have any additional configuration options available to it, beyond the standard set offered for all Buttons (e.g. `text`). The text in the button can be set by using the `-init language.buttons.removeAllStates` option.
+		
+		The text in the button can be set by using the `-init language.buttons.removeAllStates` option.
 	</description>
+
+    <option name="config" type="confirmModal" default="true" since="1.5.0">
+        This option allows for StateRestore to be configured, particularly for column specific options.
+    </option>
 
 	<example title="removeAllStates button modify text"><![CDATA[
 DataTable.ext.buttons.removeAllStates.text = function (e, dt, node, config) {

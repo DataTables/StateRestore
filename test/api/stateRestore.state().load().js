@@ -20,9 +20,9 @@ describe('stateRestore - api - stateRestore.state().load()', function () {
 		});
 	});
 
-	describe('Functional tests', function () {
-		// test performed in state().add() and state().save() so no need to duplicate here
-	});
+	// describe('Functional tests', function () {
+	// 	// test performed in state().add() and state().save() so no need to duplicate here
+	// });
 
 	describe('Tidy up', function () {
 		dt.html('basic');

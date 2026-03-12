@@ -29,10 +29,18 @@ describe('stateRestore - buttons - removeAllStates', function () {
 			$('.buttons-collection').click();
 
 			expect($('.dtsr-removeAllStates').hasClass('disabled')).toBe(false);
-		});		
-		it('... Click remove all button', function () {
+		});
+		it('... Click remove all button - Modal is shown', function () {
 			$('.dtsr-removeAllStates').click();
 
+			expect($('.dtsr-confirmation').length).toBe(1);
+		});
+		it('Click confirm - modal is hidden', function () {
+			$('.dtsr-confirmation-button.dt-button').trigger('click');
+
+			expect($('.dtsr-confirmation').length).toBe(0);
+		});
+		it('... Remove all button is disabled', function () {
 			expect($('.dtsr-removeAllStates').hasClass('disabled')).toBe(true);
 		});
 		it('... and all states are removed', function () {
@@ -68,13 +76,18 @@ describe('stateRestore - buttons - removeAllStates', function () {
 		it('... Remove all button is active', function () {
 			expect($('.dtsr-removeAllStates').hasClass('disabled')).toBe(false);
 		});
-		it('... Click remove all button', function () {
+		it('... Click remove all button - Modal is shown', function () {
 			$('.dtsr-removeAllStates').click();
-			$('.buttons-collection').click();
 
-			expect($('.dtsr-removeAllStates').hasClass('disabled')).toBe(true);
+			expect($('.dtsr-confirmation').length).toBe(1);
+		});
+		it('Click confirm - modal is hidden', function () {
+			$('.dtsr-confirmation-button.dt-button').trigger('click');
+
+			expect($('.dtsr-confirmation').length).toBe(0);
 		});
 		it('... and all states are removed', function () {
+			$('.buttons-collection').click();
 			$('.dt-buttons button:nth-child(2)').click();
 
 			expect($('.dtsr-emptyStates').text()).toBe('No saved states');

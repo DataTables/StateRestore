@@ -8,7 +8,7 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 	describe('Functional tests', function () {
 		dt.html('basic');
-		it('True - Create state', async function (done) {
+		it('True - Create state', async function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -35,8 +35,6 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 			expect($('.dt-button-collection .dt-button').length).toBe(2);
-
-			done();
 		});
 		it('... clear buttons and draw', function (done) {
 			$('.dt-button:eq(1)').click();
@@ -58,7 +56,7 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 		});
 
 		dt.html('basic');
-		it('False - Create state', async function (done) {
+		it('False - Create state', async function () {
 			$.fx.off = true; // disables lightbox animation
 
 			table = $('#example').DataTable({
@@ -85,8 +83,6 @@ describe('stateRestore - options - stateRestore.saveState.searchPanes', function
 
 			expect($('#example tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 			expect($('.dt-button-collection .dt-button').length).toBe(4);
-
-			done();
 		});
 		it('... clear buttons and draw', function (done) {
 			$('.dt-button:eq(1)').click();
