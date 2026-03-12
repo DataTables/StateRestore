@@ -125,7 +125,7 @@ export interface II18n {
 	removeError: string;
 	removeJoiner: string;
 	removeSubmit: string;
-	removeTitle: string;
+	removeTitle: Record<string, string>;
 	renameButton: string;
 	renameLabel: string;
 	renameTitle: string;
@@ -237,7 +237,10 @@ export default class StateRestoreCollection {
 			removeError: 'Failed to remove state.',
 			removeJoiner: ' and ',
 			removeSubmit: 'Remove',
-			removeTitle: 'Remove State',
+			removeTitle: {
+				1: 'Remove State',
+				_: 'Remove States'
+			},
 			renameButton: 'Rename',
 			renameLabel: 'New Name for %s:',
 			renameTitle: 'Rename State'
@@ -469,12 +472,7 @@ export default class StateRestoreCollection {
 			),
 			removeTitle: $(
 				'<div class="'+this.classes.creationText+'">'+
-					'<h2 class="'+this.classes.creationTitle+'">'+
-						this.s.dt.i18n(
-							'stateRestore.removeTitle',
-							this.c.i18n.removeTitle
-						)+
-					'</h2>'+
+					'<h2 class="'+this.classes.creationTitle+'"></h2>'+
 				'</div>'
 			),
 			scrollerToggle: $(
@@ -707,6 +705,14 @@ export default class StateRestoreCollection {
 				this.s.dt.i18n('stateRestore.removeJoiner', this.c.i18n.removeJoiner) +
 				ids.slice(-1);
 		}
+
+		$(this.dom.removeTitle).find('h2').html(
+			this.s.dt.i18n(
+				'stateRestore.removeTitle',
+				this.c.i18n.removeTitle,
+				ids.length
+			)
+		);
 
 		$(this.dom.removeContents.children('span')).html(
 			this.s.dt

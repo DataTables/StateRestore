@@ -261,7 +261,8 @@ export default class StateRestore {
 				'<h2 class="'+this.classes.confirmationTitle+'">'+
 					this.s.dt.i18n(
 						'stateRestore.removeTitle',
-						this.c.i18n.removeTitle
+						this.c.i18n.removeTitle,
+						1
 					)+
 				'</h2>'
 			),
