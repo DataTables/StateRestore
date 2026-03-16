@@ -127,39 +127,10 @@ apiRegister('stateRestore.state().remove()', function(skipModal) {
 });
 
 apiRegister('stateRestore.states().remove()', function(skipModal) {
-	let removeAllCallBack = (skipModalIn) => {
-		let success = true;
-		let that = this.toArray();
-
-		while (that.length > 0) {
-			let set = that[0];
-
-			if (set !== undefined && set.c.remove) {
-				let tempSuccess = set.remove(skipModalIn);
-
-				if (tempSuccess !== true) {
-					success = tempSuccess;
-				}
-				else {
-					that.splice(0, 1);
-				}
-			}
-			else {
-				break;
-			}
-		}
-
-		return success;
-	};
-
 	if (this.context[0]._stateRestore && this.context[0]._stateRestore.c.remove) {
-		if (skipModal) {
-			removeAllCallBack(skipModal);
-		}
-		else {
-			this.context[0]._stateRestore.removeAll(removeAllCallBack);
-		}
+		this.context[0]._stateRestore.removeAll(skipModal);
 	}
+
 	return this;
 });
 

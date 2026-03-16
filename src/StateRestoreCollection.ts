@@ -670,12 +670,53 @@ export default class StateRestoreCollection {
 	 *
 	 * @param removeFunction The action to be taken when the action is confirmed
 	 */
-	public removeAll(removeFunction): void {
+	public removeAll(skipModal: boolean): void {
 		// There are no states to remove so just return
 		if (this.s.states.length === 0) {
 			return;
 		}
 
+		let run = () => {
+			if (this.c.ajax) {
+				ajax(this.s.dt, this.c.ajax, {action: 'removeAll'}, () => {
+					this.s.states.length = 0;
+					this._collectionRebuild();
+				});
+			}
+			else {
+				this.s.states.length = 0;
+				this._collectionRebuild();
+
+				let keys = Object.keys(localStorage);
+
+				for (let key of keys) {
+					// Delete all owned items
+					if (
+						key.startsWith('DataTables_stateRestore_') &&
+						(
+							key.endsWith(location.pathname) || 
+							key.endsWith(location.pathname + '_'+this.s.dt.table().node().id)
+						)
+					) {
+						localStorage.removeItem(key);
+					}
+				}
+			}
+
+			return true;
+		};
+
+		if (skipModal || skipModal === undefined) {
+			run();
+		}
+		else {
+			this.confirmRemoveAll(() => {
+				return run();
+			});
+		}
+	}
+
+	private confirmRemoveAll(cb): void {
 		let ids = this.s.states.map(state => state.s.identifier);
 
 		let replacementString = ids[0];
@@ -703,7 +744,7 @@ export default class StateRestoreCollection {
 		this._newModal(
 			this.dom.removeTitle,
 			this.s.dt.i18n('stateRestore.removeSubmit', this.c.i18n.removeSubmit),
-			removeFunction,
+			cb,
 			this.dom.removeContents
 		);
 	}

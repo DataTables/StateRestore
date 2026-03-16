@@ -20,7 +20,8 @@ $('#example').DataTable({
 					config: {
 						ajax: '../data/stateRestoreSave.php'
 					}
-				}
+				},
+				'removeAllStates'
 			]
 		}
 	},

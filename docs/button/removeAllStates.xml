@@ -10,6 +10,8 @@
         A confirmation modal is shown as default when using this button, although this can be disabled using the `confirmModal` option.
         
         This button is used within the StateRestore extension. It won't do anything if removing states is disabled using the `remove` option of the `-type stateRestoreConfig` configuration object of the parent button.
+
+		If `ajax` is configured for StateRestore, this button will trigger a single Ajax call (as of 1.5.0) that will send an `action` of `-string removeAll` to the server.
 		
 		The text in the button can be set by using the `-init language.buttons.removeAllStates` option.
 	</description>
