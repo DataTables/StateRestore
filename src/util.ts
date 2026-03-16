@@ -37,6 +37,11 @@ export function ajax(
 	if (base.submitAs === 'json') {
 		base.data = JSON.stringify(base.data);
 	}
+	else if (DataTable.StateRestore.ajaxJsonState) {
+		$.each(base.data.stateRestore, (key, value) => {
+			base.data.stateRestore[key] = JSON.stringify(base.data.stateRestore[key]);
+		});
+	}
 	
 	$.ajax(base);
 }

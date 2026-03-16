@@ -1330,6 +1330,11 @@ export default class StateRestoreCollection {
 	 */
 	private _fixTypes(state) {
 		let i;
+
+		if (typeof state === 'string') {
+			state = JSON.parse(state);
+		}
+
 		let fixNum = function (d, prop) {
 			let val = d[prop];
 
