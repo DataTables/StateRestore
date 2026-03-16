@@ -2,6 +2,7 @@ let $;
 let dataTable;
 
 import StateRestore from './StateRestore';
+import { ajax } from './util';
 
 export function setJQuery(jq) {
 	$ = jq;
@@ -80,7 +81,7 @@ export interface IDom {
 
 export interface IDefaults {
 	_createInSaved: boolean;
-	ajax: boolean | string | (() => void);
+	ajax: false | string | (() => void) | JQueryAjaxSettings;
 	create: boolean;
 	creationModal: boolean;
 	i18n: II18n;
@@ -540,44 +541,23 @@ export default class StateRestoreCollection {
 		table.settings()[0]._stateRestore = this;
 		this._searchForStates();
 
-		// Has staterestore been used before? Is there anything to load?
+		// Has StateRestore been used before? Is there anything to load?
 		this._addPreDefined(this.c.preDefined);
 
-		let ajaxFunction;
-		let ajaxData = {
-			action: 'load'
+		// Ajax load if required
+		let fn = () => {
+			ajax(this.s.dt, this.c.ajax, {action: 'load'}, data => {
+				this._addPreDefined(data);
+			});
 		};
 
-		if (typeof this.c.ajax === 'function') {
-			ajaxFunction = () => {
-				if(typeof this.c.ajax === 'function') {
-					this.c.ajax.call(this.s.dt, ajaxData, s => this._addPreDefined(s));
-				}
-			};
+		if(this.s.dt.ready()) {
+			fn();
 		}
-		else if (typeof this.c.ajax === 'string') {
-			ajaxFunction = () => {
-				$.ajax({
-					data: ajaxData,
-					dataType: 'json',
-					success: (data) => {
-						this._addPreDefined(data);
-					},
-					type: 'POST',
-					url: this.c.ajax
-				});
-			};
-		}
-
-		if (typeof ajaxFunction === 'function') {
-			if(this.s.dt.settings()[0]._bInitComplete) {
-				ajaxFunction();
-			}
-			else {
-				this.s.dt.one('preInit.dtsr', () => {
-					ajaxFunction();
-				});
-			}
+		else {
+			this.s.dt.one('preInit.dtsr', () => {
+				fn();
+			});
 		}
 
 		this.s.dt.on('destroy.dtsr', () => {

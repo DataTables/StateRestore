@@ -2,6 +2,7 @@ let $;
 let dataTable;
 
 import * as restoreType from './StateRestoreCollection';
+import { ajax } from './util';
 
 export function setJQuery(jq) {
 	$ = jq;
@@ -342,23 +343,9 @@ export default class StateRestore {
 		}
 		// Ajax property has to be a string, not just true
 		// Also only want to save if the table has been initialised and the states have been loaded in
-		else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
+		else if (this.s.dt.settings()[0]._bInitComplete) {
 			removeFunction = () => {
-				$.ajax({
-					data: ajaxData,
-					success: successCallback,
-					type: 'POST',
-					url: this.c.ajax
-				});
-				return true;
-			};
-		}
-		else if(typeof this.c.ajax === 'function') {
-			removeFunction = () => {
-				if (typeof this.c.ajax === 'function') {
-					this.c.ajax.call(this.s.dt, ajaxData, successCallback);
-				}
-				return true;
+				ajax(this.s.dt, this.c.ajax, ajaxData, successCallback);
 			};
 		}
 
@@ -597,16 +584,8 @@ export default class StateRestore {
 					return false;
 				}
 			}
-			else if (typeof this.c.ajax === 'string' && this.s.dt.settings()[0]._bInitComplete) {
-				$.ajax({
-					data: ajaxData,
-					success: successCallback,
-					type: 'POST',
-					url: this.c.ajax
-				});
-			}
-			else if(typeof this.c.ajax === 'function') {
-				this.c.ajax.call(this.s.dt, ajaxData, successCallback);
+			else if (this.s.dt.settings()[0]._bInitComplete) {
+				ajax(this.s.dt, this.c.ajax, ajaxData, successCallback);
 			}
 
 			return true;
@@ -786,28 +765,10 @@ export default class StateRestore {
 			);
 			successCallback();
 		}
-		else if (typeof this.c.ajax === 'string' && callAjax) {
-			if(this.s.dt.settings()[0]._bInitComplete) {
-				$.ajax({
-					data: ajaxData,
-					success: successCallback,
-					type: 'POST',
-					url: this.c.ajax
-				});
-			}
-			else {
-				this.s.dt.one('init', () => {
-					$.ajax({
-						data: ajaxData,
-						success: successCallback,
-						type: 'POST',
-						url: this.c.ajax
-					});
-				});
-			}
-		}
-		else if(typeof this.c.ajax === 'function' && callAjax) {
-			this.c.ajax.call(this.s.dt, ajaxData, successCallback);
+		else if (callAjax) {
+			this.s.dt.ready(() => {
+				ajax(this.s.dt, this.c.ajax, ajaxData, successCallback);
+			});
 		}
 		else if (! callAjax) {
 			successCallback();

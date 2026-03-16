@@ -26,7 +26,7 @@ A number of the StateRestore buttons share options that can be used to configure
 
 ## ajax
 
-This option allows StateRestore to load and save states over ajax. If the value provided for this option is a string, StateRestore will use it as the destination url for requests via ajax.
+This option allows StateRestore to load and save states over ajax. If the value provided for this option is a string, StateRestore will use it as the destination url for requests via ajax. Furthermore, as of StateRestore 1.5 it can be given as an object which matches [jQuery's `ajax` options](https://api.jquery.com/jQuery.ajax/) - the `url` property must be provided. `submitAs` can also be included as a property and when set to `-string json` the data in the request will be submitted as JSON in the request body.
 
 Setting the value to a function allows users to customise the behaviour when loading states into StateRestore, renaming, removing or saving states. There are no restrictions on the behaviour of the function - you can do whatever you please when this is called.
 
