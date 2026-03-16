@@ -141,7 +141,11 @@ apiRegister('stateRestore.states().remove()', function(skipModal) {
 					success = tempSuccess;
 				}
 				else {
+					// Remove from local list
 					that.splice(0, 1);
+
+					// And remove from SR
+					this.context[0]._stateRestore._removeCallback(set.s.identifier);
 				}
 			}
 			else {

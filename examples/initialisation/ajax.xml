@@ -20,7 +20,8 @@ $('#example').DataTable({
 					config: {
 						ajax: '../data/stateRestoreSave.php'
 					}
-				}
+				},
+				'removeAllStates'
 			]
 		}
 	},
@@ -48,7 +49,8 @@ new DataTable('#example', {
 					config: {
 						ajax: '../data/stateRestoreSave.php'
 					}
-				}
+				},
+				'removeAllStates'
 			]
 		}
 	},
