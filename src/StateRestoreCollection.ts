@@ -1361,7 +1361,15 @@ export default class StateRestoreCollection {
 
 		if (state.order) {
 			for (i=0 ; i<state.order.length ; i++) {
-				fixNum(state.order[i], 0);
+				// Allow for the fact that column names can be used in index 0
+				// of the ordering state. If it is a number though, then it
+				// should be an actual number
+				if (
+					typeof state.order[i][0] === 'string' &&
+					state.order[i][0].match(/^\d+$/)
+				) {
+					fixNum(state.order[i], 0);
+				}
 			}
 		}
 
