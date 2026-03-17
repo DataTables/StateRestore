@@ -36,6 +36,10 @@ export function ajax(
 
 	if (base.submitAs === 'json') {
 		base.data = JSON.stringify(base.data);
+
+		if (!base.contentType) {
+			base.contentType = 'application/json; charset=utf-8';
+		}
 	}
 	else if (DataTable.StateRestore.ajaxJsonState) {
 		$.each(base.data.stateRestore, (key, value) => {
