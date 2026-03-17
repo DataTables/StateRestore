@@ -601,7 +601,7 @@ export default class StateRestoreCollection {
 
 			let currState = this.s.dt.state();
 			currState.stateRestore = {
-				isPredefined: false,
+				isPreDefined: false,
 				state: id,
 				tableId: this.s.dt.table().node().id
 			};
