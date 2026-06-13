@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" order="0">
 
-<title lib="StateRestore">StateRestore for DataTables</title>
+<title lib="StateRestore">StateRestore examples</title>
 
 <js lib="jquery" />
 <info><![CDATA[
