@@ -9,7 +9,7 @@
 ]]>
 </css>
 
-<js lib="jquery datatables staterestore pdfmake vfsfonts buttons buttons-html5 buttons-print">
+<js lib="jquery datatables staterestore pdfmake vfsfonts buttons">
 <![CDATA[
 
 $('#example').DataTable({

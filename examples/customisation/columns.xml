@@ -7,7 +7,7 @@
 	}
 </css>
 
-<js lib="jquery datatables staterestore buttons buttons-colvis">
+<js lib="jquery datatables staterestore buttons">
 <![CDATA[
 
 var table = $('#example').DataTable({
