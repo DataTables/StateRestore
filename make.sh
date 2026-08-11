@@ -23,46 +23,8 @@ DT_BUILT="${DT_SRC}/built/DataTables"
 rsync -r css $OUT_DIR
 css_frameworks stateRestore $OUT_DIR/css
 
-if [ ! -d "node_modules" ]; then
-    npm install
-fi
-
-# Copy images
-#rsync -r images $OUT_DIR
-
-node_modules/typescript/bin/tsc
-
-# Copy JS
-HEADER="$(head -n 3 src/index.ts)"
-
-rsync -r src/*.js $OUT_DIR/js
-js_frameworks stateRestore $OUT_DIR/js "jquery datatables.net-FW datatables.net-staterestore"
-
-OUT=$OUT_DIR ./node_modules/rollup/dist/bin/rollup \
-    --banner "$HEADER" \
-    --config rollup.config.js
-
-rm \
-    src/*.js \
-    # src/*.d.ts
-
-rm src/*.d.ts
-
-# Copy Types
-if [ -d $OUT_DIR/types ]; then
-	rm -r $OUT_DIR/types		
-fi
-mkdir $OUT_DIR/types
-
-if [ -d types/ ]; then
-	cp types/* $OUT_DIR/types
-else
-	if [ -f types.d.ts ]; then
-		cp types.d.ts $OUT_DIR/types
-	fi
-fi
-
-js_wrap $OUT_DIR/js/dataTables.stateRestore.js "jquery datatables.net"
+# TS / JS build
+ts_extension StateRestore stateRestore
 
 # Copy and build examples
 rsync -r examples $OUT_DIR
@@ -71,4 +33,3 @@ examples_process $OUT_DIR/examples
 # Readme and license
 cp Readme.md $OUT_DIR
 cp License.txt $OUT_DIR
-

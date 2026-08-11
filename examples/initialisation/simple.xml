@@ -3,21 +3,7 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates', 'pageLength']
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables staterestore buttons">
 <![CDATA[
 
 new DataTable('#example', {
@@ -29,16 +15,18 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
-<title lib="StateRestore">Basic StateRestore Example</title>
+<title lib="StateRestore">Simple initialisation</title>
 
 <info><![CDATA[
+
 This is the StateRestore extension for DataTables.
 
 It provides a collection of buttons that allow DataTables states to be stored and restored at any point. Pressing the _Create State_ button will create a new state. This can then be accessed under the _Saved States_ button. Here the state can be loaded into the table, updated, removed or renamed.
 
 There is no limit on the number of states that can be stored within StateRestore.
+
 ]]></info>
 
 </dt-example>

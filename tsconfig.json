@@ -1,25 +1,29 @@
 {
     "compilerOptions": {
-        "target": "ES3",
+        "target": "ES6",
         "module": "ES6",
+		"moduleResolution": "bundler",
         "lib": ["es2017", "es2016", "dom"],
         "allowUnreachableCode": true,
         "allowSyntheticDefaultImports": true,
         "pretty": true,
-        "declaration": true
+        "declaration": true,
+		"skipLibCheck": true,
+		"outDir": "dist",
+        "rootDir": "src",
+        "types": [],
+        "strict": false,
+        "noImplicitAny": false
     },
-    "exclude": [
-        "./node_modules/**/*"
-    ],
     "files": [
-        "src/index.ts",
-        "src/stateRestore.dataTables.ts",
-        "src/stateRestore.bootstrap4.ts",
-        "src/stateRestore.bootstrap5.ts",
-        "src/stateRestore.bootstrap.ts",
-        "src/stateRestore.bulma.ts",
-        "src/stateRestore.foundation.ts",
-        "src/stateRestore.jqueryui.ts",
-        "src/stateRestore.semanticui.ts",
+        "src/dataTables.stateRestore.ts",
+        "src/integrations/stateRestore.dataTables.ts",
+        "src/integrations/stateRestore.bootstrap4.ts",
+        "src/integrations/stateRestore.bootstrap5.ts",
+        "src/integrations/stateRestore.bootstrap.ts",
+        "src/integrations/stateRestore.bulma.ts",
+        "src/integrations/stateRestore.foundation.ts",
+        "src/integrations/stateRestore.jqueryui.ts",
+        "src/integrations/stateRestore.semanticui.ts",
     ]
 }

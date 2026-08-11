@@ -1,0 +1,48 @@
+import DataTable, { Api, Dom } from 'datatables.net';
+import States from './States';
+
+DataTable.ext.buttons.createState = {
+	action(e: Event, dt: Api, node: Dom, config: any) {
+		let states: States = dt.settings()[0]._states;
+
+		states.add(dt.state());
+	},
+	init(dt: Api, node: Dom, config: any) {
+		let ctx = dt.settings()[0];
+
+		if (!ctx._states) {
+			new States(dt);
+		}
+	},
+	text: dt => dt.i18n('stateRestore.button.createState', 'Create new state')
+};
+
+DataTable.ext.buttons.savedStates = {
+	extend: 'collection',
+	action(e: Event, dt: any, node: Dom, config, cb) {
+		let states: States = dt.settings()[0]._states;
+		let buttons = states.store().map(state => {
+			return {
+				text: state.name,
+				action: (e, dt) => {
+					dt.state(state.state).draw(false);
+				}
+			};
+		});
+
+		dt.button(node).collectionRebuild(buttons);
+
+		DataTable.ext.buttons.collection.action.call(
+			this,
+			e,
+			dt,
+			node,
+			config,
+			cb
+		);
+	},
+	buttons: [],
+	text: dt => dt.i18n('stateRestore.button.savedStates', 'Saved states')
+};
+
+DataTable.StateRestore = States;
