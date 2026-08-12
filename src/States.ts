@@ -20,10 +20,12 @@ export default class States {
 	public static classes: Classes = {
 		field: {
 			container: 'dtsb-field',
+			error: 'dtsb-field-error',
 			label: 'dtsb-field-label',
 			value: 'dtsb-field-value',
 			input: 'dtsb-field-input'
-		}
+		},
+		removeMessage: 'dtsb-remove-message'
 	};
 
 	public static defaults: Defaults = {
@@ -62,7 +64,7 @@ export default class States {
 		let modal = Dom.c('div').classAdd('dtsb-modal');
 
 		let saveButton = Dom.c('button')
-			.classAdd('dst-modal-button')
+			.classAdd('dtsb-modal-button')
 			.text(btnText)
 			.on('click', e => {
 				let result = callback();
@@ -125,7 +127,7 @@ export default class States {
 	 * eventually adding it to the collection.
 	 */
 	public add(state: DTState) {
-		this._modal(
+		this._stateUserInput(
 			this.s.dt.i18n('stateRestore.title.create', 'Save new state'),
 			{
 				id: null,
@@ -151,7 +153,7 @@ export default class States {
 		let idx = this.s.store.indexOf(state);
 
 		if (idx !== -1) {
-			this._modal(
+			this._stateUserInput(
 				this.s.dt.i18n(
 					'stateRestore.title.update',
 					'Update state options'
@@ -172,11 +174,37 @@ export default class States {
 	public remove(state: State) {
 		let idx = this.s.store.indexOf(state);
 
-		// TODO need confirmation modal
-
-		if (idx !== -1) {
-			this.s.store.splice(idx, 1);
+		if (idx === -1) {
+			return;
 		}
+
+		let body = Dom.c('div')
+			.classAdd(this.classes.removeMessage)
+			.text(
+				this.s.dt.i18n(
+					'stateRestore.message.remove',
+					'Are you sure you wish to remove the following state:'
+				)
+			);
+
+		Dom.c('ul')
+			.appendTo(body)
+			.append(Dom.c('li').text(this.s.store[idx].name));
+
+		States.modal(
+			this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
+			body,
+			this.s.dt.i18n('stateRestore.buttons.remove', 'Delete'),
+			() => {
+				// Actually do the deletion - going to re-find the index _just_
+				// in case of some async action such as being deleted elsewhere.
+				idx = this.s.store.indexOf(state);
+
+				if (idx !== -1) {
+					this.s.store.splice(idx, 1);
+				}
+			}
+		);
 	}
 
 	/**
@@ -270,6 +298,8 @@ export default class States {
 				.appendTo(inputContainer);
 		}
 
+		Dom.c('div').classAdd(classes.error).appendTo(inputContainer);
+
 		return field;
 	}
 
@@ -310,7 +340,11 @@ export default class States {
 	/**
 	 * Show a modal to get the user's options for this state
 	 */
-	private _modal(title: string, state: State, cb: (s: State) => void) {
+	private _stateUserInput(
+		title: string,
+		state: State,
+		cb: (s: State) => void
+	) {
 		let body = Dom.c('div');
 		let dt = this.s.dt;
 
@@ -376,7 +410,7 @@ export default class States {
 		// Finally, show the modal
 		States.modal(title, body, 'Save', () => {
 			// Post process the modal based on the inputs
-			return this._modalProcess(state, body, cb);
+			return this._stateUserInputProcess(state, body, cb);
 		});
 	}
 
@@ -388,16 +422,32 @@ export default class States {
 	 * @param body Dom instance with the form elements
 	 * @param cb Callback for when the state has been updated
 	 */
-	private _modalProcess(state: State, body: Dom, cb: (s: State) => void) {
+	private _stateUserInputProcess(
+		state: State,
+		body: Dom,
+		cb: (s: State) => void
+	) {
 		let nameInput = body.find('input[name=name]');
+		let nameError = nameInput
+			.parent()
+			.find('div.' + this.classes.field.error);
 		let defaultInput = body.find('input[name=defaults]');
 		let shareInput = body.find('input[name=share]');
 
 		if (!nameInput.val()) {
-			// TODO show error - name is required
+			// Show error - name is required
+			nameError.text(
+				this.s.dt.i18n(
+					'stateRestore.state.required',
+					'A name is required for the state'
+				)
+			);
+
+			return;
 		}
 		else {
 			state.name = nameInput.val();
+			nameError.empty();
 		}
 
 		if (defaultInput.length) {
@@ -415,7 +465,7 @@ export default class States {
 		for (const [name, manipulator] of Object.entries(stateManipulators)) {
 			if (includes[name] === null) {
 				// User selectable, depends on the checkbox state
-				if (! body.find(`input[name=""]`).prop('checked')) {
+				if (!body.find(`input[name=""]`).prop('checked')) {
 					manipulator.remove(state.state);
 				}
 			}

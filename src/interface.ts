@@ -28,10 +28,12 @@ declare module 'datatables.net' {
 export interface Classes {
 	field: {
 		container: string;
+		error: string;
 		label: string;
 		value: string;
 		input: string;
-	}
+	},
+	removeMessage: string;
 }
 
 export interface Defaults {

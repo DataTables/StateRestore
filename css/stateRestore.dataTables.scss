@@ -105,6 +105,15 @@ div.dtsb-field {
         margin-bottom: 0.5em;
     }
 
+    div.dtsb-field-error {
+        font-size: 0.8em;
+        margin: 0.5em 0 0 0;
+
+        &:empty {
+            margin: 0;
+        }
+    }
+
     span {
         display: inline-block;
         padding-left: 1em;
