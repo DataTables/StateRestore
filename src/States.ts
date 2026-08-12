@@ -1,5 +1,12 @@
-import DataTable, { Api, Context, Dom, State as DTState, util } from 'datatables.net';
-import { Classes, Defaults, Settings, State } from './interface';
+import DataTable, {
+	Api,
+	Context,
+	Dom,
+	State as DTState,
+	util
+} from 'datatables.net';
+import { Checkbox, Classes, Defaults, Settings, State } from './interface';
+import stateManipulators from './manipulators';
 
 // Sanity check
 if (!DataTable || !DataTable.versionCheck || !DataTable.versionCheck('3')) {
@@ -24,13 +31,10 @@ export default class States {
 		defaults: true,
 		include: {
 			cardView: true,
-			columns: {
-				visible: true,
-				search: true
-			},
+			columnVisibility: true,
+			columnSearch: true,
 			columnControl: true,
 			columnOrder: true,
-			length: true,
 			order: true,
 			paging: false,
 			scroller: false,
@@ -55,7 +59,6 @@ export default class States {
 		btnText: string,
 		callback: Function
 	) {
-
 		let modal = Dom.c('div').classAdd('dtsb-modal');
 
 		let saveButton = Dom.c('button')
@@ -100,6 +103,8 @@ export default class States {
 			.appendTo('body');
 	}
 
+	public static manipulators = stateManipulators;
+
 	public static version = '2.0.0-dev';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -119,9 +124,9 @@ export default class States {
 	 * allow customisation of it (name and which properties to include), then
 	 * eventually adding it to the collection.
 	 */
-	add(state: DTState) {
+	public add(state: DTState) {
 		this._modal(
-			'Save new state',
+			this.s.dt.i18n('stateRestore.title.create', 'Save new state'),
 			{
 				id: null,
 				isDefault: false,
@@ -137,11 +142,49 @@ export default class States {
 		);
 	}
 
-	update(id: string, state: State) {}
+	/**
+	 * Update a state's properties
+	 *
+	 * @param state State object to update
+	 */
+	public update(state: State) {
+		let idx = this.s.store.indexOf(state);
 
-	remove(id: string) {}
+		if (idx !== -1) {
+			this._modal(
+				this.s.dt.i18n(
+					'stateRestore.title.update',
+					'Update state options'
+				),
+				this.s.store[idx],
+				state => {
+					States.modalClose();
+				}
+			);
+		}
+	}
 
-	store() {
+	/**
+	 * Remove a state from the store
+	 *
+	 * @param state State object to remove
+	 */
+	public remove(state: State) {
+		let idx = this.s.store.indexOf(state);
+
+		// TODO need confirmation modal
+
+		if (idx !== -1) {
+			this.s.store.splice(idx, 1);
+		}
+	}
+
+	/**
+	 * Get the states stored for this table / instance
+	 *
+	 * @returns Array of states
+	 */
+	public store() {
 		return this.s.store;
 	}
 
@@ -184,6 +227,15 @@ export default class States {
 
 	private _init() {}
 
+	/**
+	 * Display an editing field
+	 *
+	 * @param label Field label
+	 * @param name Name for the input
+	 * @param value Value for the input
+	 * @param type Input type
+	 * @returns The DOM instance containing the element
+	 */
 	private _field(
 		label: string,
 		name: string,
@@ -217,6 +269,40 @@ export default class States {
 				.classAdd(classes.input)
 				.appendTo(inputContainer);
 		}
+
+		return field;
+	}
+
+	/**
+	 * Display a field with checkboxes
+	 *
+	 * @param label Field label
+	 * @param checkboxes Checkboxes for the field
+	 * @returns The DOM instance containing the element
+	 */
+	private _fieldCheckboxes(label: string, checkboxes: Checkbox[]): Dom {
+		let classes = this.classes.field;
+		let field = Dom.c('div').classAdd(classes.container);
+
+		Dom.c('label').classAdd(classes.label).text(label).appendTo(field);
+
+		let inputContainer = Dom.c('div')
+			.classAdd(classes.value)
+			.appendTo(field);
+
+		checkboxes.forEach(checkbox => {
+			Dom.c('div')
+				.appendTo(inputContainer)
+				.append(
+					Dom.c('input')
+						.attr('type', 'checkbox')
+						.attr('name', checkbox.name)
+						.prop('checked', checkbox.value)
+						.classAdd(classes.input)
+						.appendTo(inputContainer)
+				)
+				.append(Dom.c('span').text(checkbox.label));
+		});
 
 		return field;
 	}
@@ -258,8 +344,36 @@ export default class States {
 			);
 		}
 
-		// TODO List of options to toggle
+		// List of options to that the user can toggle
+		let checkboxes: Checkbox[] = [];
 
+		for (const [name, manipulator] of Object.entries(stateManipulators)) {
+			// null indicates that the user can make the selection themselves
+			if (this.c.include[name] === null) {
+				checkboxes.push({
+					name: name,
+					label: manipulator.text(dt),
+					value: true
+				});
+			}
+		}
+
+		if (checkboxes.length) {
+			// Order the available checkboxes alphabetically
+			checkboxes.sort((a, b) => a.name.localeCompare(b.name));
+
+			body.append(
+				this._fieldCheckboxes(
+					dt.i18n(
+						'stateRestore.state.properties',
+						'State properties:'
+					),
+					checkboxes
+				)
+			);
+		}
+
+		// Finally, show the modal
 		States.modal(title, body, 'Save', () => {
 			// Post process the modal based on the inputs
 			return this._modalProcess(state, body, cb);
@@ -279,7 +393,7 @@ export default class States {
 		let defaultInput = body.find('input[name=defaults]');
 		let shareInput = body.find('input[name=share]');
 
-		if (! nameInput.val()) {
+		if (!nameInput.val()) {
 			// TODO show error - name is required
 		}
 		else {
@@ -294,8 +408,22 @@ export default class States {
 			state.isSharedOut = shareInput.prop('checked') as boolean;
 		}
 
-		// TODO Work through the list of options and see if they should be
-		// included / excluded
+		// Work through the list of options and see if they should be included /
+		// excluded
+		let includes = this.c.include;
+
+		for (const [name, manipulator] of Object.entries(stateManipulators)) {
+			if (includes[name] === null) {
+				// User selectable, depends on the checkbox state
+				if (! body.find(`input[name=""]`).prop('checked')) {
+					manipulator.remove(state.state);
+				}
+			}
+			else if (includes[name] === false) {
+				// Options specify that the option shouldn't be included
+				manipulator.remove(state.state);
+			}
+		}
 
 		cb(state);
 	}

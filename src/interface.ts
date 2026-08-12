@@ -1,5 +1,6 @@
-import { Api } from "datatables.net";
+import { Api, State as DTState } from "datatables.net";
 import States from "./States";
+import { ManipulatorOptions } from "./manipulators";
 
 declare module 'datatables.net' {
 	interface Defaults {
@@ -44,49 +45,7 @@ export interface Defaults {
 	 * * `false` means that it will not be includes
 	 * * `null` will give the end user the option to have it included or not.
 	 */
-	include: {
-		/** CardView extension's status */
-		cardView: boolean | null;
-
-		/** Column specific options */
-		columns: {
-			/** Column visibility */
-			visible: boolean | null;
-
-			/** Column specific search */
-			search: boolean | null;
-		};
-
-		/** ColumnControl extension's filters */
-		columnControl: boolean | null;
-
-		/** ColReorder extension's status */
-		columnOrder: boolean | null;
-
-		/** Page length */
-		length: boolean | null;
-
-		/** Data order (sorting) */
-		order: boolean | null;
-
-		/** Page position and start */
-		paging: boolean | null;
-
-		/** Scroller extension's status */
-		scroller: boolean | null;
-
-		/** Search information */
-		search: boolean | null;
-
-		/** SearchBuilder extension's filters */
-		searchBuilder: boolean | null;
-
-		/** SearchPanes extension's filters */
-		searchPanes: boolean | null;
-
-		/** Select extension's state */
-		select: boolean | null;
-	};
+	include: ManipulatorOptions;
 
 	/**
 	 * Prefix name to give the states stored by this instance. This is available
@@ -134,5 +93,11 @@ export interface State {
 	isSharedIn: boolean;
 	isSharedOut: boolean;
 	name: string;
-	state: any;
+	state: DTState;
+}
+
+export interface Checkbox {
+	name: string;
+	label: string;
+	value: boolean;
 }

@@ -1,4 +1,4 @@
-import DataTable, { Api, Dom } from 'datatables.net';
+import DataTable, { Api, Dom, util } from 'datatables.net';
 import States from './States';
 
 DataTable.ext.buttons.createState = {
@@ -23,10 +23,25 @@ DataTable.ext.buttons.savedStates = {
 		let states: States = dt.settings()[0]._states;
 		let buttons = states.store().map(state => {
 			return {
-				text: state.name,
 				action: (e, dt) => {
 					dt.state(state.state).draw(false);
-				}
+				},
+				popoverTitle: util.escapeHtml(state.name),
+				split: [
+					{
+						text: dt.i18n('stateRestore.button.edit', 'Edit'),
+						action: () => {
+							states.update(state);
+						}
+					},
+					{
+						text: dt.i18n('stateRestore.button.remove', 'Delete'),
+						action: () => {
+							states.remove(state);
+						}
+					}
+				],
+				text: util.escapeHtml(state.name)
 			};
 		});
 

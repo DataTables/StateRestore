@@ -59,7 +59,7 @@ div.dtsb-modal {
     }
 
     div.dtsb-modal-body {
-        margin: 1em 0;
+        margin: 2em 0;
     }
 
     div.dtsb-modal-footer {
@@ -95,9 +95,31 @@ div.dtsb-field {
     display: grid;
     grid-template-columns: 40% 60%;
     gap: 1em;
-    margin-top: 0.75em;
+    margin-top: 1em;
 
     &:first-child {
         margin-top: 0;
+    }
+
+    div.dtsb-field-value > div {
+        margin-bottom: 0.5em;
+    }
+
+    span {
+        display: inline-block;
+        padding-left: 1em;
+    }
+
+    input[type=text] {
+        border: var(--dt-input_border);
+        border-radius: var(--dt-input_border-radius);
+        padding: var(--dt-input_padding);
+        background-color: var(--dt-input_background);
+        color: var(--dt-input_color);
+    }
+
+    input[type="checkbox"] {
+        border: var(--dt-input_border);
+        margin: 0;
     }
 }
