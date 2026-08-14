@@ -1,6 +1,6 @@
-import { Api, State as DTState } from "datatables.net";
-import States from "./States";
-import { ManipulatorOptions } from "./manipulators";
+import { Api, State as DTState } from 'datatables.net';
+import States from './States';
+import { ManipulatorOptions } from './manipulators';
 
 declare module 'datatables.net' {
 	interface Defaults {
@@ -32,7 +32,7 @@ export interface Classes {
 		label: string;
 		value: string;
 		input: string;
-	},
+	};
 	removeMessage: string;
 }
 
@@ -42,7 +42,7 @@ export interface Defaults {
 
 	/**
 	 * What values should be included in the states being saved. For each:
-	 * 
+	 *
 	 * * `true` means that it will be included
 	 * * `false` means that it will not be includes
 	 * * `null` will give the end user the option to have it included or not.
@@ -54,7 +54,7 @@ export interface Defaults {
 	 * to reduce the chance of name collisions if there are multiple tables with
 	 * on the same page or even across multiple pages. If not given, the table's
 	 * ID will be used as the name.
-	 * 
+	 *
 	 * Note that if this is changed, you can loose access to old store states
 	 * unless they are updated.
 	 */
@@ -87,6 +87,9 @@ export interface Settings {
 
 	/** States that have been stored and saved by this instance */
 	store: Array<State>;
+
+	/** Remote storage API */
+	storage: Storage;
 }
 
 export interface State {
@@ -102,4 +105,53 @@ export interface Checkbox {
 	name: string;
 	label: string;
 	value: boolean;
+}
+
+/**
+ * Storage controllers for where the data for the states should be "permanently"
+ * stored.
+ *
+ * Note that the storage controllers must also manipulate the `store` array in
+ * this States object. This is to allow them to do it before or after the data
+ * has been saved / submitted, to allow for easy management and error flow
+ * control.
+ */
+export interface Storage {
+	/**
+	 * Get all states
+	 *
+	 * @param dt Host DataTable
+	 * @returns Array of the states
+	 */
+	read: (dt: Api) => Promise<State[]>;
+
+	/**
+	 * State a new state
+	 *
+	 * @param dt Host DataTable
+	 * @param state New state
+	 * @param states States object
+	 * @returns True if everything is okay, false if not.
+	 */
+	create: (dt: Api, state: State, states: States) => Promise<boolean>;
+
+	/**
+	 * Update an existing state
+	 *
+	 * @param dt Host DataTable
+	 * @param state Updated state
+	 * @param states States object
+	 * @returns True if everything is okay, false if not.
+	 */
+	update: (dt: Api, state: State, states: States) => Promise<boolean>;
+
+	/**
+	 * Delete an existing state
+	 *
+	 * @param dt Host DataTable
+	 * @param state State to remove
+	 * @param states States object
+	 * @returns True if everything is okay, false if not.
+	 */
+	remove: (dt: Api, state: State, states: States) => Promise<boolean>;
 }

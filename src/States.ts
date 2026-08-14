@@ -7,6 +7,8 @@ import DataTable, {
 } from 'datatables.net';
 import { Checkbox, Classes, Defaults, Settings, State } from './interface';
 import stateManipulators from './manipulators';
+import storageAjax from './storage/ajax';
+import storageLocal from './storage/localStorage';
 
 // Sanity check
 if (!DataTable || !DataTable.versionCheck || !DataTable.versionCheck('3')) {
@@ -59,7 +61,7 @@ export default class States {
 		title: string,
 		body: Dom,
 		btnText: string,
-		callback: Function
+		submitAction: Function
 	) {
 		let modal = Dom.c('div').classAdd('dtsb-modal');
 
@@ -67,13 +69,7 @@ export default class States {
 			.classAdd('dtsb-modal-button')
 			.text(btnText)
 			.on('click', e => {
-				let result = callback();
-
-				if (result) {
-					// TODO - Not sure about this here. What if the Ajax call
-					// fails? Might be best waiting until that is completed.
-					States.modalClose();
-				}
+				submitAction(e);
 			});
 
 		let closeButton = Dom.c('button')
@@ -137,9 +133,16 @@ export default class States {
 				name: this._nextName(),
 				state: state
 			},
-			state => {
-				this.s.store.push(state);
-				States.modalClose();
+			async state => {
+				let result = await this.s.storage.create(
+					this.s.dt,
+					state,
+					this
+				);
+
+				if (result) {
+					States.modalClose();
+				}
 			}
 		);
 	}
@@ -159,8 +162,16 @@ export default class States {
 					'Update state options'
 				),
 				this.s.store[idx],
-				state => {
-					States.modalClose();
+				async state => {
+					let result = await this.s.storage.update(
+						this.s.dt,
+						state,
+						this
+					);
+
+					if (result) {
+						States.modalClose();
+					}
 				}
 			);
 		}
@@ -195,13 +206,15 @@ export default class States {
 			this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
 			body,
 			this.s.dt.i18n('stateRestore.buttons.remove', 'Delete'),
-			() => {
-				// Actually do the deletion - going to re-find the index _just_
-				// in case of some async action such as being deleted elsewhere.
-				idx = this.s.store.indexOf(state);
+			async () => {
+				let result = await this.s.storage.remove(
+					this.s.dt,
+					state,
+					this
+				);
 
-				if (idx !== -1) {
-					this.s.store.splice(idx, 1);
+				if (result) {
+					States.modalClose();
 				}
 			}
 		);
@@ -233,19 +246,22 @@ export default class States {
 
 		this.s = {
 			dt: dt,
-			store: []
+			store: [],
+			storage: this.c.ajax ? storageAjax : storageLocal
 		};
 
 		this.classes = util.object.assignDeep({}, States.classes);
 
 		let settings = this.s.dt.settings()[0];
 
-		// Check if responsive has already been initialised on this table
+		// Check if StateRestore has already been initialised on this table
 		if (settings._states) {
 			return;
 		}
 
 		settings._states = this;
+
+		// Initial startup actions
 		this._init();
 	}
 
@@ -253,7 +269,12 @@ export default class States {
 	 * Private methods
 	 */
 
-	private _init() {}
+	private async _init() {
+		// Get the initial states
+		let restore = await this.s.storage.read(this.s.dt);
+
+		this.s.store.push(...restore);
+	}
 
 	/**
 	 * Display an editing field
