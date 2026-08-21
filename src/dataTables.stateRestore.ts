@@ -61,29 +61,35 @@ DataTable.ext.buttons.states = {
 		if (states.store().length) {
 			states.store().forEach(state => {
 				let namespace = '.dtst-' + buttonCounter++;
+				let splits = [];
+
+				if (! state.isSharedIn) {
+					// Edit and delete actions available for buttons which are
+					// owned by this user only.
+					splits.push({
+						text: dt.i18n('stateRestore.button.edit', 'Edit'),
+						action: () => {
+							states.update(state);
+						}
+					});
+
+					splits.push({
+						text: dt.i18n('stateRestore.button.remove', 'Delete'),
+						action: () => {
+							states.remove(state);
+						}
+					});
+				}
+				else {
+					// TODO Duplicate button?
+				}
 
 				buttons.push({
 					action: (e, dt) => {
 						dt.state(state.state).draw(false);
 					},
 					popoverTitle: util.escapeHtml(state.name),
-					split: [
-						// TODO duplicate button for isSharedIn
-						{
-							// TODO this should only be shown if !isSharedIn
-							text: dt.i18n('stateRestore.button.edit', 'Edit'),
-							action: () => {
-								states.update(state);
-							}
-						},
-						{
-							// TODO this should only be shown if !isSharedIn
-							text: dt.i18n('stateRestore.button.remove', 'Delete'),
-							action: () => {
-								states.remove(state);
-							}
-						}
-					],
+					split: splits,
 					init: function (dt) {
 						// This is only really needed for a change of state when the
 						// dropdown is open, since the dropdown redraws every time
