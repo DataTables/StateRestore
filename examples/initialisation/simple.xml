@@ -11,7 +11,8 @@ new DataTable('#example', {
 		topStart: {
 			buttons: ['createState', 'savedStates', 'pageLength']
 		}
-	}
+	},
+	stateRestore: true
 });
 
 ]]>

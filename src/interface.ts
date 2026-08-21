@@ -3,6 +3,13 @@ import States from './States';
 import { ManipulatorOptions } from './manipulators';
 
 declare module 'datatables.net' {
+	interface Options {
+		/**
+		 * StateRestore extension options
+		 */
+		stateRestore?: Partial<Config>;
+	}
+
 	interface Defaults {
 		/**
 		 * StateRestore extension defaults
@@ -85,11 +92,17 @@ export interface Settings {
 	/** DataTables API to the table this States instance manages */
 	dt: Api;
 
+	/** Flag to indicate when async loading is happening */
+	loading: boolean;
+
 	/** States that have been stored and saved by this instance */
 	store: Array<State>;
 
 	/** Remote storage API */
 	storage: Storage;
+
+	/** Callbacks to execute when states have been loaded */
+	whenLoaded: Array<() => void>;
 }
 
 export interface State {

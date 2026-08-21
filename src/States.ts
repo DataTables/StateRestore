@@ -148,6 +148,32 @@ export default class States {
 	}
 
 	/**
+	 * Get the default state
+	 *
+	 * @returns DataTables state object
+	 */
+	public getDefault(): DTState | null {
+		let state = this.s.store.find(s => s.isDefault);
+
+		return state ? state.state : null;
+	}
+
+	/**
+	 * Execute a function once the states have been loaded (allowing async
+	 * loading)
+	 *
+	 * @param cb Function to execute
+	 */
+	public loaded(cb: () => void) {
+		if (this.s.loading) {
+			this.s.whenLoaded.push(cb);
+		}
+		else {
+			cb();
+		}
+	}
+
+	/**
 	 * Update a state's properties
 	 *
 	 * @param state State object to update
@@ -246,8 +272,10 @@ export default class States {
 
 		this.s = {
 			dt: dt,
+			loading: false,
 			store: [],
-			storage: this.c.ajax ? storageAjax : storageLocal
+			storage: this.c.ajax ? storageAjax : storageLocal,
+			whenLoaded: []
 		};
 
 		this.classes = util.object.assignDeep({}, States.classes);
@@ -262,18 +290,29 @@ export default class States {
 		settings._states = this;
 
 		// Initial startup actions
-		this._init();
+		this._load();
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
 
-	private async _init() {
+	/**
+	 * Load states and execute callbacks from `loaded()` when done
+	 */
+	private async _load() {
+		this.s.loading = true;
+
 		// Get the initial states
 		let restore = await this.s.storage.read(this.s.dt);
 
 		this.s.store.push(...restore);
+
+		this.s.loading = false;
+
+		// Execute callbacks
+		this.s.whenLoaded.forEach(w => w());
+		this.s.whenLoaded.length = 0;
 	}
 
 	/**
@@ -452,7 +491,7 @@ export default class States {
 		let nameError = nameInput
 			.parent()
 			.find('div.' + this.classes.field.error);
-		let defaultInput = body.find('input[name=defaults]');
+		let defaultInput = body.find('input[name=default]');
 		let shareInput = body.find('input[name=share]');
 
 		if (!nameInput.val()) {
@@ -473,6 +512,13 @@ export default class States {
 
 		if (defaultInput.length) {
 			state.isDefault = defaultInput.prop('checked') as boolean;
+
+			// If this is the default, no other state can be
+			if (state.isDefault) {
+				this.s.store
+					.filter(s => s !== state)
+					.forEach(s => (s.isDefault = false));
+			}
 		}
 
 		if (shareInput.length) {
