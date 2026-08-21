@@ -3,18 +3,18 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons">
+<js lib="datatables staterestore buttons">
 <![CDATA[
 
-$('#example').DataTable({
+new DataTable('#example', {
 	layout: {
 		topStart: {
 			buttons: [
 				{
-					extend: 'savedStates',
+					extend: 'states',
 					buttons: [
-						'createState',
-						'removeAllStates',
+						'stateCreate',
+						'statesRemoveAll',
 						{extend: 'spacer', style: 'bar'}
 					]
 				}
@@ -25,29 +25,6 @@ $('#example').DataTable({
 
 ]]>
 </js>
-
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'savedStates',
-					buttons: [
-						'createState',
-						'removeAllStates',
-						{extend: 'spacer', style: 'bar'}
-					]
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js-vanilla>
 
 <title lib="StateRestore">Alternative UI</title>
 

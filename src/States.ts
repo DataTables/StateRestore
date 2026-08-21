@@ -300,6 +300,11 @@ export default class States {
 			opts
 		);
 
+		// TODO default can only be available if `stateRestore` is in the
+		// initialisation options
+
+		// TODO share is only relevant if there is Ajax
+
 		this.s = {
 			dt: dt,
 			loading: false,

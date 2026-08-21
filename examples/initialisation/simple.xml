@@ -9,7 +9,7 @@
 new DataTable('#example', {
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates', 'pageLength']
+			buttons: ['stateCreate', 'states', 'pageLength']
 		}
 	},
 	stateRestore: true
