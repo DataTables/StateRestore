@@ -2,7 +2,7 @@ import DataTable, {
 	Api,
 	Context,
 	Dom,
-	State as DTState,
+	StateLoad as DTState,
 	util
 } from 'datatables.net';
 import { Checkbox, Classes, Defaults, Settings, State } from './interface';
@@ -156,6 +156,36 @@ export default class States {
 		let state = this.s.store.find(s => s.isDefault);
 
 		return state ? state.state : null;
+	}
+
+	/**
+	 * Check if a state is currently displayed. Note that a state is considered
+	 * to be active if its properties match those for the current state, however
+	 * it is not bidirectional - a current state could have additional
+	 * properties added to it (e.g. a new extension added) and they would not
+	 * be checked.
+	 *
+	 * @param state The state object to check
+	 */
+	public isCurrent(state: DTState) {
+		// DataTables caches this, so it isn't an expensive call
+		let currentState = this.s.dt.state();
+		let keys = Object.keys(state);
+
+		for (let i = 0; i < keys.length; i++) {
+			let key = keys[i];
+
+			// Ignore time
+			if (key === 'time') {
+				continue;
+			}
+
+			if (!this._isEqual(state[key], currentState[key])) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -398,6 +428,82 @@ export default class States {
 	}
 
 	/**
+	 * Check values to see if they are equal
+	 *
+	 * @param a First value
+	 * @param b Second value
+	 * @returns true if equal, false otherwise
+	 */
+	private _isEqual(a: any, b: any) {
+		// Handles primitives, identical references, and NaN === NaN
+		if (Object.is(a, b)) {
+			return true;
+		}
+
+		// If either isn't an object (or is null), they aren't equal
+		if (
+			typeof a !== 'object' ||
+			a === null ||
+			typeof b !== 'object' ||
+			b === null
+		) {
+			return false;
+		}
+
+		// Ensure both are arrays or both are standard objects
+		if (Array.isArray(a) !== Array.isArray(b)) {
+			return false;
+		}
+
+		const keysA = Object.keys(a);
+		const keysB = Object.keys(b);
+
+		// Mismatched number of keys or array elements
+		if (keysA.length !== keysB.length) {
+			return false;
+		}
+
+		// Recursively compare each key/value pair
+		for (const key of keysA) {
+			if (
+				!Object.prototype.hasOwnProperty.call(b, key) ||
+				!this._isEqual(a[key], b[key])
+			) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Determine the default name for the next state (used when creating a new
+	 * state).
+	 *
+	 * @returns New name
+	 */
+	private _nextName(): string {
+		let matcher = new RegExp(
+			'^' + this.c.newName.replace('#', '(\\d?)') + '$'
+		);
+		let found: number[] = [];
+
+		this.s.store.forEach(state => {
+			let match = state.name.match(matcher);
+
+			if (match && match[1]) {
+				found.push(parseInt(match[1]));
+			}
+		});
+
+		found.sort((a, b) => b - a);
+
+		let next = !found.length ? '1' : (found[0] + 1).toString();
+
+		return this.c.newName.replace('#', next);
+	}
+
+	/**
 	 * Show a modal to get the user's options for this state
 	 */
 	private _stateUserInput(
@@ -543,32 +649,5 @@ export default class States {
 		}
 
 		cb(state);
-	}
-
-	/**
-	 * Determine the default name for the next state (used when creating a new
-	 * state).
-	 *
-	 * @returns New name
-	 */
-	private _nextName(): string {
-		let matcher = new RegExp(
-			'^' + this.c.newName.replace('#', '(\\d?)') + '$'
-		);
-		let found: number[] = [];
-
-		this.s.store.forEach(state => {
-			let match = state.name.match(matcher);
-
-			if (match && match[1]) {
-				found.push(parseInt(match[1]));
-			}
-		});
-
-		found.sort((a, b) => b - a);
-
-		let next = !found.length ? '1' : (found[0] + 1).toString();
-
-		return this.c.newName.replace('#', next);
 	}
 }

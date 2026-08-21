@@ -1,4 +1,4 @@
-import { Api, State as DTState } from 'datatables.net';
+import { Api, StateLoad as DTState } from 'datatables.net';
 import States from './States';
 import { ManipulatorOptions } from './manipulators';
 

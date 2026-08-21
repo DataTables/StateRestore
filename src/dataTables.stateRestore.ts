@@ -1,6 +1,8 @@
 import DataTable, { Api, Dom, Options, util } from 'datatables.net';
 import States from './States';
 
+let buttonCounter = 0;
+
 DataTable.ext.buttons.createState = {
 	action(e: Event, dt: Api, node: Dom, config: any) {
 		let states: States = dt.settings()[0]._states;
@@ -22,6 +24,8 @@ DataTable.ext.buttons.savedStates = {
 	action(e: Event, dt: any, node: Dom, config, cb) {
 		let states: States = dt.settings()[0]._states;
 		let buttons = states.store().map(state => {
+			let namespace = '.dtst-' + buttonCounter++;
+
 			return {
 				action: (e, dt) => {
 					dt.state(state.state).draw(false);
@@ -41,6 +45,19 @@ DataTable.ext.buttons.savedStates = {
 						}
 					}
 				],
+				init: function (dt) {
+					// This is only really needed for a change of state when the
+					// dropdown is open, since the dropdown redraws every time
+					// it is displayed.
+					dt.on('draw' + namespace, () => {
+						this.active(states.isCurrent(state.state));
+					});
+
+					this.active(states.isCurrent(state.state));
+				},
+				destroy: function (dt) {
+					dt.off('draw' + namespace);
+				},
 				text: util.escapeHtml(state.name)
 			};
 		});
@@ -76,7 +93,7 @@ Dom.s(document).on('options.dt.stateRestore', function (e, init: Options) {
 
 		init.stateSave = true;
 		init.stateLoadCallback = (ctx, cb) => {
-			let controller = ctx._states as States || new States(ctx);
+			let controller = (ctx._states as States) || new States(ctx);
 
 			// stateLoadCallback uses the callback if the return from its
 			// function is undefined, but it doesn't accept a Promise
@@ -94,7 +111,7 @@ Dom.s(document).on('options.dt.stateRestore', function (e, init: Options) {
 
 			// Restore state saving feature to dev's selection.
 			ctx.features.stateSave = initialValue;
-		}
+		};
 	}
 });
 
