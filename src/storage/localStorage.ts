@@ -77,12 +77,15 @@ const local: Storage = {
 		return true;
 	},
 
-	remove: async function (dt, state, states) {
-		let store = states.store();
-		let idx = store.indexOf(state);
+	remove: async function (dt, states, host) {
+		let store = host.store();
 
-		if (idx !== -1) {
-			store.splice(idx, 1);
+		for (let i=0 ; i<states.length ; i++) {
+			let idx = store.indexOf(states[i]);
+
+			if (idx !== -1) {
+				store.splice(idx, 1);
+			}
 		}
 
 		localStorage.setItem(localStorageName(dt), JSON.stringify(store));

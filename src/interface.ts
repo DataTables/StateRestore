@@ -143,28 +143,28 @@ export interface Storage {
 	 *
 	 * @param dt Host DataTable
 	 * @param state New state
-	 * @param states States object
+	 * @param host States object
 	 * @returns True if everything is okay, false if not.
 	 */
-	create: (dt: Api, state: State, states: States) => Promise<boolean>;
+	create: (dt: Api, state: State, host: States) => Promise<boolean>;
 
 	/**
 	 * Update an existing state
 	 *
 	 * @param dt Host DataTable
 	 * @param state Updated state
-	 * @param states States object
+	 * @param host States object
 	 * @returns True if everything is okay, false if not.
 	 */
-	update: (dt: Api, state: State, states: States) => Promise<boolean>;
+	update: (dt: Api, state: State, host: States) => Promise<boolean>;
 
 	/**
 	 * Delete an existing state
 	 *
 	 * @param dt Host DataTable
-	 * @param state State to remove
-	 * @param states States object
+	 * @param states States to remove
+	 * @param host States object
 	 * @returns True if everything is okay, false if not.
 	 */
-	remove: (dt: Api, state: State, states: States) => Promise<boolean>;
+	remove: (dt: Api, states: State[], host: States) => Promise<boolean>;
 }

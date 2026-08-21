@@ -21,7 +21,13 @@ DataTable.ext.buttons.stateCreate = {
 
 DataTable.ext.buttons.statesRemoveAll = {
 	action(e: Event, dt: Api, node: Dom, config: any) {
-		// TODO
+		let ctx = dt.settings()[0];
+		let states = ctx._states;
+
+		// Get all owned states
+		let myStates = states.store().filter(s => !s.isSharedIn);
+
+		states.remove(myStates);
 	},
 	init(dt: Api, node: Dom, config: any) {
 		let ctx = dt.settings()[0];
@@ -29,8 +35,15 @@ DataTable.ext.buttons.statesRemoveAll = {
 		if (!ctx._states) {
 			new States(dt);
 		}
+
+		let states = ctx._states;
+
+		dt.on('stateRestore', () => {
+			this.enable(states.store().length > 0);
+		});
+
+		this.enable(states.store().length > 0);
 	},
-	// TODO update activation based on the number of states. Custom event
 	text: dt =>
 		dt.i18n('stateRestore.button.statesRemoveAll', 'Remove All States')
 };

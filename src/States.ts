@@ -141,6 +141,8 @@ export default class States {
 				);
 
 				if (result) {
+					this.s.dt.trigger('stateRestore', ['create', state]);
+
 					States.modalClose();
 				}
 			}
@@ -226,6 +228,8 @@ export default class States {
 					);
 
 					if (result) {
+						this.s.dt.trigger('stateRestore', ['update', state]);
+
 						States.modalClose();
 					}
 				}
@@ -236,12 +240,12 @@ export default class States {
 	/**
 	 * Remove a state from the store
 	 *
-	 * @param state State object to remove
+	 * @param state State object(s) to remove
 	 */
-	public remove(state: State) {
-		let idx = this.s.store.indexOf(state);
+	public remove(stateIn: State | State[]) {
+		let states = Array.isArray(stateIn) ? stateIn : [stateIn];
 
-		if (idx === -1) {
+		if (states.length === 0) {
 			return;
 		}
 
@@ -250,13 +254,18 @@ export default class States {
 			.text(
 				this.s.dt.i18n(
 					'stateRestore.message.remove',
-					'Are you sure you wish to remove the following state:'
+					{
+						_: 'Are you sure you wish to remove the following states:',
+						1: 'Are you sure you wish to remove the following state:'
+					},
+					states.length
 				)
 			);
+		let ul = Dom.c('ul').appendTo(body);
 
-		Dom.c('ul')
-			.appendTo(body)
-			.append(Dom.c('li').text(this.s.store[idx].name));
+		states.forEach(s => {
+			ul.append(Dom.c('li').text(s.name));
+		});
 
 		States.modal(
 			this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
@@ -265,11 +274,13 @@ export default class States {
 			async () => {
 				let result = await this.s.storage.remove(
 					this.s.dt,
-					state,
+					states,
 					this
 				);
 
 				if (result) {
+					this.s.dt.trigger('stateRestore', ['remove']);
+
 					States.modalClose();
 				}
 			}
@@ -300,10 +311,18 @@ export default class States {
 			opts
 		);
 
-		// TODO default can only be available if `stateRestore` is in the
-		// initialisation options
+		// Defaults can only be used if `stateRestore` is in the initialisation
+		// options (as that will add the state loader - it won't work without
+		// it!)
+		if (! opts) {
+			this.c.defaults = false;
+		}
 
-		// TODO share is only relevant if there is Ajax
+		// Sharing is only relevant if there is Ajax, since otherwise there is
+		// no way to states!
+		if (!this.c.ajax) {
+			this.c.sharing = false;
+		}
 
 		this.s = {
 			dt: dt,
@@ -344,6 +363,8 @@ export default class States {
 		this.s.store.push(...restore);
 
 		this.s.loading = false;
+
+		this.s.dt.trigger('stateRestore', ['loaded']);
 
 		// Execute callbacks
 		this.s.whenLoaded.forEach(w => w());
