@@ -57,13 +57,13 @@ DataTable.ext.buttons.states = {
 		if (config.buttons && config.buttons.length) {
 			config.buttons.forEach(btn => buttons.push(btn));
 		}
-		
+
 		if (states.store().length) {
 			states.store().forEach(state => {
 				let namespace = '.dtst-' + buttonCounter++;
 				let splits = [];
 
-				if (! state.isSharedIn) {
+				if (!state.isSharedIn) {
 					// Edit and delete actions available for buttons which are
 					// owned by this user only.
 					splits.push({
@@ -81,7 +81,21 @@ DataTable.ext.buttons.states = {
 					});
 				}
 				else {
-					// TODO Duplicate button?
+					// If the state is shared in, then we can't edit it, but we
+					// do allow it to be copied so that it can then be edited
+					splits.push({
+						text: dt.i18n('stateRestore.button.duplicate', 'Copy'),
+						action: () => {
+							states.add(
+								state.state,
+								state.name +
+									dt.i18n(
+										'stateRestore.copyName',
+										' (copy)'
+									)
+							);
+						}
+					});
 				}
 
 				buttons.push({

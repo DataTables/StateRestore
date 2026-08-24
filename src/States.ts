@@ -121,8 +121,11 @@ export default class States {
 	 * (this will most likely come from `table.state()`), showing a modal to
 	 * allow customisation of it (name and which properties to include), then
 	 * eventually adding it to the collection.
+	 *
+	 * @param state DataTables state to save
+	 * @param name New name
 	 */
-	public add(state: DTState) {
+	public add(state: DTState, newName: string | null = null) {
 		this._stateUserInput(
 			this.s.dt.i18n('stateRestore.title.create', 'Save new state'),
 			{
@@ -130,7 +133,7 @@ export default class States {
 				isDefault: false,
 				isSharedIn: false,
 				isSharedOut: false,
-				name: this._nextName(),
+				name: newName || this._nextName(),
 				state: state
 			},
 			async state => {
