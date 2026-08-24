@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="4">
+<dt-example table-type="ajax" table-class="display nowrap" order="4">
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="datatables staterestore buttons">
+<js lib="datatables buttons staterestore">
 <![CDATA[
 
 new DataTable('#example', {
-	ajax: {
-		url: '../data/2500States.txt'
-	},
+	ajax: '../data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{ data: 'salary' }
+	],
 	layout: {
 		topStart: {
 			buttons: ['stateCreate', 'statesList', 'pageLength']
 		}
-	}
+	},
+    stateRestore: true
 });
 
 ]]>
@@ -24,9 +31,11 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example shows how predefined states can be supplied using the StateRestore extension. The state present under the `Saved States` button contains a predefined state that will scroll the table and apply an order to the third column.
+We've already seen [how to provide prepopulated states](./predefined.html) on the client-side, but it is also possible to have the states list populate from the Ajax request DataTables makes when the `-init ajax` option is set.
 
-Renaming, updating and removing this state could all be disabled using the `rename`, `save` and `remove` options of the `-type stateRestoreConfig` configuration object. Because it is built into the ajax data that is sent initially, the state will always be present on a new page load, even if it has been removed previously.
+To do this, in the object returned by the server include a `stateRestore` object which should be an array with `-type StateRestore.Predefined` objects in it.
+
+In this case, two simple states are added automatically to the list of states, and the end user can select from these as they need.
 
 ]]></info>
 

@@ -5,7 +5,7 @@ import DataTable, {
 	StateLoad as DTState,
 	util
 } from 'datatables.net';
-import { Checkbox, Classes, Defaults, Settings, State } from './interface';
+import { Checkbox, Classes, Defaults, PreDefined, Settings, State } from './interface';
 import stateManipulators from './manipulators';
 import storageAjax from './storage/ajax';
 import storageLocal from './storage/localStorage';
@@ -81,6 +81,8 @@ export default class States {
 			.on('click', () => {
 				States.modalClose();
 			});
+
+		// TODO keyboard events for return key in an input and esc to exit
 
 		modal
 			.append(
@@ -209,22 +211,8 @@ export default class States {
 	public isCurrent(state: DTState) {
 		// DataTables caches this, so it isn't an expensive call
 		let currentState = this.s.dt.state();
-		let keys = Object.keys(state);
 
-		for (let i = 0; i < keys.length; i++) {
-			let key = keys[i];
-
-			// Ignore time
-			if (key === 'time') {
-				continue;
-			}
-
-			if (!this._isEqual(state[key], currentState[key])) {
-				return false;
-			}
-		}
-
-		return true;
+		return this._isEqual(state, currentState);
 	}
 
 	/**
@@ -386,10 +374,12 @@ export default class States {
 		settings._states = this;
 
 		// Add predefined states to the list
-		// TODO should accept an object for legacy support
-		// TODO need an `xhr` listener for look for a stateRestore object
-		this.c.preDefined.forEach(s => {
-			this.add(s.state, s.name, true, s.isDefault || false);
+		this._addPredefined(this.c.preDefined);
+
+		this.s.dt.on('xhr.dtsr', (e, s, json) => {
+			if (json && json.stateRestore) {
+				this._addPredefined(json.stateRestore);
+			}
 		});
 
 		// Initial startup actions
@@ -399,6 +389,25 @@ export default class States {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
+
+	/**
+	 * Add predefined states to the list
+	 *
+	 * @param predefined Array of states, or object of states
+	 */
+	private async _addPredefined(predefined: PreDefined[] | Record<string, DTState>) {
+		if (Array.isArray(predefined)) {
+			predefined.forEach(s => {
+				this.add(s.state, s.name, true, s.isDefault || false);
+			});
+		}
+		else {
+			// Legacy support - v1 used objects keyed by the state name
+			Object.keys(predefined).forEach(k => {
+				this.add(predefined[k], k, true, false);
+			});
+		}
+	}
 
 	/**
 	 * Load states and execute callbacks from `loaded()` when done
@@ -531,12 +540,6 @@ export default class States {
 		}
 
 		const keysA = Object.keys(a);
-		const keysB = Object.keys(b);
-
-		// Mismatched number of keys or array elements
-		if (keysA.length !== keysB.length) {
-			return false;
-		}
 
 		// Recursively compare each key/value pair
 		for (const key of keysA) {

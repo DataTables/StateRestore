@@ -48,12 +48,16 @@ new DataTable('#example', {
 ]]>
 </js>
 
-<title lib="StateRestore">Predefined States - No creation</title>
+<title lib="StateRestore">Predefined states - No creation</title>
 
 <info><![CDATA[
-This example shows how predefined states can be supplied using the StateRestore extension. The state present under the `Saved States` button contains a predefined state that will scroll the table and apply an order to the third column.
 
-Renaming, updating and removing this state are all disabled using the `rename`, `save` and `remove` options of the `-type stateRestoreConfig` configuration object. This means that there is no reason for the state to be a split button. It is instead just a normal button that provides solely a load function. Because it is built into the ajax data that is sent initially, the state will always be present on a new page load.
+We've seen in [a previous example](./predefined.html) how states can be defined by the developer implementing the table, so the end user immediately has states available to them. This can be really useful for complex data sets to allow different "views" into the table. There might be times where those are the only states you want to present though - i.e. no option for the end user to create their own states.
+
+This example demonstrates how that can be done. First note that there is no `-button stateCreate` button, and furthermore notice that `-init stateRestore canCreate` is set in the initialisation object. This ensures that the sub-button allowing the user to duplicate the state and then customise it is not available.
+
+This example provides two simple states that change the columns that are visible in the table.
+
 ]]></info>
 
 </dt-example>
