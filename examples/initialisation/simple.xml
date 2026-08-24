@@ -3,13 +3,13 @@
 
 <css lib="datatables buttons staterestore"/>
 
-<js lib="datatables staterestore buttons">
+<js lib="datatables buttons staterestore">
 <![CDATA[
 
 new DataTable('#example', {
 	layout: {
 		topStart: {
-			buttons: ['stateCreate', 'states', 'pageLength']
+			buttons: ['stateCreate', 'statesList', 'pageLength']
 		}
 	},
 	stateRestore: true
@@ -22,11 +22,9 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This is the StateRestore extension for DataTables.
+The StateRestore extension for DataTables provides a library and UI to let an end user create a list of table states, which they can then apply to the table with a simple click, or set a default state for when the table is loaded. Such functionality is useful when working with complex data and you have a set of search terms that you frequently apply - StateRestore makes it possible to jump between states with just a couple of clicks.
 
-It provides a collection of buttons that allow DataTables states to be stored and restored at any point. Pressing the _Create State_ button will create a new state. This can then be accessed under the _Saved States_ button. Here the state can be loaded into the table, updated, removed or renamed.
-
-There is no limit on the number of states that can be stored within StateRestore.
+In this simple example, you will see that `-init stateRestore` is used to initialise StateRestore with its default configuration, and the `-button stateCreate` and `-button statesList` buttons are used to let an end user create a new state from the state a table is in, and also provide a button to list the saved states.
 
 ]]></info>
 

@@ -11,7 +11,7 @@ new DataTable('#example', {
 		topStart: {
 			buttons: [
 				{
-					extend: 'states',
+					extend: 'statesList',
 					buttons: [
 						'stateCreate',
 						'statesRemoveAll',
@@ -20,21 +20,24 @@ new DataTable('#example', {
 				}
 			]
 		}
-	}
+	},
+	stateRestore: true
 });
 
 ]]>
 </js>
 
-<title lib="StateRestore">Alternative UI</title>
+<title lib="StateRestore">Combined dropdown</title>
 
 <info><![CDATA[
 
-This example shows how StateRestore can be initialised using a single button.
+In the [previous example](./simple.html), we've seen how StateRestore can be setup with independent buttons for creating a new state and listing saved states. In this example, we demonstrate the ability to add extra buttons into the states list by using its `buttons` property.
 
-Here the `-button savedStates` `-init buttons.buttons` option is used to add the `-button createState` and the `-button removeAllStates` buttons to the collection. This reduces the amount of buttons that are initially displayed to the used and compartmentalises StateRestore nicely.
+Specifically, `-button statesList` provides a `buttons` property which is an array of other buttons. You could use any other button here, including the export buttons, but it makes sense to keep the state control buttons together!
 
-You can add any buttons that you wish to display to this property, it works in the same way as it would for any other buttons collection.
+In this case, the create state button (`-button stateCreate`) is moved into the dropdown, and a button to remove all current states (`-button statesRemoveAll`) is introduced. A spacer button then follows to separate the control buttons from the state buttons.
+
+You'll be able to see how you can customise the UI to suit your needs in this way. For example, if you don't want to provide an option to delete all saved states, just remove that button.
 
 ]]></info>
 

@@ -32,6 +32,7 @@ export default class States {
 
 	public static defaults: Defaults = {
 		ajax: null,
+		canCreate: true,
 		defaults: true,
 		include: {
 			cardView: true,
@@ -49,7 +50,8 @@ export default class States {
 		},
 		name: null,
 		newName: 'State #',
-		sharing: true
+		sharing: true,
+		preDefined: []
 	};
 
 	public static modalClose() {
@@ -125,31 +127,63 @@ export default class States {
 	 * @param state DataTables state to save
 	 * @param name New name
 	 */
-	public add(state: DTState, newName: string | null = null) {
-		this._stateUserInput(
-			this.s.dt.i18n('stateRestore.title.create', 'Save new state'),
-			{
+	public add(
+		state: DTState,
+		newName: string | null = null,
+		isStatic = false,
+		isDefault = false
+	) {
+		if (isStatic) {
+			this.s.store.push({
 				id: null,
-				isDefault: false,
+				isDefault,
 				isSharedIn: false,
 				isSharedOut: false,
+				isStatic,
 				name: newName || this._nextName(),
-				state: state
-			},
-			async state => {
-				let result = await this.s.storage.create(
-					this.s.dt,
-					state,
-					this
-				);
-
-				if (result) {
-					this.s.dt.trigger('stateRestore', ['create', state]);
-
-					States.modalClose();
-				}
+				state
+			})
+		}
+		else {
+			if (! this.c.canCreate) {
+				return;
 			}
-		);
+
+			this._stateUserInput(
+				this.s.dt.i18n('stateRestore.title.create', 'Save new state'),
+				{
+					id: null,
+					isDefault,
+					isSharedIn: false,
+					isSharedOut: false,
+					isStatic,
+					name: newName || this._nextName(),
+					state
+				},
+				async state => {
+					let result = await this.s.storage.create(
+						this.s.dt,
+						state,
+						this
+					);
+
+					if (result) {
+						this.s.dt.trigger('stateRestore', ['create', state]);
+
+						States.modalClose();
+					}
+				}
+			);
+		}
+	}
+
+	/**
+	 * Is an end user allowed to create a new state?
+	 *
+	 * @returns Flag
+	 */
+	public canCreate() {
+		return this.c.canCreate;
 	}
 
 	/**
@@ -293,10 +327,15 @@ export default class States {
 	/**
 	 * Get the states stored for this table / instance
 	 *
+	 * @param includeStatics Indicate if static states should be included or not
 	 * @returns Array of states
 	 */
-	public store() {
-		return this.s.store;
+	public store(includeStatics= false) {
+		if (includeStatics) {
+			return this.s.store;
+		}
+		
+		return this.s.store.filter(s => !s.isStatic);
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -317,7 +356,7 @@ export default class States {
 		// Defaults can only be used if `stateRestore` is in the initialisation
 		// options (as that will add the state loader - it won't work without
 		// it!)
-		if (! opts) {
+		if (!opts) {
 			this.c.defaults = false;
 		}
 
@@ -345,6 +384,13 @@ export default class States {
 		}
 
 		settings._states = this;
+
+		// Add predefined states to the list
+		// TODO should accept an object for legacy support
+		// TODO need an `xhr` listener for look for a stateRestore object
+		this.c.preDefined.forEach(s => {
+			this.add(s.state, s.name, true, s.isDefault || false);
+		});
 
 		// Initial startup actions
 		this._load();

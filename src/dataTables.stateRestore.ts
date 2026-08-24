@@ -15,6 +15,10 @@ DataTable.ext.buttons.stateCreate = {
 		if (!ctx._states) {
 			new States(dt);
 		}
+
+		if (! ctx._states.canCreate()) {
+			this.disable();
+		}
 	},
 	text: dt => dt.i18n('stateRestore.button.createState', 'Create New State')
 };
@@ -48,7 +52,7 @@ DataTable.ext.buttons.statesRemoveAll = {
 		dt.i18n('stateRestore.button.statesRemoveAll', 'Remove All States')
 };
 
-DataTable.ext.buttons.states = {
+DataTable.ext.buttons.statesList = {
 	extend: 'collection',
 	action(e: Event, dt: any, node: Dom, config, cb) {
 		let states: States = dt.settings()[0]._states;
@@ -58,12 +62,13 @@ DataTable.ext.buttons.states = {
 			config.buttons.forEach(btn => buttons.push(btn));
 		}
 
-		if (states.store().length) {
-			states.store().forEach(state => {
+		if (states.store(true).length) {
+			states.store(true).forEach(state => {
 				let namespace = '.dtst-' + buttonCounter++;
 				let splits = [];
 
-				if (!state.isSharedIn) {
+				// Split buttons
+				if (!state.isSharedIn && !state.isStatic) {
 					// Edit and delete actions available for buttons which are
 					// owned by this user only.
 					splits.push({
@@ -81,21 +86,24 @@ DataTable.ext.buttons.states = {
 					});
 				}
 				else {
-					// If the state is shared in, then we can't edit it, but we
-					// do allow it to be copied so that it can then be edited
-					splits.push({
-						text: dt.i18n('stateRestore.button.duplicate', 'Copy'),
-						action: () => {
-							states.add(
-								state.state,
-								state.name +
-									dt.i18n(
-										'stateRestore.copyName',
-										' (copy)'
-									)
-							);
-						}
-					});
+					// If the state is shared in or static, then we can't edit
+					// it, but we do allow it to be copied so that it can then
+					// be edited
+					if (states.canCreate()) {
+						splits.push({
+							text: dt.i18n('stateRestore.button.duplicate', 'Copy'),
+							action: () => {
+								states.add(
+									state.state,
+									state.name +
+										dt.i18n(
+											'stateRestore.copyName',
+											' (copy)'
+										)
+								);
+							}
+						});
+					}
 				}
 
 				buttons.push({
@@ -146,7 +154,7 @@ DataTable.ext.buttons.states = {
 
 // Legacy aliases
 DataTable.ext.buttons.createState = DataTable.ext.buttons.stateCreate;
-DataTable.ext.buttons.savedStates = DataTable.ext.buttons.states;
+DataTable.ext.buttons.savedStates = DataTable.ext.buttons.statesList;
 DataTable.ext.buttons.removeAllStates = DataTable.ext.buttons.statesRemoveAll;
 
 // Attach a listener to the document which listens for DataTables initialisation

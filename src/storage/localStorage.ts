@@ -43,6 +43,7 @@ const local: Storage = {
 						isDefault: false,
 						isSharedIn: false,
 						isSharedOut: false,
+						isStatic: false,
 						name: key
 							.replace(/^DataTables_stateRestore_/, '')
 							.replace(location.pathname, ''),
@@ -68,11 +69,13 @@ const local: Storage = {
 	},
 
 	update: async function (dt, state, states) {
-		// The state is updated in place, so we can just store it
-		localStorage.setItem(
-			localStorageName(dt),
-			JSON.stringify(states.store())
-		);
+		if (!state.isStatic) {
+			// The state is updated in place, so we can just store it
+			localStorage.setItem(
+				localStorageName(dt),
+				JSON.stringify(states.store())
+			);
+		}
 
 		return true;
 	},
@@ -80,7 +83,11 @@ const local: Storage = {
 	remove: async function (dt, states, host) {
 		let store = host.store();
 
-		for (let i=0 ; i<states.length ; i++) {
+		for (let i = 0; i < states.length; i++) {
+			if (states[i].isStatic) {
+				continue;
+			}
+
 			let idx = store.indexOf(states[i]);
 
 			if (idx !== -1) {

@@ -1,94 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="4">
 
-<css lib="datatables buttons staterestore scroller"/>
+<css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons scroller">
+<js lib="datatables staterestore buttons">
 <![CDATA[
 
-$('#example').DataTable({
+new DataTable('#example', {
 	layout: {
 		topStart: {
-			buttons: [
-				'createState',
-				{
-					extend: 'savedStates',
-					config: {
-						preDefined: {
-							'Order Position, Search London, Hide Start date': {
-								order: [[1, 'asc']],
-								search: {
-									search: 'London',
-									smart: true,
-									regex: false,
-									caseInsensitive: true
-								},
-								columns: [
-									{ visible: true },
-									{ visible: true },
-									{ visible: true },
-									{ visible: true },
-									{ visible: false },
-									{ visible: true }
-								]
-							}
-						}
-					}
-				}
-			]
+			buttons: ['stateCreate', 'statesList', 'pageLength']
 		}
+	},
+	stateRestore: {
+		preDefined: [{
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']]
+			}
+		}, {
+			name: 'Search and order',
+			state: {
+				order: [[1, 'asc']],
+				search: {
+					search: 'London'
+				}
+			}
+		}]
 	}
 });
 
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	layout: {
-		topStart: {
-			buttons: [
-				'createState',
-				{
-					extend: 'savedStates',
-					config: {
-						preDefined: {
-							'Order Position, Search London, Hide Start date': {
-								order: [[1, 'asc']],
-								search: {
-									search: 'London',
-									smart: true,
-									regex: false,
-									caseInsensitive: true
-								},
-								columns: [
-									{ visible: true },
-									{ visible: true },
-									{ visible: true },
-									{ visible: true },
-									{ visible: false },
-									{ visible: true }
-								]
-							}
-						}
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">Predefined States</title>
+<title lib="StateRestore">Predefined states</title>
 
 <info><![CDATA[
-This example shows how predefined states can be supplied using the StateRestore extension. The state present under the `Saved States` button contains a predefined state that will apply an order to the second column, search for London and hide the 'Start date' column.
 
-Renaming, updating and removing this state could all be disabled using the `rename`, `save` and `remove` options of the `-type stateRestoreConfig` configuration object. Because it is built into the DataTable's initialisation, the state will always be present on a new page load, even if it has been removed previously.
+This example shows how predefined states can be supplied using the StateRestore extension and its `-init stateRestore.preDefined` option. With this you can create a set of useful states that are immediately accessible to the end user.
+
+In this case, the states present under the _Saved states_ button provide saved states for a filter, order and the two combined. The end user still has the ability to create their own states and can use the predefined states as the basis for their own.
+
 ]]></info>
 
 </dt-example>

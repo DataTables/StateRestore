@@ -48,6 +48,11 @@ export interface Defaults {
 	ajax: string | null;
 
 	/**
+	 * The end user is allowed to create new states
+	 */
+	canCreate: boolean;
+
+	/**
 	 * What values should be included in the states being saved. For each:
 	 *
 	 * * `true` means that it will be included
@@ -74,6 +79,8 @@ export interface Defaults {
 	 */
 	newName: string;
 
+	preDefined: PreDefined[];
+
 	/**
 	 * Indicate if states can be shared between users. Note that this requires
 	 * `ajax` to be specified for remote state storage.
@@ -84,6 +91,24 @@ export interface Defaults {
 	 * Allow the end user to set a default state
 	 */
 	defaults: boolean;
+}
+
+export interface PreDefined {
+	/**
+	 * Name to give the state
+	 */
+	name: string;
+
+	/**
+	 * State to load
+	 */
+	state: DTState;
+
+	/**
+	 * Indicate if the state should be the default one. Can be overridden by an
+	 * end user selecting to have one of their own states as the default.
+	 */
+	isDefault: boolean;
 }
 
 export interface Config extends Partial<Defaults> {}
@@ -106,11 +131,41 @@ export interface Settings {
 }
 
 export interface State {
+	/**
+	 * Unique ID for the state. Only needed for ajax.
+	 */
 	id: string | null;
+
+	/**
+	 * Indicator to say if the state is the default one.
+	 */
 	isDefault: boolean;
+
+	/**
+	 * Indicator to say if the state is owned by someone else
+	 */
 	isSharedIn: boolean;
+
+	/**
+	 * Indicator to say if this state is shared to other users
+	 */
 	isSharedOut: boolean;
+
+	/**
+	 * A static state is a predefined one - it cannot be edited or deleted as
+	 * it will simply be there on reload. However, it can be duplicated so the
+	 * client can have their own copy (if they wanted).
+	 */
+	isStatic: boolean;
+
+	/**
+	 * Name of the state
+	 */
 	name: string;
+
+	/**
+	 * The table static iself
+	 */
 	state: DTState;
 }
 
