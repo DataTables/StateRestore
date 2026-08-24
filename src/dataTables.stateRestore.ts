@@ -16,7 +16,7 @@ DataTable.ext.buttons.stateCreate = {
 			new States(dt);
 		}
 
-		if (! ctx._states.canCreate()) {
+		if (!ctx._states.canCreate()) {
 			this.disable();
 		}
 	},
@@ -91,7 +91,10 @@ DataTable.ext.buttons.statesList = {
 					// be edited
 					if (states.canCreate()) {
 						splits.push({
-							text: dt.i18n('stateRestore.button.duplicate', 'Copy'),
+							text: dt.i18n(
+								'stateRestore.button.duplicate',
+								'Copy'
+							),
 							action: () => {
 								states.add(
 									state.state,
@@ -192,6 +195,106 @@ Dom.s(document).on('options.dt.stateRestore', function (e, init: Options) {
 			// Restore state saving feature to dev's selection.
 			ctx.features.stateSave = initialValue;
 		};
+	}
+});
+
+/*
+ * DT API interface
+ */
+Api.register('stateRestore.activeStates()', function () {
+	let states = this.context[0]._states as States;
+
+	if (!states) {
+		return this;
+	}
+
+	return states.store().filter(s => states.isCurrent(s.state));
+});
+
+Api.register('stateRestore.state.add()', function (name) {
+	let states = this.context[0]._states as States;
+
+	if (states) {
+		states.add(this.state(), name, false, false);
+	}
+
+	return this;
+});
+
+Api.register('stateRestore.state()', function (id: string | number) {
+	let states = this.context[0]._states as States;
+
+	if (states) {
+		this.context[0]._stateSelected = states.store().find(s => id === s.id);
+	}
+
+	return this;
+});
+
+Api.register('stateRestore.state().details()', function () {
+	return this.context[0]._stateSelected || null;
+});
+
+Api.register('stateRestore.state().load()', function () {
+	let selected = this.context[0]._stateSelected;
+
+	if (selected) {
+		this.state(selected.state).draw(false);
+	}
+
+	return this;
+});
+
+Api.register('stateRestore.state().remove()', function (skipConfirm = false) {
+	let states = this.context[0]._states as States;
+	let selected = this.context[0]._stateSelected;
+
+	if (states && selected) {
+		states.remove(selected, skipConfirm);
+	}
+});
+
+Api.register('stateRestore.state().rename()', function (name: string) {
+	let selected = this.context[0]._stateSelected;
+
+	if (selected && name) {
+		selected.name = name;
+	}
+
+	return this;
+});
+
+Api.register('stateRestore.state().save()', function () {
+	let states = this.context[0]._states as States;
+	let selected = this.context[0]._stateSelected;
+
+	if (states && selected) {
+		// TODO
+	}
+});
+
+Api.register(
+	'stateRestore.states()',
+	function (idOrIds: string | number | Array<string | number>) {
+		let states = this.context[0]._states as States;
+		let ids = Array.isArray(idOrIds) ? idOrIds : [idOrIds];
+
+		if (states) {
+			this.context[0]._statesSelected = states
+				.store()
+				.filter(s => ids.includes(s.id));
+		}
+
+		return this;
+	}
+);
+
+Api.register('stateRestore.states().remove()', function (skipConfirm = false) {
+	let states = this.context[0]._states as States;
+	let selected = this.context[0]._statesSelected;
+
+	if (states && selected) {
+		states.remove(selected, skipConfirm);
 	}
 });
 

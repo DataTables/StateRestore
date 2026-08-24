@@ -142,10 +142,10 @@ export default class States {
 				isStatic,
 				name: newName || this._nextName(),
 				state
-			})
+			});
 		}
 		else {
-			if (! this.c.canCreate) {
+			if (!this.c.canCreate) {
 				return;
 			}
 
@@ -279,49 +279,53 @@ export default class States {
 	 *
 	 * @param state State object(s) to remove
 	 */
-	public remove(stateIn: State | State[]) {
+	public remove(stateIn: State | State[], skipConfirm = false) {
 		let states = Array.isArray(stateIn) ? stateIn : [stateIn];
 
 		if (states.length === 0) {
 			return;
 		}
-
-		let body = Dom.c('div')
-			.classAdd(this.classes.removeMessage)
-			.text(
-				this.s.dt.i18n(
-					'stateRestore.message.remove',
-					{
-						_: 'Are you sure you wish to remove the following states:',
-						1: 'Are you sure you wish to remove the following state:'
-					},
-					states.length
-				)
-			);
-		let ul = Dom.c('ul').appendTo(body);
-
-		states.forEach(s => {
-			ul.append(Dom.c('li').text(s.name));
-		});
-
-		States.modal(
-			this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
-			body,
-			this.s.dt.i18n('stateRestore.buttons.remove', 'Delete'),
-			async () => {
-				let result = await this.s.storage.remove(
-					this.s.dt,
-					states,
-					this
+		else if (skipConfirm) {
+			this.s.storage.remove(this.s.dt, states, this);
+		}
+		else {
+			let body = Dom.c('div')
+				.classAdd(this.classes.removeMessage)
+				.text(
+					this.s.dt.i18n(
+						'stateRestore.message.remove',
+						{
+							_: 'Are you sure you wish to remove the following states:',
+							1: 'Are you sure you wish to remove the following state:'
+						},
+						states.length
+					)
 				);
+			let ul = Dom.c('ul').appendTo(body);
 
-				if (result) {
-					this.s.dt.trigger('stateRestore', ['remove']);
+			states.forEach(s => {
+				ul.append(Dom.c('li').text(s.name));
+			});
 
-					States.modalClose();
+			States.modal(
+				this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
+				body,
+				this.s.dt.i18n('stateRestore.buttons.remove', 'Delete'),
+				async () => {
+					let result = await this.s.storage.remove(
+						this.s.dt,
+						states,
+						this
+					);
+
+					if (result) {
+						this.s.dt.trigger('stateRestore', ['remove']);
+
+						States.modalClose();
+					}
 				}
-			}
-		);
+			);
+		}
 	}
 
 	/**
@@ -330,11 +334,11 @@ export default class States {
 	 * @param includeStatics Indicate if static states should be included or not
 	 * @returns Array of states
 	 */
-	public store(includeStatics= false) {
+	public store(includeStatics = false) {
 		if (includeStatics) {
 			return this.s.store;
 		}
-		
+
 		return this.s.store.filter(s => !s.isStatic);
 	}
 

@@ -24,12 +24,103 @@ declare module 'datatables.net' {
 		_states: States;
 	}
 
+	interface Api<T> {
+		/**
+		 * StateRestore API Methods
+		 */
+		stateRestore: ApiStateRestore<T>;
+	}
+
 	interface DataTablesStatic {
 		/**
 		 * Responsive class
 		 */
 		StateRestore: typeof States;
 	}
+}
+
+interface ApiStateRestore<T> {
+	/**
+	 * Creates a new state, adding it to the collection.
+	 *
+	 * @param identifier The identifier that is to be used for the new state
+	 * @returns DataTables Api for chaining
+	 */
+	activeStates(): Api<State>;
+
+	state: StateRestoreState<T>
+
+	/**
+	 * Retrieves all of the states from the collection.
+	 *
+	 * @returns An array of the StateRestore instances, or further api methods
+	 *   that are applicable to multiple states.
+	 */
+	states(
+		identifier: string | number | Array<string | number>
+	): StateRestoreStatesMethods<T>;
+}
+
+interface StateRestoreState<T> {
+	/**
+	 * Retrieves a state from the collection.
+	 *
+	 * @param identifier The identifier of the state that is to be retrieved.
+	 * @returns StateRestore instance, or further api methods.
+	 */
+	(identifier: string | number): StateRestoreStateMethods<T>;
+
+	/**
+	 * Add a new state
+	 *
+	 * @param Name for the state
+	 * @returns DataTables Api for chaining
+	 */
+	add(name: string | number): Api<T>;
+}
+
+interface StateRestoreStateMethods<T> extends Api<T> {
+	/**
+	 * Get the state details object
+	 */
+	details(): State;
+
+	/**
+	 * Apply the selected state to the table
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	load(): Api<T>;
+
+	/**
+	 * Delete the selected state
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	remove(skipConfirm: boolean): Api<T>;
+
+	/**
+	 * Rename the selected state
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	rename(name: string): Api<T>;
+
+	/**
+	 * Save the table's current state into the selected state
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	save(): Api<T>;
+}
+
+interface StateRestoreStatesMethods<T> extends Api<T> {
+	/**
+	 * Delete all selected states
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	remove(): Api<T>;
 }
 
 export interface Classes {
@@ -132,9 +223,9 @@ export interface Settings {
 
 export interface State {
 	/**
-	 * Unique ID for the state. Only needed for ajax.
+	 * Unique ID for the state.
 	 */
-	id: string | null;
+	id: number | string | null;
 
 	/**
 	 * Indicator to say if the state is the default one.
