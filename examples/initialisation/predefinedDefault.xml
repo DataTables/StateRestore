@@ -26,6 +26,7 @@ new DataTable('#example', {
 				order: [[1, 'asc']]
 			}
 		}, {
+			isDefault: true,
 			name: 'Search and order',
 			state: {
 				order: [[5, 'asc']],
@@ -40,15 +41,13 @@ new DataTable('#example', {
 ]]>
 </js>
 
-<title lib="StateRestore">Predefined states</title>
+<title lib="StateRestore">Predefined states - default</title>
 
 <info><![CDATA[
 
-For complex data you might wish to help your end users out by pre-populating a set of states that they can either use as a template, or will be a common route into your table's data. This can be done with the `-init stateRestore.preDefined` option. It is an array that lists the states you want to provide.
+When you are adding [predefined states](./predefined.html), you might wish to make one of them the default state of the table when it is loaded. This is possible through the `isDefault` property of the `-type StateRestore.Predefined` objects in the `-init stateRestore.preDefined` array.
 
-It is worth noting that an end user cannot remove or edit a predefined state, but they can by default, duplicate it to then modify as they require.
-
-This example demonstrates three simple states that will populate the states.
+This example is identical to the simple predefined case, but here the _Search and order_ state is flagged as the default, and if you load the page (or reload), you'll see that this is the state that is applied to the table.
 
 ]]></info>
 

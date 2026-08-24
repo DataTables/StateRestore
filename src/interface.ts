@@ -170,7 +170,7 @@ export interface Defaults {
 	 */
 	newName: string;
 
-	preDefined: PreDefined[];
+	preDefined: PreDefined[] | Record<string, DTState>;
 
 	/**
 	 * Indicate if states can be shared between users. Note that this requires
@@ -255,7 +255,7 @@ export interface State {
 	name: string;
 
 	/**
-	 * The table static iself
+	 * The table static itself
 	 */
 	state: DTState;
 }
