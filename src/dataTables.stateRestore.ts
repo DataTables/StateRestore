@@ -219,17 +219,10 @@ Api.register('stateRestore.activeStates()', function () {
 		return this;
 	}
 
-	return states.storeGet().filter(s => states.isCurrent(s.state));
-});
-
-Api.register('stateRestore.state.add()', function (name) {
-	let states = this.context[0]._states as States;
-
-	if (states) {
-		states.add(this.state(), name, false, false);
-	}
-
-	return this;
+	return this.inst(
+		this.context,
+		states.storeGet().filter(s => states.isCurrent(s.state))
+	);
 });
 
 Api.register('stateRestore.state()', function (id: string | number) {
@@ -241,6 +234,16 @@ Api.register('stateRestore.state()', function (id: string | number) {
 	}
 
 	return inst;
+});
+
+Api.register('stateRestore.add()', function (name) {
+	let states = this.context[0]._states as States;
+
+	if (states) {
+		states.add(this.state(), name, false, false);
+	}
+
+	return this;
 });
 
 Api.register('stateRestore.state().details()', function () {
@@ -264,6 +267,13 @@ Api.register('stateRestore.state().remove()', function (skipConfirm = false) {
 	if (states && selected) {
 		states.remove(selected, skipConfirm);
 	}
+});
+
+Api.register('stateRestore.state().isActive()', function () {
+	let states = this.context[0]._states as States;
+	let selected = this._stateSelected;
+
+	return states && selected ? states.isCurrent(selected) : false;
 });
 
 Api.register('stateRestore.state().rename()', function (name: string) {
@@ -294,7 +304,7 @@ Api.register('stateRestore.state().edit()', function () {
 	return this;
 });
 
-Api.register('stateRestore.state().save()', function (skipModal = true) {
+Api.register('stateRestore.state().save()', function (skipModal = false) {
 	let states = this.context[0]._states as States;
 	let selected = this._stateSelected;
 

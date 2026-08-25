@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.state().details()</name>
+	<summary>Get the details about a state</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>stateRestore.state().details()</signature>
+		<description>Get the state details for the item selected.</description>
+		<returns type="StateRestore.State|null">An object containing details about the selected state. Can be `null` if no matching state was selected.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+
+At times you may wish to inspect the details of a particular state object. This method provides the ability to access the underlying state object used by StateRestore. They are of type `-type StateRestore.State` with all the properties defined there available in the object.
+
+Mutating the state object is not currently supported - don't write values to it as there is no API to tell StateRestore that they have changed. This object is considered to be _read-only_.
+
+	]]>
+	</description>
+
+	<related type="api">stateRestore.state()</related>
+	<related type="api">stateRestore.state().remove()</related>
+	<related type="api">stateRestore.state().rename()</related>
+	<related type="api">stateRestore.state().save()</related>
+</dt-api>

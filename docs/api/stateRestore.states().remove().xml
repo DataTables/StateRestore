@@ -6,37 +6,31 @@
 
 	<type type="function">
 		<signature>stateRestore.states().remove()</signature>
-        <parameter type="boolean" name="skipModal" default="false">Boolean value indicating if the confirmation modal should be skipped or not. The default value is `false` meaning that the modal will be shown.</parameter>
+        <parameter type="boolean" name="skipModal" default="false">
+			Boolean value indicating if the confirmation modal should be skipped or not. The default value is `false` meaning that the modal will be shown.
+		</parameter>
 		<description>Removes stored states from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
+		<returns type="DataTable.Api">Returns a DataTables API for chaining.</returns>
 	</type>
 
 	<description>
 	<![CDATA[
+
 This method provides the ability to remove multiple states that are managed by the StateRestore extension.
 
 `-api stateRestore.states().remove()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed for each state. The default value for `skipModal` is `false` meaning that the modal will be shown. It removes the states retrieved by the previous call to `-api stateRestore.states()`.
 
-A DataTables API instance is returned so that further chaining can occur.
+As with `-api stateRestore.state().remove()`, please note that predefined states (`-init stateRestore.preDefined`) cannot be removed, nor can states which have been shared by other users.
 
-If the `remove` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
-
 	</description>
 
-	<example title="Remove states called 'New State' and 'Old State'"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
+	<example title="Remove states two specific states"><![CDATA[
 
-table.stateRestore.states(['New State', 'Old State']).remove();
+table.stateRestore.states(['{id1}', '{id2}']).remove();
+
 ]]></example>
 
-<related type="api">stateRestore.states()</related>
-<related type="api">stateRestore.state().remove()</related>
-
+	<related type="api">stateRestore.states()</related>
+	<related type="api">stateRestore.state().remove()</related>
 </dt-api>

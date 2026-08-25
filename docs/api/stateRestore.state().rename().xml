@@ -5,40 +5,31 @@
 	<since>1.0.0</since>
 
 	<type type="function">
-		<signature>stateRestore.state().rename()</signature>
-        <parameter type="boolean" name="newIdentifier">The new name to be given to the state.</parameter>
-		<description>Renames a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
+		<signature>stateRestore.state().rename(name)</signature>
+        <parameter type="boolean" name="name">
+			The new name to be given to the state.
+		</parameter>
+		<description>
+			Renames a stored state from the StateRestore extension.
+		</description>
+		<returns type="DataTable.Api">Returns a DataTables API instance for chaining.</returns>
 	</type>
 
 	<description>
 	<![CDATA[
-This method provides the ability to rename a state that is managed by the StateRestore extension.
 
-`-api stateRestore.state().rename()` takes one argument, `newIdentifier` that is the new identifier for the selected state. It renames the state retrieved by the previous call to `-api stateRestore.state()`.
+This method is used to alter the name of a state. State names are shown in any list of states to allow the end user to identify the state.
 
-A DataTables API instance is returned so that further chaining can occur.
+When renaming a state with this method, there is no confirmation modal, or user input presented - the change is simply applied. To allow the end user to enter the state name, use `-api stateRestore.state().edit()`.
 
-If the `rename` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
-
 	</description>
 
-	<example title="Rename a state called 'New State'"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
+	<example title="Rename a state"><![CDATA[
+	
+table.stateRestore.state('{id}').rename('New Name');
 
-table.stateRestore.state('New State').rename('New Name');
 ]]></example>
 
-<related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.state().remove()</related>
-<related type="api">stateRestore.state().load()</related>
-<related type="api">stateRestore.state().save()</related>
-
+	<related type="api">stateRestore.state()</related>
 </dt-api>

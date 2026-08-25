@@ -6,22 +6,19 @@
 
 	<type type="function">
 		<signature>stateRestore.state().load()</signature>
-		<description>Loads a stored state from the StateRestore extension into the table.</description>
-		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
+		<description>Loads the selected state in the DataTable and draws it.</description>
+		<returns type="DataTable.Api">Returns a DataTables API instance for chaining.</returns>
 	</type>
 
 	<description>
 	<![CDATA[
-This method provides the ability to load a state that is managed by the StateRestore extension into the table.
 
-`-api stateRestore.state().load()` takes no arguments. It loads the state retrieved by the previous call to `-api stateRestore.state()`.
+Once you have states in StateRestore, you'll want to provide the end user with the ability to have the table re-take that state, so they can return to it when selected. This method provides that ability by taking the selected state, loading it into the table (`-api state()`) and then drawing the table.
 
-A DataTables API instance is returned so that further chaining can occur.
 	]]>
-
 	</description>
 
-	<example title="Load a state called 'New State'"><![CDATA[
+	<example title="Load a state"><![CDATA[
 var table = new DataTable('#myTable', {
 	layout: {
 		topStart: {
@@ -30,12 +27,10 @@ var table = new DataTable('#myTable', {
 	}
 });
 
-table.stateRestore.state('New State').load();
+table.stateRestore.state('{my-id}').load();
+
 ]]></example>
 
-<related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.state().remove()</related>
-<related type="api">stateRestore.state().rename()</related>
-<related type="api">stateRestore.state().save()</related>
-
+	<related type="api">stateRestore.state()</related>
+	<related type="api">state()</related>
 </dt-api>

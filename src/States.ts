@@ -220,8 +220,22 @@ export default class States {
 	public isCurrent(state: DTState) {
 		// DataTables caches this, so it isn't an expensive call
 		let currentState = this.s.dt.state();
+		let keys = Object.keys(state);
 
-		return this._isEqual(state, currentState);
+		for (let i = 0; i < keys.length; i++) {
+			let key = keys[i];
+
+			// Ignore time
+			if (key === 'time') {
+				continue;
+			}
+
+			if (!this._isEqual(state[key], currentState[key])) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

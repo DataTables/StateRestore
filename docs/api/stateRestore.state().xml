@@ -1,43 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-api library="StateRestore">
 	<name>stateRestore.state()</name>
-	<summary>Get a state from StateRestore</summary>
+	<summary>Select a saved state</summary>
 	<since>1.0.0</since>
 
 	<type type="function">
-		<signature>stateRestore.state()</signature>
-        <parameter type="string" name="identifier">The string that is used to identify this state.</parameter>
+		<signature>stateRestore.state(identifier)</signature>
 		<description>Retrieves a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API containing the desired state so that chaining can occur.</returns>
+        <parameter type="string" name="identifier">
+			The value that is used to identify a state. This will match the `id` property from `-type StateRestore.State`.
+		</parameter>
+		<returns type="DataTable.Api">
+			Returns a DataTables API instance containing the desired state so that chained methods can be used.
+		</returns>
 	</type>
 
 	<description>
 	<![CDATA[
+
 This method provides the ability to retrieve a state that is managed by the StateRestore extension.
 
-`-api stateRestore.state()` takes one argument, `identifier`. This string is used to identify the state throughout StateRestore.
+`-api stateRestore.state()` takes one argument, `identifier`. This string is used to identify the state throughout StateRestore and matches against the `id` property in `-type StateRestore.State`.
 
-A DataTables API instance is returned containing the state that is desired. This method will mainly be used for chaining. 
+The returned object is a DataTables API instance with methods available on it specifically for use to manage the selected state. Please see the related methods below.
+
 	]]>
 
 	</description>
 
-	<example title="Get a state called 'New State'"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
+	<example title="Get all states and then display their details on the console"><![CDATA[
+
+let ids = table.stateRestore.states().details().map(s => s.id);
+
+ids.forEach(id => {
+	console.log(table.stateRestore.state(id).details());
 });
 
-table.stateRestore.state('New State');
 ]]></example>
 
 <related type="api">stateRestore.states()</related>
+<related type="api">stateRestore.state().details()</related>
+<related type="api">stateRestore.state().isActive()</related>
 <related type="api">stateRestore.state().remove()</related>
 <related type="api">stateRestore.state().load()</related>
 <related type="api">stateRestore.state().rename()</related>
 <related type="api">stateRestore.state().save()</related>
+<related type="api">stateRestore.state().edit()</related>
 
 </dt-api>

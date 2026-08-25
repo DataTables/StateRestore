@@ -5,36 +5,37 @@
 	<since>1.0.0</since>
 
 	<type type="function">
-		<signature>stateRestore.state()</signature>
-        <parameter type="string[]" name="identifier">An array of strings that are used to identify the desired states.</parameter>
-		<description>Retrieves stored states from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API containing the desired states so that chaining can occur.</returns>
+		<signature>stateRestore.state(ids)</signature>
+        <parameter type="number|string|array" name="ids" default="">
+			An array of values that are used to identify the desired states. If no value is given, all states are selected.
+		</parameter>
+		<description>
+			Retrieves stored states from the StateRestore extension.
+		</description>
+		<returns type="DataTable.Api">
+			Returns a DataTables API instance for the states selected.
+		</returns>
 	</type>
 
 	<description>
 	<![CDATA[
-This method provides the ability to retrieve states that are managed by the StateRestore extension.
 
-`-api stateRestore.states()` takes one argument, `identifier`. This is an array of strings that are used to identify the states throughout StateRestore.
+This method provides the ability to selected states that are managed by the StateRestore extension for further manipulation by chained methods.
 
-A DataTables API instance is returned containing the states that are desired. This method will mainly be used for chaining. 
+The state selector is an array of values that will match against the `id` property of the `-type StateRestore.State` object. If no selector is provided, then all states will automatically be selected.
+
 	]]>
-
 	</description>
 
-	<example title="Get states called 'New State' and 'Old State'"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
+	<example title="Select two states by a given id"><![CDATA[
 
-table.stateRestore.states(['New State', 'Old State']);
+console.log(
+	table.stateRestore.states(['{id1}', '{id2}']).details().toArray();
+);
+
 ]]></example>
 
-<related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.states().remove()</related>
-
+	<related type="api">stateRestore.state()</related>
+	<related type="api">stateRestore.states().details()</related>
+	<related type="api">stateRestore.states().remove()</related>
 </dt-api>

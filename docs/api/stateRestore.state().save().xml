@@ -1,43 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-api library="StateRestore">
 	<name>stateRestore.state().save()</name>
-	<summary>Save a state from StateRestore</summary>
+	<summary>Replace the state with the currently active state</summary>
 	<since>1.0.0</since>
 
 	<type type="function">
-		<signature>stateRestore.state().save()</signature>
-		<description>Saves the current state into a stored state in the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
+		<signature>stateRestore.state().save(skipModal)</signature>
+		<description>
+			Saves the current state into a stored state in the StateRestore extension.
+		</description>
+        <parameter type="boolean" name="skipModal" default="false">
+			Boolean value indicating if the confirmation modal should be skipped or not. The default is `false` meaning that the modal will be shown.
+		</parameter>
+		<returns type="DataTable.Api">Returns a DataTables API instance for chaining.</returns>
 	</type>
 
 	<description>
 	<![CDATA[
-This method provides the ability to save a state that is managed by the StateRestore extension.
 
-`-api stateRestore.state().save()` takes no arguments. It saves the state retrieved by the previous call to `-api stateRestore.state()`.
+You might wish to offer the end user the ability to change the table state that is stored in a particular StateRestore state object. This method provides that ability (it might be more correctly called `stateRestore.state().replace()`, but the name is used for backwards compatibility).
 
-A DataTables API instance is returned so that further chaining can occur.
+This is very similar to `-api stateRestore.state().edit()`, but that method will mutate an existing state allowing the properties to be modified, but not to add any new information to the table state itself. This method provides that ability, replacing (completely) the saved state with the current table state.
 
-If the `save` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
-
 	</description>
 
-	<example title="Save a state called 'New State'"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
+	<example title="Update a state with the table's current state"><![CDATA[
 
-table.stateRestore.state('New State').save();
+table.stateRestore.state('{id}').save();
+
 ]]></example>
 
-<related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.state().remove()</related>
-<related type="api">stateRestore.state().load()</related>
-<related type="api">stateRestore.state().rename()</related>
-
+	<related type="api">stateRestore.state()</related>
+	<related type="api">stateRestore.state().edit()</related>
+	<related type="api">stateRestore.state().load()</related>
 </dt-api>

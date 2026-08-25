@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.state().edit()</name>
+	<summary>Update the properties of a state</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>stateRestore.state().edit()</signature>
+		<description>
+			Shows an editing modal to let the user update the properties of a state.
+		</description>
+		<returns type="DataTable.Api">Returns a DataTables API instance for chaining.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+
+This method provides the option of updating the properties of an existing state. A modal is shown with the properties of the state, including its name and if available sharing and default options. Furthermore, if the end user has the option of selecting which table properties are saved in the state (via the `-init stateRestore.include` property), they will have the option of removing them (but not adding new properties!).
+
+If you wish to offer the user the ability to update the state itself, use `-api stateRestore.state().save()`.
+
+	]]>
+	</description>
+
+	<example title="Trigger the edit modal for a state"><![CDATA[
+
+table.stateRestore.state('{id}').edit();
+
+]]></example>
+
+	<related type="api">stateRestore.state()</related>
+	<related type="api">stateRestore.state().load()</related>
+	<related type="api">stateRestore.state().save()</related>
+</dt-api>

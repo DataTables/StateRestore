@@ -48,7 +48,21 @@ interface ApiStateRestore<T> {
 	 */
 	activeStates(): Api<State>;
 
-	state: StateRestoreState<T>;
+	/**
+	 * Add a new state
+	 *
+	 * @param Name for the state
+	 * @returns DataTables Api for chaining
+	 */
+	add(name: string | number): Api<T>;
+
+	/**
+	 * Retrieves a state from the collection.
+	 *
+	 * @param identifier The identifier of the state that is to be retrieved.
+	 * @returns StateRestore instance, or further api methods.
+	 */
+	state(identifier: string | number): StateRestoreStateMethods<T>;
 
 	/**
 	 * Retrieves all of the states from the collection.
@@ -61,29 +75,23 @@ interface ApiStateRestore<T> {
 	): StateRestoreStatesMethods<T>;
 }
 
-interface StateRestoreState<T> {
-	/**
-	 * Retrieves a state from the collection.
-	 *
-	 * @param identifier The identifier of the state that is to be retrieved.
-	 * @returns StateRestore instance, or further api methods.
-	 */
-	(identifier: string | number): StateRestoreStateMethods<T>;
-
-	/**
-	 * Add a new state
-	 *
-	 * @param Name for the state
-	 * @returns DataTables Api for chaining
-	 */
-	add(name: string | number): Api<T>;
-}
-
 interface StateRestoreStateMethods<T> extends Api<T> {
 	/**
 	 * Get the state details object
 	 */
 	details(): State;
+
+	/**
+	 * Edit an existing state
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	edit(): Api<T>;
+
+	/**
+	 * Flag to indicate if a state is currently active or not
+	 */
+	isActive(): boolean;
 
 	/**
 	 * Apply the selected state to the table

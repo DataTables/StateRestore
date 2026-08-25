@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.state().isActive()</name>
+	<summary>Checks if the selected state is active.</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>stateRestore.state().isActive()</signature>
+		<description>Determines if the selected state is currently active or not.</description>
+		<returns type="boolean">`true` if the state is active, `false` otherwise.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+	
+When working with states, you might wish to know if a particular one is active. You can use `-api stateRestore.activeStates()` to get all currently active states, but if you are building a list of states for a custom UI, you might want to test each individual state. This method provides that ability.
+
+	]]>
+	</description>
+
+	<example title="List all states, and if they are active">
+	<![CDATA[
+
+table.stateRestore.states().details().forEach(state => {
+	if (table.stateRestore.state(state.id).isActive()) {
+		console.log(`State ${state.id} is ACTIVE`);
+	}
+	else {
+		console.log(`State ${state.id} is NOT active`);
+	}
+});
+
+	]]>
+	</example>
+
+	<related type="api">stateRestore.activeStates()</related>
+	<related type="api">stateRestore.state()</related>
+	<related type="api">stateRestore.state().remove()</related>
+	<related type="api">stateRestore.state().rename()</related>
+	<related type="api">stateRestore.state().save()</related>
+</dt-api>

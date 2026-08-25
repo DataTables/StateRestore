@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-event library="StateRestore">
+	<name>stateRestore</name>
+	<summary>Triggered when a state has been added, removed or changed.</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>function( e, action, state )</signature>
+		<parameter type="object" name="e">
+			Event object
+		</parameter>
+		<parameter type="string" name="action">
+			The action that has been performed. This can be one of `-string loaded`, `-string create`, `-string edit` or `-string remove`.
+		</parameter>
+		<parameter type="StateRestore.State" name="state">
+			The state object that has been updated (only provided for `create` and `edit` actions).
+		</parameter>
+		<scope>HTML table element</scope>
+	</type>
+
+	<description>
+	<![CDATA[
+
+This event is triggered whenever one of the following occurs to a state within StateRestore.
+
+* States are loaded
+* A new state is added
+* A state is updates.
+* A state is removed
+
+The event can be used to update any external control that you might have that shows the list of states manged by StateRestore. [See this example](//datatables.net/examples/statestore/initialisation/api.html) for a running test case.
+
+	]]>
+	</description>
+
+	<example title="Display a list of states, with control buttons for each"><![CDATA[
+
+const Dom = DataTable.Dom;
+const states = Dom.s('#states');
+
+// Create the DataTable - regular StateRestore buttons are included to show the interaction
+const table = new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: true
+});
+
+// List of states - updates based on the `stateRestore` event
+table.on('stateRestore', () => {
+	statesEl.empty();
+
+	table.stateRestore
+		.states()
+		.details()
+		.forEach(s => {
+			Dom.c('li')
+				.text(s.name)
+				.appendTo(statesEl);
+		});
+});
+
+]]></example>
+</dt-event>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-type library="StateRestore">
+	<name>StateRestore.State</name>
+	<summary>State storage object</summary>
+
+	<description>
+<![CDATA[
+
+StateRestore saved information about each state that it manages in an object of this type. The object can be retrieved using `-api stateRestore.state().details()` and `-api stateRestore.states().details()`, but please note that it is considered to be _read-only_. Any manipulation of the states should be done via the API.
+
+The TypeScript description for this object is:
+
+```js
+interface State {
+	/**
+	 * Unique ID for the state.
+	 */
+	id: number | string | null;
+
+	/**
+	 * Indicator to say if the state is the default one.
+	 */
+	isDefault: boolean;
+
+	/**
+	 * Indicator to say if the state is owned by someone else
+	 */
+	isSharedIn: boolean;
+
+	/**
+	 * Indicator to say if this state is shared to other users
+	 */
+	isSharedOut: boolean;
+
+	/**
+	 * A static state is a predefined one - it cannot be edited or deleted as
+	 * it will simply be there on reload. However, it can be duplicated so the
+	 * client can have their own copy (if they wanted).
+	 */
+	isStatic: boolean;
+
+	/**
+	 * Name of the state
+	 */
+	name: string;
+
+	/**
+	 * The table static itself
+	 */
+	state: DTState;
+}
+```
+
+The `id` property is particularly key as it is used to select states via the `-api stateRestore.state()` / `-api stateRestore.states()` methods.
+
+]]>
+	</description>
+</dt-type>

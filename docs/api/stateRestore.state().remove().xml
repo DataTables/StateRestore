@@ -1,57 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-api library="StateRestore">
 	<name>stateRestore.state().remove()</name>
-	<summary>Remove a state from StateRestore</summary>
+	<summary>Delete a state</summary>
 	<since>1.0.0</since>
 
 	<type type="function">
 		<signature>stateRestore.state().remove()</signature>
-        <parameter type="boolean" name="skipModal" default="false">Boolean value indicating if the confirmation modal should be skipped or not. The default is `false` meaning that the modal will be shown.</parameter>
-		<description>Removes a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API for chaining.</returns>
+		<description>Deletes the selected state.</description>
+        <parameter type="boolean" name="skipModal" default="false">
+			Boolean value indicating if the confirmation modal should be skipped or not. The default is `false` meaning that the modal will be shown. If set to `true` the state will be immediately deleted.
+		</parameter>
+		<returns type="DataTable.Api">Returns a DataTables API instance for chaining.</returns>
 	</type>
 
 	<description>
 	<![CDATA[
+
 This method provides the ability to remove a state that is managed by the StateRestore extension.
 
-`-api stateRestore.state().remove()` takes one argument, `skipModal` that allows the confirmation modal to be bypassed. The default for `skipModal` is `false`, meaning that the modal will be shown. It removes the state retrieved by the previous call to `-api stateRestore.state()`.
+`-api stateRestore.state().remove()` cam take a single argument, `skipModal` that allows the confirmation modal to be bypassed. The default for `skipModal` is `false`, meaning that the modal will be shown. It removes the state retrieved by the previous call to `-api stateRestore.state()`.
 
-A DataTables API instance is returned so that further chaining can occur.
+Note that predefined states (`-init stateRestore.preDefined`) cannot be removed, nor can states which have been shared by other users.
 
-If the `remove` option of the `-type stateRestoreConfig` configuration object is set to `false` then this API method will not do anything.
 	]]>
-
 	</description>
 
-	<example title="Remove a state called 'New State'"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
+	<example title="Remove a state, showing the confirmation modal"><![CDATA[
 
-table.stateRestore.state('New State').remove();
+table.stateRestore.state('{id}').remove();
+
 ]]></example>
 
-	<example title="Remove a state called 'New State', skipping the confirmation modal"><![CDATA[
-var table = new DataTable('#myTable', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
+	<example title="Remove a state, skipping the confirmation modal"><![CDATA[
 
-table.stateRestore.state('New State').remove(true);
+table.stateRestore.state('{id}').remove(true);
+
 ]]></example>
 
-<related type="api">stateRestore.state()</related>
-<related type="api">stateRestore.states().remove()</related>
-<related type="api">stateRestore.state().load()</related>
-<related type="api">stateRestore.state().rename()</related>
-<related type="api">stateRestore.state().save()</related>
-
+	<related type="api">stateRestore.state()</related>
+	<related type="api">stateRestore.states().remove()</related>
 </dt-api>

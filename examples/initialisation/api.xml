@@ -1,108 +1,115 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="2">
 
-<css lib="datatables buttons staterestore"/>
-
-<js lib="jquery datatables staterestore buttons">
+<css lib="datatables buttons staterestore">
 <![CDATA[
 
-var table = $('#example').DataTable({
+div.demo-html > button {
+	margin-bottom: 0.5em;
+}
+
+div.demo-html > ul button {
+	margin-left: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+]]>
+</css>
+
+<js lib="datatables buttons staterestore">
+<![CDATA[
+
+const Dom = DataTable.Dom;
+const states = Dom.s('#states');
+
+function populateStateList(table, statesEl) {
+	statesEl.empty();
+
+	table.stateRestore
+		.states()
+		.details()
+		.forEach(s => {
+			Dom.c('li')
+				.text(s.name)
+				.attr('data-state-id', s.id)
+				.append(Dom.c('button').classAdd('load').text('Load'))
+				.append(Dom.c('button').classAdd('edit').text('Edit'))
+				.append(Dom.c('button').classAdd('replace').text('Replace'))
+				.append(Dom.c('button').classAdd('remove').text('Remove'))
+				.appendTo(statesEl);
+		});
+}
+
+// Create the DataTable - regular StateRestore buttons are included to show the interaction
+const table = new DataTable('#example', {
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates']
+			buttons: ['stateCreate', 'statesList', 'pageLength']
 		}
-	}
+	},
+	stateRestore: true
 });
 
-$('#save').on('click', function () {
-	table.stateRestore.state($('#state-selector').val()).save();
+// List of states - updates based on the `stateRestore` event
+table.on('stateRestore', () => populateStateList(table, states));
+
+// Initial population
+populateStateList(table, states)
+
+// Event handlers
+Dom.s('#add').on('click', function () {
+	table.stateRestore.add();
 });
 
-$('#load').on('click', function () {
-	table.stateRestore.state($('#state-selector').val()).load();
-});
-
-$('#remove').on('click', function () {
-	table.stateRestore.state($('#state-selector').val()).remove();
-});
-
-$('#removeAll').on('click', function () {
+Dom.s('#deleteAll').on('click', function () {
 	table.stateRestore.states().remove();
 });
 
-$('#removeSkip').on('click', function () {
-	table.stateRestore.state($('#state-selector').val()).remove(true);
+states.on('click', 'button.load', function () {
+	table.stateRestore
+		.state(this.parentNode.getAttribute('data-state-id'))
+		.load();
 });
 
-$('#removeAllSkip').on('click', function () {
-	table.stateRestore.states().remove(true);
+states.on('click', 'button.edit', function () {
+	table.stateRestore
+		.state(this.parentNode.getAttribute('data-state-id'))
+		.edit();
 });
 
-$('#add').on('click', function () {
-	table.stateRestore.state.add($('#state-selector').val());
+states.on('click', 'button.replace', function () {
+	table.stateRestore
+		.state(this.parentNode.getAttribute('data-state-id'))
+		.save();
+});
+
+states.on('click', 'button.remove', function () {
+	table.stateRestore
+		.state(this.parentNode.getAttribute('data-state-id'))
+		.remove();
 });
 
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-let table = new DataTable('#example', {
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
-let stateSelector = document.querySelector('#state-selector');
-
-document.querySelector('#save').addEventListener('click', function () {
-	table.stateRestore.state(stateSelector.value).save();
-});
-
-document.querySelector('#load').addEventListener('click', function () {
-	table.stateRestore.state(stateSelector.value).load();
-});
-
-document.querySelector('#remove').addEventListener('click', function () {
-	table.stateRestore.state(stateSelector.value).remove();
-});
-
-document.querySelector('#removeAll').addEventListener('click', function () {
-	table.stateRestore.states().remove();
-});
-
-document.querySelector('#removeSkip').addEventListener('click', function () {
-	table.stateRestore.state(stateSelector.value).remove(true);
-});
-
-document.querySelector('#removeAllSkip').addEventListener('click', function () {
-	table.stateRestore.states().remove(true);
-});
-
-document.querySelector('#add').addEventListener('click', function () {
-	table.stateRestore.state.add(stateSelector.value);
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">Basic StateRestore Example - API</title>
+<title lib="StateRestore">API methods</title>
 
 <info><![CDATA[
-This example demonstrates all of the API methods that are available within StateRestore and how they can be used outside of the usual buttons interactions.
 
-Use the input element to the right to input an identifier. The other buttons will then implement the relevant API methods.
+StateRestore provides a comprehensive API that is fully integrated with [DataTables own API](https://datatables.net/manual/core/api). With the API you can add new states, modify existing ones and of course delete states. Put it all together and you can create a complete UI for StateRestore using your own HTML elements or components.
 
-<input id="state-selector"></input>
-<button id="save">Save</button>
-<button id="add">Add State</button>
-<button id="load">Load</button>
-<button id="remove">Remove</button>
-<button id="removeSkip">Remove and skip modal</button>
-<button id="removeAll">Remove All</button>
-<button id="removeAllSkip">Remove All skipping modal</button>
+In this example, the API is used together with the `-event stateRestore` event to provide a very basic interface. You can create new states, delete all, and load, edit, replace or remove individual states.
+
+I wouldn't suggest you use this specific UI for your end users! Rather this is a demonstration to show how the API can be used to create a custom UI.
+
+The `-button stateCreate` and `-button statesList` buttons have been included as well to show the interaction between the two UIs - they stay in sync with either being usable.
+
 ]]></info>
+
+<demo-html>
+	<button id="add">Create state</button><br/>
+	<button id="deleteAll">Delete all states</button><br/>
+	<ul id="states"> </ul>
+</demo-html>
 
 </dt-example>

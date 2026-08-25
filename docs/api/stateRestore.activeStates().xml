@@ -6,34 +6,37 @@
 
 	<type type="function">
 		<signature>stateRestore.activeStates()</signature>
-		<description>Retrieves a stored state from the StateRestore extension.</description>
-		<returns type="DataTablesApi">Returns a DataTables API containing an array of details about the states that are currently active.</returns>
+		<description>Retrieves any currently active states.</description>
+		<returns type="DataTable.Api">
+			Returns a DataTables API instance containing an array of details about the states that are currently active (`type StateRestore.State`).
+		</returns>
 	</type>
 
 	<description>
 	<![CDATA[
-This method provides the ability to retrieve details about all of the currently active states that are managed by the StateRestore extension.
 
-The method is plural as it is possible to have multiple states that are active at the same time.
+This method provides the ability to retrieve details about all of the currently active states that are managed by the StateRestore extension. It is worth keeping in mind here that multiple states can be active at any one time (e.g. one which specifies only a filter, and another which specifies only an ordering condition for example).
 
-A DataTables API instance is returned containing all of the active states as objects. Each object contains the following properties.
+A DataTables API instance is returned containing information about all of the active states. The objects in the result set are of type `-type StateRestore.State`.
 
-* `name` - The name of the state.
-* `data` - The data that is used to implement the state.
 	]]>
-
 	</description>
 
 	<example title="Get the currently active states"><![CDATA[
-var table = new DataTable('#myTable', {
+const table = new DataTable('#myTable', {
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates']
+			buttons: ['stateCreate', 'statesList']
 		}
 	}
 });
 
-table.stateRestore.activeStates();
-]]></example>
+// Button to get the current active states
+document.querySelector('#getStates', function () {
+	console.log(
+		table.stateRestore.activeStates().toArray()
+	);
+});
 
+]]></example>
 </dt-api>

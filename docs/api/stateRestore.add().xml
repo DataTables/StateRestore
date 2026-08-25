@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.add()</name>
+	<summary>Create a new state</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>stateRestore.add()</signature>
+        <parameter type="string" name="identifier" default="">
+			The string that is used to identify this state. This parameter is optional and if no value is given the next default name in the sequence will be used.
+		</parameter>
+		<description>Creates a new state.</description>
+		<returns type="DataTable.Api">
+			Returns a DataTables API for chaining, with the object containing the state that has been extracted from the table in the result set.
+		</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+
+This method provides the ability to create a new state that is managed by the StateRestore extension.
+
+`-api stateRestore.add()` takes just one argument (which is optional), the state name. A modal will be shown to the end user with options to customise the state (e.g. change the name, and properties saved if that is configured) before the state is then saved to storage.
+
+When using local storage (i.e. `-init stateRestore.ajax` is not specified), then the state will be given a random id. This can be used as a selector for `-api stateRestore.state()` if you then wish to modify or otherwise manipulate the state via the API in future.
+
+	]]>
+	</description>
+
+	<example title="Add a new state"><![CDATA[
+const table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	}
+});
+
+// Button to add a state based on the current table state
+document.querySelector('#createState', function () {
+	table.stateRestore.add();
+});
+
+]]></example>
+</dt-api>

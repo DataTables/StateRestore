@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="StateRestore">
+	<name>stateRestore.states().details()</name>
+	<summary>Get the details for the selected states</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>stateRestore.states().details()</signature>
+		<description>Get a list of the selected states.</description>
+		<returns type="DataTable.Api">Returns a DataTables API for chaining which contains objects of type `-type StateRestore.State`.</returns>
+	</type>
+
+	<description>
+	<![CDATA[
+
+This method can be used to get the details of all selected states. The objects in the returned data set are of type `-type StateRestore.State`.
+
+As with `-api stateRestore.state().details()`, please note that mutating the state object is not currently supported - don't write values to it as there is no API to tell StateRestore that they have changed. The objects in the result set are considered to be _read-only_.
+
+	]]>
+	</description>
+
+	<example title="Print out the details for two selected states"><![CDATA[
+
+console.log(
+	table.stateRestore.states(['{id1}', '{id2}']).details().toArray();
+);
+
+]]></example>
+
+	<related type="api">stateRestore.states()</related>
+	<related type="api">stateRestore.state().remove()</related>
+</dt-api>
