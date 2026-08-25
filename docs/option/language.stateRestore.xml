@@ -15,6 +15,50 @@
 	</default>
 	<description>
 		<![CDATA[
+
+stateRestore: {
+	create: {
+		title: "Save new state'"
+		info: ""
+	},
+	edit: {
+		title: "Edit state'"
+		info: ""
+	},
+	create: {
+		title: "Replace state'"
+		info: "Replace the currently saved state with the table's current state."
+	},
+	remove: {
+		title: "Delete state'"
+		message: {
+			_: "Are you sure you wish to remove the following states:",
+			1: "Are you sure you wish to remove the following state:"
+		}
+	},
+	button: {
+		create: "Create new state",
+		duplicate: "Copy",
+		edit: "Edit",
+		empty: "No saved states",
+		replace: "Replace",
+		remove: "Delete:",
+		statesRemoveAll: "Remove all states",
+		statesList: "Saved states
+	},
+	state: {
+		name: "Name:",
+		nameInfo: "",
+		nameRequired: "A name is required for the state",
+		defaults: "Default:",
+		defaultsInfo: "The state that is selected as the default will be used automatically when the page is loaded.",
+		share: "Share:",
+		shareInfo: "Other users of the system will be able to use states that you share. They will not be able to edit the state.",
+		properties: "State properties:"
+	},
+	copyName: " (copy)"
+}
+	
 			As standard, no custom options will be applied to the StateRestore language options if `-init language.stateRestore` is undefined. Otherwise the related options will be applied if they are defined within this object.
             
 			This is useful as it means that the language options can be set for StateRestore leading to increased internationalisation.

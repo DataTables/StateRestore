@@ -20,7 +20,7 @@ DataTable.ext.buttons.stateCreate = {
 			this.disable();
 		}
 	},
-	text: dt => dt.i18n('stateRestore.button.createState', 'Create New State')
+	text: dt => dt.i18n('stateRestore.button.create', 'Create new state')
 };
 
 DataTable.ext.buttons.statesRemoveAll = {
@@ -49,7 +49,7 @@ DataTable.ext.buttons.statesRemoveAll = {
 		this.enable(states.storeGet().length > 0);
 	},
 	text: dt =>
-		dt.i18n('stateRestore.button.statesRemoveAll', 'Remove All States')
+		dt.i18n('stateRestore.button.statesRemoveAll', 'Remove all states')
 };
 
 DataTable.ext.buttons.statesList = {
@@ -142,7 +142,7 @@ DataTable.ext.buttons.statesList = {
 		else {
 			buttons.push({
 				extend: 'spacer',
-				text: dt.i18n('stateRestore.button.empty', 'No Saved States'),
+				text: dt.i18n('stateRestore.button.empty', 'No saved states'),
 				style: 'empty'
 			});
 		}
@@ -159,7 +159,7 @@ DataTable.ext.buttons.statesList = {
 		);
 	},
 	buttons: [],
-	text: dt => dt.i18n('stateRestore.button.savedStates', 'Saved states')
+	text: dt => dt.i18n('stateRestore.button.statesList', 'Saved states')
 };
 
 // Legacy aliases

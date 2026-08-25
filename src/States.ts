@@ -319,7 +319,7 @@ export default class States {
 				.classAdd(this.classes.removeMessage)
 				.text(
 					this.s.dt.i18n(
-						'stateRestore.message.remove',
+						'stateRestore.remove.message',
 						{
 							_: 'Are you sure you wish to remove the following states:',
 							1: 'Are you sure you wish to remove the following state:'
@@ -336,7 +336,7 @@ export default class States {
 			States.modal(
 				this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
 				body,
-				this.s.dt.i18n('stateRestore.buttons.remove', 'Delete'),
+				this.s.dt.i18n('stateRestore.button.remove', 'Delete'),
 				async () => {
 					let result = await this.s.storage.remove(
 						this.s.dt,
@@ -790,7 +790,7 @@ export default class States {
 			// Show error - name is required
 			nameError.text(
 				this.s.dt.i18n(
-					'stateRestore.state.required',
+					'stateRestore.state.nameRequired',
 					'A name is required for the state'
 				)
 			);

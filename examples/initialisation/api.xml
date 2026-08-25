@@ -54,7 +54,7 @@ const table = new DataTable('#example', {
 table.on('stateRestore', () => populateStateList(table, states));
 
 // Initial population
-populateStateList(table, states)
+populateStateList(table, states);
 
 // Event handlers
 Dom.s('#add').on('click', function () {
