@@ -57,7 +57,7 @@ interface ApiStateRestore<T> {
 	 *   that are applicable to multiple states.
 	 */
 	states(
-		identifier: string | number | Array<string | number>
+		identifier?: string | number | Array<string | number>
 	): StateRestoreStatesMethods<T>;
 }
 
@@ -115,6 +115,13 @@ interface StateRestoreStateMethods<T> extends Api<T> {
 }
 
 interface StateRestoreStatesMethods<T> extends Api<T> {
+	/**
+	 * Get the details for the selected states
+	 *
+	 * @returns DataTables Api for chaining.
+	 */
+	details(): Api<State>;
+
 	/**
 	 * Delete all selected states
 	 *

@@ -72,10 +72,7 @@ DataTable.ext.buttons.statesList = {
 					// Edit and delete actions available for buttons which are
 					// owned by this user only.
 					splits.push({
-						text: dt.i18n(
-							'stateRestore.button.edit',
-							'Edit'
-						),
+						text: dt.i18n('stateRestore.button.edit', 'Edit'),
 						action: () => {
 							states.edit(state);
 						}
@@ -84,7 +81,7 @@ DataTable.ext.buttons.statesList = {
 					splits.push({
 						text: dt.i18n('stateRestore.button.replace', 'Replace'),
 						action: () => {
-							states.edit(state, {state: dt.state()});
+							states.edit(state, { state: dt.state() });
 						}
 					});
 
@@ -211,6 +208,10 @@ Dom.s(document).on('options.dt.stateRestore', function (e, init: Options) {
 /*
  * DT API interface
  */
+Api.register('stateRestore()', function () {
+	return this;
+});
+
 Api.register('stateRestore.activeStates()', function () {
 	let states = this.context[0]._states as States;
 
@@ -232,23 +233,22 @@ Api.register('stateRestore.state.add()', function (name) {
 });
 
 Api.register('stateRestore.state()', function (id: string | number) {
+	let inst = this.inst(this.context);
 	let states = this.context[0]._states as States;
 
 	if (states) {
-		this.context[0]._stateSelected = states
-			.storeGet()
-			.find(s => id === s.id);
+		inst._stateSelected = states.storeGet().find(s => id === s.id);
 	}
 
-	return this;
+	return inst;
 });
 
 Api.register('stateRestore.state().details()', function () {
-	return this.context[0]._stateSelected || null;
+	return this._stateSelected || null;
 });
 
 Api.register('stateRestore.state().load()', function () {
-	let selected = this.context[0]._stateSelected;
+	let selected = this._stateSelected;
 
 	if (selected) {
 		this.state(selected.state).draw(false);
@@ -259,7 +259,7 @@ Api.register('stateRestore.state().load()', function () {
 
 Api.register('stateRestore.state().remove()', function (skipConfirm = false) {
 	let states = this.context[0]._states as States;
-	let selected = this.context[0]._stateSelected;
+	let selected = this._stateSelected;
 
 	if (states && selected) {
 		states.remove(selected, skipConfirm);
@@ -268,7 +268,7 @@ Api.register('stateRestore.state().remove()', function (skipConfirm = false) {
 
 Api.register('stateRestore.state().rename()', function (name: string) {
 	let states = this.context[0]._states as States;
-	let selected = this.context[0]._stateSelected;
+	let selected = this._stateSelected;
 
 	if (states && selected && name) {
 		states.edit(
@@ -285,16 +285,18 @@ Api.register('stateRestore.state().rename()', function (name: string) {
 
 Api.register('stateRestore.state().edit()', function () {
 	let states = this.context[0]._states as States;
-	let selected = this.context[0]._stateSelected;
+	let selected = this._stateSelected;
 
 	if (states && selected) {
 		states.edit(selected);
 	}
+
+	return this;
 });
 
 Api.register('stateRestore.state().save()', function (skipModal = true) {
 	let states = this.context[0]._states as States;
-	let selected = this.context[0]._stateSelected;
+	let selected = this._stateSelected;
 
 	if (states && selected) {
 		states.edit(
@@ -305,31 +307,45 @@ Api.register('stateRestore.state().save()', function (skipModal = true) {
 			skipModal
 		);
 	}
+
+	return this;
 });
 
 Api.register(
 	'stateRestore.states()',
-	function (idOrIds: string | number | Array<string | number>) {
+	function (idOrIds?: string | number | Array<string | number>) {
+		let inst = this.inst(this.context);
 		let states = this.context[0]._states as States;
-		let ids = Array.isArray(idOrIds) ? idOrIds : [idOrIds];
 
 		if (states) {
-			this.context[0]._statesSelected = states
+			let ids = idOrIds
+				? Array.isArray(idOrIds)
+					? idOrIds
+					: [idOrIds]
+				: states.storeGet(true).map(s => s.id);
+
+			inst._statesSelected = states
 				.storeGet()
 				.filter(s => ids.includes(s.id));
 		}
 
-		return this;
+		return inst;
 	}
 );
 
+Api.register('stateRestore.states().details()', function () {
+	return this._statesSelected || [];
+});
+
 Api.register('stateRestore.states().remove()', function (skipConfirm = false) {
 	let states = this.context[0]._states as States;
-	let selected = this.context[0]._statesSelected;
+	let selected = this._statesSelected;
 
 	if (states && selected) {
 		states.remove(selected, skipConfirm);
 	}
+
+	return this;
 });
 
 DataTable.StateRestore = States;
