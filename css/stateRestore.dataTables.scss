@@ -93,7 +93,7 @@ div.dtsb-modal-background {
 
 div.dtsb-field {
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 30% 70%;
     gap: 1em;
     margin-top: 1em;
 
@@ -105,8 +105,19 @@ div.dtsb-field {
         margin-bottom: 0.5em;
     }
 
+    div.dtsb-field-info {
+        font-size: 0.8em;
+        line-height: 1.3em;
+        margin: 0.5em 0 0 0;
+
+        &:empty {
+            margin: 0;
+        }
+    }
+
     div.dtsb-field-error {
         font-size: 0.8em;
+        line-height: 1.3em;
         margin: 0.5em 0 0 0;
 
         &:empty {
@@ -125,6 +136,8 @@ div.dtsb-field {
         padding: var(--dt-input_padding);
         background-color: var(--dt-input_background);
         color: var(--dt-input_color);
+        width: 96%;
+        box-sizing: border-box;
     }
 
     input[type="checkbox"] {

@@ -29,7 +29,7 @@ DataTable.ext.buttons.statesRemoveAll = {
 		let states = ctx._states;
 
 		// Get all owned states
-		let myStates = states.store().filter(s => !s.isSharedIn);
+		let myStates = states.storeGet().filter(s => !s.isSharedIn);
 
 		states.remove(myStates);
 	},
@@ -43,10 +43,10 @@ DataTable.ext.buttons.statesRemoveAll = {
 		let states = ctx._states;
 
 		dt.on('stateRestore', () => {
-			this.enable(states.store().length > 0);
+			this.enable(states.storeGet().length > 0);
 		});
 
-		this.enable(states.store().length > 0);
+		this.enable(states.storeGet().length > 0);
 	},
 	text: dt =>
 		dt.i18n('stateRestore.button.statesRemoveAll', 'Remove All States')
@@ -62,8 +62,8 @@ DataTable.ext.buttons.statesList = {
 			config.buttons.forEach(btn => buttons.push(btn));
 		}
 
-		if (states.store(true).length) {
-			states.store(true).forEach(state => {
+		if (states.storeGet(true).length) {
+			states.storeGet(true).forEach(state => {
 				let namespace = '.dtst-' + buttonCounter++;
 				let splits = [];
 
@@ -72,9 +72,19 @@ DataTable.ext.buttons.statesList = {
 					// Edit and delete actions available for buttons which are
 					// owned by this user only.
 					splits.push({
-						text: dt.i18n('stateRestore.button.edit', 'Edit'),
+						text: dt.i18n(
+							'stateRestore.button.edit',
+							'Edit'
+						),
 						action: () => {
-							states.update(state);
+							states.edit(state);
+						}
+					});
+
+					splits.push({
+						text: dt.i18n('stateRestore.button.replace', 'Replace'),
+						action: () => {
+							states.edit(state, {state: dt.state()});
 						}
 					});
 
@@ -208,7 +218,7 @@ Api.register('stateRestore.activeStates()', function () {
 		return this;
 	}
 
-	return states.store().filter(s => states.isCurrent(s.state));
+	return states.storeGet().filter(s => states.isCurrent(s.state));
 });
 
 Api.register('stateRestore.state.add()', function (name) {
@@ -225,7 +235,9 @@ Api.register('stateRestore.state()', function (id: string | number) {
 	let states = this.context[0]._states as States;
 
 	if (states) {
-		this.context[0]._stateSelected = states.store().find(s => id === s.id);
+		this.context[0]._stateSelected = states
+			.storeGet()
+			.find(s => id === s.id);
 	}
 
 	return this;
@@ -255,21 +267,43 @@ Api.register('stateRestore.state().remove()', function (skipConfirm = false) {
 });
 
 Api.register('stateRestore.state().rename()', function (name: string) {
+	let states = this.context[0]._states as States;
 	let selected = this.context[0]._stateSelected;
 
-	if (selected && name) {
-		selected.name = name;
+	if (states && selected && name) {
+		states.edit(
+			selected,
+			{
+				name
+			},
+			true
+		);
 	}
 
 	return this;
 });
 
-Api.register('stateRestore.state().save()', function () {
+Api.register('stateRestore.state().edit()', function () {
 	let states = this.context[0]._states as States;
 	let selected = this.context[0]._stateSelected;
 
 	if (states && selected) {
-		// TODO
+		states.edit(selected);
+	}
+});
+
+Api.register('stateRestore.state().save()', function (skipModal = true) {
+	let states = this.context[0]._states as States;
+	let selected = this.context[0]._stateSelected;
+
+	if (states && selected) {
+		states.edit(
+			selected,
+			{
+				state: this.state()
+			},
+			skipModal
+		);
 	}
 });
 
@@ -281,7 +315,7 @@ Api.register(
 
 		if (states) {
 			this.context[0]._statesSelected = states
-				.store()
+				.storeGet()
 				.filter(s => ids.includes(s.id));
 		}
 

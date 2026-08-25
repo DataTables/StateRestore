@@ -48,7 +48,7 @@ interface ApiStateRestore<T> {
 	 */
 	activeStates(): Api<State>;
 
-	state: StateRestoreState<T>
+	state: StateRestoreState<T>;
 
 	/**
 	 * Retrieves all of the states from the collection.
@@ -127,6 +127,7 @@ export interface Classes {
 	field: {
 		container: string;
 		error: string;
+		info: string;
 		label: string;
 		value: string;
 		input: string;
@@ -298,11 +299,17 @@ export interface Storage {
 	 * Update an existing state
 	 *
 	 * @param dt Host DataTable
-	 * @param state Updated state
+	 * @param oldState State object that needs to be updated
+	 * @param newState The new state object
 	 * @param host States object
 	 * @returns True if everything is okay, false if not.
 	 */
-	update: (dt: Api, state: State, host: States) => Promise<boolean>;
+	edit: (
+		dt: Api,
+		oldState: State,
+		newState: State,
+		host: States
+	) => Promise<boolean>;
 
 	/**
 	 * Delete an existing state

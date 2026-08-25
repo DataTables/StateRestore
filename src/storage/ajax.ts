@@ -9,7 +9,7 @@ const ajax: Storage = {
 		return true;
 	},
 
-	update: async function (dt, state, states) {
+	edit: async function (dt, state, states) {
 		return true;
 	},
 

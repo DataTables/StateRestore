@@ -5,7 +5,14 @@ import DataTable, {
 	StateLoad as DTState,
 	util
 } from 'datatables.net';
-import { Checkbox, Classes, Defaults, PreDefined, Settings, State } from './interface';
+import {
+	Checkbox,
+	Classes,
+	Defaults,
+	PreDefined,
+	Settings,
+	State
+} from './interface';
 import stateManipulators from './manipulators';
 import storageAjax from './storage/ajax';
 import storageLocal from './storage/localStorage';
@@ -23,6 +30,7 @@ export default class States {
 		field: {
 			container: 'dtsb-field',
 			error: 'dtsb-field-error',
+			info: 'dtsb-field-info',
 			label: 'dtsb-field-label',
 			value: 'dtsb-field-value',
 			input: 'dtsb-field-input'
@@ -152,7 +160,8 @@ export default class States {
 			}
 
 			this._stateUserInput(
-				this.s.dt.i18n('stateRestore.title.create', 'Save new state'),
+				this.s.dt.i18n('stateRestore.create.title', 'Save new state'),
+				this.s.dt.i18n('stateRestore.create.info', ''),
 				{
 					id: null,
 					isDefault,
@@ -231,34 +240,49 @@ export default class States {
 	}
 
 	/**
-	 * Update a state's properties
+	 * Edit a state's properties. Can be used to replace a state if a new state
+	 * object is passed in with the `state` property set.
 	 *
-	 * @param state State object to update
+	 * @param oldState State object to update
 	 */
-	public update(state: State) {
-		let idx = this.s.store.indexOf(state);
+	public edit(oldState: State, newState?: Partial<State>, skipModal = false) {
+		let idx = this.s.store.indexOf(oldState);
 
 		if (idx !== -1) {
-			this._stateUserInput(
-				this.s.dt.i18n(
-					'stateRestore.title.update',
-					'Update state options'
-				),
-				this.s.store[idx],
-				async state => {
-					let result = await this.s.storage.update(
-						this.s.dt,
-						state,
-						this
-					);
+			// We need a copy of the object, in case it is rejected by an error
+			// - i.e. we don't want to mutate the original object.
+			let copy = util.object.assignDeep<State>({}, oldState);
+			let title = this.s.dt.i18n('stateRestore.edit.title', 'Edit state');
+			let info = this.s.dt.i18n('stateRestore.edit.info', '');
 
-					if (result) {
-						this.s.dt.trigger('stateRestore', ['update', state]);
+			if (newState && newState.state) {
+				title = this.s.dt.i18n(
+					'stateRestore.replace.title',
+					'Replace state'
+				);
+				info = this.s.dt.i18n(
+					'stateRestore.replace.info',
+					"Replace the currently saved state with the table's current state."
+				);
+			}
 
-						States.modalClose();
-					}
+			// Shallow copy to allow partial input
+			util.object.assign(copy, newState);
+
+			this._stateUserInput(title, info, copy, async state => {
+				let result = await this.s.storage.edit(
+					this.s.dt,
+					oldState,
+					state,
+					this
+				);
+
+				if (result) {
+					this.s.dt.trigger('stateRestore', ['edit', state]);
+
+					States.modalClose();
 				}
-			);
+			});
 		}
 	}
 
@@ -322,12 +346,53 @@ export default class States {
 	 * @param includeStatics Indicate if static states should be included or not
 	 * @returns Array of states
 	 */
-	public store(includeStatics = false) {
+	public storeGet(includeStatics = false) {
 		if (includeStatics) {
 			return this.s.store;
 		}
 
 		return this.s.store.filter(s => !s.isStatic);
+	}
+
+	/**
+	 * Add a new state to the store
+	 *
+	 * @param state To add
+	 */
+	public storeAdd(state: State) {
+		this.s.store.push(state);
+	}
+
+	/**
+	 * Remove a state from the store
+	 *
+	 * @param state To remove
+	 * @returns Void
+	 */
+	public storeRemove(state: State) {
+		let store = this.s.store;
+		let idx = store.indexOf(state);
+
+		if (state.isStatic) {
+			return;
+		}
+
+		if (idx !== -1) {
+			store.splice(idx, 1);
+		}
+	}
+
+	public storeReplace(oldState: State, newState: State) {
+		let store = this.s.store;
+		let idx = store.indexOf(oldState);
+
+		if (oldState.isStatic) {
+			return;
+		}
+
+		if (idx !== -1) {
+			store.splice(idx, 1, newState);
+		}
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -399,7 +464,9 @@ export default class States {
 	 *
 	 * @param predefined Array of states, or object of states
 	 */
-	private async _addPredefined(predefined: PreDefined[] | Record<string, DTState>) {
+	private async _addPredefined(
+		predefined: PreDefined[] | Record<string, DTState>
+	) {
 		if (Array.isArray(predefined)) {
 			predefined.forEach(s => {
 				this.add(s.state, s.name, true, s.isDefault || false);
@@ -437,6 +504,7 @@ export default class States {
 	 * Display an editing field
 	 *
 	 * @param label Field label
+	 * @param info Extra field details
 	 * @param name Name for the input
 	 * @param value Value for the input
 	 * @param type Input type
@@ -444,6 +512,7 @@ export default class States {
 	 */
 	private _field(
 		label: string,
+		info: string,
 		name: string,
 		value: any,
 		type: 'text' | 'checkbox' = 'text'
@@ -473,6 +542,13 @@ export default class States {
 				.attr('name', name)
 				.prop('checked', value)
 				.classAdd(classes.input)
+				.appendTo(inputContainer);
+		}
+
+		if (info) {
+			Dom.c('div')
+				.classAdd(classes.info)
+				.text(info)
 				.appendTo(inputContainer);
 		}
 
@@ -590,15 +666,21 @@ export default class States {
 	 */
 	private _stateUserInput(
 		title: string,
+		info: string,
 		state: State,
 		cb: (s: State) => void
 	) {
 		let body = Dom.c('div');
 		let dt = this.s.dt;
 
+		if (info) {
+			body.append(Dom.c('p').text(info));
+		}
+
 		body.append(
 			this._field(
 				dt.i18n('stateRestore.state.name', 'Name:'),
+				dt.i18n('stateRestore.state.nameInfo', ''),
 				'name',
 				state.name
 			)
@@ -608,6 +690,10 @@ export default class States {
 			body.append(
 				this._field(
 					dt.i18n('stateRestore.state.defaults', 'Default:'),
+					dt.i18n(
+						'stateRestore.state.defaultsInfo',
+						'The state that is selected as the default will be used automatically when the page is loaded.'
+					),
 					'default',
 					state.isDefault,
 					'checkbox'
@@ -619,6 +705,10 @@ export default class States {
 			body.append(
 				this._field(
 					dt.i18n('stateRestore.state.share', 'Share:'),
+					dt.i18n(
+						'stateRestore.state.shareInfo',
+						'Other users of the system will be able to use states that you share. They will not be able to edit the state.'
+					),
 					'share',
 					state.isSharedOut,
 					'checkbox'

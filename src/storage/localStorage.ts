@@ -58,22 +58,24 @@ const local: Storage = {
 		return states;
 	},
 
-	create: async function (dt, state, states) {
-		let store = states.store();
+	create: async function (dt, state, host) {
+		host.storeAdd(state);
 
-		store.push(state);
-
-		localStorage.setItem(localStorageName(dt), JSON.stringify(store));
+		localStorage.setItem(
+			localStorageName(dt),
+			JSON.stringify(host.storeGet())
+		);
 
 		return true;
 	},
 
-	update: async function (dt, state, states) {
-		if (!state.isStatic) {
-			// The state is updated in place, so we can just store it
+	edit: async function (dt, oldState, newState, host) {
+		host.storeReplace(oldState, newState);
+
+		if (!oldState.isStatic) {
 			localStorage.setItem(
 				localStorageName(dt),
-				JSON.stringify(states.store())
+				JSON.stringify(host.storeGet())
 			);
 		}
 
@@ -81,21 +83,14 @@ const local: Storage = {
 	},
 
 	remove: async function (dt, states, host) {
-		let store = host.store();
-
 		for (let i = 0; i < states.length; i++) {
-			if (states[i].isStatic) {
-				continue;
-			}
-
-			let idx = store.indexOf(states[i]);
-
-			if (idx !== -1) {
-				store.splice(idx, 1);
-			}
+			host.storeRemove(states[i]);
 		}
 
-		localStorage.setItem(localStorageName(dt), JSON.stringify(store));
+		localStorage.setItem(
+			localStorageName(dt),
+			JSON.stringify(host.storeGet())
+		);
 
 		return true;
 	}
