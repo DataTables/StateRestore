@@ -50,8 +50,11 @@ export interface ManipulatorOptions {
 	/** Data order (sorting) */
 	order: boolean | null;
 
-	/** Page position and length */
-	paging: boolean | null;
+	/** Page start */
+	pageStart: boolean | null;
+
+	/** Page length */
+	pageLength: boolean | null;
 
 	/** Scroller extension's status */
 	scroller: boolean | null;
@@ -143,18 +146,27 @@ const stateManipulators: Record<keyof ManipulatorOptions, Manipulator> = {
 		},
 		text: dt => dt.i18n('stateRestore.option.order', 'Ordering')
 	},
-	paging: {
+	pageStart: {
 		available: state => {
 			return (
-				typeof state.length !== 'undefined' ||
 				typeof state.start !== 'undefined'
 			);
 		},
 		remove: state => {
-			delete state.length;
 			delete state.start;
 		},
-		text: dt => dt.i18n('stateRestore.option.order', 'Paging position')
+		text: dt => dt.i18n('stateRestore.option.pageStart', 'Paging position')
+	},
+	pageLength: {
+		available: state => {
+			return (
+				typeof state.length !== 'undefined'
+			);
+		},
+		remove: state => {
+			delete state.length;
+		},
+		text: dt => dt.i18n('stateRestore.option.pageLength', 'Paging length')
 	},
 	scroller: {
 		available: state => {

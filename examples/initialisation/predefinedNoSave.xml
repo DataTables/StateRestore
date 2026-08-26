@@ -14,7 +14,7 @@ new DataTable('#example', {
 	},
 	stateRestore: {
 		canCreate: false,
-		preDefined: [
+		predefined: [
 			{
 				name: 'Summary columns',
 				state: {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.canCreate</name>
+	<summary>Set if the end user is allowed to create new states</summary>
+	<since>2.0.0</since>
+
+	<type type="boolean">
+		<description>
+			When `false` the end user will not be able to create new states. When `true`, they will.
+		</description>
+	</type>
+
+	<default value="true">
+		The end user will be able to create new states.
+	</default>
+
+	<description>
+		StateRestore offers the end user to create new states not only through the `-button stateCreate` button, but also through the sub-buttons for states which are shared in, or predefined by duplicating them.
+
+		While it is trivial to leave out the `-button stateCreate` button, if you don't want the end user to be able to create new states from others that are available to them (i.e. you just want to provide a list of states that you control), this option is available to disable that ability.
+	</description>
+
+	<example title="Provide a single state and the end user cannot add their own or duplicate"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		canCreate: false,
+		preDefined: [
+			{search: {search: "Edinburgh"}}
+		]
+	}
+});
+]]></example>
+</dt-option>

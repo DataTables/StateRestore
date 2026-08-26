@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.sharing</name>
+	<summary>Allow the end user to share states (or not)</summary>
+	<since>2.0.0</since>
+
+	<type type="boolean">
+		<description>
+			This option can be provided as a boolean value:
+
+			* `true` - The end user can share states with others
+			* `false` - The end user cannot share states.
+		</description>
+	</type>
+
+	<default value="true">
+		The user is allowed to flag a state as shared (note that it requires `-init stateRestore.ajax` to be set as well).
+	</default>
+
+	<description>
+		When using an Ajax data store (`-init stateRestore.ajax`), StateRestore provides the ability for a user to share a state that they have created with others. This is done by setting a property in the state edit modal.
+
+		It is worth noting that other users who are using a shared state have only the ability to load the state or duplicate it. They will not have the ability to edit states shared by others, or set them as defaults (since that is part of the editing process).
+	</description>
+
+	<example title="Disallow the end user from sharing states."><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		ajax: '/states/myTable',
+		sharing: false
+	}
+});
+]]></example>
+</dt-option>

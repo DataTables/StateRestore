@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.include</name>
+	<summary>Define the properties that will be saved in the state</summary>
+	<since>2.0.0</since>
+
+	<type type="object">
+		<description>
+			Each property in this object defines if part of the table's state will be included in the saved state or not. The value each property can take is:
+
+			* `false` - Not included in the saved state
+			* `true` - Will be included in the saved state
+			* `null` - The end user has the option of including the value or not. A checkbox will be shown in the create state modal allowing them to select or deselect this value (default selected).
+		</description>
+	</type>
+
+	<default>
+		The following object is used as the default value:
+
+		```js
+		{
+			cardView: true,
+			columnVisibility: true,
+			columnSearch: true,
+			columnControl: true,
+			columnOrder: true,
+			order: true,
+			paging: false,
+			scroller: false,
+			search: true,
+			searchBuilder: true,
+			searchPanes: true,
+			select: false
+		}
+		```
+	</default>
+
+	<description>
+		The states that can be saved and restored by StateRestore can be "partial" - that is, it doesn't need to define every single piece of state information about a table. Indeed, in many cases it can be useful to have only specific pieces of information saved, disregarding other pieces which are more transient.
+
+		This option provides the ability to define which pieces of information will be stored in StateRestore states, with the ability to either have a part of the state included, removed or allowing the end user to make the decision in the new state modal.
+
+		Each property in the object will manipulate the state object based on the properties that it controls. The properties available, and a description of them, are shown below:
+
+		| Property | Description | Default value |
+		| -------- | ----------- | ------------- |
+		| `.cardView` | [CardView](https://datatables.net/manual/extensions/cardview) properties | `true` - Saved |
+		| `.columnVisibility` | Column visibility values | `true` - Saved |
+		| `.columnSearch` | Column specific search terms | `true` - Saved |
+		| `.columnControl` | [ColumnControl](https://datatables.net/manual/extensions/columnControl) search terms | `true` - Saved |
+		| `.columnOrder` | [ColReorder](https://datatables.net/manual/extensions/colReorder) ordering | `true` - Saved |
+		| `.order` | Column ordering | `true` - Saved |
+		| `.paging` | Table paging (page length and start page) | `false` - Removed |
+		| `.scroller` | [Scroller](https://datatables.net/manual/extensions/scroller) properties | `false` - Removed |
+		| `.search` | Global search terms | `true` - Saved |
+		| `.searchBuilder` | [SearchBuilder](https://datatables.net/manual/extensions/searchBuilder) search | `true` - Saved |
+		| `.select` | [Select](https://datatables.net/manual/extensions/select) properties | `false` - Removed |
+	</description>
+
+	<example title="Give the end user the option for some properties of the state, but disallow the saving of column ordering."><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		include: {
+			cardView: null,
+			order: false,
+			search: null,
+			searchBuilder: null
+		}
+	}
+});
+]]></example>
+</dt-option>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.newName</name>
+	<summary>Set the default for a new state name</summary>
+	<since>2.0.0</since>
+
+	<type type="string">
+		<description>
+			The value that will be used for a new state name. `#` can be used in the string and will be replaced by the next number in the sequence when creating multiple new states.
+		</description>
+	</type>
+
+	<default value="State #" />
+
+	<description>
+		When a new state is created with `-button stateCreate`, a modal is shown with a state name prepopulated - the string that is used for that value is defined by this property.
+
+		If multiple states share the same base name (i.e. this name plus a number), StateRestore will look through them to determine the next number is the sequence and then use that next number to create a unique name for the end user. Where the number is added is defined by a `#` character in the string.
+	</description>
+
+	<example title="Define a custom string for the new state default"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: {
+		newName: 'État #'
+	}
+});
+]]></example>
+
+	<example title="Empty string - make the user pick their own state name"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: {
+		newName: ''
+	}
+});
+]]></example>
+</dt-option>

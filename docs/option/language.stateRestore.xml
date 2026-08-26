@@ -1,41 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="StateRestore">
 	<name>language.stateRestore</name>
-	<summary>Container for options for language</summary>
-	<since>stateRestore 1.0.0</since>
+	<summary>StateRestore language options</summary>
+	<since>2.0.0</since>
 
 	<type type="object">
 		<description>
-			This option is capable of holding all of the sub-options for languages for `-init stateRestore`.
+			This option hosts the language strings that are used by StateRestore for its UI.
 		</description>
 	</type>
 
-	<default value="undefined">
-		The default value for the `-init language.stateRestore` object is `-type undefined`. Meaning that as standard there are no extra options to add to the panes for language.
-	</default>
 	<description>
-		<![CDATA[
 
+This object provides the ability to specify the language strings that are used by StateRestore for its UI elements. As with all language strings for DataTables, they can be set at initialisation time with this property, via defaults (`DataTable.defaults.language.stateRestore`) or [loaded via Ajax](https://datatables.net/examples/core/i18n/ajax.html).
+
+The language strings used by StateRestore can be broken down into the following blocks:
+
+* Buttons
+* Editing form
+* Editing modal
+* Misc.
+
+### Buttons
+
+StateRestore makes use [of the Buttons extension](https://datatables.net/manual/extensions/buttons) to provide a simple to use list UI for the end user. The labels used by the buttons are defined as follows with the keys shown available under `language.stateRestore.button`:
+
+| Object key | Description | Default value |
+| ---------- | ----------- | ------------- |
+| `.create` | Label for `-button stateCreate` | `-string Create new state` |
+| `.duplicate` | Sub-button that can be used to duplicate a shared in or predefined state. | `-string Copy` |
+| `.edit` | Sub-button to trigger the editing of a state's properties. | `-string Edit` |
+| `.empty` | Shown in place of the state list when there are no saved states. | `-string No saved states` |
+| `.replace` | Sub-button that will replace the selected state with the table's current state. | `-string Replace` |
+| `.remove` | Sub-button to delete the selected state. | `-string Delete:` |
+| `.statesRemoveAll` | Label for `-button statesRemoveAll`. | `-string Remove all states` |
+| `.statesList` | Label for `-button statesList`. | `-string Saved states` |
+
+
+### Editing form
+
+When creating, editing or deleting a state, the following language strings are used. The keys are available under `language.stateRestore.state`:
+
+| Object key | Description | Default value |
+| ---------- | ----------- | ------------- |
+
+| `name` | Label for the state name field. | `-string Name:` |
+| `nameInfo` | Information describing the name field. | Empty string |
+| `nameRequired` | Error message if a name isn't given. | `-string A name is required for the state` |
+| `defaults` | Label for the default field | `-string Default:` |
+| `defaultsInfo` | Information describing the default field. | `-string The state that is selected as the default will be used automatically when the page is loaded.` |
+| `save` | Button used for submitting the form. | `-string Save` |
+| `share` | Label for the share field. | `-string Share:` |
+| `shareInfo` | Information describing the share field. | `-string Other users of the system will be able to use states that you share. They will not be able to edit the state.` |
+| `properties` | State properties field label. | `-string State properties:` |
+
+
+### Editing modal
+
+The editing modal is reused with different strings to indicate what action is being performed. The keys are available under `language.stateRestore` and provide the ability to customise the modal information:
+
+| Object key | Description | Default value |
+| ---------- | ----------- | ------------- |
+| `.create.title` | Modal title for creating a state. | `-string Save new state` |
+| `.create.info` | Optional description of the create state action. | Empty string |
+| `.edit.title` | Modal title for editing a state. | `-string Edit state` |
+| `.edit.info` | Optional description of the edit state action. | Empty string |
+| `.replace.title` | Modal title for replacing a state. | `-string Replace state` |
+| `.replace.info` | Optional description of the replace state action. | Empty string |
+| `.remove.title` | Modal title for deleting a state. | `-string Delete state` |
+| `.remove.message` | Message asking the user to confirm the deletion. | `-string Are you sure you wish to remove the following states:` |
+
+### Misc
+
+| Object key | Description | Default value |
+| ---------- | ----------- | ------------- |
+| `.copyName` | Postfix to add when copying a state |  `-string  (copy)` |
+| `.newName` | Base string for new state names. The `#` is replaced with the next number in the sequence. |  `-string State #` |
+
+
+## Defaults
+
+By default there is no `stateRestore` object attached to the `DataTables.defaults.language` object. Instead the default values are defined in the library - please see below for the default values. To set a default, set `DataTables.defaults.language.stateRestore` using the structure below.
+
+```js
 stateRestore: {
-	create: {
-		title: "Save new state'"
-		info: ""
-	},
-	edit: {
-		title: "Edit state'"
-		info: ""
-	},
-	create: {
-		title: "Replace state'"
-		info: "Replace the currently saved state with the table's current state."
-	},
-	remove: {
-		title: "Delete state'"
-		message: {
-			_: "Are you sure you wish to remove the following states:",
-			1: "Are you sure you wish to remove the following state:"
-		}
-	},
 	button: {
 		create: "Create new state",
 		duplicate: "Copy",
@@ -44,7 +92,26 @@ stateRestore: {
 		replace: "Replace",
 		remove: "Delete:",
 		statesRemoveAll: "Remove all states",
-		statesList: "Saved states
+		statesList: "Saved states"
+	},
+	create: {
+		title: "Save new state"
+		info: ""
+	},
+	edit: {
+		title: "Edit state"
+		info: ""
+	},
+	replace: {
+		title: "Replace state"
+		info: "Replace the currently saved state with the table's current state."
+	},
+	remove: {
+		title: "Delete state"
+		message: {
+			_: "Are you sure you wish to remove the following states:",
+			1: "Are you sure you wish to remove the following state:"
+		}
 	},
 	state: {
 		name: "Name:",
@@ -52,43 +119,45 @@ stateRestore: {
 		nameRequired: "A name is required for the state",
 		defaults: "Default:",
 		defaultsInfo: "The state that is selected as the default will be used automatically when the page is loaded.",
+		save: "Save",
 		share: "Share:",
 		shareInfo: "Other users of the system will be able to use states that you share. They will not be able to edit the state.",
 		properties: "State properties:"
 	},
-	copyName: " (copy)"
+	copyName: " (copy)",
+	newName: "State #"
 }
-	
-			As standard, no custom options will be applied to the StateRestore language options if `-init language.stateRestore` is undefined. Otherwise the related options will be applied if they are defined within this object.
-            
-			This is useful as it means that the language options can be set for StateRestore leading to increased internationalisation.
-		]]>
+```
+
+## Community translations
+
+Our amazing community have provided a wide range of translations for DataTables, which are available on our CDN for you to use. Please see the [Internalisation plug-ins page](https://datatables.net/download/plug-ins/i18n/) for more details.
+
+It is possible that you might find translations missing for the specific keys you need. If you have knowledge of a specific language, please take the time to submit the missing strings so everyone can benefit!
+
 	</description>
 
-	<example title="Alter language options: "><![CDATA[
+	<example title="French translation for the StateRestore buttons"><![CDATA[
 new DataTable('#myTable', {
 	language: {
 		stateRestore: {
-			removeSubmit: 'Remove',
-			removeConfirm: 'Confirm state removal.',
-			emptyStates: 'No states',
-			renameButton: 'Change Name',
-			renameLabel: 'New value:'
+			button {
+				create: "Créer un état",
+				duplicate: "Dupliquer",
+				edit: "Modifier",
+				empty: "Aucun état sauvegardé",
+				replace: "Remplacer",
+				remove: "Supprimer :",
+				statesRemoveAll: "Supprimer tous les états",
+				statesList: "États sauvegardés"
+			}
 		}
 	},
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates']
+			buttons: ['stateCreate', 'statesList']
 		}
 	}
 });
 ]]></example>
-
-
-<related type="option">language.stateRestore.removeSubmit</related>
-<related type="option">language.stateRestore.removeConfirm</related>
-<related type="option">language.stateRestore.emptyStates</related>
-<related type="option">language.stateRestore.renameButton</related>
-<related type="option">language.stateRestore.renameLabel</related>
-
 </dt-option>

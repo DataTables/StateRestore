@@ -9,7 +9,7 @@ import {
 	Checkbox,
 	Classes,
 	Defaults,
-	PreDefined,
+	Predefined,
 	Settings,
 	State
 } from './interface';
@@ -49,17 +49,18 @@ export default class States {
 			columnControl: true,
 			columnOrder: true,
 			order: true,
-			paging: false,
+			pageStart: false,
+			pageLength: true,
 			scroller: false,
 			search: true,
 			searchBuilder: true,
 			searchPanes: true,
 			select: false
 		},
-		name: null,
-		newName: 'State #',
+		storeId: null,
+		newName: null,
 		sharing: true,
-		preDefined: []
+		predefined: []
 	};
 
 	public static modalClose() {
@@ -437,6 +438,11 @@ export default class States {
 			this.c.sharing = false;
 		}
 
+		// Allow the new state name to be defined from the language object
+		if (!this.c.newName) {
+			this.c.newName = dt.i18n('stateRestore.newName', 'State #');
+		}
+
 		this.s = {
 			dt: dt,
 			loading: false,
@@ -457,7 +463,7 @@ export default class States {
 		settings._states = this;
 
 		// Add predefined states to the list
-		this._addPredefined(this.c.preDefined);
+		this._addPredefined(this.c.predefined);
 
 		this.s.dt.on('xhr.dtsr', (e, s, json) => {
 			if (json && json.stateRestore) {
@@ -479,7 +485,7 @@ export default class States {
 	 * @param predefined Array of states, or object of states
 	 */
 	private async _addPredefined(
-		predefined: PreDefined[] | Record<string, DTState>
+		predefined: Predefined[] | Record<string, DTState>
 	) {
 		if (Array.isArray(predefined)) {
 			predefined.forEach(s => {
@@ -760,10 +766,15 @@ export default class States {
 		}
 
 		// Finally, show the modal
-		States.modal(title, body, 'Save', () => {
-			// Post process the modal based on the inputs
-			return this._stateUserInputProcess(state, body, cb);
-		});
+		States.modal(
+			title,
+			body,
+			dt.i18n('stateRestore.state.save', 'Save'),
+			() => {
+				// Post process the modal based on the inputs
+				return this._stateUserInputProcess(state, body, cb);
+			}
+		);
 	}
 
 	/**

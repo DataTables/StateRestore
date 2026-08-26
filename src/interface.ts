@@ -160,6 +160,11 @@ export interface Defaults {
 	canCreate: boolean;
 
 	/**
+	 * Allow the end user to set a default state
+	 */
+	defaults: boolean;
+
+	/**
 	 * What values should be included in the states being saved. For each:
 	 *
 	 * * `true` means that it will be included
@@ -169,38 +174,25 @@ export interface Defaults {
 	include: ManipulatorOptions;
 
 	/**
-	 * Prefix name to give the states stored by this instance. This is available
-	 * to reduce the chance of name collisions if there are multiple tables with
-	 * on the same page or even across multiple pages. If not given, the table's
-	 * ID will be used as the name.
-	 *
-	 * Note that if this is changed, you can loose access to old store states
-	 * unless they are updated.
-	 */
-	name: string | null;
-
-	/**
 	 * The base name that will be used for new state names. It _must_ include
 	 * `#` where you want a number to appear (to allow multiple states with
 	 * consecutive numbering).
 	 */
 	newName: string;
 
-	preDefined: PreDefined[] | Record<string, DTState>;
+	/**
+	 * Set of predefined states
+	 */
+	predefined: Predefined[] | Record<string, DTState>;
 
 	/**
 	 * Indicate if states can be shared between users. Note that this requires
 	 * `ajax` to be specified for remote state storage.
 	 */
 	sharing: boolean;
-
-	/**
-	 * Allow the end user to set a default state
-	 */
-	defaults: boolean;
 }
 
-export interface PreDefined {
+export interface Predefined {
 	/**
 	 * Name to give the state
 	 */

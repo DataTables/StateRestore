@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-type library="StateRestore">
+	<name>StateRestore.Predefined</name>
+	<summary>Predefined states object</summary>
+
+	<description>
+<![CDATA[
+
+StateRestore can have a set of states included in the initialisation object that the end user will be able to use, but not edit. This is done via the `-init stateRestore.preDefined` option. 
+
+The TypeScript description for this object is:
+
+```js
+interface Predefined {
+	/**
+	 * Name to give the state
+	 */
+	name: string;
+
+	/**
+	 * State to load
+	 */
+	state: DataTable.State;
+
+	/**
+	 * Indicate if the state should be the default one. Can be overridden by an
+	 * end user selecting to have one of their own states as the default.
+	 */
+	isDefault: boolean;
+}
+```
+
+Note that the state object is of type `-type DataTable.State`, and can be partial (i.e. you only need to define the properties that are required for the state).
+
+]]>
+	</description>
+</dt-type>

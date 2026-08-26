@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.ajax</name>
+	<summary>Ajax configuration for StateRestore</summary>
+	<since>2.0.0</since>
+
+	<type type="string">
+		<description>
+			As a string, this option sets the URL that should be used to get and set saved states.
+		</description>
+	</type>
+
+	<type type="object">
+		<description>
+			As an object, this option will define the Ajax request options that will be used to get and set saved states. Please see `-type DataTable.AjaxOptions` for the full details of the properties that this object can take.
+		</description>
+	</type>
+
+	<description>
+
+TODO
+
+	</description>
+
+	<example title="Ajax load and save state information"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		ajax: '/states/myTable'
+	}
+});
+]]></example>
+</dt-option>

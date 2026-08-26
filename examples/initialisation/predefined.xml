@@ -13,7 +13,7 @@ new DataTable('#example', {
 		}
 	},
 	stateRestore: {
-		preDefined: [{
+		predefined: [{
 			name: 'Search - London',
 			state: {
 				search: {
@@ -44,7 +44,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-For complex data you might wish to help your end users out by pre-populating a set of states that they can either use as a template, or will be a common route into your table's data. This can be done with the `-init stateRestore.preDefined` option. It is an array that lists the states you want to provide.
+For complex data you might wish to help your end users out by pre-populating a set of states that they can either use as a template, or will be a common route into your table's data. This can be done with the `-init stateRestore.predefined` option. It is an array that lists the states you want to provide.
 
 It is worth noting that an end user cannot remove or edit a predefined state, but they can by default, duplicate it to then modify as they require.
 

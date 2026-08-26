@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.predefined</name>
+	<summary>Set states that will be immediately available</summary>
+	<since>2.0.0</since>
+
+	<type type="array">
+		<description>
+			As an array, it will contain objects of type `-type StateRestore.Predefined`, with each entry in the array being a state that the end user can select from.
+		</description>
+	</type>
+
+	<type type="object">
+		<description>
+			For backwards compatibility with states from StateRestore v1, this option can also be given as an object, where each key / value pair is the name of the state and the DataTable state itself.
+
+			Using as an object is very much discouraged. Use the array option above for the full range of features.
+		</description>
+	</type>
+
+	<description>
+		It can be useful to provide end users with a list of states that you expect to be the most commonly used, to allow them fast access into the system and the data you wish them to see prominently (e.g. specific sets of columns, or filters). This option provides that ability.
+
+		It is an array of `-type StateRestore.Predefined` objects, which can have the name, state and if it should be the default state defined.
+
+		The end user will not be able to edit or delete states which are defined with this property. Furthermore, when combined with `-init stateRestore.canCreate`, you can use this to create a set of static states that the user cannot add to either.
+	</description>
+
+	<example title="Set predefined states"><![CDATA[
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: {
+		predefined: [{
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']]
+			}
+		}, {
+			name: 'Search and order',
+			state: {
+				order: [[5, 'asc']],
+				search: {
+					search: 'San Francisco'
+				}
+			}
+		}]
+	}
+});
+]]></example>
+</dt-option>

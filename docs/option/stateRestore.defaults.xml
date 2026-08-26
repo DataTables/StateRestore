@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.defaults</name>
+	<summary>Allow the end user to set a default state</summary>
+	<since>2.0.0</since>
+
+	<type type="boolean">
+		<description>
+			This option can be provided as a boolean value:
+
+			* `true` - The end user can set a state to be the default state
+			* `false` - The end user cannot set a default state.
+		</description>
+	</type>
+
+	<default value="true">
+		The user is allowed to set a default state.
+	</default>
+
+	<description>
+		In StateRestore, an end user has the option of selecting a state and defining it to be be the default state - that is, the state that the table will take when it is created on page load. This ability can be disabled using this option.
+		
+		Please note that for defaults to be available the `-init stateRestore` property _must_ be defined in the DataTable initialisation object. This is to allow StateRestore to define the state loader for the table.
+	</description>
+
+	<example title="Disallow the end user from setting a default state."><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		defaults: false
+	}
+});
+]]></example>
+</dt-option>
