@@ -5,6 +5,9 @@
     --dtsb-modal_width: 500px;
     --dtsb-modal_margin-left: -250px;
 
+    --dtsb-modal_width-wide: 800px;
+    --dtsb-modal_margin-left-wide: -400px;
+
     --dtsb-modal_background: white;
     --dtsb-modal_box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
     --dtsb-modal_border: 1px solid rgba(255, 255, 255, 0.15);
@@ -30,6 +33,7 @@
 }
 
 div.dtsb-modal {
+    // TODO the positioning needs to be changed to use better centering
     position: fixed;
     top: var(--dtsb-modal_top);
     left: var(--dtsb-modal_left);
@@ -42,6 +46,11 @@ div.dtsb-modal {
     z-index: 2003;
     box-sizing: border-box;
     padding: var(--dtsb-modal_padding);
+
+    &.dtsb-modal_wide {
+        width: var(--dtsb-modal_width-wide);
+        margin-left: var(--dtsb-modal_margin-left-wide);
+    }
 
     button.dtsb-modal-close {
         position: absolute;
@@ -63,11 +72,12 @@ div.dtsb-modal {
     }
 
     div.dtsb-modal-body {
-        margin: 2em 0;
+        margin: 2em 0 0 0;
     }
 
-    div.dtsb-modal-footer {
+    div.dtsb-modal-buttons {
         text-align: right;
+        margin-top: 2em;
 
         button {
             display: inline-block;

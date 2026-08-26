@@ -35,6 +35,9 @@ export default class States {
 			value: 'dtsb-field-value',
 			input: 'dtsb-field-input'
 		},
+		modal: {
+			wide: 'dtsb-modal_wide'
+		},
 		removeMessage: 'dtsb-remove-message'
 	};
 
@@ -69,28 +72,27 @@ export default class States {
 		Dom.s('div.dtsb-modal-background').remove();
 	}
 
-	public static modal(title: string, body: Dom, btnText: string) {
-		let modal = Dom.c('div').classAdd('dtsb-modal');
-
-		let saveButton = Dom.c('button')
-			.classAdd('dtsb-modal-button')
-			.text(btnText)
-			.on('click', e => {
-				modal.find<HTMLFormElement>('form')[0].requestSubmit();
-			});
-
+	public static modal(
+		title: string,
+		body: Dom,
+		className: string,
+		close: () => void
+	) {
+		let modal = Dom.c('div').classAdd('dtsb-modal').classAdd(className);
 		let closeButton = Dom.c('button')
 			.classAdd('dtsb-modal-close')
 			.attr('type', 'button')
 			.html('&times;')
 			.on('click', () => {
-				States.modalClose();
+				close();
 			});
 
 		// Esc will close and cancel the modal
 		Dom.s(document).on('keyup.dtsr', e => {
+			e.stopPropagation();
+
 			if (e.keyCode === 27) {
-				States.modalClose();
+				close();
 			}
 		});
 
@@ -102,15 +104,12 @@ export default class States {
 					.append(closeButton)
 			)
 			.append(Dom.c('div').classAdd('dtsb-modal-body').append(body))
-			.append(
-				Dom.c('div').classAdd('dtsb-modal-footer').append(saveButton)
-			)
 			.appendTo('body');
 
 		Dom.c('div')
 			.classAdd('dtsb-modal-background')
 			.on('click', () => {
-				States.modalClose();
+				close();
 			})
 			.appendTo('body');
 
@@ -190,7 +189,7 @@ export default class States {
 					if (result) {
 						this.s.dt.trigger('stateRestore', ['create', state]);
 
-						States.modalClose();
+						this.modalClose();
 					}
 				}
 			);
@@ -198,12 +197,24 @@ export default class States {
 	}
 
 	/**
-	 * Is an end user allowed to create a new state?
+	 * Is an end user allowed to perform a particular action
 	 *
 	 * @returns Flag
 	 */
-	public canCreate() {
-		return this.c.canCreate;
+	public can(action: 'create' | 'default' | 'share') {
+		switch (action) {
+			case 'create':
+				return this.c.canCreate;
+
+			case 'default':
+				return this.c.defaults;
+
+			case 'share':
+				return this.c.sharing;
+
+			default:
+				return false;
+		}
 	}
 
 	/**
@@ -303,9 +314,62 @@ export default class States {
 				if (result) {
 					this.s.dt.trigger('stateRestore', ['edit', state]);
 
-					States.modalClose();
+					this.modalClose();
 				}
 			});
+		}
+	}
+
+	/**
+	 * Display a modal, allowing for layering, so a modal can have an action
+	 * that will display an "inner" modal, but uses the same modal display,
+	 * and then allows it to be returned to.
+	 *
+	 * @param title Modal title
+	 * @param body Element to show in the modal body
+	 * @param wide Indicate if the modal should be wide
+	 */
+	public modal(title: string, body: Dom, wide = false) {
+		// Add the modal to the layers, so we can restore to it if needed
+		this.s.modalLayers.push({
+			title,
+			body,
+			wide
+		});
+
+		// Remove any existing modal
+		States.modalClose();
+
+		// And display
+		States.modal(title, body, wide ? this.classes.modal.wide : '', () => {
+			this.modalClose();
+		});
+	}
+
+	/**
+	 * Close a modal and if there are any layered above it, display them.
+	 */
+	public modalClose() {
+		// Tidy up from the last modal
+		States.modalClose();
+
+		// Pop off the last state
+		this.s.modalLayers.pop();
+
+		// And if there are any left, then we need to display them again
+		if (this.s.modalLayers.length) {
+			let layer = this.s.modalLayers[this.s.modalLayers.length - 1];
+
+			setTimeout(() => {
+				States.modal(
+					layer.title,
+					layer.body,
+					layer.wide ? this.classes.modal.wide : '',
+					() => {
+						this.modalClose();
+					}
+				);
+			}, 10);
 		}
 	}
 
@@ -336,16 +400,23 @@ export default class States {
 						states.length
 					)
 				);
-			let form = Dom.c('form').appendTo(body);
+			let form = Dom.c<HTMLFormElement>('form').appendTo(body);
 			let ul = Dom.c('ul').appendTo(form);
 
 			states.forEach(s => {
 				ul.append(Dom.c('li').text(s.name));
 			});
 
+			form.append(
+				this._submitButton(
+					this.s.dt.i18n('stateRestore.remove.button', 'Delete')
+				)
+			);
+
 			// Event handler for the submission
 			form.on('submit', async e => {
 				e.preventDefault();
+				e.stopPropagation();
 
 				let result = await this.s.storage.remove(
 					this.s.dt,
@@ -356,14 +427,13 @@ export default class States {
 				if (result) {
 					this.s.dt.trigger('stateRestore', ['remove']);
 
-					States.modalClose();
+					this.modalClose();
 				}
 			});
 
-			States.modal(
+			this.modal(
 				this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
-				body,
-				this.s.dt.i18n('stateRestore.button.remove', 'Delete')
+				body
 			);
 		}
 	}
@@ -459,6 +529,7 @@ export default class States {
 		this.s = {
 			dt: dt,
 			loading: false,
+			modalLayers: [],
 			store: [],
 			storage: this.c.ajax ? storageAjax : storageLocal,
 			whenLoaded: []
@@ -785,6 +856,10 @@ export default class States {
 			);
 		}
 
+		form.append(
+			this._submitButton(dt.i18n('stateRestore.state.save', 'Save'))
+		);
+
 		// Event handler for when the form is submitted
 		form.on('submit', e => {
 			e.preventDefault();
@@ -794,7 +869,7 @@ export default class States {
 		});
 
 		// Finally, show the modal
-		States.modal(title, body, dt.i18n('stateRestore.state.save', 'Save'));
+		this.modal(title, body);
 	}
 
 	/**
@@ -866,5 +941,26 @@ export default class States {
 		}
 
 		cb(state);
+	}
+
+	/**
+	 * Common create and submit button
+	 *
+	 * @param text Button text
+	 * @returns DOM element with the button
+	 */
+	private _submitButton(text: string) {
+		return Dom.c('div')
+			.classAdd('dtsb-modal-buttons')
+			.append(
+				Dom.c('button')
+					.classAdd('dtsb-modal-button')
+					.text(text)
+					.on('click', function () {
+						Dom.s(this)
+							.closest<HTMLFormElement>('form')[0]
+							.requestSubmit();
+					})
+			);
 	}
 }

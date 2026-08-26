@@ -67,6 +67,7 @@ The editing modal is reused with different strings to indicate what action is be
 | `.edit.info` | Optional description of the edit state action. | Empty string |
 | `.replace.title` | Modal title for replacing a state. | `-string Replace state` |
 | `.replace.info` | Optional description of the replace state action. | Empty string |
+| `.remove.button` | Modal submit button. | `-string Delete` |
 | `.remove.title` | Modal title for deleting a state. | `-string Delete state` |
 | `.remove.message` | Message asking the user to confirm the deletion. | `-string Are you sure you wish to remove the following states:` |
 
@@ -107,6 +108,7 @@ stateRestore: {
 		info: "Replace the currently saved state with the table's current state."
 	},
 	remove: {
+		button: "Delete",
 		title: "Delete state"
 		message: {
 			_: "Are you sure you wish to remove the following states:",

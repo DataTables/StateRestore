@@ -1,6 +1,7 @@
-import { Api, StateLoad as DTState } from 'datatables.net';
+import { Api, Dom, StateLoad as DTState } from 'datatables.net';
 import States from './States';
 import { ManipulatorOptions } from './manipulators';
+import { StateTable } from './table';
 
 declare module 'datatables.net' {
 	interface Options {
@@ -22,6 +23,11 @@ declare module 'datatables.net' {
 		 * State restore collection
 		 */
 		_states: States;
+
+		/**
+		 * State table wrapper
+		 */
+		_statesTable: StateTable;
 	}
 
 	interface Api<T> {
@@ -147,6 +153,9 @@ export interface Classes {
 		value: string;
 		input: string;
 	};
+	modal: {
+		wide: string
+	};
 	removeMessage: string;
 }
 
@@ -218,6 +227,13 @@ export interface Settings {
 
 	/** Flag to indicate when async loading is happening */
 	loading: boolean;
+
+	/** Modal nesting */
+	modalLayers: Array<{
+		title: string;
+		body: Dom;
+		wide: boolean;
+	}>;
 
 	/** States that have been stored and saved by this instance */
 	store: Array<State>;

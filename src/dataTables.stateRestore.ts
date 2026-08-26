@@ -1,5 +1,6 @@
 import DataTable, { Api, Dom, Options, util } from 'datatables.net';
 import States from './States';
+import stateTable from './table';
 
 let buttonCounter = 0;
 
@@ -16,7 +17,7 @@ DataTable.ext.buttons.stateCreate = {
 			new States(dt);
 		}
 
-		if (!ctx._states.canCreate()) {
+		if (!ctx._states.can('create')) {
 			this.disable();
 		}
 	},
@@ -97,7 +98,7 @@ DataTable.ext.buttons.statesList = {
 					// If the state is shared in or static, then we can't edit
 					// it, but we do allow it to be copied so that it can then
 					// be edited
-					if (states.canCreate()) {
+					if (states.can('create')) {
 						splits.push({
 							text: dt.i18n(
 								'stateRestore.button.duplicate',
@@ -161,6 +162,15 @@ DataTable.ext.buttons.statesList = {
 	},
 	buttons: [],
 	text: dt => dt.i18n('stateRestore.button.statesList', 'Saved states')
+};
+
+DataTable.ext.buttons.statesTable = {
+	autoClose: true,
+	action(e: Event, dt: any, node: Dom, config, cb) {
+		stateTable(dt, node);
+	},
+	buttons: [],
+	text: dt => dt.i18n('stateRestore.button.statesTable', 'Saved states')
 };
 
 // Legacy aliases
