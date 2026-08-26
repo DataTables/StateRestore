@@ -54,6 +54,7 @@ DataTable.ext.buttons.statesRemoveAll = {
 
 DataTable.ext.buttons.statesList = {
 	extend: 'collection',
+	autoClose: true,
 	action(e: Event, dt: any, node: Dom, config, cb) {
 		let states: States = dt.settings()[0]._states;
 		let buttons = [];

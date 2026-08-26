@@ -57,30 +57,26 @@ export default class States {
 			searchPanes: true,
 			select: false
 		},
-		storeId: null,
 		newName: null,
 		sharing: true,
 		predefined: []
 	};
 
 	public static modalClose() {
+		Dom.s(document).off('keyup.dtsr');
+
 		Dom.s('div.dtsb-modal').remove();
 		Dom.s('div.dtsb-modal-background').remove();
 	}
 
-	public static modal(
-		title: string,
-		body: Dom,
-		btnText: string,
-		submitAction: Function
-	) {
+	public static modal(title: string, body: Dom, btnText: string) {
 		let modal = Dom.c('div').classAdd('dtsb-modal');
 
 		let saveButton = Dom.c('button')
 			.classAdd('dtsb-modal-button')
 			.text(btnText)
 			.on('click', e => {
-				submitAction(e);
+				modal.find<HTMLFormElement>('form')[0].requestSubmit();
 			});
 
 		let closeButton = Dom.c('button')
@@ -91,7 +87,12 @@ export default class States {
 				States.modalClose();
 			});
 
-		// TODO keyboard events for return key in an input and esc to exit
+		// Esc will close and cancel the modal
+		Dom.s(document).on('keyup.dtsr', e => {
+			if (e.keyCode === 27) {
+				States.modalClose();
+			}
+		});
 
 		modal
 			.append(
@@ -112,6 +113,13 @@ export default class States {
 				States.modalClose();
 			})
 			.appendTo('body');
+
+		// Initial focus
+		modal
+			.find('input, button')
+			.filter(':not(.dtsb-modal-close)')
+			.eq(0)
+			.focus();
 	}
 
 	public static manipulators = stateManipulators;
@@ -328,29 +336,34 @@ export default class States {
 						states.length
 					)
 				);
-			let ul = Dom.c('ul').appendTo(body);
+			let form = Dom.c('form').appendTo(body);
+			let ul = Dom.c('ul').appendTo(form);
 
 			states.forEach(s => {
 				ul.append(Dom.c('li').text(s.name));
 			});
 
+			// Event handler for the submission
+			form.on('submit', async e => {
+				e.preventDefault();
+
+				let result = await this.s.storage.remove(
+					this.s.dt,
+					states,
+					this
+				);
+
+				if (result) {
+					this.s.dt.trigger('stateRestore', ['remove']);
+
+					States.modalClose();
+				}
+			});
+
 			States.modal(
 				this.s.dt.i18n('stateRestore.title.remove', 'Delete state'),
 				body,
-				this.s.dt.i18n('stateRestore.button.remove', 'Delete'),
-				async () => {
-					let result = await this.s.storage.remove(
-						this.s.dt,
-						states,
-						this
-					);
-
-					if (result) {
-						this.s.dt.trigger('stateRestore', ['remove']);
-
-						States.modalClose();
-					}
-				}
+				this.s.dt.i18n('stateRestore.button.remove', 'Delete')
 			);
 		}
 	}
@@ -541,7 +554,11 @@ export default class States {
 
 		let field = Dom.c('div').classAdd(classes.container);
 
-		Dom.c('label').classAdd(classes.label).text(label).appendTo(field);
+		Dom.c('label')
+			.attr('for', 'dtsr-' + name)
+			.classAdd(classes.label)
+			.text(label)
+			.appendTo(field);
 
 		let inputContainer = Dom.c('div')
 			.classAdd(classes.value)
@@ -549,6 +566,7 @@ export default class States {
 
 		if (type === 'text') {
 			Dom.c('input')
+				.attr('id', 'dtsr-' + name)
 				.attr('type', 'text')
 				.attr('name', name)
 				.attr('autocomplete', 'off')
@@ -558,6 +576,7 @@ export default class States {
 		}
 		else if (type === 'checkbox') {
 			Dom.c('input')
+				.attr('id', 'dtsr-' + name)
 				.attr('type', 'checkbox')
 				.attr('name', name)
 				.prop('checked', value)
@@ -691,13 +710,14 @@ export default class States {
 		cb: (s: State) => void
 	) {
 		let body = Dom.c('div');
+		let form = Dom.c('form').appendTo(body);
 		let dt = this.s.dt;
 
 		if (info) {
-			body.append(Dom.c('p').text(info));
+			form.append(Dom.c('p').text(info));
 		}
 
-		body.append(
+		form.append(
 			this._field(
 				dt.i18n('stateRestore.state.name', 'Name:'),
 				dt.i18n('stateRestore.state.nameInfo', ''),
@@ -707,7 +727,7 @@ export default class States {
 		);
 
 		if (this.c.defaults) {
-			body.append(
+			form.append(
 				this._field(
 					dt.i18n('stateRestore.state.defaults', 'Default:'),
 					dt.i18n(
@@ -722,7 +742,7 @@ export default class States {
 		}
 
 		if (this.c.sharing) {
-			body.append(
+			form.append(
 				this._field(
 					dt.i18n('stateRestore.state.share', 'Share:'),
 					dt.i18n(
@@ -754,7 +774,7 @@ export default class States {
 			// Order the available checkboxes alphabetically
 			checkboxes.sort((a, b) => a.name.localeCompare(b.name));
 
-			body.append(
+			form.append(
 				this._fieldCheckboxes(
 					dt.i18n(
 						'stateRestore.state.properties',
@@ -765,16 +785,16 @@ export default class States {
 			);
 		}
 
+		// Event handler for when the form is submitted
+		form.on('submit', e => {
+			e.preventDefault();
+
+			// Post process the modal based on the inputs
+			this._stateUserInputProcess(state, body, cb);
+		});
+
 		// Finally, show the modal
-		States.modal(
-			title,
-			body,
-			dt.i18n('stateRestore.state.save', 'Save'),
-			() => {
-				// Post process the modal based on the inputs
-				return this._stateUserInputProcess(state, body, cb);
-			}
-		);
+		States.modal(title, body, dt.i18n('stateRestore.state.save', 'Save'));
 	}
 
 	/**
