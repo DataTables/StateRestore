@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
-	<name>removeAllStates</name>
+	<name>statesRemoveAll</name>
 	<summary>Removes all stored states.</summary>
-	<since>1.0.0</since>
+	<since>2.0.0</since>
 
 	<description>
-        This button can be displayed at the top level alongside the `-button savedStates` and `-button createState` buttons. This button removes all saved states. This completely removes the states from storage, as well as removing the buttons that represent them.
+		This button provides the end user with the ability to delete all states that they have the ability to delete (i.e. not states which are predefined or shared with them).
 
-        A confirmation modal is shown as default when using this button, although this can be disabled using the `confirmModal` option.
-        
-        This button is used within the StateRestore extension. It won't do anything if removing states is disabled using the `remove` option of the `-type stateRestoreConfig` configuration object of the parent button.
-		
-		The text in the button can be set by using the `-init language.buttons.removeAllStates` option.
+		When selected a confirmation modal will be shown asking the user if they are sure they wish to proceed with the deletion.
+
+		There are no additional configuration options for this button beyond the standard set offered by all buttons (e.g. `-init buttons.buttons.text`).
+
+		Please note that the label for this button defaults to "Remove all states", which can be customised with the `stateRestore.button.statesRemoveAll` language option (see `-init language.stateRestore`), or with the button's `text` option.
+
+		Furthermore, this button provides an alias name (`removeAllStates`) to assist with porting from StateRestore v1. The new name is preferred and should be used for all new projects.
 	</description>
 
-    <option name="config" type="confirmModal" default="true" since="1.5.0">
-        This option allows for StateRestore to be configured, particularly for column specific options.
-    </option>
-
-	<example title="removeAllStates button modify text"><![CDATA[
-DataTable.ext.buttons.removeAllStates.text = function (e, dt, node, config) {
-	return 'Remove Everything';
-};
+	<example title="Delete all button in a state list"><![CDATA[
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'statesList',
+					buttons: [
+						'stateCreate',
+						'statesRemoveAll',
+						{extend: 'spacer', style: 'bar'}
+					]
+				}
+			]
+		}
+	},
+	stateRestore: true
+});
 ]]></example>
 </dt-button>

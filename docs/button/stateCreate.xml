@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>createState</name>
+	<summary>Creates a new state, based on of the current state of the table.</summary>
+	<since>2.0.0</since>
+
+	<description>
+		This button creates a new state and adds it to the collection stored by StateRestore. The state stored is based on the current state of the table.
+
+		There are no additional configuration options for this button beyond the standard set offered by all buttons (e.g. `-init buttons.buttons.text`).
+
+		Please note that the label for this button defaults to "Create new state", which can be customised with the `stateRestore.button.create` language option (see `-init language.stateRestore`), or with the button's `text` option.
+
+		Furthermore, this button provides an alias name (`createState`) to assist with porting from StateRestore v1. The new name is preferred and should be used for all new projects.
+	</description>
+
+	<example title="Use the `stateCreate` button"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: true
+});
+]]></example>
+</dt-button>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>statesList</name>
+	<summary>Collection used to show the saved states</summary>
+	<since>2.0.0</since>
+
+	<description>
+		This button is a key interaction point for StateRestore. It makes use of a button collection (a dropdown) to show a list of saved states. Each saved state can have a split button (i.e. sub-options), depending on its configuration, which a user can use to edit, replace, delete or copy a state.
+
+		Please note that the label for this button defaults to "Saved states", which can be customised with the `stateRestore.button.statesList` language option (see `-init language.stateRestore`), or with the button's `text` option.
+
+		Furthermore, this button provides an alias name (`savedStates`) to assist with porting from StateRestore v1. The new name is preferred and should be used for all new projects.
+	</description>
+
+	<option name="buttons" type="array" default="[]">
+		This option will accept an array with string or object entities, defining a list of buttons that will be shown before the list of states. All buttons defined by [the Buttons library](https://datatables.net/ref/core/button/) and any custom buttons can be used here - although you will likely wish to keep them relevant to saved states.
+	</option>
+
+	<example title="Simple use case"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: true
+});
+]]></example>
+
+
+	<example title="Using the `buttons` property to add create and remove all buttons in the dropdown"><![CDATA[
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'statesList',
+					buttons: [
+						'stateCreate',
+						'statesRemoveAll',
+						{extend: 'spacer', style: 'bar'}
+					]
+				}
+			]
+		}
+	},
+	stateRestore: true
+});
+]]></example>
+</dt-button>
