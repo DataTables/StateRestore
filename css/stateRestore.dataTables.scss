@@ -160,3 +160,21 @@ div.dtsb-field {
         margin: 0;
     }
 }
+
+button.dtsb-button {
+    padding: 0.25em 1em;
+    cursor: pointer;
+    border: var(--dtb-button_border);
+    border-radius: var(--dtb-button_border-radius);
+    box-shadow: var(--dtb-button_box-shadow);
+    background: var(--dtb-button_background);
+    color: var(--dtb-button_color);
+
+    &:hover {
+        border: var(--dtb-button_border-hover);
+        border-radius: var(--dtb-button_border-radius-hover);
+        box-shadow: var(--dtb-button_box-shadow-hover);
+        background: var(--dtb-button_background-hover);
+        color: var(--dtb-button_color-hover);
+    }
+}

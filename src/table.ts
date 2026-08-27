@@ -29,8 +29,10 @@ export class StateTable {
 		hostDt: Api;
 	};
 
+	/**
+	 * Show the table in a States modal
+	 */
 	public display() {
-		// Show in the modal
 		this.s.states.modal(
 			'Saved states',
 			Dom.s(this.s.statesDt.table().container()),
@@ -46,7 +48,7 @@ export class StateTable {
 		}
 
 		let states = ctx._states;
-		let table = Dom.c('table').classAdd('display');
+		let table = Dom.c('table').classAdd(States.classes.table.table);
 
 		let statesDt = new DataTable(table[0], {
 			columns: this._columns(states),
@@ -91,9 +93,15 @@ export class StateTable {
 			statesDt.clear().rows.add(states.storeGet(true).slice()).draw();
 		});
 
-		hostDt.on('stateRestore', () => {
-			statesDt.clear().rows.add(states.storeGet(true).slice()).draw();
-		});
+		hostDt
+			.on('stateRestore', () => {
+				// When the states change, we just redraw completely
+				statesDt.clear().rows.add(states.storeGet(true).slice()).draw();
+			})
+			.on('draw', () => {
+				// Update for the "current" state indicator
+				statesDt.rows().invalidate().draw();
+			});
 	}
 
 	/**
@@ -106,14 +114,11 @@ export class StateTable {
 	private _buttons(states: States, hostDt: Api) {
 		// Create button is always active
 		let buttons: any[] = [];
-		
+
 		if (states.can('create')) {
 			// Create button is always enabled if available
 			buttons.push({
-				text: hostDt.i18n(
-					'stateRestore.button.create',
-					'Create state'
-				),
+				text: hostDt.i18n('stateRestore.button.create', 'Create state'),
 				action: () => {
 					states.add(hostDt.state());
 				}
@@ -177,8 +182,7 @@ export class StateTable {
 
 				states.add(
 					state.state,
-					state.name +
-						hostDt.i18n('stateRestore.copyName', ' (copy)')
+					state.name + hostDt.i18n('stateRestore.copyName', ' (copy)')
 				);
 			}
 		});
@@ -218,6 +222,12 @@ export class StateTable {
 			{
 				title: 'Name',
 				data: 'name'
+			},
+			{
+				title: 'Active',
+				data: null,
+				className: 'dt-center',
+				render: data => (states.isCurrent(data.state) ? icons.tick : '')
 			}
 		];
 
@@ -225,8 +235,8 @@ export class StateTable {
 			columns.push({
 				title: 'Default',
 				data: 'isDefault',
-				className: 'dt-body-center',
-				render: data => data ? icons.tick : ''
+				className: 'dt-center',
+				render: data => (data ? icons.tick : '')
 			});
 		}
 
@@ -234,7 +244,7 @@ export class StateTable {
 			columns.push({
 				title: 'Share',
 				data: null,
-				className: 'dt-body-center',
+				className: 'dt-center',
 				render: data => {
 					if (data.isSharedIn) {
 						return icons.shareIn;
@@ -250,7 +260,10 @@ export class StateTable {
 
 		columns.push({
 			data: null,
-			defaultContent: '<button>Load</button>',
+			defaultContent:
+				'<button class="' +
+				States.classes.table.button +
+				'">Load</button>',
 			orderable: false
 		});
 

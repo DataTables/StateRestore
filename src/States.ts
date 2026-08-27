@@ -38,7 +38,11 @@ export default class States {
 		modal: {
 			wide: 'dtsb-modal_wide'
 		},
-		removeMessage: 'dtsb-remove-message'
+		removeMessage: 'dtsb-remove-message',
+		table: {
+			table: 'display',
+			button: 'dtsb-button'
+		}
 	};
 
 	public static defaults: Defaults = {

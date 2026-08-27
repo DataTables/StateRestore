@@ -157,6 +157,10 @@ export interface Classes {
 		wide: string
 	};
 	removeMessage: string;
+	table: {
+		table: string;
+		button: string;
+	}
 }
 
 export interface Defaults {
