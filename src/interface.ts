@@ -18,6 +18,70 @@ declare module 'datatables.net' {
 		stateRestore?: Config;
 	}
 
+	interface Language {
+		/**
+		 * StateRestore language options
+		 */
+		stateRestore?: {
+			stateRestore?: {
+				button?: {
+					create?: string;
+					duplicate?: string;
+					edit?: string;
+					empty?: string;
+					replace?: string;
+					remove?: string;
+					statesRemoveAll?: string;
+					statesList?: string;
+				},
+				create?: {
+					title?: string;
+					info?: string;
+				},
+				edit?: {
+					title?: string;
+					info?: string;
+				},
+				replace?: {
+					title?: string;
+					info?: string;
+				},
+				remove?: {
+					button?: string;
+					title?: string;
+					message?: {
+						_?: string;
+						1?: string;
+					}
+				},
+				state?: {
+					name?: string;
+					nameInfo?: string;
+					nameRequired?: string;
+					defaults?: string;
+					defaultsInfo?: string;
+					save?: string;
+					share?: string;
+					shareInfo?: string;
+					properties?: string;
+				},
+				table?: {
+					active?: string;
+					default?: string;
+					entries?: {
+						1?: string;
+						_?: string;
+					},
+					load?: string;
+					name?: string;
+					share?: string;
+				},
+				copyName?: string;
+				newName?: string;
+			}
+		}
+	}
+
 	interface Context {
 		/**
 		 * State restore collection

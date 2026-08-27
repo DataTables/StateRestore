@@ -51,7 +51,7 @@ export class StateTable {
 		let table = Dom.c('table').classAdd(States.classes.table.table);
 
 		let statesDt = new DataTable(table[0], {
-			columns: this._columns(states),
+			columns: this._columns(states, hostDt),
 			layout: {
 				topStart: {
 					buttons: this._buttons(states, hostDt)
@@ -67,11 +67,14 @@ export class StateTable {
 			scrollCollapse: true,
 			rowId: 'id',
 			language: {
-				// TODO should extend from the host table
-				entries: {
-					_: 'states',
-					1: 'state'
-				}
+				entries: hostDt.i18n(
+					'stateRestore.table.entries',
+					{
+						_: 'states',
+						1: 'state'
+					},
+					false
+				)
 			}
 		} as any);
 
@@ -213,18 +216,18 @@ export class StateTable {
 	 * @param states Host states instance
 	 * @returns Column array
 	 */
-	private _columns(states: States) {
+	private _columns(states: States, hostDt: Api) {
 		let columns: any[] = [
 			{
 				orderable: false,
 				render: (DataTable.render as any).select()
 			},
 			{
-				title: 'Name',
+				title: hostDt.i18n('stateRestore.table.name', 'Name'),
 				data: 'name'
 			},
 			{
-				title: 'Active',
+				title: hostDt.i18n('stateRestore.table.active', 'Active'),
 				data: null,
 				className: 'dt-center',
 				render: data => (states.isCurrent(data.state) ? icons.tick : '')
@@ -233,7 +236,7 @@ export class StateTable {
 
 		if (states.can('default')) {
 			columns.push({
-				title: 'Default',
+				title: hostDt.i18n('stateRestore.table.default', 'Default'),
 				data: 'isDefault',
 				className: 'dt-center',
 				render: data => (data ? icons.tick : '')
@@ -242,7 +245,7 @@ export class StateTable {
 
 		if (states.can('share')) {
 			columns.push({
-				title: 'Share',
+				title: hostDt.i18n('stateRestore.table.share', 'Share'),
 				data: null,
 				className: 'dt-center',
 				render: data => {
@@ -263,7 +266,9 @@ export class StateTable {
 			defaultContent:
 				'<button class="' +
 				States.classes.table.button +
-				'">Load</button>',
+				'">' +
+				hostDt.i18n('stateRestore.table.load', 'Load') +
+				'</button>',
 			orderable: false
 		});
 

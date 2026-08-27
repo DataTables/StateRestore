@@ -19,6 +19,7 @@ The language strings used by StateRestore can be broken down into the following 
 * Buttons
 * Editing form
 * Editing modal
+* Table display
 * Misc.
 
 ### Buttons
@@ -70,6 +71,21 @@ The editing modal is reused with different strings to indicate what action is be
 | `.remove.button` | Modal submit button. | `-string Delete` |
 | `.remove.title` | Modal title for deleting a state. | `-string Delete state` |
 | `.remove.message` | Message asking the user to confirm the deletion. | `-string Are you sure you wish to remove the following states:` |
+
+
+### Table display
+
+When using the `-button statesTable` button to display and manage the list of states, the following strings are used. Note that the button strings described above are also used for the control button labels. These keys are available under `language.stateRestore.table`:
+
+| Object key | Description | Default value |
+| ---------- | ----------- | ------------- |
+| `.active` | Column header for the active status | `-string Active` |
+| `.default` | Column header for the default status | `-string Default` |
+| `.entries` | The object type for the table - i.e. a translation of "States" | `-string states` |
+| `.load` | Load button text | `-string Load` |
+| `.name` | Column header for the state name | `-string Name` |
+| `.share` | Column header for the share state | `-string Share` |
+
 
 ### Misc
 
@@ -125,6 +141,17 @@ stateRestore: {
 		share: "Share:",
 		shareInfo: "Other users of the system will be able to use states that you share. They will not be able to edit the state.",
 		properties: "State properties:"
+	},
+	table: {
+		active: 'Active',
+		default: 'Default',
+		entries: {
+			1: 'entry',
+			_: 'entries'
+		},
+		load: 'Load',
+		name: 'Name',
+		share: 'Share'
 	},
 	copyName: " (copy)",
 	newName: "State #"
