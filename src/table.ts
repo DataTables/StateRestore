@@ -1,5 +1,6 @@
 import DataTable, { Api, Dom } from 'datatables.net';
 import States from './States';
+import icons from './icons';
 
 // Quite a few `any`s in this file, as Select is not a dependency of
 // StateRestore as a whole, but is for this view of the states.
@@ -224,16 +225,26 @@ export class StateTable {
 			columns.push({
 				title: 'Default',
 				data: 'isDefault',
-				className: 'dt-body-center'
+				className: 'dt-body-center',
+				render: data => data ? icons.tick : ''
 			});
 		}
 
 		if (states.can('share')) {
 			columns.push({
 				title: 'Share',
-				data: 'isSharedIn',
-				className: 'dt-body-center'
-				// TODO rendering for in or out status
+				data: null,
+				className: 'dt-body-center',
+				render: data => {
+					if (data.isSharedIn) {
+						return icons.shareIn;
+					}
+					else if (data.isSharedOut) {
+						return icons.shareOut;
+					}
+
+					return '';
+				}
 			});
 		}
 

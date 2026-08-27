@@ -1,3 +1,11 @@
+/*! StateRestore for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license/plus
+ *
+ * SVG icons: ISC License
+ * Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT).
+ * All other copyright (c) for Lucide are held by Lucide Contributors 2022.
+ */
+
 import DataTable, { Api, Dom, Options, util } from 'datatables.net';
 import States from './States';
 import stateTable from './table';
