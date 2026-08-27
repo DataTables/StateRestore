@@ -51,7 +51,7 @@ export class StateTable {
 			columns: this._columns(states),
 			layout: {
 				topStart: {
-					buttons: this._buttons(states)
+					buttons: this._buttons(states, hostDt)
 				}
 			},
 			paging: false,
@@ -95,36 +95,119 @@ export class StateTable {
 		});
 	}
 
-	private _buttons(states: States) {
-		let buttons: any[] = [
-			{
-				text: 'Create state',
+	/**
+	 * Create the list of buttons
+	 *
+	 * @param states Host states instance
+	 * @param hostDt Host DataTable
+	 * @returns Array of buttons
+	 */
+	private _buttons(states: States, hostDt: Api) {
+		// Create button is always active
+		let buttons: any[] = [];
+		
+		if (states.can('create')) {
+			// Create button is always enabled if available
+			buttons.push({
+				text: hostDt.i18n(
+					'stateRestore.button.create',
+					'Create state'
+				),
 				action: () => {
-					states.add(this.s.hostDt.state());
+					states.add(hostDt.state());
 				}
-			}
-		];
+			});
+		}
 
-		// TODO
-		// Edit
-		// Replace
-		// Copy
+		// A common action between buttons is to get the state, and moreover,
+		// the actions can typically only be performed on states the user owns.
+		let selectedData = (own: boolean) => {
+			let selected = this.s.statesDt
+				.rows({ selected: true } as any)
+				.data()
+				.toArray();
 
+			return own
+				? selected.filter(s => !s.isSharedIn && !s.isStatic)
+				: selected;
+		};
+
+		// Edit button - only enable for a single state, and one which the user
+		// can actually edit
 		buttons.push({
-			extend: 'selected',
-			text: 'Delete',
+			text: hostDt.i18n('stateRestore.button.edit', 'Edit'),
 			action: () => {
-				let state = this.s.statesDt.rows({selected: true} as any).data();
+				this.s.states.edit(selectedData(true)[0]);
+			},
+			init: function (dt) {
+				this.disable();
 
-				if (state) {
-					this.s.states.remove(state.toArray());
-				}
+				dt.on('select deselect', () => {
+					this.enable(selectedData(true).length === 1);
+				});
+			}
+		});
+
+		// Replace button - same as edit
+		buttons.push({
+			extend: 'selectedSingle',
+			text: hostDt.i18n('stateRestore.button.replace', 'Replace'),
+			action: () => {
+				let state = selectedData(true)[0];
+
+				states.edit(state, { state: this.s.statesDt.state() });
+			},
+			init: function (dt) {
+				this.disable();
+
+				dt.on('select deselect', () => {
+					this.enable(selectedData(true).length === 1);
+				});
+			}
+		});
+
+		// Copy button - any row can be copied (allowing it here in the table,
+		// while the list view doesn't have a duplicate for one's own states)
+		buttons.push({
+			extend: 'selectedSingle',
+			text: hostDt.i18n('stateRestore.button.duplicate', 'Copy'),
+			action: () => {
+				let state = selectedData(true)[0];
+
+				states.add(
+					state.state,
+					state.name +
+						hostDt.i18n('stateRestore.copyName', ' (copy)')
+				);
+			}
+		});
+
+		// Delete button - can only delete one's own states
+		buttons.push({
+			text: hostDt.i18n('stateRestore.button.remove', 'Delete'),
+			action: () => {
+				let state = selectedData(true);
+
+				this.s.states.remove(state);
+			},
+			init: function (dt) {
+				this.disable();
+
+				dt.on('select deselect', () => {
+					this.enable(selectedData(true).length !== 0);
+				});
 			}
 		});
 
 		return buttons;
 	}
 
+	/**
+	 * Define the columns for the DataTable
+	 *
+	 * @param states Host states instance
+	 * @returns Column array
+	 */
 	private _columns(states: States) {
 		let columns: any[] = [
 			{

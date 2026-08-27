@@ -27,7 +27,7 @@ StateRestore makes use [of the Buttons extension](https://datatables.net/manual/
 
 | Object key | Description | Default value |
 | ---------- | ----------- | ------------- |
-| `.create` | Label for `-button stateCreate` | `-string Create new state` |
+| `.create` | Label for `-button stateCreate` | `-string Create state` |
 | `.duplicate` | Sub-button that can be used to duplicate a shared in or predefined state. | `-string Copy` |
 | `.edit` | Sub-button to trigger the editing of a state's properties. | `-string Edit` |
 | `.empty` | Shown in place of the state list when there are no saved states. | `-string No saved states` |
@@ -86,7 +86,7 @@ By default there is no `stateRestore` object attached to the `DataTables.default
 ```js
 stateRestore: {
 	button: {
-		create: "Create new state",
+		create: "Create state",
 		duplicate: "Copy",
 		edit: "Edit",
 		empty: "No saved states",

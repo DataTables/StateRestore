@@ -360,16 +360,14 @@ export default class States {
 		if (this.s.modalLayers.length) {
 			let layer = this.s.modalLayers[this.s.modalLayers.length - 1];
 
-			setTimeout(() => {
-				States.modal(
-					layer.title,
-					layer.body,
-					layer.wide ? this.classes.modal.wide : '',
-					() => {
-						this.modalClose();
-					}
-				);
-			}, 10);
+			States.modal(
+				layer.title,
+				layer.body,
+				layer.wide ? this.classes.modal.wide : '',
+				() => {
+					this.modalClose();
+				}
+			);
 		}
 	}
 

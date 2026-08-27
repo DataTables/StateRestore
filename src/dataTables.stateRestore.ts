@@ -21,7 +21,7 @@ DataTable.ext.buttons.stateCreate = {
 			this.disable();
 		}
 	},
-	text: dt => dt.i18n('stateRestore.button.create', 'Create new state')
+	text: dt => dt.i18n('stateRestore.button.create', 'Create state')
 };
 
 DataTable.ext.buttons.statesRemoveAll = {
