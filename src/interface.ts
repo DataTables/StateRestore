@@ -215,10 +215,15 @@ export interface Classes {
 		info: string;
 		label: string;
 		value: string;
-		input: string;
+		input: {
+			checkbox: string;
+			text: string;
+		},
+		checkboxOption: string;
 	};
 	modal: {
-		wide: string
+		button: string;
+		table: string;
 	};
 	removeMessage: string;
 	table: {

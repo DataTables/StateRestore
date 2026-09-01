@@ -22,21 +22,33 @@ if (!DataTable || !DataTable.versionCheck || !DataTable.versionCheck('3')) {
 	throw 'DataTables StateRestore requires DataTables 3 or newer';
 }
 
+const _modal = Dom.c('div').classAdd('dtsb-modal');
+const _modalCloseButton = Dom.c('button')
+	.classAdd('dtsb-modal-close')
+	.attr('type', 'button')
+	.html('&times;');
+const _modalBackground = Dom.c('div').classAdd('dtsb-modal-background');
+
 export default class States {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Statics
 	 */
 	public static classes: Classes = {
 		field: {
+			checkboxOption: '',
 			container: 'dtsb-field',
 			error: 'dtsb-field-error',
 			info: 'dtsb-field-info',
 			label: 'dtsb-field-label',
 			value: 'dtsb-field-value',
-			input: 'dtsb-field-input'
+			input: {
+				checkbox: 'dtsb-field-input',
+				text: 'dtsb-field-input'
+			}
 		},
 		modal: {
-			wide: 'dtsb-modal_wide'
+			button: 'dtsb-modal-button',
+			table: 'dtsb-modal_wide'
 		},
 		removeMessage: 'dtsb-remove-message',
 		table: {
@@ -69,11 +81,16 @@ export default class States {
 		predefined: []
 	};
 
-	public static modalClose() {
+	public static modalClean() {
 		Dom.s(document).off('keyup.dtsr');
+		_modal.empty().classRemove(States.classes.modal.table);
+		_modalCloseButton.off('click');
+		_modalBackground.off('click');
+	}
 
-		Dom.s('div.dtsb-modal').remove();
-		Dom.s('div.dtsb-modal-background').remove();
+	public static modalClose() {
+		_modal.remove();
+		_modalBackground.remove();
 	}
 
 	public static modal(
@@ -82,14 +99,10 @@ export default class States {
 		className: string,
 		close: () => void
 	) {
-		let modal = Dom.c('div').classAdd('dtsb-modal').classAdd(className);
-		let closeButton = Dom.c('button')
-			.classAdd('dtsb-modal-close')
-			.attr('type', 'button')
-			.html('&times;')
-			.on('click', () => {
-				close();
-			});
+		_modal.classAdd(className);
+		_modalCloseButton.on('click', () => {
+			close();
+		});
 
 		// Esc will close and cancel the modal
 		Dom.s(document).on('keyup.dtsr', e => {
@@ -100,25 +113,24 @@ export default class States {
 			}
 		});
 
-		modal
+		_modal
 			.append(
 				Dom.c('div')
 					.classAdd('dtsb-modal-header')
 					.text(title)
-					.append(closeButton)
+					.append(_modalCloseButton)
 			)
 			.append(Dom.c('div').classAdd('dtsb-modal-body').append(body))
 			.appendTo('body');
 
-		Dom.c('div')
-			.classAdd('dtsb-modal-background')
+		_modalBackground
 			.on('click', () => {
 				close();
 			})
 			.appendTo('body');
 
 		// Initial focus
-		modal
+		_modal
 			.find('input, button')
 			.filter(':not(.dtsb-modal-close)')
 			.eq(0)
@@ -341,11 +353,11 @@ export default class States {
 			wide
 		});
 
-		// Remove any existing modal
-		States.modalClose();
+		// Tidy any existing modal
+		States.modalClean();
 
 		// And display
-		States.modal(title, body, wide ? this.classes.modal.wide : '', () => {
+		States.modal(title, body, wide ? this.classes.modal.table : '', () => {
 			this.modalClose();
 		});
 	}
@@ -355,7 +367,7 @@ export default class States {
 	 */
 	public modalClose() {
 		// Tidy up from the last modal
-		States.modalClose();
+		States.modalClean();
 
 		// Pop off the last state
 		this.s.modalLayers.pop();
@@ -367,11 +379,15 @@ export default class States {
 			States.modal(
 				layer.title,
 				layer.body,
-				layer.wide ? this.classes.modal.wide : '',
+				layer.wide ? this.classes.modal.table : '',
 				() => {
 					this.modalClose();
 				}
 			);
+		}
+		else {
+			// Otherwise we close it off
+			States.modalClose();
 		}
 	}
 
@@ -644,7 +660,7 @@ export default class States {
 				.attr('name', name)
 				.attr('autocomplete', 'off')
 				.val(value)
-				.classAdd(classes.input)
+				.classAdd(classes.input.text)
 				.appendTo(inputContainer);
 		}
 		else if (type === 'checkbox') {
@@ -653,7 +669,7 @@ export default class States {
 				.attr('type', 'checkbox')
 				.attr('name', name)
 				.prop('checked', value)
-				.classAdd(classes.input)
+				.classAdd(classes.input.checkbox)
 				.appendTo(inputContainer);
 		}
 
@@ -686,18 +702,24 @@ export default class States {
 			.classAdd(classes.value)
 			.appendTo(field);
 
-		checkboxes.forEach(checkbox => {
+		checkboxes.forEach((checkbox, i) => {
 			Dom.c('div')
+				.classAdd(this.classes.field.checkboxOption)
 				.appendTo(inputContainer)
 				.append(
 					Dom.c('input')
 						.attr('type', 'checkbox')
+						.attr('id', checkbox.name)
 						.attr('name', checkbox.name)
 						.prop('checked', checkbox.value)
-						.classAdd(classes.input)
+						.classAdd(classes.input.checkbox)
 						.appendTo(inputContainer)
 				)
-				.append(Dom.c('span').text(checkbox.label));
+				.append(
+					Dom.c('label')
+						.text(checkbox.label)
+						.attr('for', checkbox.name)
+				);
 		});
 
 		return field;
@@ -932,7 +954,7 @@ export default class States {
 		for (const [name, manipulator] of Object.entries(stateManipulators)) {
 			if (includes[name] === null) {
 				// User selectable, depends on the checkbox state
-				if (!body.find(`input[name=""]`).prop('checked')) {
+				if (!body.find(`input[name="${name}"]`).prop('checked')) {
 					manipulator.remove(state.state);
 				}
 			}
@@ -956,7 +978,7 @@ export default class States {
 			.classAdd('dtsb-modal-buttons')
 			.append(
 				Dom.c('button')
-					.classAdd('dtsb-modal-button')
+					.classAdd(this.classes.modal.button)
 					.text(text)
 					.on('click', function () {
 						Dom.s(this)

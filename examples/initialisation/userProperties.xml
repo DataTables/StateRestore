@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="5">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables buttons staterestore">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		include: {
+			order: null,
+			pageStart: null,
+			pageLength: null,
+			search: null
+		}
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">User controlled properties</title>
+
+<info><![CDATA[
+
+StateRestore has the ability to either include, exclude or allow the user to select if a property in a DataTables state object is to be included in the saved state or not. It is important to note here that the states stored by StateRestore can be partial states - so for example, you could have it save the search properties, but not the paging and ordering information.
+
+You can either force the inclusion or exclusion of a state property, but you can also let the end user make the decision themselves. This is done with the `-init stateRestore.include` object. Setting the properties to `null` will result in a checkbox being shown to the end user, allowing them to select the parts of the state they want to save.
+
+In this example, paging, ordering and global search options are provided to the user.
+
+]]></info>
+
+</dt-example>

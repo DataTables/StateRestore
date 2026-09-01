@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="2">
+<dt-example table-type="html" table-class="display nowrap" order="3">
 
 <css lib="datatables buttons staterestore"/>
 
@@ -31,7 +31,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-In the [previous example](./simple.html), we've seen how StateRestore can be setup with independent buttons for creating a new state and listing saved states. In this example, we demonstrate the ability to add extra buttons into the states list by using its `buttons` property.
+In the [previous example](./listView.html), we've seen how StateRestore can be setup with independent buttons for creating a new state and listing saved states. In this example, we demonstrate the ability to add extra buttons into the states list by using its `buttons` property.
 
 Specifically, `-button statesList` provides a `buttons` property which is an array of other buttons. You could use any other button here, including the export buttons, but it makes sense to keep the state control buttons together!
 

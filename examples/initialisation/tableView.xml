@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons select staterestore"/>
+
+<js lib="datatables buttons select staterestore">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['statesTable', 'pageLength']
+		}
+	},
+	stateRestore: true
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">Table view</title>
+
+<info><![CDATA[
+
+StateRestore provides two UI options to display and manage states. The first, shown in this example, is table based in a modal window, triggered from a `-button statesTable` button. In the table, the user is shown all states they have access to, indicators for if the state is active, default or if it is shared (if using an Ajax data source).
+
+The user also has options to create new states, edit states and remove those they no longer need. The table showing the states is a full DataTable, so all the regular features such as ordering and search are available!
+
+Next: [List view](./listView.html).
+
+]]></info>
+
+</dt-example>

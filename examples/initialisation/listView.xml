@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="2">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables buttons staterestore">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: true
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">List view</title>
+
+<info><![CDATA[
+
+The second interface for StateRestore makes use of a dropdown button (`-button collection`) to show a list of the states that are available, allowing them to be quickly restored and provides sub-buttons for editing control of states. This example demonstrates that with the `-button statesList` button.
+
+Furthermore, to create a new state, in this case `-button stateCreate` is provided to the end user, providing a simple way for a new state to be quickly created based on the table's state when the button is clicked.
+
+Next: [Combining buttons](./listView-singleButton.html).
+
+]]></info>
+
+</dt-example>
