@@ -1,40 +1,11 @@
-@use 'common.scss';
-
-div.dtsr-form-row {
-    display: block;
-}
-
-div.dtsr-creation-form {
-    width: 100%;
-}
-
-div.checkbox {
-    cursor: default;
-}
-
-span.dtsr-check-label {
-    padding-left: 3px;
-}
-
-input.dtsr-input {
-    display: inline-block;
-    width: auto;
-}
-
-span.dtsr-confirmation-message {
-    font-size: 1rem;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    line-height: 2.5em;
-}
-
-div.dtsr-form-row, div.dtsr-confirmation-text {
-    label.dtsr-name-label {
-        line-height: 1.5;
-        padding-top: 10px;
+div.dtsr-modal {
+    table.dataTable td {
+        vertical-align: middle;
     }
-}
 
-div.dtsr-confirmation-text, div.dtsr-creation-form {
-    margin-top: 1.5em;
+    div.dtsr-check {
+        label {
+            padding-left: 0.75em;
+        }
+    }
 }
