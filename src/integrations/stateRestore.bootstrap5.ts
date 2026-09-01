@@ -31,7 +31,8 @@ const domEls = {
 		)
 };
 
-// Get the Bootstrap library
+// Get the Bootstrap library either from it being registered on DataTables (i.e
+// in an ESM environment), or on the window if present there.
 function getBs() {
 	let dtBs = DataTable.use('bootstrap') as any;
 
@@ -48,6 +49,9 @@ function getBs() {
 	);
 }
 
+/*
+ * Bootstrap modal for StateRestore.
+ */
 StateRestore.modal = function (title, content, className, closeCb) {
 	if (!bsModal) {
 		let localBs = getBs();
@@ -101,6 +105,9 @@ StateRestore.modalClose = function () {
 	}
 };
 
+/*
+ * Setup classes for integration
+ */
 util.object.assignDeep(StateRestore.classes, {
 	field: {
 		checkboxOption: 'form-check',

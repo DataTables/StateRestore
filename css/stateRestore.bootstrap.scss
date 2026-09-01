@@ -1,11 +1,26 @@
-@use 'common.scss';
 
-span.dtsr-check-label {
-    padding-left: 3px;
-}
+div.dtsr-modal {
+    div.form-text {
+        font-size: 0.8em;
+    }
 
-input.dtsr-input {
-    display: inline-block;
-    width: auto;
-    margin-left: 3px;
+    #dtsr-default {
+        position: relative;
+        margin-left: 0;
+    }
+
+    table td {
+        vertical-align: middle;
+    }
+
+    div.dtsb-modal-buttons {
+        text-align: right;
+    }
+
+    // BS3 uses explicit checkbox / label, so we need to make it look like that,
+    // rather than changing the markup just for BS3.
+    div.form-check label {
+        font-weight: normal;
+        padding-left: 0.75em;
+    }
 }

@@ -1,41 +1,15 @@
-@use 'common.scss';
 
-input.dtsr-input {
-    display: inline-block;
-    width: auto;
-    margin-left: 3px;
-}
-
-div.dtsr-creation-form {
-    div.dtsr-form-row {
-        label.dtsr-name-label {
-            width: 33.3%;
-            display: inline-block;
-            text-align: left !important;
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-
-        input.dtsr-name-input {
-            width: 66.6%;
-            display: inline-block;
-        }
-    }
-}
-
-div.dtsr-confirmation-text {
-    margin-top: 1.5em;
-
-    label.dtsr-name-label {
-        width: 33.3%;
-        display: inline-block;
-        text-align: left !important;
-        padding-right: 15px;
-        padding-left: 15px;
+div.dtsr-modal {
+    div.form-text {
+        font-size: 0.8em;
     }
 
-    input.dtsr-name-input {
-        width: 66.6%;
-        display: inline-block;
+    #dtsr-default {
+        position: relative;
+        margin-left: 0;
+    }
+
+    table td {
+        vertical-align: middle;
     }
 }
