@@ -1,92 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="4">
+<dt-example table-type="html" table-class="display nowrap" order="6">
 
-<css lib="datatables buttons staterestore scroller"/>
+<css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons scroller">
+<js lib="datatables buttons staterestore">
 <![CDATA[
 
-$('#example').DataTable({
-	ajax: {
-		url: '../data/stateRestoreLoad.php',
-		dataSrc: 'data'
-	},
+new DataTable('#example', {
 	layout: {
 		topStart: {
-			buttons: [
-				'createState',
-				{
-					extend: 'savedStates',
-					config: {
-						ajax: '../data/stateRestoreSave.php'
-					}
-				},
-				'removeAllStates'
-			]
+			buttons: ['stateCreate', 'statesList', 'pageLength']
 		}
 	},
-	scrollY: 200,
-	scrollCollapse: true
+	stateRestore: {
+		ajax: '..?..'
+	}
 });
 
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	ajax: {
-		url: '../data/stateRestoreLoad.php',
-		dataSrc: 'data'
-	},
-	layout: {
-		topStart: {
-			buttons: [
-				'createState',
-				{
-					extend: 'savedStates',
-					config: {
-						ajax: '../data/stateRestoreSave.php'
-					}
-				},
-				'removeAllStates'
-			]
-		}
-	},
-	scrollY: 200,
-	scrollCollapse: true
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">Ajax Loading and Saving</title>
+<title lib="StateRestore">Ajax states</title>
 
 <info><![CDATA[
 
-This example shows how the StateRestore extension can be operated over ajax.
-
-To do this the `ajax` option of the `-type stateRestoreConfig` configuration object has to be set to a url that will be used when attempting to save the states. States are then loaded again via the tables own ajax url. If there is a `stateRestore` property in the json that is initially passed then the states present there will be loaded into the table.
-
-It is worth noting that we only provide the client side implementation. You will have to write your own server side implementation to save states for longer than the current session.
-
-The Scroller extension is also being used here. This is because it is a common use of loading over ajax.
 
 ]]></info>
-
-<custom-table>
-<table id="example" class="display nowrap" style="width:100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>ZIP / Post code</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-    </table>
-</custom-table>
 
 </dt-example>

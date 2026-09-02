@@ -48,11 +48,11 @@ new DataTable('#example', {
 ]]>
 </js>
 
-<title lib="StateRestore">Predefined states - No creation</title>
+<title lib="StateRestore">No state creation</title>
 
 <info><![CDATA[
 
-We've seen in [a previous example](./predefined.html) how states can be defined by the developer implementing the table, so the end user immediately has states available to them. This can be really useful for complex data sets to allow different "views" into the table. There might be times where those are the only states you want to present though - i.e. no option for the end user to create their own states.
+We've seen in [a previous example](./main.html) how states can be defined by the developer implementing the table, so the end user immediately has states available to them. This can be really useful for complex data sets to allow different "views" into the table. There might be times where those are the only states you want to present though - i.e. no option for the end user to create their own states.
 
 This example demonstrates how that can be done. First note that there is no `-button stateCreate` button, and furthermore notice that `-init stateRestore canCreate` is set in the initialisation object. This ensures that the sub-button allowing the user to duplicate the state and then customise it is not available.
 

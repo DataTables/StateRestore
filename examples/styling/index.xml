@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example order="0">
 
-<title lib="StateRestore">StateRestore styling integrations</title>
+<title lib="StateRestore">Styling integrations</title>
 
-<js lib="jquery" />
+<js lib="datatables" />
 <info><![CDATA[
 
-This is the section for showing how StateRestore appears for each of the 7 styling frameworks supported by DataTables.
+This set of examples demonstrate how StateRestore appears in the styling frameworks supported by DataTables.
 
 ]]></info>
 

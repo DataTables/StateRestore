@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example order="0">
+
+<title lib="StateRestore">Predefined states</title>
+
+<js lib="datatables" />
+<info><![CDATA[
+
+This set of examples demonstrate how you can provide a set of states for your end user to select from. Useful if you know how the table is likely to be used (e.g. specific sets of columns or filters).
+
+]]></info>
+
+</dt-example>

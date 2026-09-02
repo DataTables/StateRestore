@@ -3,9 +3,11 @@
 
 <title lib="StateRestore">StateRestore examples</title>
 
-<js lib="jquery" />
+<js lib="datatables" />
 <info><![CDATA[
-This is the StateRestore extension for DataTables.
+
+StateRestore provides the end user with state management for DataTables, allowing them to save a table's state (locally or via Ajax), the restore it from their available list of states. States can be predefined, or shared between users (when using Ajax). This examples demonstrate the capabilities of StateRestore.
+
 ]]></info>
 
 </dt-example>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example order="0">
+
+<title lib="StateRestore">DataTables extensions</title>
+
+<js lib="datatables" />
+<info><![CDATA[
+
+This set of examples demonstrates how StateRestore integrates with the other DataTables extensions that can have a saveable state (not all of them can - e.g. KeyTable doesn't store which cell is focused). The extensions each have their state storage option set so you can select if the state will be stored or not, so you can experiment with the integrations.
+
+]]></info>
+
+</dt-example>

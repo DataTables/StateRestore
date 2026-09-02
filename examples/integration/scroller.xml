@@ -1,64 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="1">
+<dt-example table-type="scroller" table-class="display nowrap" order="4">
 
 <css lib="datatables buttons staterestore scroller"/>
 
-<js lib="jquery datatables staterestore buttons scroller">
+<js lib="datatables buttons staterestore scroller">
 <![CDATA[
 
-$('#example').DataTable({
-	ajax: '../data/2500.txt',
+new DataTable('#example', {
+	ajax: '../../Scroller/examples/data/2500.txt',
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates']
+			buttons: ['stateCreate', 'statesList']
 		}
 	},
 	scrollY: 200,
 	scrollCollapse: true,
-	scroller: true
+	scroller: true,
+	stateRestore: {
+		include: {
+			scroller: null
+		}
+	}
 });
 
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	ajax: '../data/2500.txt',
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	},
-	scrollY: 200,
-	scrollCollapse: true,
-	scroller: true
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">Scroller Integration</title>
+<title lib="StateRestore">Scroller</title>
 
 <info><![CDATA[
 
-This example shows how the StateRestore extension behaves alongside the `-init scroller` extension. The scroll position of Scroller is able to be stored and restored when using StateRestore.
+The [Scroller extension](https://datatables.net/manual/extensions/scroller) for DataTables provides high performance virtual scroller for DataTables, allowing long lists of data to be displays as if it were a single continuous display, but without the overhead of actually displaying everything all at once! The scroll position is part of the DataTables' state and thus can interact with StateRestore, as demonstrated in this example.
+
+The `scroller` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the Scroller position in the state.
 
 ]]></info>
-
-<custom-table>
-<table id="example" class="display nowrap" style="width:100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>ZIP / Post code</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-    </table>
-</custom-table>
 
 </dt-example>

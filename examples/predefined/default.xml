@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="4">
+<dt-example table-type="html" table-class="display nowrap" order="3">
 
 <css lib="datatables buttons staterestore"/>
 
@@ -41,11 +41,11 @@ new DataTable('#example', {
 ]]>
 </js>
 
-<title lib="StateRestore">Predefined states - default</title>
+<title lib="StateRestore">Default state</title>
 
 <info><![CDATA[
 
-When you are adding [predefined states](./predefined.html), you might wish to make one of them the default state of the table when it is loaded. This is possible through the `isDefault` property of the `-type StateRestore.Predefined` objects in the `-init stateRestore.predefined` array.
+When you are adding [predefined states](./main.html), you might wish to make one of them the default state of the table when it is loaded. This is possible through the `isDefault` property of the `-type StateRestore.Predefined` objects in the `-init stateRestore.predefined` array.
 
 This example is identical to the simple predefined case, but here the _Search and order_ state is flagged as the default, and if you load the page (or reload), you'll see that this is the state that is applied to the table.
 

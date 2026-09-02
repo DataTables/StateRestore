@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="6">
+<dt-example table-type="html" table-class="display nowrap" order="2">
 
-<css lib="datatables buttons staterestore colreorder buttons"/>
+<css lib="datatables buttons colreorder staterestore"/>
 
-<js lib="jquery datatables staterestore buttons colreorder buttons">
+<js lib="datatables buttons colreorder staterestore">
 <![CDATA[
 
-$('#example').DataTable({
+new DataTable('#example', {
 	colReorder: true,
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates', 'colvis']
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: {
+		include: {
+			columnOrder: null
 		}
 	}
 });
@@ -18,26 +23,13 @@ $('#example').DataTable({
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	colReorder: true,
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates', 'colvis']
-		}
-	}
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">ColReorder Integration</title>
+<title lib="StateRestore">Column order</title>
 
 <info><![CDATA[
 
-This example shows how the StateRestore extension behaves alongside the ColReorder extension, which adds the ability for the end user to change the column order through click and drag.
+The [ColReorder extension](https://datatables.net/manual/extensions/colreorder) for DataTables provides the end user with the ability to reorder columns to suit their needs. This example demonstrates StateRestore's ability to save and restore the order of columns as set by ColReorder.
+
+The `columnOrder` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the column order in the state.
 
 ]]></info>
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="3">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables buttons staterestore">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'colvis']
+		}
+	},
+	stateRestore: {
+		include: {
+			columnVisibility: null
+		}
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">Column visibility buttons</title>
+
+<info><![CDATA[
+
+The `-button colvis` provides an easy way for an end user to select which columns they want to see in the DataTable. This example demonstrates StateRestore's ability to save and restore column visibility.
+
+The `columnVisibility` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the column visibility status in the state.
+
+]]></info>
+
+</dt-example>

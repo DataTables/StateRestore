@@ -1,81 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="1">
+<dt-example table-type="html-index" table-class="display nowrap" order="6">
 
 <css lib="datatables buttons staterestore select"/>
 
-<js lib="jquery datatables staterestore buttons select">
+<js lib="datatables buttons staterestore select">
 <![CDATA[
 
-$('#example').DataTable({
-	ajax: '../data/objects.txt',
-	columns: [
-		{ data: 'name' },
-		{ data: 'position' },
-		{ data: 'office' },
-		{ data: 'salary' }
+new DataTable('#example', {
+	columnDefs: [
+		{
+			orderable: false,
+			render: DataTable.render.select(),
+			targets: 0
+		}
 	],
 	layout: {
 		topStart: {
-			buttons: ['createState', 'savedStates']
+			buttons: ['stateCreate', 'statesList']
 		}
 	},
-	rowId: 'id',
-	select: true
+	order: [[1, 'asc']],
+	select: {
+		style: 'os',
+		selector: 'td:first-child'
+	},
+	stateRestore: {
+		include: {
+			select: null
+		}
+	}
 });
 
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	ajax: '../data/objects.txt',
-	columns: [
-		{ data: 'name' },
-		{ data: 'position' },
-		{ data: 'office' },
-		{ data: 'salary' }
-	],
-	layout: {
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	},
-	rowId: 'id',
-	select: true
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">Select Integration</title>
+<title lib="StateRestore">Select</title>
 
 <info><![CDATA[
 
-This example shows how the StateRestore extension behaves alongside the Select extension. The selections made in Select are able to be stored and restored when using StateRestore.
+The [Select extension](https://datatables.net/manual/extensions/select) for DataTables allows the items in the table (usually rows, as in this example) to be selected. The items that are selected are part of the state of the table, and thus will integration with StateRestore. This example demonstrates that ability.
+
+The `select` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the row selection in the state.
 
 ]]></info>
-
-<custom-table>
-<table id="example" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Salary</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Salary</th>
-        </tr>
-    </tfoot>
-</table>
-</custom-table>
 
 </dt-example>

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" table-class="display nowrap" order="1">
+<dt-example table-type="html" table-class="display nowrap" order="5">
 
 <css lib="datatables buttons staterestore searchbuilder datetime"/>
 
-<js lib="jquery datatables staterestore buttons searchbuilder datetime">
+<js lib="datatables buttons staterestore searchbuilder datetime">
 <![CDATA[
 
-$('#example').DataTable({
+new DataTable('#example', {
 	layout: {
-		top1Start: 'searchBuilder',
+		top: 'searchBuilder',
 		topStart: {
-			buttons: ['createState', 'savedStates']
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: {
+		include: {
+			searchBuilder: null
 		}
 	}
 });
@@ -18,26 +23,13 @@ $('#example').DataTable({
 ]]>
 </js>
 
-<js-vanilla>
-<![CDATA[
-
-new DataTable('#example', {
-	layout: {
-		top1Start: 'searchBuilder',
-		topStart: {
-			buttons: ['createState', 'savedStates']
-		}
-	}
-});
-
-]]>
-</js-vanilla>
-
-<title lib="StateRestore">SearchBuilder Integration</title>
+<title lib="StateRestore">SearchBuilder</title>
 
 <info><![CDATA[
 
-This example shows how the StateRestore extension behaves alongside the SearchBuilder extension. The search criteria constructed in SearchBuilder are able to be stored and restored when using StateRestore.
+The [SearchBuilder extension](https://datatables.net/manual/extensions/searchbuilder) for DataTables presents the end user with an easy to use UI that allows them to build up complex search expressions. The resulting search term is included in the DataTables state and this example demonstrates the integration between StateRestore and SearchBuilder.
+
+The `searchBuilder` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the SearchBuilder filter in the state.
 
 ]]></info>
 

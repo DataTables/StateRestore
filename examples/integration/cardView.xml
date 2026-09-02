@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons cardview staterestore"/>
+
+<js lib="datatables buttons cardview staterestore">
+<![CDATA[
+
+new DataTable('#example', {
+	cardView: true,
+	layout: {
+		topStart: {
+			buttons: [
+				'stateCreate',
+				'statesList',
+				{
+					extend: 'collection',
+					text: 'Display mode',
+					buttons: ['cardView', 'tableView', 'autoView']
+				}
+			]
+		}
+	},
+	stateRestore: {
+		include: {
+			cardView: null
+		}
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">CardView</title>
+
+<info><![CDATA[
+
+The [CardView extension](https://datatables.net/manual/extensions/cardview) for DataTables provides the ability to change between a card display of the source data, or the regular table display. The `-button cardView` and `-button tableView` buttons provide the ability for the end user to toggle between the two modes manually and this can be included in saved states, as shown in this example.
+
+The `cardView` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the CardView mode in the state.
+
+]]></info>
+
+</dt-example>
