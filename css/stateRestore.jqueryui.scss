@@ -1,1 +1,12 @@
-@use 'common.scss';
+@use 'stateRestore.dataTables.scss';
+
+div.dtsr-jqui-modal {
+	div.dtsr-jqui-modal-content {
+		padding-top: 1em;
+	}
+
+	div.dtsb-modal-buttons {
+		padding-top: 1em;
+		text-align: right;
+	}
+}

@@ -129,7 +129,7 @@ util.object.assignDeep(StateRestore.classes, {
 		table: 'large'
 	},
 	table: {
-		table: 'table table-striped table-hover',
+		table: 'table hover',
 		button: 'button secondary small'
 	}
 });
