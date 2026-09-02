@@ -46,9 +46,11 @@ export default class States {
 				text: 'dtsb-field-input'
 			}
 		},
+		form: '',
 		modal: {
 			button: 'dtsb-modal-button',
-			table: 'dtsb-modal_wide'
+			table: 'dtsb-modal_wide',
+			form: ''
 		},
 		removeMessage: 'dtsb-remove-message',
 		table: {
@@ -357,9 +359,14 @@ export default class States {
 		States.modalClean();
 
 		// And display
-		States.modal(title, body, wide ? this.classes.modal.table : '', () => {
-			this.modalClose();
-		});
+		States.modal(
+			title,
+			body,
+			wide ? this.classes.modal.table : this.classes.modal.form,
+			() => {
+				this.modalClose();
+			}
+		);
 	}
 
 	/**
@@ -805,7 +812,7 @@ export default class States {
 		cb: (s: State) => void
 	) {
 		let body = Dom.c('div');
-		let form = Dom.c('form').appendTo(body);
+		let form = Dom.c('form').classAdd(this.classes.form).appendTo(body);
 		let dt = this.s.dt;
 
 		if (info) {

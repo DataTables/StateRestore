@@ -1,79 +1,18 @@
-@use 'common.scss';
 
-span.dtsr-check-label {
-    padding-left: 3px;
-}
-
-span.dtsr-name-label, span.dtsr-confirmation-message {
-    padding-right: 3px;
-}
-
-div.dtsr-confirmation {
-    text-align: center;
-}
-
-span.dtsr-confirmation-message {
-    padding-top: 0.678571em;
-    padding-bottom: 0.678571em;
-    font-size: 1rem;
-}
-
-span.dtsr-emptyStates {
-    font-size: 1rem;
-    padding: 5px !important;
-}
-
-div.dt-button-collection {
-    div.ui.basic.vertical.buttons {
-        padding: 4px;
-        padding-bottom: 0px;
-        background: white !important;
-
-        h3 {
-            font-size: 1.5rem;
-            line-height: 2rem;
-        }
-        div.dt-btn-split-wrapper {
-            margin-bottom: 4px;
-    
-            button.button {
-                margin-bottom: 4px;
-                border: 1px solid rgba(34, 36, 38, .15) !important;
-            }
-    
-            button.dt-btn-split-drop {
-                margin-left: -1px;
-            }
-        }
-
-        button.dt-btn-split-drop-button {
-            border: 1px solid rgba(34, 36, 38, 0.15);
-            border-radius: 0.285714rem;
-            margin-bottom: 4px;
-        }
+div.dtsr-modal {
+    // Fomantic uses a span for info text, we've got a div.
+    div.info.text {
+        column-count: 1;
     }
-}
 
-input.dtsr-name-input {
-    border: 1px solid rgba(24, 26, 28, 0.15);
-    border-radius: 4.6px;
-    line-height: 20px;
-    padding-top: 10.8px;
-    padding-bottom: 10.8px;
-    font-size: 16px;
-}
-
-label.dtsr-name-label, label.form-check-label {
-    font-size: 14.9px;
-}
-
-div.dtsr-form-row, div.dtsr-confirmation-text {
-    label.dtsr-name-label {
-        line-height: 1.5;
-        padding-top: 5px;
+    // Doesn't appear to be a vertical checkbox list option
+    div.ui.checkbox {
+        display: block;
+        margin-bottom: 0.5em;
     }
-}
 
-div.dtsr-creation {
-    padding: 1em;
+    // No pull right?
+    div.dtsb-modal-buttons {
+        text-align: right;
+    }
 }

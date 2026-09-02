@@ -221,9 +221,11 @@ export interface Classes {
 		},
 		checkboxOption: string;
 	};
+	form: string;
 	modal: {
 		button: string;
 		table: string;
+		form: string;
 	};
 	removeMessage: string;
 	table: {
