@@ -30,6 +30,7 @@ const _modal = Dom.c('div')
  * Bootstrap modal for StateRestore.
  */
 StateRestore.modal = function (title, content, className, closeCb) {
+	let background = _modal.find('div.modal-background');
 	let header = _modal.find('header p');
 	let body = _modal.find('section.modal-card-body');
 	let close = _modal.find('button.delete');
@@ -40,6 +41,9 @@ StateRestore.modal = function (title, content, className, closeCb) {
 	_modal.classAdd(className);
 
 	// Close event handler
+	background.on('click.dtsr', () => {
+		closeCb();
+	});
 	close.on('click.dtsr', () => {
 		closeCb();
 	});
@@ -53,6 +57,7 @@ StateRestore.modal = function (title, content, className, closeCb) {
 };
 
 StateRestore.modalClean = function () {
+	let background = _modal.find('div.modal-background');
 	let header = _modal.find('header p');
 	let body = _modal.find('section.modal-card-body');
 	let close = _modal.find('button.delete');
@@ -61,6 +66,7 @@ StateRestore.modalClean = function () {
 	body.empty();
 	_modal.classRemove(StateRestore.classes.modal.table);
 
+	background.off('.dtsr');
 	close.off('.dtsr');
 	_modal.off('.dtsr');
 };

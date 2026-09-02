@@ -1,24 +1,27 @@
-@use 'common.scss';
 
-span.dtsr-check-label {
-    padding-left: 3px;
-}
+div.reveal.dtsr-modal {
+    input {
+        margin-bottom: 0;
+    }
 
-input.dtsr-check-box {
-    margin-bottom: 0px;
-}
+    div.dtsr-field {
+        margin-bottom: 1em;
+    }
 
-button.dtsr-creation-button {
-    margin-bottom: 0px;
-}
+    table button {
+        margin-bottom: 0;
+    }
 
-input.dtsr-input {
-    display: inline-block;
-    width: auto;
-    font-size: 1rem;
-    margin-left: 3px;
-}
+    .dtsr-info {
+        font-size: 0.8em;
+        color: #555;
+    }
 
-div.dtsr-confirmation-text, div.dtsr-creation-form {
-    margin-top: 1.5em;
+    div.dtsr-check-container {
+        padding-left: 1em;
+    }
+
+    div.dtsb-modal-buttons {
+        text-align: right;
+    }
 }
