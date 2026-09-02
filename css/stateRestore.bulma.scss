@@ -8,4 +8,16 @@ div.dtsr-modal {
             padding-left: 0.75em;
         }
     }
+
+    // Don't use a footer, so need to add border radius
+    div.modal-card {
+        border-end-end-radius: var(--bulma-modal-card-foot-radius);
+        border-end-start-radius: var(--bulma-modal-card-foot-radius);
+    }
+
+    // No wide option for the modal in Bulma
+    &.dtsr-modal-lg div.modal-card {
+        --bulma-modal-content-width: 52rem;
+        max-width: 100%;
+    }
 }

@@ -79,7 +79,7 @@ util.object.assignDeep(StateRestore.classes, {
 		error: 'help has-text-danger',
 		info: 'help',
 		label: 'label',
-		value: '',
+		value: 'control',
 		input: {
 			checkbox: '',
 			text: 'input'
@@ -87,7 +87,7 @@ util.object.assignDeep(StateRestore.classes, {
 	},
 	modal: {
 		button: 'button is-primary is-pulled-right',
-		table: 'modal-lg'
+		table: 'dtsr-modal-lg'
 	},
 	table: {
 		table: 'table is-striped is-hoverable',
