@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="StateRestore">
-	<name>createState</name>
+	<name>stateCreate</name>
 	<summary>Creates a new state, based on of the current state of the table.</summary>
 	<since>2.0.0</since>
 
@@ -24,4 +24,9 @@ new DataTable('#myTable', {
 	stateRestore: true
 });
 ]]></example>
+
+
+	<related>-button statesList</related>
+	<related>-button statesTable</related>
+	<related>-button removeAllStates</related>
 </dt-button>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="StateRestore">
+	<name>statesTable</name>
+	<summary>State management in a popup table</summary>
+	<since>2.0.0</since>
+
+	<description>
+		This button provides a primary interaction point for StateRestore to the end user (typically you would select between this button or `-button statesList`). When activated it will cause a modal to show with a table listing the states that are available to the end user. Those states can be loaded through a button in the table, or managed (i.e. edited, updated or removed) using a list of buttons above the table. The create state button is also available there, or you can select to present `-button stateCreate` at the top level if you prefer.
+
+		The table of states is a regular DataTable, which as scrolling enabled and shows a summary of information about the states (name, sharing status, default, etc). 
+
+		Please note that the label for this button defaults to "Saved states", which can be customised with the `stateRestore.button.statesTable` language option (see `-init language.stateRestore`), or with the button's `text` option.
+	</description>
+
+	<example title="Simple use case"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['statesTable]
+		}
+	},
+	stateRestore: true
+});
+]]></example>
+
+	<related>-button stateCreate</related>
+	<related>-button statesList</related>
+</dt-button>

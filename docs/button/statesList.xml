@@ -47,4 +47,7 @@ new DataTable('#example', {
 	stateRestore: true
 });
 ]]></example>
+
+	<related>-button stateCreate</related>
+	<related>-button statesTable</related>
 </dt-button>

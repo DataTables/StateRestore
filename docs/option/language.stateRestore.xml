@@ -36,6 +36,7 @@ StateRestore makes use [of the Buttons extension](https://datatables.net/manual/
 | `.remove` | Sub-button to delete the selected state. | `-string Delete:` |
 | `.statesRemoveAll` | Label for `-button statesRemoveAll`. | `-string Remove all states` |
 | `.statesList` | Label for `-button statesList`. | `-string Saved states` |
+| `.statesTable` | Label for `-button statesTable`. | `-string Saved states` |
 
 
 ### Editing form
