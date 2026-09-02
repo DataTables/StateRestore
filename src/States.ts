@@ -526,6 +526,8 @@ export default class States {
 		let dt = new DataTable.Api(host);
 		let opts = dt.init().stateRestore;
 
+		DataTable.plus('__BUILD_DATE__');
+
 		this.c = util.object.assignDeep(
 			{},
 			States.defaults,
