@@ -61,10 +61,7 @@ const local: Storage = {
 	create: async function (dt, state, host) {
 		if (!state.id) {
 			// Create a random uid to act as the id for a local state
-			state.id = Array.from(
-				crypto.getRandomValues(new Uint8Array(16)),
-				b => b.toString(16).padStart(2, '0')
-			).join('');
+			state.id = host.randomId();
 		}
 
 		host.storeAdd(state);

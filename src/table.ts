@@ -152,25 +152,31 @@ export class StateTable {
 				this.disable();
 
 				dt.on('select deselect', () => {
-					this.enable(selectedData(true).length === 1);
+					this.enable(
+						selectedData(true).length === 1 &&
+							selectedData(false).length === 1
+					);
 				});
 			}
 		});
 
-		// Replace button - same as edit
+		// Replace button - same as edit for enablement
 		buttons.push({
 			extend: 'selectedSingle',
 			text: hostDt.i18n('stateRestore.button.replace', 'Replace'),
 			action: () => {
 				let state = selectedData(true)[0];
 
-				states.edit(state, { state: this.s.statesDt.state() });
+				states.edit(state, { state: hostDt.state() });
 			},
 			init: function (dt) {
 				this.disable();
 
 				dt.on('select deselect', () => {
-					this.enable(selectedData(true).length === 1);
+					this.enable(
+						selectedData(true).length === 1 &&
+							selectedData(false).length === 1
+					);
 				});
 			}
 		});
@@ -181,7 +187,7 @@ export class StateTable {
 			extend: 'selectedSingle',
 			text: hostDt.i18n('stateRestore.button.duplicate', 'Copy'),
 			action: () => {
-				let state = selectedData(true)[0];
+				let state = selectedData(false)[0];
 
 				states.add(
 					state.state,
@@ -202,7 +208,11 @@ export class StateTable {
 				this.disable();
 
 				dt.on('select deselect', () => {
-					this.enable(selectedData(true).length !== 0);
+					this.enable(
+						selectedData(true).length !== 0 &&
+							selectedData(true).length ===
+								selectedData(false).length
+					);
 				});
 			}
 		});

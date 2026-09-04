@@ -1,4 +1,4 @@
-import { Api, Dom, StateLoad as DTState } from 'datatables.net';
+import { AjaxOptions, Api, Dom, StateLoad as DTState } from 'datatables.net';
 import States from './States';
 import { ManipulatorOptions } from './manipulators';
 import { StateTable } from './table';
@@ -236,7 +236,7 @@ export interface Classes {
 
 export interface Defaults {
 	/** Ajax URL to save / load states */
-	ajax: string | null;
+	ajax: AjaxOptions | string | null;
 
 	/**
 	 * The end user is allowed to create new states
@@ -379,9 +379,10 @@ export interface Storage {
 	 * Get all states
 	 *
 	 * @param dt Host DataTable
+	 * @param host States object
 	 * @returns Array of the states
 	 */
-	read: (dt: Api) => Promise<State[]>;
+	read: (dt: Api, host: States) => Promise<State[]>;
 
 	/**
 	 * State a new state

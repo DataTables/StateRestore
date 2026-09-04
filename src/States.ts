@@ -1,4 +1,5 @@
 import DataTable, {
+	AjaxOptions,
 	Api,
 	Context,
 	Dom,
@@ -215,6 +216,19 @@ export default class States {
 	}
 
 	/**
+	 * Get the base Ajax configuration
+	 *
+	 * @returns Ajax configuration object
+	 */
+	public ajax(): AjaxOptions {
+		return typeof this.c.ajax === 'string'
+			? {
+					url: this.c.ajax
+			  }
+			: this.c.ajax;
+	}
+
+	/**
 	 * Is an end user allowed to perform a particular action
 	 *
 	 * @returns Flag
@@ -339,6 +353,15 @@ export default class States {
 	}
 
 	/**
+	 * Error message to display
+	 *
+	 * @param msg 
+	 */
+	public error(msg: string) {
+		alert(msg);
+	}
+
+	/**
 	 * Display a modal, allowing for layering, so a modal can have an action
 	 * that will display an "inner" modal, but uses the same modal display,
 	 * and then allows it to be returned to.
@@ -396,6 +419,17 @@ export default class States {
 			// Otherwise we close it off
 			States.modalClose();
 		}
+	}
+
+	/**
+	 * Get a random ID for client-side states
+	 *
+	 * @returns A random ID
+	 */
+	public randomId() {
+		return Array.from(crypto.getRandomValues(new Uint8Array(16)), b =>
+			b.toString(16).padStart(2, '0')
+		).join('');
 	}
 
 	/**
@@ -618,7 +652,7 @@ export default class States {
 		this.s.loading = true;
 
 		// Get the initial states
-		let restore = await this.s.storage.read(this.s.dt);
+		let restore = await this.s.storage.read(this.s.dt, this);
 
 		this.s.store.push(...restore);
 
@@ -983,17 +1017,14 @@ export default class States {
 	 * @returns DOM element with the button
 	 */
 	private _submitButton(text: string) {
+		// No need for a click submit event handler as this button will trigger
+		// the `submit` event for the form.
 		return Dom.c('div')
 			.classAdd('dtsb-modal-buttons')
 			.append(
 				Dom.c('button')
 					.classAdd(this.classes.modal.button)
 					.text(text)
-					.on('click', function () {
-						Dom.s(this)
-							.closest<HTMLFormElement>('form')[0]
-							.requestSubmit();
-					})
 			);
 	}
 }
