@@ -27,6 +27,12 @@ const ajax: Storage = {
 								.map(s => {
 									let state = Object.assign({}, s);
 
+									// Already JSON
+									if (typeof s.state === 'object') {
+										return s.state;
+									}
+
+									// Or string based
 									try {
 										state.state = JSON.parse(s.state);
 										return state;
@@ -93,6 +99,13 @@ const ajax: Storage = {
 							) {
 								let state = json.data[0];
 
+								// Already JSON
+								if (typeof state.state === 'object') {
+									host.storeAdd(state);
+									resolve(true);
+								}
+
+								// Or string based
 								try {
 									state.state = JSON.parse(state.state);
 									host.storeAdd(state);
@@ -159,6 +172,13 @@ const ajax: Storage = {
 							) {
 								let state = json.data[0];
 
+								// Already JSON
+								if (typeof state.state === 'object') {
+									host.storeReplace(oldState, state);
+									resolve(true);
+								}
+
+								// Or string based
 								try {
 									state.state = JSON.parse(state.state);
 									host.storeReplace(oldState, state);

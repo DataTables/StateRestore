@@ -6,20 +6,29 @@
 
 	<type type="string">
 		<description>
-			As a string, this option sets the URL that should be used to get and set saved states.
+			As a string, this option sets the URL that should be used to get and set saved states. POST is used for the requests.
 		</description>
 	</type>
 
-	<type type="object">
+	<type type="DataTable.AjaxOptions">
 		<description>
 			As an object, this option will define the Ajax request options that will be used to get and set saved states. Please see `-type DataTable.AjaxOptions` for the full details of the properties that this object can take.
 		</description>
 	</type>
 
 	<description>
+		StateRestore has the ability to use remote storage to save states, allowing a user to define a state on one computer, and then use it on another, when logged in with their account. State information is requested from and sent via Ajax to a specific path, given by this parameter.
 
-TODO
+		The end point defined by this parameter will be used for loading, creating, editing and deletion actions. The specifics of the action that each request requires the server to perform is defined by the `action` data parameter. Please see the [Ajax section of the StateRestore manual](/manual/extensions/staterestore/ajax) for full details of the data that is sent to the server.
 
+		Additionally, the server-side libraries for DataTables have full support for StateRestore's Ajax capabilities - please see the documentation for each at:
+
+		* [Node.js](/manual/server/nodejs/staterestore)
+		* [.NET](/manual/server/net/staterestore)
+		* [PHP](/manual/server/php/staterestore)
+		* [Python](/manual/server/python/staterestore)
+
+		In the most simple case, this property should be set a string to define the Ajax end point. If you would like more control over the Ajax request, use it as an object with a `url` property set, and any of the other properties available through `-type DataTable.AjaxOptions` that you need.
 	</description>
 
 	<example title="Ajax load and save state information"><![CDATA[
@@ -31,6 +40,24 @@ new DataTable('#myTable', {
 	},
 	stateRestore: {
 		ajax: '/states/myTable'
+	}
+});
+]]></example>
+
+	<example title="Set a custom header in the Ajax request"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		ajax: {
+			url: '/states/myTable',
+			headers: {
+				'x-csrftoken': TOKEN
+			}
+		}
 	}
 });
 ]]></example>

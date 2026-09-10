@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" table-class="display nowrap" order="4">
 
-<css lib="datatables buttons staterestore scroller"/>
+<css lib="datatables buttons staterestore"/>
 
-<js lib="jquery datatables staterestore buttons scroller">
+<js lib="jquery datatables staterestore buttons">
 <![CDATA[
 
 new DataTable('#example', {
