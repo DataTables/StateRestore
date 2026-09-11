@@ -142,7 +142,7 @@ export default class States {
 
 	public static manipulators = stateManipulators;
 
-	public static version = '2.0.0-dev';
+	public static version = '2.0.0';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Properties
