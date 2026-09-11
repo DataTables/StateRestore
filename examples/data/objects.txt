@@ -516,22 +516,32 @@
 	],
 	"stateRestore": [
 		{
-      "name": "Engineers by Office",
-      "state": {
-        "search": {
-          "search": "engineer"
-        },
-        "order": [[2, "asc"]]
-      }
-    },
+			"name": "Engineers by Office",
+			"state": {
+				"search": {
+					"search": "engineer"
+				},
+				"order": [
+					[
+						2,
+						"asc"
+					]
+				]
+			}
+		},
 		{
-      "name": "Tokyo by Salary",
-      "state": {
-        "search": {
-          "search": "tokyo"
-        },
-        "order": [[5, "asc"]]
-      }
-    }
+			"name": "Tokyo by Salary",
+			"state": {
+				"search": {
+					"search": "tokyo"
+				},
+				"order": [
+					[
+						5,
+						"asc"
+					]
+				]
+			}
+		}
 	]
 }
