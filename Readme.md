@@ -1,37 +1,58 @@
 # StateRestore
 
-The StateRestore extension for DataTables builds on the `stateSave` option within DataTable's core. This allows users to save multiple different states and reload them at any time, not just at initialisation.
+StateRestore is a state management UI for DataTables. It allows users to create multiple table states which can be saved and then reloaded at any time. This is particularly useful for complex tables where specific views are common and the user might wish to toggle between states.
 
-# Installation
+States can be saved locally, or for a more permanent part of your table's features, to a remote database via Ajax, which also provides the ability for users to share states.
 
-The StateRestore extension is available on the [DataTables CDN](https://cdn.datatables.net/#StateRestore) and in the [download builder](/download). See the [documentation](http://datatables.net/extensions/staterestore/) for full details.
 
-# NPM
+## Features
 
-You can also install it from [NPM](/download/npm/#StateRestore)
+StateRestore provides the following features to enhance a DataTable:
 
-If you prefer to use a package manager such as NPM or Bower, distribution repositories are available with software built from this repository under the name `datatables.net-staterestore. Styling packages for Bootstrap, Foundation and other styling libraries are also available by adding a suffix to the package name.
+* Two state management interfaces to suit your needs:
+  * Table based
+  * Dropdown list based
+* Default state for when a table is loaded
+* First class Ajax storage
+* Optional sharing of states
+* Customisation of which table settings are saved
+* Comprehensive API
+* Full support in our [server-side libraries](/manual/server)
 
-Please see the DataTables [NPM](//datatables.net/download/npm) installation page for further information. The [DataTables installation manual](//datatables.net/manual/installation) also has details on how to use package managers with DataTables.
+And more! As with all DataTables extensions it can of course have all language strings localised, has complete documentation, and has styling integration with all of the DataTables supported styling libraries (e.g. Bootstrap, Bulma, Fomantic UI and others).
 
-# Basic Usage
 
-StateRestore is initialised by adding the `createState` and `savedStates` buttons into the DataTables [`buttons`](https://datatables.net/reference/option/buttons) option. Further options can be specified using these button's `config` property - see the documentation for details. For example:
+## Installation
+
+The easiest way to install any extension for for DataTables, including StateRestore, is with the [download builder](/download). With the download builder, you select the styling and aspects of DataTables suite that you want, and it will generate the packages / install commands for you to use.
+
+The download builder includes options for direct loading with `script` and `link` tags, details for using a package manager such as [npm](https://www.npmjs.com/) and [NuGet](https://www.nuget.org/), or a download option if you wish to have the files locally.
+
+
+## Basic Usage
+
+In its most simple case, you can enable StateRestore by simply setting `stateRestore: true` as an option in the DataTables initialisation.
 
 ```js
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Blfrtip',
-        buttons:['createState', 'savedStates']
-    });
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: true
 });
 ```
 
-# Documentation / Support
+Note that you will typically use one of `statesList` or `statesTable` in the `buttons` array with the [Buttons extension](https://datatables.net/extensions/buttons/), as these define the UI that the end user will interact with. `stateCreate` is another common StateRestore button to use at the top level. This and the list view are used in the example above.
 
-* [Documentation](https://datatables.net/extensions/staterestore/)
+
+## Documentation / Support
+
+* Full installation, usage and documentation is [in the manual](https://datatables.net/extensions/staterestore/)
 * [DataTables support forums](http://datatables.net/forums)
 
-# GitHub
 
-If you fancy getting involved with the development of StateRestore and help make it better, please refer to its [GitHub repo](https://github.com/DataTables/StateRestore)
+## License
+
+StateRestore is part of the DataTables Plus set of extensions - a premium set of extensions that enhance the capabilities of DataTables. Please see the [information page](https://datatables.net/plus) for more details and licensing options.
