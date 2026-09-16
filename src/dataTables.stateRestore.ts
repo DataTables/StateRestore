@@ -32,7 +32,7 @@ DataTable.ext.buttons.stateCreate = {
 	text: dt => dt.i18n('stateRestore.button.create', 'Create state')
 };
 
-DataTable.ext.buttons.removeAllStates = {
+DataTable.ext.buttons.statesRemoveAll = {
 	action(e: Event, dt: Api, node: Dom, config: any) {
 		let ctx = dt.settings()[0];
 		let states = ctx._states;
