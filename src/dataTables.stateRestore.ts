@@ -188,7 +188,7 @@ DataTable.ext.buttons.removeAllStates = DataTable.ext.buttons.statesRemoveAll;
 
 // Attach a listener to the document which listens for DataTables initialisation
 // events so we can automatically initialise
-Dom.s(document).on('options.dt.stateRestore', function (e, init: Options) {
+Dom.on('options.dt.stateRestore', function (e, init: Options) {
 	if (e.namespace !== 'dt') {
 		return;
 	}

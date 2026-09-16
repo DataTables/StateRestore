@@ -5,36 +5,43 @@
 import DataTable, { Dom, util } from 'datatables.net';
 
 let fModal;
+let modalEl: Dom;
 const StateRestore = DataTable.StateRestore;
-const _modal = Dom.c('div')
-	.classAdd('reveal reveal-modal dtsr-modal')
-	.append(
-		Dom.c('button')
-			.classAdd('close-button')
-			.attr({
-				type: 'button',
-				'aria-label': 'Close'
-			})
-			.append(
-				Dom.c('span').attr('aria-hidden', 'true').html('&times;')
-			)
-	)
-	.append(Dom.c('div').classAdd('dtsr-modal-header').append(Dom.c('h4')))
-	.append(
-		Dom.c('div').classAdd('dtsr-modal-content')
-	);
+
+function assertModal() {
+	if (modalEl) {
+		return;
+	}
+
+	modalEl = Dom.c('div')
+		.classAdd('reveal reveal-modal dtsr-modal')
+		.append(
+			Dom.c('button')
+				.classAdd('close-button')
+				.attr({
+					type: 'button',
+					'aria-label': 'Close'
+				})
+				.append(
+					Dom.c('span').attr('aria-hidden', 'true').html('&times;')
+				)
+		)
+		.append(Dom.c('div').classAdd('dtsr-modal-header').append(Dom.c('h4')))
+		.append(Dom.c('div').classAdd('dtsr-modal-content'));
+}
 
 // Get the Bootstrap library either from it being registered on DataTables (i.e
 // in an ESM environment), or on the window if present there.
 function getFoundation() {
 	let F = DataTable.use('foundation') as any;
+	let win = DataTable.use('win');
 
 	if (F) {
 		return F;
 	}
 
-	if ((window as any).Foundation) {
-		return (window as any).Foundation;
+	if (win.Foundation) {
+		return win.Foundation;
 	}
 
 	throw new Error(
@@ -43,36 +50,38 @@ function getFoundation() {
 }
 
 /*
- * Bootstrap modal for StateRestore.
+ * Foundation modal for StateRestore.
  */
 StateRestore.modal = function (title, content, className, closeCb) {
+	assertModal();
+
 	let $ = DataTable.use('jq');
 
 	if (!fModal) {
-		_modal.appendTo('body');
+		modalEl.appendTo('body');
 
 		// Foundation depends on jQuery, so it must be set
 		let Foundation = getFoundation();
 
-		fModal = new Foundation.Reveal($(_modal.get(0)), {
+		fModal = new Foundation.Reveal($(modalEl.get(0)), {
 			closeOnClick: false
 		});
 	}
 
-	let header = _modal.find('div.dtsr-modal-header h4');
-	let body = _modal.find('div.dtsr-modal-content');
-	let close = _modal.find('button.close-button');
+	let header = modalEl.find('div.dtsr-modal-header h4');
+	let body = modalEl.find('div.dtsr-modal-content');
+	let close = modalEl.find('button.close-button');
 
 	// Display the content
 	header.text(title);
 	body.append(content);
-	_modal.classAdd(className);
+	modalEl.classAdd(className);
 
 	// Close event handler
 	close.on('click.dtsr', () => {
 		closeCb();
 	});
-	_modal.on('click.dtsr', e => {
+	modalEl.on('click.dtsr', e => {
 		if (Dom.s(e.target).classHas('modal')) {
 			closeCb();
 		}
@@ -81,28 +90,32 @@ StateRestore.modal = function (title, content, className, closeCb) {
 	fModal.open();
 
 	$(document).on('click.dtsr', 'div.reveal-overlay', e => {
-		if (!$(e.target).closest(_modal.get(0)).length) {
+		if (!$(e.target).closest(modalEl.get(0)).length) {
 			closeCb();
 		}
 	});
 };
 
 StateRestore.modalClean = function () {
+	assertModal();
+
 	let $ = DataTable.use('jq');
-	let header = _modal.find('div.dtsr-modal-header h4');
-	let body = _modal.find('div.dtsr-modal-content');
-	let close = _modal.find('button.close-button');
+	let header = modalEl.find('div.dtsr-modal-header h4');
+	let body = modalEl.find('div.dtsr-modal-content');
+	let close = modalEl.find('button.close-button');
 
 	header.text('');
 	body.empty();
-	_modal.classRemove(StateRestore.classes.modal.table);
+	modalEl.classRemove(StateRestore.classes.modal.table);
 
 	close.off('.dtsr');
-	_modal.off('.dtsr');
+	modalEl.off('.dtsr');
 	$(document).off('click.dtsr');
 };
 
 StateRestore.modalClose = function () {
+	assertModal();
+
 	if (fModal) {
 		fModal.close();
 	}

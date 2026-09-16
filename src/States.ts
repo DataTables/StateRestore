@@ -23,12 +23,21 @@ if (!DataTable || !DataTable.versionCheck || !DataTable.versionCheck('3')) {
 	throw 'DataTables StateRestore requires DataTables 3 or newer';
 }
 
-const _modal = Dom.c('div').classAdd('dtsb-modal');
-const _modalCloseButton = Dom.c('button')
-	.classAdd('dtsb-modal-close')
-	.attr('type', 'button')
-	.html('&times;');
-const _modalBackground = Dom.c('div').classAdd('dtsb-modal-background');
+// Package scope for the elements so they can be reused
+let _modal: Dom;
+let _modalCloseButton: Dom;
+let _modalBackground: Dom;
+
+function assertModal() {
+	if (! _modal) {
+		_modal = Dom.c('div').classAdd('dtsb-modal');
+		_modalCloseButton = Dom.c('button')
+			.classAdd('dtsb-modal-close')
+			.attr('type', 'button')
+			.html('&times;');
+		_modalBackground = Dom.c('div').classAdd('dtsb-modal-background');
+	}
+}
 
 export default class States {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -85,6 +94,8 @@ export default class States {
 	};
 
 	public static modalClean() {
+		assertModal();
+
 		Dom.s(document).off('keyup.dtsr');
 		_modal.empty().classRemove(States.classes.modal.table);
 		_modalCloseButton.off('click');
@@ -92,6 +103,8 @@ export default class States {
 	}
 
 	public static modalClose() {
+		assertModal();
+
 		_modal.remove();
 		_modalBackground.remove();
 	}
@@ -102,6 +115,8 @@ export default class States {
 		className: string,
 		close: () => void
 	) {
+		assertModal();
+
 		_modal.classAdd(className);
 		_modalCloseButton.on('click', () => {
 			close();
@@ -355,7 +370,7 @@ export default class States {
 	/**
 	 * Error message to display
 	 *
-	 * @param msg 
+	 * @param msg
 	 */
 	public error(msg: string) {
 		alert(msg);
@@ -1022,9 +1037,7 @@ export default class States {
 		return Dom.c('div')
 			.classAdd('dtsb-modal-buttons')
 			.append(
-				Dom.c('button')
-					.classAdd(this.classes.modal.button)
-					.text(text)
+				Dom.c('button').classAdd(this.classes.modal.button).text(text)
 			);
 	}
 }

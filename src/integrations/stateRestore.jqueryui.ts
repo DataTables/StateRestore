@@ -5,28 +5,38 @@
 import DataTable, { Dom, util } from 'datatables.net';
 
 let jquiModal;
+let modalEl: Dom;
 const StateRestore = DataTable.StateRestore;
-const _modal = Dom.c('div')
-	.classAdd('dtsr-jqui-modal')
-	.append(Dom.c('div').classAdd('dtsr-jqui-modal-content'));
+
+function assertModal() {
+	if (modalEl) {
+		return;
+	}
+
+	modalEl = Dom.c('div')
+		.classAdd('dtsr-jqui-modal')
+		.append(Dom.c('div').classAdd('dtsr-jqui-modal-content'));
+}
 
 /*
  * Bootstrap modal for StateRestore.
  */
 StateRestore.modal = function (title, content, className, closeCb) {
+	assertModal();
+
 	let $ = DataTable.use('jq');
 
 	if (!jquiModal) {
-		jquiModal = $(_modal.get(0)).appendTo('body').dialog({
+		jquiModal = $(modalEl.get(0)).appendTo('body').dialog({
 			autoOpen: false,
 			closeOnEscape: false,
 			maxWidth: '100%'
 		});
 	}
 
-	let header = _modal.parent().find('span.ui-dialog-title');
-	let body = _modal.parent().find('div.dtsr-jqui-modal-content');
-	let close = _modal.parent().find('div.ui-dialog-titlebar button');
+	let header = modalEl.parent().find('span.ui-dialog-title');
+	let body = modalEl.parent().find('div.dtsr-jqui-modal-content');
+	let close = modalEl.parent().find('div.ui-dialog-titlebar button');
 
 	// Display the content
 	header.text(title);
@@ -36,7 +46,7 @@ StateRestore.modal = function (title, content, className, closeCb) {
 	close.on('click.dtsr', () => {
 		closeCb();
 	});
-	_modal.on('click.dtsr', e => {
+	modalEl.on('click.dtsr', e => {
 		if (Dom.s(e.target).classHas('modal')) {
 			closeCb();
 		}
@@ -51,22 +61,25 @@ StateRestore.modal = function (title, content, className, closeCb) {
 	}
 
 	jquiModal.dialog('open');
-
 };
 
 StateRestore.modalClean = function () {
-	let header = _modal.parent().find('span.ui-dialog-title');
-	let body = _modal.parent().find('div.dtsr-jqui-modal-content');
-	let close = _modal.parent().find('div.ui-dialog-titlebar button');
+	assertModal();
+
+	let header = modalEl.parent().find('span.ui-dialog-title');
+	let body = modalEl.parent().find('div.dtsr-jqui-modal-content');
+	let close = modalEl.parent().find('div.ui-dialog-titlebar button');
 
 	header.text('');
 	body.empty();
 
 	close.off('.dtsr');
-	_modal.off('.dtsr');
+	modalEl.off('.dtsr');
 };
 
 StateRestore.modalClose = function () {
+	assertModal();
+
 	if (jquiModal) {
 		jquiModal.dialog('close');
 	}
