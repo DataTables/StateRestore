@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="5">
+
+<css lib="datatables buttons staterestore searchpanes select"/>
+
+<js lib="datatables buttons staterestore searchpanes select">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		top: 'searchPanes',
+		topStart: {
+			buttons: ['stateCreate', 'statesList']
+		}
+	},
+	stateRestore: {
+		include: {
+			searchPanes: null
+		}
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">SearchPanes</title>
+
+<info><![CDATA[
+
+The [SearchPanes extension](https://datatables.net/manual/extensions/searchpanes) for DataTables shows panels with the data for columns in the table that the end user can use to easily select from, allowing fast, intuitive and easy to use filtering of the table. The resulting search terms from SearchPanes are included in the DataTables state and this example demonstrates the integration between StateRestore and SearchPanes.
+
+The `searchPanes` option of `-init stateRestore.include` option is set to `null` in this example, so you can selectively include, or exclude, the SearchPanes filter in the state.
+
+]]></info>
+
+</dt-example>
