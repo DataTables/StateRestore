@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.bookmark.src</name>
+	<summary>Bookmark source value location</summary>
+	<since>2.1.0</since>
+
+	<type type="string">
+		<description>
+			This value can be one of the following:
+
+			* _Empty string_ (default) - bookmarking in StateRestore disabled
+			* `-string ?{name}` - Use a query / search parameter where the parameter name is defined by `{name}`
+			* `-string #` - Use the URL hash as the state identifier
+			* `-string #{name}` - Use the value after `#{name}`, from the URL hash, as the state identifier.
+		</description>
+	</type>
+
+	<description>
+		In order for StateRestore to be able to load a bookmarked state, it must be able to identify which part of the URL holds the value that will identify the state. This parameter provides that ability.
+
+		StateRestore can find the state identifier in either:
+
+		* The URL query / search parameters
+		* The URL's hash
+
+		Which to use will depend upon your application and if you are already making use of either. A hash has the benefit of not requiring a full page reload if you are linking to a state from the current page, but there is no separation of parameters in the hash. The search parameter however provide an easy to use separation method, but they can also be used to identify different content to display on the page, and thus state sharing between them might not be appropriate.
+
+		Select the correct option for your application.
+	</description>
+
+	<example title="Using a `dtsr` query parameter for the state identifier"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '?dtsr'
+		}
+	}
+});
+]]></example>
+
+	<example title="Using a hash for the state identifier"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '#'
+		}
+	}
+});
+]]></example>
+
+	<related>-init stateRestore.bookmark</related>
+	<related>-init stateRestore.bookmark.match</related>
+	<related>-init stateRestore.bookmark.src</related>
+	<related>-init stateRestore.bookmark.update</related>
+</dt-option>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="4">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables staterestore buttons">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			match: 'name',
+			src: '#dt-'
+		},
+		predefined: [{
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']],
+				search: {
+					search: ''
+				}
+			}
+		}, {
+			isDefault: true,
+			name: 'Search and order',
+			state: {
+				order: [[5, 'asc']],
+				search: {
+					search: 'San Francisco'
+				}
+			}
+		}]
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">Hash location (name matching)</title>
+
+<info><![CDATA[
+
+To round off our examples of URL options, this example demonstrates the use of a hash to indicate the state to load, this time using the state name as the identifier to match. [As before](./searchName) this should be used with caution if you allow the end user to change the name of their states, since it could impact on existing bookmarks.
+
+In this case `-init stateRestore.bookmark.src` is set to `#dt-` which tells StateRestore to look for a hash that starts with `dt-`. Anything else will be ignored.
+
+Updating the example links, we now have:
+
+* [Search - London](./hashName#dt-Search%20-%20London)
+* [Order - Position](./hashName#dt-Order%20-%20Position)
+* [Search and order](./hashName#dt-Search%20and%20order)
+
+Again, click the links to reload the page with the selected state active.
+
+Next: [No URL rewriting](./update).
+
+
+]]></info>
+
+</dt-example>

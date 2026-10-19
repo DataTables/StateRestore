@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="6">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables staterestore buttons">
+<![CDATA[
+
+const table = new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '#'
+		}
+	}
+});
+
+const Dom = DataTable.Dom;
+const list = Dom.s('#demo_info');
+
+table.on('stateRestore', () => {
+	const states = table.stateRestore.states().details();
+
+	list.empty();
+
+	states.forEach(s => {
+		Dom.c('li')
+			.append(
+				Dom.c('a')
+					.text(s.name)
+					.attr('href', './userStates#' + s.id)
+			)
+			.appendTo(list);
+	});
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">API - User defined states</title>
+
+<info><![CDATA[
+
+So far, the bookmark examples for StateRestore have focused on predefined states. However, it is of course possible to allow bookmarks to states that the end user creates. It requires a small amount of code to create the links, since they need to update automatically whenever the states list changes.
+
+We know when the states list is changed through the `-event stateRestore` event, and `api stateRestore.states().details()` can be used to get the list of states available. From there it is just a bit of DOM building! In this example I've used `-type DataTable.Dom` as a DOM library to create the elements, but you can use `document.createElement` or any other library you prefer.
+
+To use this example, create a few tables states (changing the ordering, page length, search to create unique states) and you'll see that for each a new link appears in the output box. Click on the link to have the state load.
+
+]]></info>
+
+<demo-html>
+	<div class="box">
+		<ul id="demo_info"> </ul>
+	</div>
+</demo-html>
+
+</dt-example>
