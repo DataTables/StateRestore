@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore</name>
+	<summary>StateRestore base configuration object</summary>
+	<since>2.0.0</since>
+
+	<type type="boolean">
+		<description>
+			When set to be `true`, this option will cause StateRestore to initialise along with the host DataTable, with its default parameters used for the configuration. If `false`, then StateRestore will not be configured.
+		</description>
+	</type>
+
+	<type type="object">
+		<description>
+			As an object, this option provides a way to define configuration options for StateRestore so you can customise it for your needs.
+		</description>
+	</type>
+
+	<description>
+		StateRestore is a state management library for DataTables. It provides the following features:
+
+		* Two state management interfaces to suit your needs:
+		  * Table based
+		  * Dropdown list based
+		* Default state for when a table is loaded
+		* First class Ajax storage
+		* Optional sharing of states
+		* Bookmarkable states
+		* Customisation of which table settings are saved
+		* Comprehensive API
+
+		There are two parts to enabling StateRestore for DataTables. The first is through this parameter, which is used to initialise the state management control, and perform any initial actions while the table is being loaded (e.g. checking for a bookmarked state or loading a default state). Set this option to `true` to make use of the defaults, or use as an object to customise the options.
+
+		The second part to using StateRestore is to display a UI to manage the states. This can be done with Buttons - e.g. `-button stateList` or `-button stateTable`, or through a custom UI that utilises the API if you prefer.
+	</description>
+
+	<example title="Default configuration"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: true
+});
+]]></example>
+
+	<example title="Ajax load and save state information"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		ajax: '/states/myTable'
+	}
+});
+]]></example>
+
+	<related>-init stateRestore.ajax</related>
+	<related>-init stateRestore.bookmark</related>
+	<related>-init stateRestore.canCreate</related>
+	<related>-init stateRestore.defaults</related>
+	<related>-init stateRestore.include</related>
+	<related>-init stateRestore.newName</related>
+	<related>-init stateRestore.predefined</related>
+	<related>-init stateRestore.sharing</related>
+</dt-option>

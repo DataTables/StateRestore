@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="1">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables staterestore buttons">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '?dtsr'
+		},
+		predefined: [{
+			id: 1,
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			id: 2,
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']]
+			}
+		}, {
+			id: 3,
+			isDefault: true,
+			name: 'Search and order',
+			state: {
+				order: [[5, 'asc']],
+				search: {
+					search: 'San Francisco'
+				}
+			}
+		}]
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">Search parameter (id matching)</title>
+
+<info><![CDATA[
+
+StateRestore has the ability to provide bookmarking support for states - i.e. when a page is loaded, StateRestore will check the URL to see if there is a specific state that should be loaded. This allows:
+
+1. Links to be provided to a table in a specific state
+2. The end user can load a state and then bookmark that URL for reloading at another time. The table will be restored in that state.
+
+Bookmarking in StateRestore is not enabled by default, but is easily configured using the `-init stateRestore.bookmark` configuration object - specifically the `src` property must be set. This parameter tells StateRestore if it should look in the query / search parameters, or the URI hash for the state to be loaded.
+
+In this case, `-init stateRestore.bookmark.src` is set to be `?dtsr`. The `?` tells the software that it will be a query parameter and the following part is the parameter name (`dtsr` in this case).
+
+By default the state `id` is the property that the match will be performed on (although this is configurable with `-init stateRestore.bookmark.match`), so `?dtsr=1` will load state id 1, etc.
+
+The following links demonstrate that for the three predefined states in this example:
+
+* [Search - London](?dtsr=1)
+* [Order - Position](?dtsr=2)
+* [Search and order](?dtsr=3)
+
+Click the links and the page will reload with the selected state. Obviously, if you were linking to a state on the same page, you would actually just use `-api state()` or `-api stateRestore.state().load()` to prevent the full refresh - this is just an example to show how external links might work.
+
+Next: [State name matching](./searchName).
+
+
+]]></info>
+
+</dt-example>

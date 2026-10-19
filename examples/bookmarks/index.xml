@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example order="2">
+
+<title lib="StateRestore">Bookmarking</title>
+
+<js lib="datatables" />
+<info><![CDATA[
+
+StateRestore has the ability to read and set a parameter in the page's URL that can define the state that should be loaded on initialisation. If the configured parameter is found, the state it corresponds to will be loaded.
+
+The examples in this section demonstrate the options for for bookmarking states and how they can be configured for your needs.
+
+]]></info>
+
+</dt-example>

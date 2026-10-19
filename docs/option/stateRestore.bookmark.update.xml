@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.bookmark.update</name>
+	<summary>Bookmark source value location</summary>
+	<since>2.1.0</since>
+
+	<type type="boolean">
+		<description>
+			This option can be one of:
+
+			* `true` - The page URL will be updated automatically as the user selects different states from the StateRestore UI, always reflecting the most recently loaded state.
+			* `false` - The page URL will not be updated.
+		</description>
+	</type>
+
+	<default value="true">
+		When StartRestore's bookmarking feature is enabled, the URL will be updated as the user changes states in the UI.
+	<default>
+
+	<description>
+		By default, as the end user uses the StateRestore UI to load states (`-button statesList` and `-button statesTable`), the page URL will automatically update (based on the `-init stateRestore.bookmark.src` parameter) to reflect the state that was loaded (this can be the id or the name of the loaded state - `-init stateRestore.bookmark.match`).
+
+		The dynamic updating of the URL is to allow the end user to create bookmarks based on the state loaded. However, it might not always be desirable for have this behaviour - for example you might wish to only provide links to predefined states. This parameter provides the ability to disable the automatic URL updates.
+	</description>
+
+	<example title="Don't update the URL as user loads different states"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '?dtsr',
+			update: false
+		}
+	}
+});
+]]></example>
+
+	<related>-init stateRestore.bookmark</related>
+	<related>-init stateRestore.bookmark.match</related>
+	<related>-init stateRestore.bookmark.src</related>
+	<related>-init stateRestore.bookmark.update</related>
+</dt-option>

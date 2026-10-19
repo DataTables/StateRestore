@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="2">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables staterestore buttons">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			match: 'name',
+			src: '?dtsr'
+		},
+		predefined: [{
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']]
+			}
+		}, {
+			isDefault: true,
+			name: 'Search and order',
+			state: {
+				order: [[5, 'asc']],
+				search: {
+					search: 'San Francisco'
+				}
+			}
+		}]
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">Search parameter (name matching)</title>
+
+<info><![CDATA[
+
+In the [previous example](./searchId) we saw how a query parameter can be set to a state ID to have it bookmarkable. You might fine it desirable to be able to use the state name instead of the ID, which can be done with the `-init stateRestore.bookmark.match` property, setting it to `name`.
+
+The benefit of this is that the URLs are more descriptive and the end user will understand a little easier what state is going to be loaded, since the state's name is right there. The downside is that if the state's name changes, any previous bookmark would no longer be valid! As such, you will most likely wish to only use bookmarking and name matching with `-init stateRestore.predefined` states only, and disallow end user creation of new states.
+
+The following links still make use of the `dtsr` parameter (defined by `-init stateRestore.bookmark.src`), but in this case the state name is used, rather than a state id (indeed, no state id is required for these static states):
+
+* [Search - London](?dtsr=Search%20-%20London)
+* [Order - Position](?dtsr=Order%20-%20Position)
+* [Search and order](?dtsr=Search%20and%20order)
+
+Next: [Hash state loading](./hashId).
+
+]]></info>
+
+</dt-example>

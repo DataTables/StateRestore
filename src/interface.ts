@@ -239,6 +239,42 @@ export interface Defaults {
 	ajax: AjaxOptions | string | null;
 
 	/**
+	 * Bookmark-able states configuration
+	 */
+	bookmark: {
+		/**
+		 * Should the state id or name be used as the source. The name is more
+		 * friendly in the URL, however, if you allow the user to change the
+		 * state name, after creation, it would require the bookmark to be
+		 * updated.
+		 * 
+		 * Use `name` if you are focusing on static states. Use `id` if you
+		 * allow bookmarking of user created states.
+		 */
+		match: 'id' | 'name';
+
+		/**
+		 * Source for where to look in the URL for the state to load. This can
+		 * be one of:
+		 * 
+		 * * `` {empty string} - disabled, no bookmarking
+		 * * `?{name}` - a search string / query parameter where `{name}` is the
+		 *   parameter name to use.
+		 * * `#` - a hash value with no prefix
+		 * * `#{name}` - a hash value with a StateRestore specific prefix
+		 *   defined by `{name}`.
+		 * 
+		 */
+		src: string; // `?dtsr` or `#` or `#dtsr-` etc.
+
+		/**
+		 * Indicate if the URL will be updated as the user selects different
+		 * states.
+		 */
+		update: boolean;
+	};
+
+	/**
 	 * The end user is allowed to create new states
 	 */
 	canCreate: boolean;
@@ -277,6 +313,11 @@ export interface Defaults {
 }
 
 export interface Predefined {
+	/**
+	 * State id for external reference
+	 */
+	id?: number | string | null;
+
 	/**
 	 * Name to give the state
 	 */

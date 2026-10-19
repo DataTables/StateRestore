@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="3">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables staterestore buttons">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '#'
+		},
+		predefined: [{
+			id: 1,
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			id: 2,
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']],
+				search: {
+					search: ''
+				}
+			}
+		}, {
+			id: 3,
+			isDefault: true,
+			name: 'Search and order',
+			state: {
+				order: [[5, 'asc']],
+				search: {
+					search: 'San Francisco'
+				}
+			}
+		}]
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">Hash location (id matching)</title>
+
+<info><![CDATA[
+
+We've seen in the [previous](./searchId) [two examples](./searchName) how a query parameter can be used to for state loading on initialisation. It is also possible to use a hash location. This is typically used for linking to a specific part of a document though [an anchor tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a), making it ideal for bookmarking states as well.
+
+To use a hash for state bookmarking, set `-init stateRestore.bookmark.src` to be simply `#`. The id (or name if configured) of the state is the part that follows. Updating our examples, we now have:
+
+* [Search - London](./hashId#1)
+* [Order - Position](./hashId#2)
+* [Search and order](./hashId#3)
+
+Again, click the links to reload the page with the selected state active. Note that in this case the page does not do a full reload, since the hash does not trigger that behaviour in the browser. Instead, StateRestore has a listener to take effect, so it will load the state on initial load, or as the end user clicks links for the page.
+
+Next: [Hash location and state name matching](./hashName).
+
+
+]]></info>
+
+</dt-example>

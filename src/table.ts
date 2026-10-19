@@ -87,9 +87,9 @@ export class StateTable {
 
 		// Load button event handler
 		statesDt.on('click', 'tbody button', function () {
-			let row = statesDt.row(this.closest('tr')).data();
+			let stateData = statesDt.row(this.closest('tr')).data();
 
-			hostDt.state(row.state).draw(false);
+			states.load(stateData);
 		});
 
 		states.loaded(() => {

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="5">
+
+<css lib="datatables buttons staterestore"/>
+
+<js lib="datatables staterestore buttons">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '?dtsr',
+			update: false
+		},
+		predefined: [{
+			id: 1,
+			name: 'Search - London',
+			state: {
+				search: {
+					search: 'London'
+				}
+			}
+		}, {
+			id: 2,
+			name: 'Order - Position',
+			state: {
+				order: [[1, 'asc']]
+			}
+		}, {
+			id: 3,
+			isDefault: true,
+			name: 'Search and order',
+			state: {
+				order: [[5, 'asc']],
+				search: {
+					search: 'San Francisco'
+				}
+			}
+		}]
+	}
+});
+
+]]>
+</js>
+
+<title lib="StateRestore">No URL rewriting</title>
+
+<info><![CDATA[
+
+You might have noted, while using the previous examples, that if you load a state using the regular StateRestore states list (or table), the URL will be updated to match this new state. This is done to allow the end user to bookmark the state that they currently have loaded.
+
+It may not always be desirable to have this feature though - you might just wish to provide links to pages and not have the URL change after this (such behaviour is particularly useful when providing predefined states that you want to give links to, but are not showing the StateRestore UI to create new states). This is done with the `-init stateRestore.bookmark.update` parameter.
+
+To see this difference, below are the links to trigger the predefined states to load, but also consider the "States" dropdown list and [compare to the previous examples](./searchId) where the URL is updated when a state is selected from that drop down list - here it is not:
+
+* [Search - London](?dtsr=1)
+* [Order - Position](?dtsr=2)
+* [Search and order](?dtsr=3)
+
+
+]]></info>
+
+</dt-example>

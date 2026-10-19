@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.bookmark.match</name>
+	<summary>Bookmark match target</summary>
+	<since>2.1.0</since>
+
+	<type type="string">
+		<description>
+			This value can be one of the following:
+
+			* `-string id` (default) - bookmarked state is found based on its ID and the source value found
+			* `-string name` - bookmarked state is found based on the name of the states.
+		</description>
+	</type>
+
+	<description>
+		When a value is found by `-init stateRestore.bookmark.src`, it can be configured to match against either a state id, or a state name - this configuration option controls which.
+
+		Using an id is generally preferred as it cannot change once created, unlike a state name, which can (if operating on an end user defined state, not a predefined one). If the state name changes, then any existing bookmarks pointing to it will no longer load, unlike when an id is used.
+
+		However, using a name can sometimes be desirable as it provides more context in the URL, allowing the end user to more easily identify a state. It is recommended that you only use name based bookmarking in StateRestore with `-init stateRestore.predefined` states, and disallow the end user from creating their own states. 
+	</description>
+
+	<example title="Find a state based on the state's name and the value of the `dtsr` query parameter"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			match: 'name',
+			src: '?dtsr'
+		}
+	}
+});
+]]></example>
+
+	<related>-init stateRestore.bookmark</related>
+	<related>-init stateRestore.bookmark.match</related>
+	<related>-init stateRestore.bookmark.src</related>
+	<related>-init stateRestore.bookmark.update</related>
+</dt-option>

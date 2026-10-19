@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="StateRestore">
+	<name>stateRestore.bookmark</name>
+	<summary>Bookmark configuration object</summary>
+	<since>2.1.0</since>
+
+	<type type="object">
+		<description>
+			Configuration object for the bookmark feature of StateRestore.
+		</description>
+	</type>
+
+	<description>
+		This object is the container for the configuration of StateRestore's bookmarking feature. To enable this feature you must set `-init stateRestore.bookmark.src`, but it also has other parameters that can be used to customise as you need:
+
+		* `-init stateRestore.bookmark.match` - Match on state id or name
+		* `-init stateRestore.bookmark.src` - Query / search parameter or hash to identify the state
+		* `-init stateRestore.bookmark.update` - Control URL rewriting when changing state.
+
+		Please refer to the documentation for each for full details.
+	</description>
+
+	<example title="Enable bookmark support, using a query string parameter"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			src: '?dtsr'
+		}
+	}
+});
+]]></example>
+
+	<example title="Enable bookmark support using a URL hash"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['stateCreate', 'statesList', 'pageLength']
+		}
+	},
+	stateRestore: {
+		bookmark: {
+			match: 'name',
+			src: '#dt-'
+		}
+	}
+});
+]]></example>
+
+	<related>-init stateRestore.bookmark.match</related>
+	<related>-init stateRestore.bookmark.src</related>
+	<related>-init stateRestore.bookmark.update</related>
+</dt-option>

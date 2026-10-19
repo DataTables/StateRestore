@@ -62,6 +62,11 @@ export default class States {
 
 	public static defaults: Defaults = {
 		ajax: null,
+		bookmark: {
+			match: 'id',
+			src: '',
+			update: true
+		},
 		canCreate: true,
 		defaults: true,
 		include: {
@@ -163,16 +168,20 @@ export default class States {
 	 *
 	 * @param state DataTables state to save
 	 * @param name New name
+	 * @param isStatic Is a static state
+	 * @param isDefault Is the default state
+	 * @param id State id
 	 */
 	public add(
 		state: DTState,
 		newName: string | null = null,
 		isStatic = false,
-		isDefault = false
+		isDefault = false,
+		id: string | number | null = null
 	) {
 		if (isStatic) {
 			this.s.store.push({
-				id: null,
+				id: id || null,
 				isDefault,
 				isSharedIn: false,
 				isSharedOut: false,
@@ -190,7 +199,7 @@ export default class States {
 				this.s.dt.i18n('stateRestore.create.title', 'Save new state'),
 				this.s.dt.i18n('stateRestore.create.info', ''),
 				{
-					id: null,
+					id: id || null,
 					isDefault,
 					isSharedIn: false,
 					isSharedOut: false,
@@ -250,12 +259,48 @@ export default class States {
 	}
 
 	/**
-	 * Get the default state
+	 * Get the state to load on initialisation. This can be identified from a
+	 * bookmark, or it can be from a default state flag.
 	 *
+	 * @param allowDefault Let the default be used if there is no matching state
 	 * @returns DataTables state object
 	 */
-	public getDefault(): DTState | null {
-		let state = this.s.store.find(s => s.isDefault);
+	public getInitialLoadState(allowDefault = true): DTState | null {
+		let bookmark = this.c.bookmark;
+		let state: State | null = null;
+
+		if (bookmark.src) {
+			let val = '';
+
+			if (bookmark.src.charAt(0) === '?') {
+				// Query parameter
+				let paramName = bookmark.src.slice(1);
+				let params = new URLSearchParams(document.location.search);
+
+				if (params.has(paramName)) {
+					val = params.get(paramName);
+				}
+			}
+			else if (bookmark.src.charAt(0) === '#') {
+				// Search string - remove the src value from the location's hash
+				// which will leave only the part we've to match against.
+				let re = new RegExp(
+					'^' + util.string.escapeRegex(bookmark.src)
+				);
+
+				val = window.location.hash.replace(re, '');
+			}
+
+			state =
+				bookmark.match === 'id'
+					? this.s.store.find(s => s.id == val) // loose typing for numbers
+					: this.s.store.find(s => s.name === val);
+		}
+
+		// Nothing from the bookmarking, so check if there is a default state
+		if (!state && allowDefault) {
+			state = this.s.store.find(s => s.isDefault);
+		}
 
 		return state ? state.state : null;
 	}
@@ -288,21 +333,6 @@ export default class States {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Execute a function once the states have been loaded (allowing async
-	 * loading)
-	 *
-	 * @param cb Function to execute
-	 */
-	public loaded(cb: () => void) {
-		if (this.s.loading) {
-			this.s.whenLoaded.push(cb);
-		}
-		else {
-			cb();
-		}
 	}
 
 	/**
@@ -355,10 +385,56 @@ export default class States {
 	/**
 	 * Error message to display
 	 *
-	 * @param msg 
+	 * @param msg
 	 */
 	public error(msg: string) {
 		alert(msg);
+	}
+
+	/**
+	 * Load a state
+	 *
+	 * @param state State to load
+	 */
+	public load(state: State) {
+		this.s.dt.state(state.state).draw(false);
+
+		// Bookmarking
+		let bookmark = this.c.bookmark;
+
+		if (bookmark.src && bookmark.update) {
+			let url = new URL(document.location.href);
+			let val = bookmark.match === 'id' ? state.id : state.name;
+
+			if (bookmark.src.charAt(0) === '?') {
+				let paramName = bookmark.src.slice(1);
+
+				url.searchParams.set(paramName, val.toString());
+				history.replaceState(null, '', url.pathname + url.search);
+			}
+			else if (bookmark.src.charAt(0) === '#') {
+				history.replaceState(
+					null,
+					'',
+					url.pathname + url.search + bookmark.src + val
+				);
+			}
+		}
+	}
+
+	/**
+	 * Execute a function once the states have been loaded (allowing async
+	 * loading)
+	 *
+	 * @param cb Function to execute
+	 */
+	public loaded(cb: () => void) {
+		if (this.s.loading) {
+			this.s.whenLoaded.push(cb);
+		}
+		else {
+			cb();
+		}
 	}
 
 	/**
@@ -616,6 +692,20 @@ export default class States {
 			}
 		});
 
+		// Set up a listener for future hash changes, as it doesn't reload the
+		// page.
+		if (this.c.bookmark.src && this.c.bookmark.src.charAt(0) === '#') {
+			Dom.w.on('hashchange.dtsr', event => {
+				let state = this.getInitialLoadState(false);
+
+				if (state) {
+					let s = this.s.store.find(s => state === s.state);
+
+					this.load(s);
+				}
+			});
+		}
+
 		// Initial startup actions
 		this._load();
 	}
@@ -634,7 +724,13 @@ export default class States {
 	) {
 		if (Array.isArray(predefined)) {
 			predefined.forEach(s => {
-				this.add(s.state, s.name, true, s.isDefault || false);
+				this.add(
+					s.state,
+					s.name,
+					true,
+					s.isDefault || false,
+					s.id || null
+				);
 			});
 		}
 		else {
@@ -1022,9 +1118,7 @@ export default class States {
 		return Dom.c('div')
 			.classAdd('dtsb-modal-buttons')
 			.append(
-				Dom.c('button')
-					.classAdd(this.classes.modal.button)
-					.text(text)
+				Dom.c('button').classAdd(this.classes.modal.button).text(text)
 			);
 	}
 }

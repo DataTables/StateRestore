@@ -128,7 +128,7 @@ DataTable.ext.buttons.statesList = {
 
 				buttons.push({
 					action: (e, dt) => {
-						dt.state(state.state).draw(false);
+						states.load(state);
 					},
 					popoverTitle: util.escapeHtml(state.name),
 					split: splits,
@@ -211,7 +211,7 @@ Dom.s(document).on('options.dt.stateRestore', function (e, init: Options) {
 			setTimeout(async () => {
 				controller.loaded(() => {
 					// Get default
-					let def = controller.getDefault();
+					let def = controller.getInitialLoadState();
 
 					// Callback state
 					cb(def || {}, true);
@@ -270,10 +270,11 @@ Api.register('stateRestore.state().details()', function () {
 });
 
 Api.register('stateRestore.state().load()', function () {
+	let states = this.context[0]._states as States;
 	let selected = this._stateSelected;
 
 	if (selected) {
-		this.state(selected.state).draw(false);
+		states.load(selected);
 	}
 
 	return this;
