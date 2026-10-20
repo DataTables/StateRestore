@@ -15,7 +15,7 @@
 
 	<default value="true">
 		When StartRestore's bookmarking feature is enabled, the URL will be updated as the user changes states in the UI.
-	<default>
+	</default>
 
 	<description>
 		By default, as the end user uses the StateRestore UI to load states (`-button statesList` and `-button statesTable`), the page URL will automatically update (based on the `-init stateRestore.bookmark.src` parameter) to reflect the state that was loaded (this can be the id or the name of the loaded state - `-init stateRestore.bookmark.match`).
