@@ -68,7 +68,7 @@ The editing modal is reused with different strings to indicate what action is be
 | `.edit.title` | Modal title for editing a state. | `-string Edit state` |
 | `.edit.info` | Optional description of the edit state action. | Empty string |
 | `.replace.title` | Modal title for replacing a state. | `-string Replace state` |
-| `.replace.info` | Optional description of the replace state action. | Empty string |
+| `.replace.info` | Optional description of the replace state action. | `-string Replace the currently saved state with the table's current state.` |
 | `.remove.button` | Modal submit button. | `-string Delete` |
 | `.remove.title` | Modal title for deleting a state. | `-string Delete state` |
 | `.remove.message` | Message asking the user to confirm the deletion. | `-string Are you sure you wish to remove the following states:` |
@@ -110,7 +110,8 @@ stateRestore: {
 		replace: "Replace",
 		remove: "Delete:",
 		statesRemoveAll: "Remove all states",
-		statesList: "Saved states"
+		statesList: "Saved states",
+		statesTable: "Saved states"
 	},
 	create: {
 		title: "Save new state"
@@ -147,8 +148,8 @@ stateRestore: {
 		active: 'Active',
 		default: 'Default',
 		entries: {
-			1: 'entry',
-			_: 'entries'
+			1: 'state',
+			_: 'states'
 		},
 		load: 'Load',
 		name: 'Name',
