@@ -25,7 +25,8 @@
 			columnControl: true,
 			columnOrder: true,
 			order: true,
-			paging: false,
+			pageStart: false,
+			pageLength: true,
 			scroller: false,
 			search: true,
 			searchBuilder: true,
@@ -50,7 +51,8 @@
 		| `.columnControl` | [ColumnControl](https://datatables.net/manual/extensions/columnControl) search terms | `true` - Saved |
 		| `.columnOrder` | [ColReorder](https://datatables.net/manual/extensions/colReorder) ordering | `true` - Saved |
 		| `.order` | Column ordering | `true` - Saved |
-		| `.paging` | Table paging (page length and start page) | `false` - Removed |
+		| `.pageStart` | Table paging start point | `false` - Removed |
+		| `.pageLength` | Table page length | `true` - Saved |
 		| `.scroller` | [Scroller](https://datatables.net/manual/extensions/scroller) properties | `false` - Removed |
 		| `.search` | Global search terms | `true` - Saved |
 		| `.searchBuilder` | [SearchBuilder](https://datatables.net/manual/extensions/searchBuilder) search | `true` - Saved |
